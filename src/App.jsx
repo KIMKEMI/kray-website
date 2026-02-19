@@ -11,7 +11,6 @@ import {
   CheckCircle2, 
   Star, 
   Mail, 
-  PlayCircle,
   ShoppingCart,
   TrendingUp,
   Eye,
@@ -25,42 +24,42 @@ import {
  * 각 제품별 스토어 링크를 처리하는 컴포넌트입니다.
  */
 const PurchaseIcons = ({ lang, naverUrl, amazonUrl, rakutenUrl }) => {
-  const disabledClass = "flex items-center gap-2 bg-gray-100 text-gray-400 border border-gray-200 px-4 py-2 w-full justify-center rounded-none cursor-not-allowed pointer-events-none";
-  
+  const disabledClass = "flex items-center gap-2 bg-gray-100 text-gray-400 border border-gray-200 px-4 py-3.5 w-full justify-center rounded-none cursor-not-allowed pointer-events-none";
+  const labelStyle = "text-[12px] font-medium uppercase tracking-widest";
+
   if (lang === 'ko') {
     return naverUrl ? (
-      <a href={naverUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 bg-[#03C75A] text-white px-4 py-2 hover:bg-[#02b351] transition-colors w-full justify-center rounded-none">
-        <ShoppingCart size={16} />
-        <span className="text-[11px] font-black uppercase tracking-wider">네이버 스마트스토어</span>
+      <a href={naverUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 bg-[#03C75A] text-white px-4 py-3.5 hover:bg-[#02b351] transition-colors w-full justify-center rounded-none shadow-sm">
+        <ShoppingCart size={18} />
+        <span className={labelStyle}>네이버 스마트스토어</span>
       </a>
     ) : (
       <div className={disabledClass}>
-        <ShoppingCart size={16} />
-        <span className="text-[11px] font-black uppercase tracking-wider">네이버 스마트스토어</span>
+        <ShoppingCart size={18} />
+        <span className={labelStyle}>네이버 스마트스토어</span>
       </div>
     );
   }
 
   if (lang === 'ja') {
     return (
-      <div className="flex gap-1 w-full text-black">
+      <div className="flex flex-col gap-2 w-full">
         {amazonUrl ? (
-          <a href={amazonUrl} target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center gap-2 bg-[#FF9900] text-black px-1 py-2 hover:bg-[#e68a00] transition-colors justify-center rounded-none">
-            <span className="text-[10px] font-black uppercase tracking-tighter">AmazonJP</span>
+          <a href={amazonUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 bg-[#FF9900] text-black px-4 py-3.5 hover:bg-[#e68a00] transition-colors w-full justify-center rounded-none shadow-sm">
+            <span className={labelStyle}>AmazonJP</span>
           </a>
         ) : (
-          <div className="flex-1 flex items-center gap-2 bg-gray-100 text-gray-400 border border-gray-200 px-1 py-2 justify-center rounded-none cursor-not-allowed">
-            <span className="text-[10px] font-black uppercase tracking-tighter text-gray-400">AmazonJP</span>
+          <div className={disabledClass}>
+            <span className={labelStyle}>AmazonJP</span>
           </div>
         )}
-        
         {rakutenUrl ? (
-          <a href={rakutenUrl} target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center gap-2 bg-[#BF0000] text-white px-1 py-2 hover:bg-[#a60000] transition-colors justify-center rounded-none">
-            <span className="text-[10px] font-black uppercase tracking-tighter">楽天市場</span>
+          <a href={rakutenUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 bg-[#BF0000] text-white px-4 py-3.5 hover:bg-[#a60000] transition-colors w-full justify-center rounded-none shadow-sm text-white">
+            <span className={labelStyle}>楽天市場</span>
           </a>
         ) : (
-          <div className="flex-1 flex items-center gap-2 bg-gray-100 text-gray-400 border border-gray-200 px-1 py-2 justify-center rounded-none cursor-not-allowed">
-            <span className="text-[10px] font-black uppercase tracking-tighter text-gray-400">楽天市場</span>
+          <div className={disabledClass}>
+            <span className={labelStyle}>楽天市場</span>
           </div>
         )}
       </div>
@@ -69,12 +68,12 @@ const PurchaseIcons = ({ lang, naverUrl, amazonUrl, rakutenUrl }) => {
 
   if (lang === 'en') {
     return amazonUrl ? (
-      <a href={amazonUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 bg-[#FF9900] text-black px-4 py-2 hover:bg-[#e68a00] transition-colors w-full justify-center rounded-none">
-        <span className="text-[11px] font-black uppercase tracking-wider">Amazon US</span>
+      <a href={amazonUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 bg-[#FF9900] text-black px-4 py-3.5 hover:bg-[#e68a00] transition-colors w-full justify-center rounded-none shadow-sm">
+        <span className={labelStyle}>Amazon US</span>
       </a>
     ) : (
       <div className={disabledClass}>
-        <span className="text-[11px] font-black uppercase tracking-wider text-gray-400">Amazon US</span>
+        <span className={labelStyle}>Amazon US</span>
       </div>
     );
   }
@@ -94,7 +93,7 @@ const App = () => {
         title: <>콘텐츠로 세상의 <br /><span className="text-yellow-500 underline decoration-black underline-offset-8">취향을 잇다</span></>,
         desc: "Kray는 단순한 인플루언서 마케팅을 넘어 실질적인 판매 실적과 브랜드 자산을 구축하는 '콘텐츠 커머스' 기업입니다. 일본 현지의 도시락 문화를 한국적 감성으로 재해석하여 한일 양국에 새로운 라이프스타일을 제안합니다."
       },
-      valuesIntro: { tag: "Executive Summary", title: "품격 있는 콘텐츠로 마음을 잇다" },
+      valuesIntro: { tag: "Executive Summary", title: "평범함 속에 특별함이 스며든다" },
       values: [
         { title: "인플루언서 기반 경영", desc: "요리·도시락에 특화된 인플루언서 CEO 경영" },
         { title: "독보적인 콘텐츠 파급력", desc: "압도적인 도달 범위와 높은 바이럴 잠재력" },
@@ -107,7 +106,7 @@ const App = () => {
         { label: "최대 조회수", value: "1,722만", sub: "Viral Content" },
         { label: "업로드 빈도", value: "주 4~5회", sub: "Daily Engagement" },
       ],
-      influencerIntro: { tag: "Unrivaled Reach", title: "1억 재생수가 증명하는 파급력" },
+      influencerIntro: { tag: "Unrivaled Reach", title: "1억 재생수가 증명하는 영향력" },
       influencer: {
         title: "압도적 파급력의 콘텐츠 파워",
         desc: "일본 거주 한국인 인플루언서 'SONA'는 현지에서 경험한 도시락 문화를 특유의 감성으로 재해석하여 전 세계 시청자들의 마음을 사로잡았습니다. 단순한 영상을 넘어, '나도 만들 수 있겠다'는 확신을 주는 튜토리얼을 제공합니다."
@@ -128,7 +127,7 @@ const App = () => {
       },
       products: {
         tag: "Product Lineup",
-        title: <>SONA 가 프로듀스한 <br /> 자사 상품 라인업</>,
+        title: "SONA가 프로듀스한 라인업",
         footnote: "※ 도시락 데코레이션 카테고리 부문",
         items: [
           {
@@ -178,10 +177,10 @@ const App = () => {
       nav: { about: '紹介', influencer: 'インフルエンサー', products: '製品', roadmap: 'ロードマップ', cta: 'お問い合わせ' },
       hero: {
         tag: "影響力が成果に繋がるエコシステム",
-        title: <>コンテンツで世界の「好み」を繋ぐ</>,
-        desc: "Krayは単なるインフルエンサーマーケティングを越え、実質的な販売実績とブランド資産を構築する「コンテンツコマース」企業です。日本現地のお弁当文化を韓国的な感性で再解釈し、日韓両国に新しいライフスタイルを提案します。"
+        title: <>コンテンツで世界の<span className="text-yellow-500 underline decoration-black underline-offset-8">「好み」を繋ぐ</span></>,
+        desc: "Krayは単なるインフルエンサーマーケティングを越え, 実質的な販売実績とブランド資産を構築する「コンテンツコマース」企業です. 日本現地のお弁当文化を韓国的な感性で再解釈し, 日韓両国に新しいライフスタイルを提案します."
       },
-      valuesIntro: { tag: "Executive Summary", title: "高品質なコンテンツで心を繋ぐ" },
+      valuesIntro: { tag: "Executive Summary", title: "平凡の中に特別さが染み込む" },
       values: [
         { title: "インフルエンサー経営", desc: "料理・お弁当特化型クリエイターによる経営" },
         { title: "圧倒的なコンテンツ拡散力", desc: "圧倒的なコンテンツ拡散力とリーチ力" },
@@ -194,34 +193,34 @@ const App = () => {
         { label: "最多再生回数", value: "1,722万回", sub: "星のキンパ動画" },
         { label: "投稿頻度", value: "週4〜5回", sub: "継続的な発信" },
       ],
-      influencerIntro: { tag: "Unrivaled Reach", title: "1億再生回数が証明する波及力" },
+      influencerIntro: { tag: "Unrivaled Reach", title: "1億再生が証明する影響力" },
       influencer: {
         title: "圧倒的な波及力のコンテンツパワー",
-        desc: "日本在住の韓国人インフルエンサー「SONA」は、現地で経験したお弁当文化を独自の感性で再解釈し、世界中の視聴者を魅了しました。単なる動画を超え、「私にもできる」という確信を与えるチュートリアルを提供しています。"
+        desc: "日本在住の韓国人インフルエンサー「SONA」は, 現地で経験したお弁当文化を独自の感性で再解釈し, 世界中の視聴者を魅了しました. 単なる動画を超え, 「私にもできる」という確信を与えるチュートリアルを提供しています."
       },
       strategy: {
-        title: "Content Strategy: 'Show & Teach'",
+        title: "Content Strategy: 「魅せる」& 「教える」",
         subtitle: "目を引くビジュアル + 直感的なチュートリアル = 自然な購買への繋がり",
         steps: [
-          { title: "Visual (魅せる)", desc: "可愛いお弁当やセンス溢れる料理가 화면을 압도합니다." },
-          { title: "Process (教える)", desc: "分かりやすい動画で、誰でも作れる라는 확신을 줍니다." },
-          { title: "Action (買う)", desc: "自然な購買導線で、実際の購入과 팬덤 형성으로 이끌어냅니다." },
+          { title: "Visual (魅せる)", desc: "可愛いお弁当やセンス溢れる料理が画面を圧倒します." },
+          { title: "Process (教える)", desc: "分かりやすい動画で, 誰でも作れるという自信を与えます." },
+          { title: "Action (買う)", desc: "自然な購買導線で, 実際の購入とファン層の形成を誘導します." },
         ]
       },
       brand: { 
         tag: "Our Brand Identity", 
         title: <>食卓と料理に<br />楽しさ大さじ1杯を加える</>,
-        caption: "上記の画像は日本で商標登録された SONA and TOKYO の公式ロゴです。"
+        caption: "上記の画像は日本で商標登録された SONA and TOKYO の公式ロゴです."
       },
       products: {
         tag: "Product Lineup",
-        title: <>SONAがプロデュースした<br />自社商品ラインナップ</>,
+        title: "SONA가 프로듀스한 라인업",
         footnote: "※弁当デコレーションカテゴリー部門",
         items: [
           {
             title: "星・ハートの卵焼き型",
             badge: "Amazon JP 売れ筋ランキング1位! (※)",
-            desc: "型に入れるだけで誰でも可愛い形가 완성합니다! お弁当初心者の悩みを解決する 획기적인 아이템입니다.",
+            desc: "型に入れるだけで誰でも可愛い形が完成します! お弁当初心者の悩みを解決する画期的なアイテムです.",
             features: ["日・韓・中にて意匠登録済", "お客様からの高い評価"],
             urls: {
               naver: "https://mkt.shopping.naver.com/link/68f668bf309bbc4b1c8000cb",
@@ -243,7 +242,7 @@ const App = () => {
           {
             title: "トリプルパン (予定)",
             badge: "Coming Soon",
-            desc: "3品同時に！SONAエディションの新色2種と専用터너가 세트로 발매!",
+            desc: "3品同時に！SONAエディションの新色2種と専用ターナーがセットになって発売！",
             features: ["SONA Edition", "3口同時調理システム"],
             urls: { naver: null, amazon: null, rakuten: null }
           }
@@ -251,14 +250,14 @@ const App = () => {
       },
       roadmapIntro: { tag: "Brand Roadmap", title: <>持続可能なブランドへと<br />成長する軌跡</> },
       roadmap: [
-        { year: "2024.02", title: "星・ハートの卵焼き型 発売", desc: "星・ハート型プロデュース" },
+        { year: "2024.02", title: "星・ハートの卵焼き型 発売", desc: "星・ハート型のプロデュース" },
         { year: "2024.05", title: "レシピ本出版", desc: "韓国にてベストセラー" },
         { year: "2025.07", title: "星の卵とき 発売", desc: "ラインアップの拡充" },
         { year: "2026.05", title: "トリプルパン 発売予定", desc: "自社ブランドの強化" },
       ],
       contact: {
         title: "CONNECT US",
-        desc: <>Krayと共に新しいコンテンツコマースの未来を創るパートナーを募集しています。<br className="hidden md:block" /> 提携のご提案やお問い合わせは、下記のメールアドレスまでご連絡ください。</>
+        desc: <>Krayと共に新しいコンテンツコマースの未来を創るパートナーを募集しています. <br className="hidden md:block" /> 提携のご提案やお問い合わせは, 下記のメールアドレスまでご連絡ください.</>
       }
     },
     en: {
@@ -268,7 +267,7 @@ const App = () => {
         title: <>Connecting <br /><span className="text-yellow-500 underline decoration-black underline-offset-8">Global Tastes</span> with Content</>,
         desc: "Kray is a 'Content Commerce' company that builds brand assets and actual sales records beyond simple influencer marketing. We propose a new lifestyle by reinterpreting Japanese bento culture with Korean sensibilities."
       },
-      valuesIntro: { tag: "Executive Summary", title: "Connecting Hearts with Quality Content" },
+      valuesIntro: { tag: "Executive Summary", title: "Infusing Extraordinary Value into the Ordinary" },
       values: [
         { title: "Influencer-Led Business", desc: "Management led by specialists in bento content" },
         { title: "Global Content Impact", desc: "Creative expression with unrivaled viral reach" },
@@ -302,7 +301,7 @@ const App = () => {
       },
       products: {
         tag: "Product Lineup",
-        title: <>Proprietary Lineup <br /> Produced by SONA</>,
+        title: "SONA가 프로듀스한 라인업",
         footnote: "* Bento Decoration Category",
         items: [
           {
@@ -354,7 +353,7 @@ const App = () => {
 
   useEffect(() => {
     const browserLang = navigator.language.split('-')[0];
-    if (['ko', 'ja'].includes(browserLang)) setLang(browserLang);
+    if (['ko', 'ja', 'en'].includes(browserLang)) setLang(browserLang);
     else setLang('en');
 
     const handleScroll = () => {
@@ -365,8 +364,7 @@ const App = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white font-sans text-black overflow-x-hidden">
-      {/* 🎬 필름 롤 무한 루프 애니메이션 스타일 수정 (속도 10% 감소: 20s -> 22s) */}
+    <div className="min-h-screen bg-white font-sans text-gray-900 overflow-x-hidden antialiased">
       <style>
         {`
           @keyframes infinite-scroll {
@@ -381,65 +379,59 @@ const App = () => {
         `}
       </style>
 
-      {/* Navigation - Size Increased, Mobile Text Logo Removed */}
-      <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-white/90 backdrop-blur-md shadow-sm py-5' : 'bg-transparent py-8'}`}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
-          <div className="flex items-center gap-4 text-black">
+      {/* Navigation */}
+      <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-white/95 backdrop-blur-md shadow-sm py-5' : 'bg-transparent py-8'}`}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center text-black">
+          <div className="flex items-center gap-4">
             <a href="#" className="flex items-center">
               <img src="/kray_logo.png" alt="Kray Inc." className="h-12 md:h-16 w-auto object-contain" onError={(e) => { e.target.style.display = 'none'; }} />
             </a>
           </div>
-          <div className="hidden md:flex items-center gap-10">
-            {(Object.keys(t.nav) || []).filter(k => k !== 'cta').map((key) => (
-              <a key={key} href={`#${key}`} className="text-base font-bold hover:text-yellow-600 transition-colors uppercase">{t.nav[key]}</a>
-            ))}
-            <div className="flex items-center bg-gray-100 p-1.5 rounded-full gap-2 ml-4 border border-gray-200">
+          
+          <div className="flex items-center gap-4 md:gap-10">
+            <div className="hidden md:flex items-center gap-10">
+              {(Object.keys(t.nav) || []).filter(k => k !== 'cta').map((key) => (
+                <a key={key} href={`#${key}`} className="text-base font-medium text-gray-800 hover:text-yellow-600 transition-colors uppercase tracking-tight">{t.nav[key]}</a>
+              ))}
+              <div className="flex items-center bg-gray-100 p-1.5 rounded-full gap-2 ml-4 border border-gray-200">
+                {['ko', 'ja', 'en'].map(l => (
+                  <button key={l} onClick={() => setLang(l)} className={`px-3 py-1 rounded-full text-[10px] font-medium uppercase transition-all ${lang === l ? 'bg-black text-white' : 'text-gray-400 hover:text-black'}`}>{l}</button>
+                ))}
+              </div>
+              <a href="#contact" className="bg-black text-white px-6 py-3 rounded-full text-base font-medium hover:bg-gray-800 transition-transform active:scale-95 text-center tracking-tight">{t.nav.cta}</a>
+            </div>
+
+            <div className="flex md:hidden items-center bg-gray-100 p-1 rounded-full gap-1 border border-gray-200 shadow-sm">
               {['ko', 'ja', 'en'].map(l => (
-                <button key={l} onClick={() => setLang(l)} className={`px-3 py-1 rounded-full text-[10px] font-black uppercase transition-all ${lang === l ? 'bg-black text-white' : 'text-gray-400 hover:text-black'}`}>{l}</button>
+                <button key={l} onClick={() => setLang(l)} className={`px-3 py-1 rounded-full text-[9px] font-medium uppercase transition-all ${lang === l ? 'bg-black text-white' : 'text-gray-400'}`}>{l}</button>
               ))}
             </div>
-            <a href="#contact" className="bg-black text-white px-6 py-3 rounded-full text-base font-bold hover:bg-gray-800 transition-transform active:scale-95 text-center">{t.nav.cta}</a>
+
+            <button className="md:hidden text-black" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+              {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
+            </button>
           </div>
-          <button className="md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-            {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
-          </button>
         </div>
       </nav>
 
-      {/* Mobile Menu */}
-      {isMenuOpen && (
-        <div className="fixed inset-0 z-[100] bg-white flex flex-col items-center justify-center gap-8 text-center animate-in fade-in duration-300">
-          <button className="absolute top-5 right-4 text-black" onClick={() => setIsMenuOpen(false)}><X size={32} /></button>
-          {(Object.keys(t.nav) || []).filter(k => k !== 'cta').map((key) => (
-            <a key={key} href={`#${key}`} onClick={() => setIsMenuOpen(false)} className="text-3xl font-black uppercase text-black">{t.nav[key]}</a>
-          ))}
-          <a href="#contact" onClick={() => setIsMenuOpen(false)} className="bg-black text-white px-10 py-5 rounded-full text-xl font-bold">{t.nav.cta}</a>
-        </div>
-      )}
-
-      {/* Hero Section - Mobile Gap Reduced */}
-      <section id="about" className="relative overflow-hidden pt-48 pb-20 lg:pt-64 lg:pb-32 text-black">
+      {/* Hero Section */}
+      <section id="about" className="relative overflow-hidden pt-48 pb-20 lg:pt-64 lg:pb-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-left">
           <div className="flex flex-col lg:flex-row items-center gap-6 lg:gap-16">
             <div className="flex-1">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-yellow-100 text-yellow-700 text-xs font-black mb-6">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-yellow-50 text-yellow-700 text-[13px] font-medium mb-8 border border-yellow-100">
                 <Star size={14} fill="currentColor" /><span>{t.hero.tag}</span>
               </div>
-              <h1 className="text-5xl lg:text-7xl font-black leading-tight mb-8 text-black">{t.hero.title}</h1>
-              <p className="text-gray-600 mb-10 leading-relaxed text-lg max-w-2xl text-black">{t.hero.desc}</p>
+              <h1 className="text-4xl md:text-5xl lg:text-7xl font-medium leading-[1.1] mb-10 text-gray-950 tracking-tighter">{t.hero.title}</h1>
+              <p className="text-gray-600 mb-10 leading-relaxed text-lg max-w-2xl font-normal">{t.hero.desc}</p>
             </div>
             <div className="relative w-full max-w-lg">
               <div className="absolute -top-10 -right-10 w-48 h-48 bg-yellow-400 rounded-full opacity-20 blur-3xl animate-pulse"></div>
-              <div className="relative z-10 aspect-[4/5] bg-gray-100 rounded-none overflow-hidden group">
-                <img 
-                  src="/sona_ceo.jpg" 
-                  alt="CEO SONA" 
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
-                  onError={(e) => { e.target.src = 'https://via.placeholder.com/600x800?text=CEO+SONA'; }} 
-                />
-                <div className="absolute bottom-6 left-6 bg-white/90 backdrop-blur-md px-5 py-2.5 rounded-none shadow-lg text-left">
-                  <p className="text-[9px] font-black text-gray-400 uppercase mb-0.5">Creator & CEO</p>
-                  <p className="text-lg font-black leading-none text-black">SONA</p>
+              <div className="relative z-10 aspect-[4/5] bg-gray-50 rounded-none overflow-hidden group">
+                <img src="/sona_ceo.jpg" alt="CEO SONA" className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" onError={(e) => { e.target.src = 'https://via.placeholder.com/600x800?text=CEO+SONA'; }} />
+                <div className="absolute bottom-6 left-6 bg-white/95 backdrop-blur-md px-5 py-3 rounded-none shadow-xl text-left border-l-2 border-yellow-500">
+                  <p className="text-[10px] font-medium text-gray-500 uppercase tracking-widest mb-1">Creator & CEO</p>
+                  <p className="text-xl font-medium text-gray-900 leading-none">SONA</p>
                 </div>
               </div>
             </div>
@@ -448,89 +440,69 @@ const App = () => {
       </section>
 
       {/* Executive Summary Section */}
-      <section className="bg-gray-50 py-24 lg:py-40 text-black">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-black">
-          <div className="text-center mb-16 lg:mb-20 text-black">
-            <h2 className="text-sm font-black text-yellow-600 uppercase tracking-widest mb-4">Executive Summary</h2>
-            <p className="text-3xl lg:text-4xl font-black italic tracking-tighter text-black">{t.valuesIntro.title}</p>
+      <section className="bg-gray-50 py-24 lg:py-40">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16 lg:mb-24">
+            <h2 className="text-xs font-medium text-yellow-600 uppercase tracking-[0.2em] mb-6">{t.valuesIntro.tag}</h2>
+            <p className="text-3xl md:text-4xl font-medium text-gray-950 tracking-tight leading-snug">{t.valuesIntro.title}</p>
           </div>
 
           <div className="w-full max-w-5xl mx-auto mb-16 lg:mb-24 overflow-hidden rounded-none border border-gray-200 bg-white group">
-            <img 
-              src="/bento_main.jpg" 
-              alt="Bento" 
-              className="w-full h-[300px] sm:h-[450px] lg:h-[550px] object-cover transition-transform duration-1000 group-hover:scale-105"
-              onError={(e) => { e.target.src = 'https://via.placeholder.com/1200x600?text=Bento+Main'; }}
-            />
+            <img src="/bento_main.jpg" alt="Bento" className="w-full h-[300px] sm:h-[450px] lg:h-[600px] object-cover transition-transform duration-1000 group-hover:scale-105" onError={(e) => { e.target.src = 'https://via.placeholder.com/1200x600?text=Bento+Main'; }} />
           </div>
 
-          <div className="grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4 text-black">
+          <div className="grid gap-4 sm:gap-8 sm:grid-cols-2 lg:grid-cols-4">
             {(t.values || []).map((item, idx) => (
-              <div key={idx} className="bg-white px-4 py-10 sm:px-5 rounded-none hover:shadow-lg transition-all border border-gray-100 flex flex-col items-center text-center">
-                <div className="w-24 h-24 bg-yellow-400 rounded-none flex items-center justify-center mb-8 text-black shadow-sm shrink-0 text-black">
-                  {[<UserRound size={48} strokeWidth={1.5} />, <BarChart3 size={48} strokeWidth={1.5} />, <ShoppingBag size={48} strokeWidth={1.5} />, <Globe size={48} strokeWidth={1.5} />][idx]}
+              <div key={idx} className="bg-white px-6 py-12 rounded-none hover:shadow-2xl hover:-translate-y-1 transition-all border border-gray-100 flex flex-col items-center text-center">
+                <div className="w-20 h-20 bg-gray-50 flex items-center justify-center mb-8 text-yellow-600 rounded-none border border-gray-100">
+                  {[<UserRound size={36} strokeWidth={1.5} />, <BarChart3 size={36} strokeWidth={1.5} />, <ShoppingBag size={36} strokeWidth={1.5} />, <Globe size={36} strokeWidth={1.5} />][idx]}
                 </div>
-                <h3 className={`${lang === 'ko' ? 'text-lg' : 'text-[14px] sm:text-[15px]'} font-black mb-3 tracking-tighter whitespace-nowrap w-full uppercase text-black`}>
-                  {item.title}
-                </h3>
-                <p className="text-gray-500 text-[11px] sm:text-xs leading-relaxed">{item.desc}</p>
+                <h3 className="text-lg font-medium text-gray-950 mb-4 tracking-tight uppercase">{item.title}</h3>
+                <p className="text-gray-500 text-sm leading-relaxed font-normal">{item.desc}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Influencer Impact Section - Card Alignment and Center Button */}
-      <section id="influencer" className="py-24 lg:py-40 text-black">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-black">
-          <div className="text-center mb-16 lg:mb-24 text-black">
-            <h2 className="text-sm font-black text-yellow-600 uppercase tracking-widest mb-4">Unrivaled Reach</h2>
-            <p className="text-3xl lg:text-5xl font-black italic tracking-tighter uppercase text-black">Proving Influence</p>
+      {/* Influencer Impact Section */}
+      <section id="influencer" className="py-24 lg:py-40">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16 lg:mb-24">
+            <h2 className="text-xs font-medium text-yellow-600 uppercase tracking-[0.2em] mb-6">{t.influencerIntro.tag}</h2>
+            <p className="text-3xl md:text-5xl font-medium text-gray-950 tracking-tighter uppercase">{t.influencerIntro.title}</p>
           </div>
           
-          <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24 text-black">
-            <div className="flex-1 w-full flex justify-center items-center text-black">
-              <div className="relative rounded-none overflow-hidden w-full max-w-[400px] aspect-[9/16] group">
-                <img 
-                  src="/viral_reel.jpg" 
-                  alt="Viral Reel Content" 
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
-                  onError={(e) => { e.target.src = 'https://via.placeholder.com/600x1066?text=Viral+Reel'; }} 
-                />
+          <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
+            <div className="flex-1 w-full flex justify-center">
+              <div className="relative rounded-none overflow-hidden w-full max-w-[400px] aspect-[9/16] group shadow-2xl">
+                <img src="/viral_reel.jpg" alt="Viral Reel" className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" onError={(e) => { e.target.src = 'https://via.placeholder.com/600x1066?text=Viral+Reel'; }} />
               </div>
             </div>
 
-            <div className="flex-1 w-full flex flex-col gap-12 text-black">
-              <div className="text-left border-l-4 border-yellow-400 pl-6 text-black">
-                <h2 className="text-lg lg:text-2xl font-bold mb-6 leading-tight tracking-tight text-black">
-                  {t.influencer.title}
-                </h2>
-                <p className="text-gray-600 leading-relaxed text-lg max-w-xl text-black">{t.influencer.desc}</p>
+            <div className="flex-1 w-full flex flex-col gap-12">
+              <div className="text-left border-l-4 border-yellow-500 pl-8">
+                <h2 className="text-2xl md:text-3xl font-medium text-gray-950 mb-6 leading-tight tracking-tight">{t.influencer.title}</h2>
+                <p className="text-gray-600 leading-relaxed text-lg font-normal">{t.influencer.desc}</p>
               </div>
               
-              <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 text-black">
+              <div className="grid gap-6 grid-cols-1 sm:grid-cols-2">
                 {(t.stats || []).map((stat, idx) => (
-                  <div key={idx} className="bg-white p-8 rounded-none border border-gray-100 shadow-sm hover:shadow-lg transition-all flex flex-col items-center text-center text-black">
-                    <div className="w-16 h-16 bg-gray-50 flex items-center justify-center mb-6 text-black">
+                  <div key={idx} className="bg-white p-8 rounded-none border border-gray-100 shadow-sm hover:shadow-xl transition-all flex flex-col items-center text-center">
+                    <div className="w-16 h-16 bg-gray-50 flex items-center justify-center mb-6 text-yellow-600 border border-gray-100">
                        {[<Users size={24} />, <Eye size={24} />, <Award size={24} />, <Calendar size={24} />][idx]}
                     </div>
                     <div>
-                      <p className="text-[10px] font-black text-gray-400 mb-2 uppercase tracking-[0.2em]">{stat.label}</p>
-                      <p className="text-2xl font-bold leading-none mb-2 tracking-tighter whitespace-nowrap text-black">
-                        {stat.value}
-                      </p>
-                      <p className="text-[9px] text-yellow-600 font-bold uppercase tracking-widest">{stat.sub}</p>
+                      <p className="text-[11px] font-medium text-gray-400 mb-3 uppercase tracking-widest">{stat.label}</p>
+                      <p className="text-3xl font-medium text-gray-950 leading-none mb-3 tracking-tighter">{stat.value}</p>
+                      <p className="text-[10px] text-yellow-600 font-medium uppercase tracking-[0.1em]">{stat.sub}</p>
                     </div>
                   </div>
                 ))}
               </div>
               
-              <div className="flex justify-center">
-                 <a 
-                  href="https://www.instagram.com/sona_tokyolife/" 
-                  target="_blank" 
-                  className="flex items-center gap-3 bg-gradient-to-tr from-[#f9ce34] via-[#ee2a7b] to-[#6228d7] text-white px-8 py-4 font-black hover:opacity-90 transition-all uppercase tracking-widest text-sm rounded-none shadow-lg text-white"
-                 >
+              <div className="flex justify-center pt-4">
+                 <a href="https://www.instagram.com/sona_tokyolife/" target="_blank" className="flex items-center gap-3 bg-gradient-to-tr from-[#f9ce34] via-[#ee2a7b] to-[#6228d7] text-white px-10 py-4 font-medium hover:shadow-xl transition-all uppercase tracking-[0.15em] text-[13px] rounded-none shadow-lg">
                    <Instagram size={20} /> @sona_tokyolife
                  </a>
               </div>
@@ -539,29 +511,21 @@ const App = () => {
         </div>
       </section>
 
-      {/* Content Strategy Section - Images 1.5x bigger, slower speed, no grayscale */}
+      {/* Content Strategy Section */}
       <section className="bg-black text-white py-24 lg:py-40 text-center">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-white">
-          <div className="mb-12 lg:mb-20 text-white">
-            <h2 className="text-xs font-black text-yellow-400 uppercase tracking-widest mb-4 text-white">Content Strategy</h2>
-            <h3 className="text-2xl lg:text-4xl font-black italic tracking-tighter mb-4 text-white">{t.strategy.title}</h3>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="mb-12 lg:mb-20">
+            <h2 className="text-[11px] font-medium text-yellow-500 uppercase tracking-[0.3em] mb-6">Content Strategy</h2>
+            <h3 className="text-2xl md:text-4xl lg:text-5xl font-medium text-white mb-6 tracking-tight">{t.strategy.title}</h3>
+            <p className="text-gray-400 max-w-2xl mx-auto font-normal mb-16 text-base md:text-lg leading-relaxed">{t.strategy.subtitle}</p>
             
-            <p className="text-gray-400 max-w-2xl mx-auto font-medium mb-12 text-sm md:text-base leading-relaxed text-white">
-              {t.strategy.subtitle}
-            </p>
-            
-            {/* 🎥 필름 롤 효과 (이미지 배열 2회 반복으로 무한 루프 구현, 크기 1.5x: w-270px) */}
-            <div className="relative w-full overflow-hidden mb-16 py-4 bg-white/5 border-y border-white/10 text-white">
-              <div className="animate-film whitespace-nowrap text-white">
+            {/* Film Roll Effect */}
+            <div className="relative w-full overflow-hidden mb-20 py-6 bg-white/[0.03] border-y border-white/10">
+              <div className="animate-film whitespace-nowrap">
                 {[1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5, 6].map((num, i) => (
-                  <div key={i} className="inline-block px-2 sm:px-4 text-white">
-                    <div className="w-[270px] sm:w-[280px] aspect-square bg-gray-800 overflow-hidden rounded-none border border-white/10 group text-white">
-                      <img 
-                        src={`/slide0${num}.jpg`} 
-                        alt={`Slide ${num}`} 
-                        className="w-full h-full object-cover group-hover:scale-110 transition-all duration-700 text-white"
-                        onError={(e) => { e.target.src = `https://via.placeholder.com/400x400?text=Slide+0${num}`; }}
-                      />
+                  <div key={i} className="inline-block px-3">
+                    <div className="w-[270px] aspect-square bg-gray-900 overflow-hidden rounded-none border border-white/10 group shadow-2xl">
+                      <img src={`/slide0${num}.jpg`} alt={`Slide ${num}`} className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" onError={(e) => { e.target.src = `https://via.placeholder.com/400x400?text=Slide+0${num}`; }} />
                     </div>
                   </div>
                 ))}
@@ -569,109 +533,94 @@ const App = () => {
             </div>
           </div>
 
-          <div className="grid gap-8 grid-cols-1 md:grid-cols-3 text-white">
+          <div className="grid gap-8 grid-cols-1 md:grid-cols-3">
             {(t.strategy.steps || []).map((item, idx) => (
-              <div key={idx} className="relative group p-10 rounded-none border border-white/30 hover:border-yellow-400/50 bg-white/5 hover:bg-white/[0.08] transition-all duration-500 text-left text-white">
-                <span className="text-8xl font-black text-yellow-400/20 absolute -top-4 -right-2 pointer-events-none group-hover:text-yellow-400/40 transition-colors text-white">0{idx+1}</span>
-                <h3 className="text-2xl md:text-3xl font-black mb-6 flex items-center gap-4 text-yellow-400 text-white">
-                  <span className="w-3 h-3 bg-yellow-400 rounded-full shadow-[0_0_10px_rgba(250,204,21,0.5)] text-white"></span>
+              <div key={idx} className="relative group p-10 rounded-none border border-white/20 hover:border-yellow-400/50 bg-white/[0.03] hover:bg-white/[0.06] transition-all duration-500 text-left">
+                <span className="text-7xl font-medium text-yellow-400/10 absolute top-4 right-4 pointer-events-none group-hover:text-yellow-400/20 transition-colors">0{idx+1}</span>
+                <h3 className="text-xl md:text-2xl font-medium text-yellow-400 mb-6 flex items-center gap-4 uppercase tracking-tight">
+                  <span className="w-2.5 h-2.5 bg-yellow-400 rounded-full"></span>
                   {item.title}
                 </h3>
-                <p className="text-gray-400 leading-relaxed text-sm md:text-lg font-medium group-hover:text-gray-200 transition-colors text-white">
-                  {item.desc}
-                </p>
+                <p className="text-gray-400 leading-relaxed text-base md:text-lg font-normal">{item.desc}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Brand Identity Section - Caption size and Break applied */}
-      <section className="bg-gray-50 border-y border-gray-100 py-20 lg:py-48 text-black">
+      {/* Brand Identity Section */}
+      <section className="bg-gray-50 border-y border-gray-100 py-24 lg:py-48">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center">
-          <div className="mb-12">
-            <h2 className="text-sm font-black text-yellow-600 uppercase tracking-widest mb-4">Our Brand Identity</h2>
-            <p className="text-3xl lg:text-4xl font-black italic tracking-tighter max-w-4xl text-black">{t.brand.title}</p>
+          <div className="mb-16">
+            <h2 className="text-xs font-medium text-yellow-600 uppercase tracking-[0.2em] mb-6">Our Brand Identity</h2>
+            <p className="text-3xl lg:text-4xl font-medium text-gray-950 tracking-tight max-w-4xl leading-snug">{t.brand.title}</p>
           </div>
-          <div className="w-full max-w-[240px] sm:max-w-sm group transition-transform duration-500 hover:scale-105 mb-12">
-             <img 
-              src="/sonaandtokyo-logo.png" 
-              alt="SONA AND TOKYO Logo" 
-              className="w-full h-auto object-contain" 
-              style={{ mixBlendMode: 'multiply' }} 
-              onError={(e) => { e.target.src = 'https://via.placeholder.com/600x200?text=BRAND+LOGO'; }}
-             />
+          <div className="w-full max-w-[280px] sm:max-w-md group transition-transform duration-700 hover:scale-105 mb-16">
+             <img src="/sonaandtokyo-logo.png" alt="Logo" className="w-full h-auto object-contain shadow-sm" style={{ mixBlendMode: 'multiply' }} onError={(e) => { e.target.src = 'https://via.placeholder.com/600x200?text=BRAND+LOGO'; }} />
           </div>
-          <p className="text-sm text-gray-400 font-medium tracking-tight mt-4">
-            {t.brand.caption}
-          </p>
+          <p className="text-sm text-gray-400 font-normal tracking-wide mt-4 opacity-80 leading-relaxed">{t.brand.caption}</p>
         </div>
       </section>
 
-      {/* Product Lineup Section - Margins reduced by 30% */}
-      <section id="products" className="py-24 lg:py-40 text-black">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-black">
-          <div className="text-center mb-16 lg:mb-20 text-black">
-            <h2 className="text-sm font-black text-yellow-600 uppercase tracking-widest mb-4 text-black">Product Lineup</h2>
-            <p className="text-3xl lg:text-4xl font-black italic tracking-tighter text-black">{t.products.title}</p>
+      {/* Product Lineup Section - Footnote integrated specifically under Product 1 */}
+      <section id="products" className="py-24 lg:py-40">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-20 lg:mb-24">
+            <h2 className="text-xs font-medium text-yellow-600 uppercase tracking-[0.2em] mb-6">Product Lineup</h2>
+            <p className="text-3xl lg:text-4xl font-medium text-gray-950 tracking-tight leading-snug">{t.products.title}</p>
           </div>
-          <div className="grid gap-10 lg:gap-12 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 text-black">
+          <div className="grid gap-12 lg:gap-16 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
             {(t.products.items || []).map((p, idx) => (
-              <div key={idx} className="group flex flex-col hover:shadow-2xl transition-all h-full bg-white border border-gray-100 rounded-none overflow-hidden text-left relative text-black">
-                <div className="w-full aspect-[4/5] bg-gray-50 flex items-center justify-center overflow-hidden relative text-black">
-                  <img 
-                    src={[`/produc01_thum.jpg`, `/produc02_thum.jpg`, `/produc03_thum.jpg`][idx]} 
-                    alt={p.title} 
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
-                    onError={(e) => { e.target.src = 'https://via.placeholder.com/600x800?text=Product'; }}
-                  />
-                  <div className="absolute top-4 left-4 z-10 text-black"><span className={`px-4 py-1.5 text-[9px] font-black uppercase tracking-widest text-white shadow-lg ${idx === 0 ? 'bg-yellow-600' : idx === 1 ? 'bg-blue-600' : 'bg-gray-400'}`}>{p.badge}</span></div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none text-black"></div>
-                </div>
-                <div className="px-6 pt-10 pb-10 sm:px-7 flex flex-col h-full text-black">
-                  <h3 className={`${lang === 'en' ? 'text-lg tracking-tight' : 'text-2xl tracking-tight'} font-black mb-4 leading-tight uppercase min-h-[1.2em] text-black`}>{p.title}</h3>
-                  {/* Margin reduced (mb-8 -> mb-5) */}
-                  <p className="text-gray-500 text-sm mb-5 leading-relaxed flex-grow text-black">{p.desc}</p>
-                  {/* Margin reduced (mb-10 -> mb-7) */}
-                  <div className="flex flex-col gap-3 mb-7 text-black text-black">
-                    {(p.features || []).map((f, i) => (
-                      <div key={i} className="flex items-center gap-3 text-xs font-bold text-black text-black"><CheckCircle2 size={16} className={`${idx === 2 ? 'text-gray-300' : 'text-yellow-500'} shrink-0`} /><span className="tracking-tight text-black">{f}</span></div>
-                    ))}
+              <div key={idx} className="flex flex-col">
+                <div className="group flex flex-col hover:shadow-2xl transition-all h-full bg-white border border-gray-100 rounded-none overflow-hidden text-left relative">
+                  <div className="w-full aspect-[4/5] bg-gray-50 flex items-center justify-center overflow-hidden relative">
+                    <img src={[`/produc01_thum.jpg`, `/produc02_thum.jpg`, `/produc03_thum.jpg`][idx]} alt={p.title} className={`w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 ${idx === 2 ? 'grayscale opacity-60' : ''}`} onError={(e) => { e.target.src = 'https://via.placeholder.com/600x800?text=Product'; }} />
+                    <div className="absolute top-5 left-5 z-10"><span className={`px-4 py-1.5 text-[10px] font-medium uppercase tracking-[0.1em] text-white shadow-lg ${idx === 0 ? 'bg-yellow-600' : idx === 1 ? 'bg-blue-600' : 'bg-gray-400'}`}>{p.badge}</span></div>
                   </div>
-                  <div className="mt-auto text-black">
-                    <PurchaseIcons 
-                      lang={lang} 
-                      naverUrl={p.urls.naver} 
-                      amazonUrl={p.urls.amazon} 
-                      rakutenUrl={p.urls.rakuten} 
-                    />
+                  <div className="px-8 pt-10 pb-10 flex flex-col h-full">
+                    <h3 className="text-xl md:text-2xl font-medium text-gray-950 mb-6 tracking-tight uppercase min-h-[1.2em]">{p.title}</h3>
+                    <p className="text-gray-600 text-sm mb-6 leading-relaxed flex-grow font-normal">{p.desc}</p>
+                    <div className="flex flex-col gap-4 mb-10 border-t border-gray-50 pt-8">
+                      {(p.features || []).map((f, i) => (
+                        <div key={i} className="flex items-center gap-4 text-[13px] font-normal text-gray-700">
+                          <CheckCircle2 size={16} className={`${idx === 2 ? 'text-gray-300' : 'text-yellow-600'} shrink-0`} />
+                          <span>{f}</span>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="mt-auto">
+                      <PurchaseIcons lang={lang} naverUrl={p.urls.naver} amazonUrl={p.urls.amazon} rakutenUrl={p.urls.rakuten} />
+                    </div>
                   </div>
                 </div>
+                {/* 📍 별하트 계란말이 틀 아래에만 예외적으로 표시되는 각주 */}
+                {idx === 0 && (
+                  <p className="mt-3 text-[10px] md:text-xs text-gray-400 font-normal italic leading-relaxed">
+                    {t.products.footnote}
+                  </p>
+                )}
               </div>
             ))}
           </div>
-          <div className="mt-8 text-left max-w-7xl mx-auto px-2 text-gray-400 text-black"><p className="text-[10px] font-bold italic tracking-tighter text-black">{t.products.footnote}</p></div>
         </div>
       </section>
 
-      {/* Roadmap Section - Title Break applied */}
-      <section id="roadmap" className="bg-gray-50 border-t border-gray-100 py-24 lg:py-40 text-black">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-black">
-          <div className="mb-16 lg:mb-20 text-black">
-            <h2 className="text-sm font-black text-yellow-600 uppercase tracking-widest mb-4">Brand Roadmap</h2>
-            <p className="text-3xl lg:text-4xl font-black italic tracking-tighter text-black">{t.roadmapIntro.title}</p>
+      {/* Roadmap Section */}
+      <section id="roadmap" className="bg-gray-50 border-t border-gray-100 py-24 lg:py-40">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="mb-20">
+            <h2 className="text-xs font-medium text-yellow-600 uppercase tracking-[0.2em] mb-6">Brand Roadmap</h2>
+            <p className="text-3xl lg:text-4xl font-medium text-gray-950 tracking-tight leading-snug">{t.roadmapIntro.title}</p>
           </div>
-          <div className="relative text-black">
-            <div className="hidden lg:block absolute top-1/2 left-0 w-full h-px bg-gray-200 -translate-y-1/2 text-black"></div>
-            <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 text-black">
+          <div className="relative">
+            <div className="hidden lg:block absolute top-1/2 left-0 w-full h-px bg-gray-200 -translate-y-1/2"></div>
+            <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
               {(t.roadmap || []).map((item, idx) => (
-                <div key={idx} className="relative bg-white px-5 py-8 sm:px-6 rounded-none border border-gray-100 hover:shadow-xl transition-all text-left h-full flex flex-col text-black">
-                  <div className="hidden lg:block absolute -top-3 left-1/2 -translate-x-1/2 w-6 h-6 bg-yellow-400 rounded-none shadow-sm z-10 text-black"></div>
-                  <p className="text-base font-black text-yellow-600 mb-2 tracking-tighter uppercase text-black">{item.year}</p>
-                  <h4 className={`${lang === 'en' ? 'text-lg leading-tight' : 'text-lg leading-none'} font-black mb-3 tracking-tighter text-black break-words min-h-[3.5em] flex items-center text-black`}>
-                    {item.title}
-                  </h4>
-                  <p className="text-[11px] text-gray-500 font-medium leading-relaxed mt-auto text-black">{item.desc}</p>
+                <div key={idx} className="relative bg-white px-8 py-12 rounded-none border border-gray-100 hover:shadow-xl transition-all text-left flex flex-col min-h-[220px]">
+                  <div className="hidden lg:block absolute -top-3 left-1/2 -translate-x-1/2 w-6 h-6 bg-yellow-400 rounded-none z-10 shadow-sm"></div>
+                  <p className="text-lg font-medium text-yellow-600 mb-4 tracking-tighter">{item.year}</p>
+                  <h4 className="text-lg font-medium text-gray-950 mb-4 tracking-tight leading-tight flex-grow">{item.title}</h4>
+                  <p className="text-xs text-gray-500 leading-relaxed font-normal">{item.desc}</p>
                 </div>
               ))}
             </div>
@@ -680,20 +629,20 @@ const App = () => {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="bg-black text-white pt-24 pb-12 lg:pt-40 lg:pb-20 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
-          <div className="max-w-3xl mx-auto text-white">
-            <h2 className="text-4xl lg:text-5xl font-black mb-8 uppercase italic tracking-tighter text-white">CONNECT US</h2>
-            <div className="text-gray-400 mb-12 leading-relaxed text-base sm:text-xl text-white font-medium text-white">{t.contact.desc}</div>
+      <section id="contact" className="bg-black text-white pt-32 pb-32">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="max-w-3xl mx-auto">
+            <h2 className="text-4xl lg:text-6xl font-medium mb-10 uppercase italic tracking-tighter text-white">CONNECT US</h2>
+            <div className="text-gray-400 mb-16 leading-relaxed text-lg md:text-xl font-normal opacity-90">{t.contact.desc}</div>
             
-            <div className="flex justify-center text-white">
-              <div className="flex flex-col items-center gap-4 group cursor-default text-white">
-                <div className="w-16 h-16 rounded-none bg-white/10 flex items-center justify-center group-hover:bg-yellow-400 group-hover:text-black transition-all mb-4 text-white">
-                  <Mail size={32} />
+            <div className="flex justify-center">
+              <div className="flex flex-col items-center gap-6 group cursor-default">
+                <div className="w-20 h-20 bg-white/5 flex items-center justify-center group-hover:bg-yellow-400 group-hover:text-black transition-all duration-500 mb-4">
+                  <Mail size={36} strokeWidth={1.5} />
                 </div>
-                <div className="text-center text-white">
-                  <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mb-1 text-white">Email Inquiry</p>
-                  <p className="text-xl sm:text-2xl font-black drop-shadow-sm group-hover:text-yellow-400 transition-colors text-white">business@krayinc.com</p>
+                <div className="text-center">
+                  <p className="text-xs text-gray-500 font-medium uppercase tracking-[0.3em] mb-3">Email Inquiry</p>
+                  <p className="text-2xl md:text-3xl font-medium tracking-tight group-hover:text-yellow-400 transition-colors">business@krayinc.com</p>
                 </div>
               </div>
             </div>
@@ -702,17 +651,14 @@ const App = () => {
       </section>
 
       {/* Footer */}
-      <footer className="bg-black text-white py-20 text-center border-t border-white/10 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white">
-          <div className="flex flex-col items-center gap-8 text-white">
-            <div className="flex items-center gap-2 text-white">
-              <div className="p-1 text-white">
-                <img src="/kray_logo.png" alt="Kray Inc." className="h-10 md:h-14 w-auto invert brightness-100 text-white" onError={(e) => { e.target.style.display = 'none'; }} />
-              </div>
+      <footer className="bg-black py-24 text-center border-t border-white/10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col items-center gap-10">
+            <div className="p-2">
+              <img src="/kray_logo.png" alt="Kray Inc." className="h-12 md:h-16 w-auto invert brightness-100" onError={(e) => { e.target.style.display = 'none'; }} />
             </div>
-            
-            <p className="text-sm md:text-base text-gray-500 font-bold uppercase tracking-widest leading-loose text-center text-white">
-              © 2025 Kray, Inc. All rights reserved. <br className="sm:hidden text-white" /> Established 2025.07 (Japan)
+            <p className="text-sm md:text-base text-gray-600 font-normal uppercase tracking-[0.2em] leading-loose">
+              © 2025 Kray, Inc. All rights reserved. <br className="sm:hidden" /> Established 2025.07 (Japan)
             </p>
           </div>
         </div>
