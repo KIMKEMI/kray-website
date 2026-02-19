@@ -23,22 +23,39 @@ import {
   UserRound
 } from 'lucide-react';
 
-// 구매 버튼 헬퍼 컴포넌트
-const PurchaseIcons = ({ lang, disabled }) => {
+/**
+ * 구매 버튼 헬퍼 컴포넌트
+ * @param {string} lang - 현재 선택된 언어
+ * @param {number} productIndex - 제품 번호 (0: 틀, 1: 스틱, 2: 팬)
+ */
+const PurchaseIcons = ({ lang, productIndex }) => {
   const disabledClass = "flex items-center gap-2 bg-gray-100 text-gray-400 border border-gray-200 px-4 py-2 w-full justify-center rounded-none cursor-not-allowed pointer-events-none";
   
-  if (lang === 'ko') {
-    if (disabled) {
-      return (
-        <div className={disabledClass}>
-          <ShoppingCart size={16} />
-          <span className="text-[11px] font-black uppercase tracking-wider">네이버 스마트스토어</span>
-        </div>
-      );
+  // 제품별 링크 설정
+  const links = [
+    { // 0: 별하트 계란말이 틀
+      naver: "https://mkt.shopping.naver.com/link/68f668bf309bbc4b1c8000cb",
+      amazon: "https://www.amazon.co.jp/gp/product/B0CVNG3VPT/",
+      rakuten: null // 비활성화
+    },
+    { // 1: 별란스틱
+      naver: "https://mkt.shopping.naver.com/link/68f668bfdb0ddd370ee27b0a",
+      amazon: "https://www.amazon.co.jp/gp/product/B0FJLHR5D3/",
+      rakuten: null // 비활성화
+    },
+    { // 2: 트리플 팬 (출시 예정)
+      naver: null,
+      amazon: null,
+      rakuten: null
     }
+  ];
+
+  const currentLinks = links[productIndex];
+
+  if (lang === 'ko') {
+    if (!currentLinks.naver) return <div className={disabledClass}><ShoppingCart size={16} /><span className="text-[11px] font-black uppercase tracking-wider text-gray-400">네이버 스마트스토어</span></div>;
     return (
-      /* 🔗 [한국어] 아래 href="#" 부분의 #을 지우고 네이버 스마트스토어 주소를 넣으세요 */
-      <a href="#" className="flex items-center gap-2 bg-[#03C75A] text-white px-4 py-2 hover:bg-[#02b351] transition-colors w-full justify-center rounded-none">
+      <a href={currentLinks.naver} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 bg-[#03C75A] text-white px-4 py-2 hover:bg-[#02b351] transition-colors w-full justify-center rounded-none">
         <ShoppingCart size={16} />
         <span className="text-[11px] font-black uppercase tracking-wider">네이버 스마트스토어</span>
       </a>
@@ -46,44 +63,39 @@ const PurchaseIcons = ({ lang, disabled }) => {
   }
 
   if (lang === 'ja') {
-    if (disabled) {
-      return (
-        <div className="flex gap-1 w-full text-black">
-          <div className="flex-1 flex items-center gap-2 bg-gray-100 text-gray-400 border border-gray-200 px-1 py-2 justify-center rounded-none cursor-not-allowed text-black">
-            <span className="text-[10px] font-black uppercase tracking-tighter text-gray-400">AmazonJP</span>
-          </div>
-          <div className="flex-1 flex items-center gap-2 bg-gray-100 text-gray-400 border border-gray-200 px-1 py-2 justify-center rounded-none cursor-not-allowed text-black">
-            <span className="text-[10px] font-black uppercase tracking-tighter text-gray-400">楽天市場</span>
-          </div>
-        </div>
-      );
-    }
     return (
       <div className="flex gap-1 w-full text-black">
-        {/* 🔗 [일본어] 아래 href="#" 부분의 #을 지우고 아마존 재팬 주소를 넣으세요 */}
-        <a href="#" className="flex-1 flex items-center gap-2 bg-[#FF9900] text-black px-1 py-2 hover:bg-[#e68a00] transition-colors justify-center rounded-none text-black">
-          <span className="text-[10px] font-black uppercase tracking-tighter text-black">AmazonJP</span>
-        </a>
-        {/* 🔗 [일본어] 아래 href="#" 부분의 #을 지우고 라쿠텐 주소를 넣으세요 */}
-        <a href="#" className="flex-1 flex items-center gap-2 bg-[#BF0000] text-white px-1 py-2 hover:bg-[#a60000] transition-colors justify-center rounded-none text-black">
-          <span className="text-[10px] font-black uppercase tracking-tighter text-white">楽天市場</span>
-        </a>
+        {/* 아마존 JP 버튼 */}
+        {currentLinks.amazon ? (
+          <a href={currentLinks.amazon} target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center gap-2 bg-[#FF9900] text-black px-1 py-2 hover:bg-[#e68a00] transition-colors justify-center rounded-none">
+            <span className="text-[10px] font-black uppercase tracking-tighter">AmazonJP</span>
+          </a>
+        ) : (
+          <div className="flex-1 flex items-center gap-2 bg-gray-100 text-gray-400 border border-gray-200 px-1 py-2 justify-center rounded-none cursor-not-allowed">
+            <span className="text-[10px] font-black uppercase tracking-tighter">AmazonJP</span>
+          </div>
+        )}
+        
+        {/* 라쿠텐 버튼 (현재 모두 비활성화) */}
+        {currentLinks.rakuten ? (
+          <a href={currentLinks.rakuten} target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center gap-2 bg-[#BF0000] text-white px-1 py-2 hover:bg-[#a60000] transition-colors justify-center rounded-none text-white">
+            <span className="text-[10px] font-black uppercase tracking-tighter">楽天市場</span>
+          </a>
+        ) : (
+          <div className="flex-1 flex items-center gap-2 bg-gray-100 text-gray-400 border border-gray-200 px-1 py-2 justify-center rounded-none cursor-not-allowed">
+            <span className="text-[10px] font-black uppercase tracking-tighter">楽天市場</span>
+          </div>
+        )}
       </div>
     );
   }
 
   if (lang === 'en') {
-    if (disabled) {
-      return (
-        <div className={disabledClass}>
-          <span className="text-[11px] font-black uppercase tracking-wider text-gray-400">Amazon US</span>
-        </div>
-      );
-    }
+    // 영어는 아마존 JP가 아닌 미국 아마존 등을 상정하여 일단 아마존 버튼 1개만 표시 (링크 없을 시 비활성화)
+    if (!currentLinks.amazon) return <div className={disabledClass}><span className="text-[11px] font-black uppercase tracking-wider text-gray-400">Amazon US</span></div>;
     return (
-      /* 🔗 [영어] 아래 href="#" 부분의 #을 지우고 아마존 미국 주소를 넣으세요 */
-      <a href="#" className="flex items-center gap-2 bg-[#FF9900] text-black px-4 py-2 hover:bg-[#e68a00] transition-colors w-full justify-center rounded-none text-black">
-        <span className="text-[11px] font-black uppercase tracking-wider text-black">Amazon US</span>
+      <a href={currentLinks.amazon} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 bg-[#FF9900] text-black px-4 py-2 hover:bg-[#e68a00] transition-colors w-full justify-center rounded-none">
+        <span className="text-[11px] font-black uppercase tracking-wider">Amazon US</span>
       </a>
     );
   }
@@ -158,534 +170,4 @@ const App = () => {
           features: ["SONA Edition", "3구 동시 조리 시스템"]
         }
       },
-      roadmapIntro: { tag: "Brand Roadmap", title: "지속 가능한 브랜드로 성장하는 과정" },
-      roadmap: [
-        { year: "2024.02", title: "별·하트 계란말이 틀 출시", desc: "별/하트 모양 프로듀스" },
-        { year: "2024.05", title: "도시락 레시피 출간", desc: "한국어판 정식 발행" },
-        { year: "2025.07", title: "별란스틱 출시", desc: "본격적인 라인업 확장" },
-        { year: "2026.05", title: "트리플 팬 출시 예정", desc: "자사 브랜드 입지 강화" },
-      ],
-      contact: {
-        title: "CONNECT US",
-        desc: <>Kray와 함께 새로운 콘텐츠 커머스의 미래를 만들어갈 비즈니스 파트너를 기다립니다. <br className="hidden md:block" /> 협업 제안 및 문의는 아래 메일로 연락 부탁드립니다.</>
-      }
-    },
-    ja: {
-      nav: { about: '紹介', influencer: 'インフルエンサー', products: '製品', roadmap: 'ロードマップ', cta: 'お問い合わせ' },
-      hero: {
-        tag: "影響力が成果に繋がるエコシステム",
-        title: <>コンテンツで世界の<br /><span className="text-yellow-500 underline decoration-black underline-offset-8">「好み」を繋ぐ</span></>,
-        desc: "Krayは単なるインフルエンサーマーケティングを超え、実質的な販売実績とブランド資産を構築する「コンテンツコマース」企業です。日本現地のお弁当文化를 韓国的な感性で再解釈し、日韓両国に新しいライフスタイルを提案します。"
-      },
-      valuesIntro: { tag: "Executive Summary", title: "高品質なコンテンツで心を繋ぐ" },
-      values: [
-        { title: "インフルエンサー経営", desc: "料理・お弁当特化型クリエイターによる経営" },
-        { title: "圧倒的なコンテンツ拡散力", desc: "圧倒的なコンテンツ拡散力とリーチ力" },
-        { title: "マーケット適合の商品企画", desc: "市場ニーズを的確に捉えた最適な商品開発" },
-        { title: "日韓トレンドの架け橋", desc: "韓国の感性と日本製造技術の融合" },
-      ],
-      stats: [
-        { label: "フォロワー数", value: "13.3万人", sub: "Instagram Audience" },
-        { label: "リール累計再生", value: "1億超え", sub: "Short-form Impact" },
-        { label: "最多再生回数", value: "1,722万回", sub: "星のキンパ動画" },
-        { label: "投稿頻度", value: "週4〜5回", sub: "継続的な発信" },
-      ],
-      influencerIntro: { tag: "Unrivaled Reach", title: "1億再生回수가 証明する波及力" },
-      influencer: {
-        title: "圧倒的な波及力のコンテンツパワー",
-        desc: "日本在住の韓国人インフルエンサー「SONA」は、現地で経験したお弁当文化を独自の感性で再解釈し、世界中の視聴者を魅了しました。単なる動画を超え、「私にもできる」という確信を与えるチュートリアルを提供しています。"
-      },
-      strategy: {
-        title: "Content Strategy: 'Show & Teach'",
-        subtitle: "目を引くビジュアル + 直感的なチュートリアル = 自然な購買への繋がり",
-        steps: [
-          { title: "Visual (魅せる)", desc: "可愛いお弁当やセンス溢れる料理が画面を圧倒します。" },
-          { title: "Process (教える)", desc: "分かりやすい動画で、誰でも作れるという自信を与えます。" },
-          { title: "Action (買う)", desc: "自然な購買導線で、実際の購入とファン層の形成を誘導します。" },
-        ]
-      },
-      brand: { 
-        tag: "Our Brand Identity", 
-        title: "食卓と料理に楽しさ大さじ1杯を加える",
-        caption: "上記の画像は日本で商標登録された SONA and TOKYO の公式ロゴです。"
-      },
-      products: {
-        tag: "Product Lineup",
-        title: "SONAがプロデュースした自社商品ラインナップ",
-        footnote: "※弁当デコレーションカテゴリー部門",
-        p1: {
-          title: "星・ハートの卵焼き型",
-          badge: "Amazon JP 売れ筋ランキング1位! (※)",
-          desc: "型に入れるだけで誰でも可愛い形が完成します！お弁当初心者の悩みを解決する画期的なアイテムです。",
-          features: ["日・韓・中にて意匠登録済", "お客様からの高い評価"]
-        },
-        p2: {
-          title: "星の卵とき",
-          badge: "New Release",
-          desc: "軽い力でなめらかな溶き卵が作れるプレミアム調理器具です。",
-          features: ["18-8ステンレス素材", "ふわふわ卵焼きに最適化"]
-        },
-        p3: {
-          title: "トリプルパン (予定)",
-          badge: "Coming Soon",
-          desc: "3品同時に！SONAエディションの新色2種と専用ターナーがセットになって発売！",
-          features: ["SONA Edition", "3口同時調理システム"]
-        }
-      },
-      roadmapIntro: { tag: "Brand Roadmap", title: "持続可能なブランドへと成長する軌跡" },
-      roadmap: [
-        { year: "2024.02", title: "星・ハートの卵焼き型 発売", desc: "星・ハート型プロデュース" },
-        { year: "2024.05", title: "レシピ本出版", desc: "韓国にてベストセラー" },
-        { year: "2025.07", title: "星の卵とき 発売", desc: "ラインアップの拡充" },
-        { year: "2026.05", title: "トリプルパン 発売予定", desc: "自社ブランドの強化" },
-      ],
-      contact: {
-        title: "CONNECT US",
-        desc: <>Krayと共に新しいコンテンツコマースの未来を創るパートナーを募集しています。<br className="hidden md:block" /> 提携のご提案やお問い合わせは、下記のメールアドレスまでご連絡ください。</>
-      }
-    },
-    en: {
-      nav: { about: 'About', influencer: 'Influencer', products: 'Products', roadmap: 'Roadmap', cta: 'Contact Us' },
-      hero: {
-        tag: "Ecosystem Where Influence Leads to Results",
-        title: <>Connecting <br /><span className="text-yellow-500 underline decoration-black underline-offset-8">Global Tastes</span> with Content</>,
-        desc: "Kray is a 'Content Commerce' company that builds brand assets and actual sales records beyond simple influencer marketing. We propose a new lifestyle by reinterpreing Japanese bento culture with Korean sensibilities."
-      },
-      valuesIntro: { tag: "Executive Summary", title: "Connecting Hearts with Quality Content" },
-      values: [
-        { title: "Influencer-Led Business", desc: "Management led by specialists in bento content" },
-        { title: "Global Content Impact", desc: "Creative expression with unrivaled viral reach" },
-        { title: "Market Fit Planning", desc: "Product planning tailored exactly to market needs" },
-        { title: "Cross-Border Bridge", desc: "The fusion of Korean sensibilities and Japanese manufacturing technology" },
-      ],
-      stats: [
-        { label: "Followers", value: "133K", sub: "Instagram Audience" },
-        { label: "Total Reels Views", value: "100M+", sub: "Short-form Impact" },
-        { label: "Most Viewed Reel", value: "17.2M", sub: "Star Kimbap Video" },
-        { label: "Post Frequency", value: "4-5/Week", sub: "Steady Communication" },
-      ],
-      influencerIntro: { tag: "Unrivaled Reach", title: "Proving Influence with 100M Views" },
-      influencer: {
-        title: "Unrivaled Influence of Content Power",
-        desc: "SONA, a Korean influencer living in Japan, reinterpreted the local bento culture with her unique sensibility and captured global audiences. Beyond videos, she provides tutorials that give confidence: 'I can do this too'."
-      },
-      strategy: {
-        title: "Content Strategy: 'Show & Teach'",
-        subtitle: "Eye-catching Visuals + Intuitive Tutorials = Natural Connection to Purchase",
-        steps: [
-          { title: "Visual (Show)", desc: "Cute lunch boxes and sensible dishes dominate the screen." },
-          { title: "Process (Teach)", desc: "Tutorials that give everyone the confidence to replicate." },
-          { title: "Action (Buy)", desc: "Natural flow to purchase through strategic call-to-actions." },
-        ]
-      },
-      brand: { 
-        tag: "Our Brand Identity", 
-        title: "Adding a Tablespoon of Joy to Your Table and Cooking",
-        caption: "The image above is the official trademarked logo of SONA and TOKYO in Japan."
-      },
-      products: {
-        tag: "Product Lineup",
-        title: "Proprietary Product Lineup Produced by SONA",
-        footnote: "* Bento Decoration Category",
-        p1: {
-          title: "Star & Heart-shaped Egg Roll Mold",
-          badge: "Amazon JP Best Seller #1 (*)",
-          desc: "Perfect shapes just by putting eggs in the mold! Solves bento beginners' pain points.",
-          features: ["Design Registered", "Highly Rated by Users"]
-        },
-        p2: {
-          title: "Star-shaped Egg Beater Stick",
-          badge: "New Release",
-          desc: "Make smooth beaten eggs with light force. Premium tool with egg-spot removal.",
-          features: ["18-8 Stainless Steel", "Fluffy egg roll optimized"]
-        },
-        p3: {
-          title: "Triple Pan",
-          badge: "Coming Soon",
-          desc: "Three dishes at once! SONA Edition with 2 new colors and a dedicated spatula set!",
-          features: ["SONA Edition", "Simultaneous 3-dish system"]
-        }
-      },
-      roadmapIntro: { tag: "Brand Roadmap", title: "Journey of Growing into a Sustainable Brand" },
-      roadmap: [
-        { year: "2024.02", title: "Star & Heart-shaped Egg Roll Mold Launch", desc: "Star & Heart Series" },
-        { year: "2024.05", title: "Recipe Book", desc: "Published in Korea" },
-        { year: "2025.07", title: "Star-shaped Egg Beater Stick Launch", desc: "Lineup Expansion" },
-        { year: "2026.05", title: "Triple Pan Launch", desc: "Planned release" },
-      ],
-      contact: {
-        title: "CONNECT US",
-        desc: <>We look forward to business partners creating the future of content commerce with Kray. <br className="hidden md:block" /> For collaboration inquiries, please contact us via the email below.</>
-      }
-    }
-  };
-
-  const t = translations[lang] || translations.en;
-
-  useEffect(() => {
-    const browserLang = navigator.language.split('-')[0];
-    if (['ko', 'ja', 'en'].includes(browserLang)) setLang(browserLang);
-    else setLang('en');
-
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  return (
-    <div className="min-h-screen bg-white font-sans text-black overflow-x-hidden">
-      {/* 🎬 필름 롤 무한 루프 애니메이션 스타일 */}
-      <style>
-        {`
-          @keyframes infinite-scroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-          }
-          .animate-film {
-            animation: infinite-scroll 40s linear infinite;
-          }
-        `}
-      </style>
-
-      {/* Navigation - Size Increased */}
-      <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-white/90 backdrop-blur-md shadow-sm py-5' : 'bg-transparent py-8'}`}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
-          <div className="flex items-center gap-4">
-            <a href="#" className="flex items-center">
-              <img src="/kray_logo.png" alt="Kray Inc." className="h-12 md:h-16 w-auto object-contain" onError={(e) => { e.target.style.display = 'none'; }} />
-              <span className="text-2xl font-black tracking-tighter leading-none uppercase md:hidden block ml-2">Kray</span>
-            </a>
-          </div>
-          <div className="hidden md:flex items-center gap-10">
-            {(Object.keys(t.nav) || []).filter(k => k !== 'cta').map((key) => (
-              <a key={key} href={`#${key}`} className="text-base font-bold hover:text-yellow-600 transition-colors uppercase">{t.nav[key]}</a>
-            ))}
-            <div className="flex items-center bg-gray-100 p-1.5 rounded-full gap-2 ml-4 border border-gray-200 text-black text-black">
-              {['ko', 'ja', 'en'].map(l => (
-                <button key={l} onClick={() => setLang(l)} className={`px-3 py-1 rounded-full text-[10px] font-black uppercase transition-all ${lang === l ? 'bg-black text-white' : 'text-gray-400 hover:text-black'}`}>{l}</button>
-              ))}
-            </div>
-            <a href="#contact" className="bg-black text-white px-6 py-3 rounded-full text-base font-bold hover:bg-gray-800 transition-transform active:scale-95 text-center">{t.nav.cta}</a>
-          </div>
-          <button className="md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-            {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
-          </button>
-        </div>
-      </nav>
-
-      {/* Mobile Menu */}
-      {isMenuOpen && (
-        <div className="fixed inset-0 z-[100] bg-white flex flex-col items-center justify-center gap-8 text-center animate-in fade-in duration-300">
-          <button className="absolute top-5 right-4 text-black text-black text-black" onClick={() => setIsMenuOpen(false)}><X size={32} /></button>
-          {(Object.keys(t.nav) || []).filter(k => k !== 'cta').map((key) => (
-            <a key={key} href={`#${key}`} onClick={() => setIsMenuOpen(false)} className="text-3xl font-black uppercase text-black text-black text-black">{t.nav[key]}</a>
-          ))}
-          <a href="#contact" onClick={() => setIsMenuOpen(false)} className="bg-black text-white px-10 py-5 rounded-full text-xl font-bold">{t.nav.cta}</a>
-        </div>
-      )}
-
-      {/* Hero Section */}
-      <section id="about" className="relative overflow-hidden pt-48 pb-20 lg:pt-64 lg:pb-32 text-black">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-left">
-          <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
-            <div className="flex-1">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-yellow-100 text-yellow-700 text-xs font-black mb-6">
-                <Star size={14} fill="currentColor" /><span>{t.hero.tag}</span>
-              </div>
-              <h1 className="text-5xl lg:text-7xl font-black leading-tight mb-8 text-black">{t.hero.title}</h1>
-              <p className="text-gray-600 mb-10 leading-relaxed text-lg max-w-2xl">{t.hero.desc}</p>
-            </div>
-            <div className="relative w-full max-w-lg">
-              <div className="absolute -top-10 -right-10 w-48 h-48 bg-yellow-400 rounded-full opacity-20 blur-3xl animate-pulse"></div>
-              {/* 테두리 제거 완료 */}
-              <div className="relative z-10 aspect-[4/5] bg-gray-100 rounded-none overflow-hidden group">
-                <img 
-                  src="/sona_ceo.jpg" 
-                  alt="CEO SONA" 
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
-                  onError={(e) => { e.target.src = 'https://via.placeholder.com/600x800?text=CEO+SONA'; }} 
-                />
-                <div className="absolute bottom-6 left-6 bg-white/90 backdrop-blur-md px-5 py-2.5 rounded-none shadow-lg text-left">
-                  <p className="text-[9px] font-black text-gray-400 uppercase mb-0.5 text-black text-black">Creator & CEO</p>
-                  <p className="text-lg font-black text-black leading-none text-black text-black">SONA</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Executive Summary Section */}
-      <section className="bg-gray-50 py-24 lg:py-40 text-black">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-black">
-          <div className="text-center mb-16 lg:mb-20">
-            <h2 className="text-sm font-black text-yellow-600 uppercase tracking-widest mb-4">Executive Summary</h2>
-            <p className="text-3xl lg:text-4xl font-black italic tracking-tighter text-black">{t.valuesIntro.title}</p>
-          </div>
-
-          <div className="w-full max-w-5xl mx-auto mb-16 lg:mb-24 overflow-hidden rounded-none border border-gray-200 bg-white group">
-            <img 
-              src="/bento_main.jpg" 
-              alt="Bento" 
-              className="w-full h-[300px] sm:h-[450px] lg:h-[550px] object-cover transition-transform duration-1000 group-hover:scale-105"
-              onError={(e) => { e.target.src = 'https://via.placeholder.com/1200x600?text=Bento+Main'; }}
-            />
-          </div>
-
-          <div className="grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {(t.values || []).map((item, idx) => (
-              <div key={idx} className="bg-white px-4 py-10 sm:px-5 rounded-none hover:shadow-lg transition-all border border-gray-100 flex flex-col items-center text-center">
-                <div className="w-24 h-24 bg-yellow-400 rounded-none flex items-center justify-center mb-8 text-black shadow-sm shrink-0 text-black text-black">
-                  {[<UserRound size={48} strokeWidth={1.5} />, <BarChart3 size={48} strokeWidth={1.5} />, <ShoppingBag size={48} strokeWidth={1.5} />, <Globe size={48} strokeWidth={1.5} />][idx]}
-                </div>
-                <h3 className={`${lang === 'ko' ? 'text-lg' : 'text-[14px] sm:text-[15px]'} font-black mb-3 tracking-tighter whitespace-nowrap w-full uppercase`}>
-                  {item.title}
-                </h3>
-                <p className="text-gray-500 text-[11px] sm:text-xs leading-relaxed">{item.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Influencer Impact Section - Single Image, Border Removed */}
-      <section id="influencer" className="py-24 lg:py-40 text-black">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-black">
-          <div className="text-center mb-16 lg:mb-24">
-            <h2 className="text-sm font-black text-yellow-600 uppercase tracking-widest mb-4">Unrivaled Reach</h2>
-            <p className="text-3xl lg:text-5xl font-black italic tracking-tighter uppercase text-black">Proving Influence</p>
-          </div>
-          
-          <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
-            <div className="flex-1 w-full flex justify-center items-center text-black">
-              {/* 테두리 및 재생 버튼 제거 완료 */}
-              <div className="relative rounded-none overflow-hidden w-full max-w-[400px] aspect-[9/16] group">
-                <img 
-                  src="/viral_reel.jpg" 
-                  alt="Viral Reel Content" 
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
-                  onError={(e) => { e.target.src = 'https://via.placeholder.com/600x1066?text=Viral+Reel'; }} 
-                />
-              </div>
-            </div>
-
-            <div className="flex-1 w-full flex flex-col gap-12 text-black">
-              <div className="text-left border-l-4 border-yellow-400 pl-6 text-black">
-                <h2 className="text-lg lg:text-2xl font-bold mb-6 leading-tight tracking-tight text-black text-black">
-                  {t.influencer.title}
-                </h2>
-                <p className="text-gray-600 leading-relaxed text-lg max-w-xl text-black text-black">{t.influencer.desc}</p>
-              </div>
-              
-              <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 text-black">
-                {(t.stats || []).map((stat, idx) => (
-                  <div key={idx} className="bg-white p-6 sm:p-8 rounded-none border-2 border-gray-100 shadow-sm hover:shadow-xl hover:border-yellow-400 transition-all group flex flex-col gap-4 text-black text-black text-black">
-                    <div className="flex items-center justify-between text-black text-black">
-                       <div className="p-3 bg-gray-50 group-hover:bg-yellow-100 transition-colors rounded-none">
-                         {[<Users size={20} />, <Eye size={20} />, <Award size={20} />, <Calendar size={20} />][idx]}
-                       </div>
-                       <TrendingUp className="text-yellow-500 opacity-0 group-hover:opacity-100 transition-opacity" size={20} />
-                    </div>
-                    <div>
-                      <p className="text-[10px] font-black text-gray-400 mb-2 uppercase tracking-[0.2em] text-black text-black"> {stat.label}</p>
-                      <p className="text-2xl sm:text-3xl lg:text-4xl font-bold leading-none mb-2 tracking-tighter whitespace-nowrap text-black text-black text-black">
-                        {stat.value}
-                      </p>
-                      <p className="text-[9px] text-yellow-600 font-bold uppercase tracking-widest text-black text-black"> {stat.sub}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              
-              <div className="flex justify-start text-black">
-                 <a 
-                  href="https://www.instagram.com/sona_tokyolife/" 
-                  target="_blank" 
-                  className="flex items-center gap-3 bg-gradient-to-tr from-[#f9ce34] via-[#ee2a7b] to-[#6228d7] text-white px-8 py-4 font-black hover:opacity-90 transition-all uppercase tracking-widest text-sm rounded-none shadow-lg text-white text-white"
-                 >
-                   <Instagram size={20} /> @sona_tokyolife
-                 </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Content Strategy Section - Subtitle moved & Title colors updated & Images Square */}
-      <section className="bg-black text-white py-24 lg:py-40 text-center">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-white text-white">
-          <div className="mb-12 lg:mb-20 text-white text-white">
-            <h2 className="text-xs font-black text-yellow-400 uppercase tracking-widest mb-4 text-white text-white">Content Strategy</h2>
-            <h3 className="text-2xl lg:text-4xl font-black italic tracking-tighter mb-4 text-white text-white">{t.strategy.title}</h3>
-            
-            {/* 부제목 위치 이동 완료 */}
-            <p className="text-gray-400 max-w-2xl mx-auto font-medium mb-12 text-sm md:text-base leading-relaxed text-white text-white">
-              {t.strategy.subtitle}
-            </p>
-            
-            {/* 🎥 필름 롤 효과 - 정사각형(aspect-square)으로 변경 완료 */}
-            <div className="relative w-full overflow-hidden mb-16 py-4 bg-white/5 border-y border-white/10 text-white">
-              <div className="flex animate-film whitespace-nowrap text-white text-white text-white">
-                {[1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5, 6].map((num, i) => (
-                  <div key={i} className="inline-block px-2 sm:px-4 text-white">
-                    <div className="w-[180px] sm:w-[280px] aspect-square bg-gray-800 overflow-hidden rounded-none border border-white/10 group text-white">
-                      <img 
-                        src={`/slide0${num}.jpg`} 
-                        alt={`Slide ${num}`} 
-                        className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700 text-white"
-                        onError={(e) => { e.target.src = `https://via.placeholder.com/400x400?text=Slide+0${num}`; }}
-                      />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          <div className="grid gap-8 grid-cols-1 md:grid-cols-3 text-white text-white">
-            {(t.strategy.steps || []).map((item, idx) => (
-              <div key={idx} className="relative group p-10 rounded-none border border-white/30 hover:border-yellow-400/50 bg-white/5 hover:bg-white/[0.08] transition-all duration-500 text-left text-white text-white text-white">
-                <span className="text-8xl font-black text-yellow-400/20 absolute -top-4 -right-2 pointer-events-none group-hover:text-yellow-400/40 transition-colors">0{idx+1}</span>
-                {/* 카드 제목 색상 강조 완료 */}
-                <h3 className="text-2xl md:text-3xl font-black mb-6 flex items-center gap-4 text-yellow-400 text-white text-white text-white text-white">
-                  <span className="w-3 h-3 bg-yellow-400 rounded-full shadow-[0_0_10px_rgba(250,204,21,0.5)] text-white"></span>
-                  {item.title}
-                </h3>
-                <p className="text-gray-400 leading-relaxed text-sm md:text-lg font-medium group-hover:text-gray-200 transition-colors text-white text-white">
-                  {item.desc}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Brand Identity Section */}
-      <section className="bg-gray-50 border-y border-gray-100 py-20 lg:py-48 text-black">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center">
-          <div className="mb-12 text-black">
-            <h2 className="text-sm font-black text-yellow-600 uppercase tracking-widest mb-4 text-black">Our Brand Identity</h2>
-            <p className="text-3xl lg:text-4xl font-black italic tracking-tighter max-w-4xl text-black">{t.brand.title}</p>
-          </div>
-          <div className="w-full max-w-[240px] sm:max-w-sm group transition-transform duration-500 hover:scale-105 mb-6 text-black">
-             <img 
-              src="/sonaandtokyo-logo.png" 
-              alt="SONA AND TOKYO Logo" 
-              className="w-full h-auto object-contain" 
-              style={{ mixBlendMode: 'multiply' }} 
-              onError={(e) => { e.target.src = 'https://via.placeholder.com/600x200?text=BRAND+LOGO'; }}
-             />
-          </div>
-          <p className="text-xs text-gray-400 font-medium tracking-tight text-black text-black text-black">
-            {t.brand.caption}
-          </p>
-        </div>
-      </section>
-
-      {/* Product Lineup Section */}
-      <section id="products" className="py-24 lg:py-40 text-black">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-black">
-          <div className="text-center mb-16 lg:mb-20 text-black">
-            <h2 className="text-sm font-black text-yellow-600 uppercase tracking-widest mb-4 text-black">Product Lineup</h2>
-            <p className="text-3xl lg:text-4xl font-black italic tracking-tighter text-black">{t.products.title}</p>
-          </div>
-          <div className="grid gap-10 lg:gap-12 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 text-black">
-            {[t.products.p1, t.products.p2, t.products.p3].map((p, idx) => (
-              <div key={idx} className="group flex flex-col hover:shadow-2xl transition-all h-full bg-white border border-gray-100 rounded-none overflow-hidden text-left relative text-black">
-                <div className="w-full aspect-[4/5] bg-gray-50 flex items-center justify-center overflow-hidden relative text-black">
-                  <img 
-                    src={[`/produc01_thum.jpg`, `/produc02_thum.jpg`, `/produc03_thum.jpg`][idx]} 
-                    alt={p.title} 
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 text-black" 
-                    onError={(e) => { e.target.src = 'https://via.placeholder.com/600x800?text=Product'; }}
-                  />
-                  <div className="absolute top-4 left-4 z-10 text-black"><span className={`px-4 py-1.5 text-[9px] font-black uppercase tracking-widest text-white shadow-lg ${idx === 0 ? 'bg-yellow-600' : idx === 1 ? 'bg-blue-600' : 'bg-gray-400'}`}>{p.badge}</span></div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none text-black"></div>
-                </div>
-                <div className="px-6 pt-10 pb-10 sm:px-7 flex flex-col h-full text-black">
-                  <h3 className={`${lang === 'en' ? 'text-lg tracking-tight' : 'text-2xl tracking-tight'} font-black mb-4 leading-tight uppercase min-h-[1.2em] text-black text-black`}>{p.title}</h3>
-                  <p className="text-gray-500 text-sm mb-8 leading-relaxed flex-grow text-black text-black">{p.desc}</p>
-                  <div className="flex flex-col gap-3 mb-10 text-black">
-                    {(p.features || []).map((f, i) => (
-                      <div key={i} className="flex items-center gap-3 text-xs font-bold text-black text-black text-black"><CheckCircle2 size={16} className={`${idx === 2 ? 'text-gray-300' : 'text-yellow-500'} shrink-0 text-black text-black`} /><span className="tracking-tight text-black text-black text-black">{f}</span></div>
-                    ))}
-                  </div>
-                  <div className="mt-auto text-black text-black text-black"><PurchaseIcons lang={lang} disabled={idx === 2} /></div>
-                </div>
-              </div>
-            ))}
-          </div>
-          <div className="mt-8 text-left max-w-7xl mx-auto px-2 text-gray-400 text-black"><p className="text-[10px] font-bold italic tracking-tighter text-black">{t.products.footnote}</p></div>
-        </div>
-      </section>
-
-      {/* Roadmap Section */}
-      <section id="roadmap" className="bg-gray-50 border-t border-gray-100 py-24 lg:py-40 text-black">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-black">
-          <div className="mb-16 lg:mb-20 text-black">
-            <h2 className="text-sm font-black text-yellow-600 uppercase tracking-widest mb-4 text-black text-black">Brand Roadmap</h2>
-            <p className="text-3xl lg:text-4xl font-black italic tracking-tighter text-black">{t.roadmapIntro.title}</p>
-          </div>
-          <div className="relative text-black text-black">
-            <div className="hidden lg:block absolute top-1/2 left-0 w-full h-px bg-gray-200 -translate-y-1/2 text-black text-black"></div>
-            <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 text-black">
-              {(t.roadmap || []).map((item, idx) => (
-                <div key={idx} className="relative bg-white px-5 py-8 sm:px-6 rounded-none border border-gray-100 hover:shadow-xl transition-all text-left h-full flex flex-col text-black text-black text-black text-black">
-                  <div className="hidden lg:block absolute -top-3 left-1/2 -translate-x-1/2 w-6 h-6 bg-yellow-400 rounded-none shadow-sm z-10 text-black text-black text-black"></div>
-                  <p className="text-base font-black text-yellow-600 mb-2 tracking-tighter uppercase text-black text-black text-black text-black text-black">{item.year}</p>
-                  <h4 className={`${lang === 'en' ? 'text-lg leading-tight' : 'text-lg leading-none'} font-black mb-3 tracking-tighter text-black break-words min-h-[3.5em] flex items-center text-black text-black text-black`}>
-                    {item.title}
-                  </h4>
-                  <p className="text-[11px] text-gray-500 font-medium leading-relaxed mt-auto text-black text-black text-black">{item.desc}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Contact Section */}
-      <section id="contact" className="bg-black text-white pt-24 pb-12 lg:pt-40 lg:pb-20 text-white text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white text-white">
-          <div className="max-w-3xl mx-auto text-white text-white">
-            <h2 className="text-4xl lg:text-5xl font-black mb-8 uppercase italic tracking-tighter text-white text-white">CONNECT US</h2>
-            <div className="text-gray-400 mb-12 leading-relaxed text-base sm:text-xl text-white font-medium text-white text-white">{t.contact.desc}</div>
-            
-            <div className="flex justify-center text-white text-white text-white text-white text-white text-white">
-              <div className="flex flex-col items-center gap-4 group cursor-default text-white text-white">
-                <div className="w-16 h-16 rounded-none bg-white/10 flex items-center justify-center group-hover:bg-yellow-400 group-hover:text-black transition-all mb-4 text-white text-white text-white text-white text-white text-white">
-                  <Mail size={32} />
-                </div>
-                <div className="text-center text-white text-white text-white text-white text-white text-white text-white text-white">
-                  <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mb-1 text-white text-white text-white text-white text-white text-white text-white text-white">Email Inquiry</p>
-                  <p className="text-xl sm:text-2xl font-black drop-shadow-sm group-hover:text-yellow-400 transition-colors text-white text-white text-white text-white text-white text-white text-white text-white text-white">business@krayinc.com</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="bg-black text-white py-20 text-center border-t border-white/10 text-white text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white text-white text-white text-white text-white text-white text-white text-white text-white">
-          <div className="flex flex-col items-center gap-8 text-white text-white text-white text-white text-white text-white text-white text-white">
-            <div className="flex items-center gap-2 text-white text-white text-white text-white text-white text-white">
-              <div className="p-1 text-white text-white text-white text-white text-white text-white">
-                <img src="/kray_logo.png" alt="Kray Inc." className="h-10 md:h-14 w-auto invert brightness-100 text-white text-white text-white text-white text-white text-white text-white" onError={(e) => { e.target.style.display = 'none'; }} />
-              </div>
-            </div>
-            
-            <p className="text-sm md:text-base text-gray-500 font-bold uppercase tracking-widest leading-loose text-center text-white text-white text-white text-white text-white text-white text-white text-white text-white">
-              © 2025 Kray, Inc. All rights reserved. <br className="sm:hidden text-white text-white text-white text-white text-white text-white text-white text-white" /> Established 2025.07 (Japan)
-            </p>
-          </div>
-        </div>
-      </footer>
-    </div>
-  );
-};
-
-export default App;
+      roadmapIntro: { tag: "Brand Roadmap", title: "지속 가능한
