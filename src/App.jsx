@@ -17,9 +17,7 @@ import {
   Eye,
   Calendar,
   Award,
-  UserRound,
-  Monitor,
-  Smartphone
+  UserRound
 } from 'lucide-react';
 
 /**
@@ -52,7 +50,7 @@ const PurchaseIcons = ({ lang, naverUrl, amazonUrl, rakutenUrl }) => {
           </a>
         ) : (
           <div className="flex-1 flex items-center gap-2 bg-gray-100 text-gray-400 border border-gray-200 px-1 py-2 justify-center rounded-none cursor-not-allowed">
-            <span className="text-[10px] font-black uppercase tracking-tighter">AmazonJP</span>
+            <span className="text-[10px] font-black uppercase tracking-tighter text-gray-400">AmazonJP</span>
           </div>
         )}
         
@@ -62,7 +60,7 @@ const PurchaseIcons = ({ lang, naverUrl, amazonUrl, rakutenUrl }) => {
           </a>
         ) : (
           <div className="flex-1 flex items-center gap-2 bg-gray-100 text-gray-400 border border-gray-200 px-1 py-2 justify-center rounded-none cursor-not-allowed">
-            <span className="text-[10px] font-black uppercase tracking-tighter">楽天市場</span>
+            <span className="text-[10px] font-black uppercase tracking-tighter text-gray-400">楽天市場</span>
           </div>
         )}
       </div>
@@ -76,7 +74,7 @@ const PurchaseIcons = ({ lang, naverUrl, amazonUrl, rakutenUrl }) => {
       </a>
     ) : (
       <div className={disabledClass}>
-        <span className="text-[11px] font-black uppercase tracking-wider">Amazon US</span>
+        <span className="text-[11px] font-black uppercase tracking-wider text-gray-400">Amazon US</span>
       </div>
     );
   }
@@ -125,12 +123,12 @@ const App = () => {
       },
       brand: { 
         tag: "Our Brand Identity", 
-        title: "식탁과 요리에 즐거움 1큰술 더하기",
+        title: <>식탁과 요리에 <br /> 즐거움 1큰술 더하기</>,
         caption: "위 이미지는 일본에서 상표 등록된 소나앤도쿄의 정식 로고 입니다."
       },
       products: {
         tag: "Product Lineup",
-        title: "SONA 가 프로듀스한 자사 상품 라인업",
+        title: <>SONA 가 프로듀스한 <br /> 자사 상품 라인업</>,
         footnote: "※ 도시락 데코레이션 카테고리 부문",
         items: [
           {
@@ -164,7 +162,7 @@ const App = () => {
           }
         ]
       },
-      roadmapIntro: { tag: "Brand Roadmap", title: "지속 가능한 브랜드로 성장하는 과정" },
+      roadmapIntro: { tag: "Brand Roadmap", title: <>지속 가능한 브랜드로 <br /> 성장하는 과정</> },
       roadmap: [
         { year: "2024.02", title: "별·하트 계란말이 틀 출시", desc: "별/하트 모양 프로듀스" },
         { year: "2024.05", title: "도시락 레시피 출간", desc: "한국어판 정식 발행" },
@@ -180,8 +178,8 @@ const App = () => {
       nav: { about: '紹介', influencer: 'インフルエンサー', products: '製品', roadmap: 'ロードマップ', cta: 'お問い合わせ' },
       hero: {
         tag: "影響力が成果に繋がるエコシステム",
-        title: <>コンテンツで世界の<br /><span className="text-yellow-500 underline decoration-black underline-offset-8">「好み」を繋ぐ</span></>,
-        desc: "Krayは単なるインフルエンサーマーケ팅を超え、実質的な販売実績とブランド資産を構築する「コンテンツコマース」企業です。日本現地のお弁当文化を韓国的な感性で再解釈し、日韓両国に新しいライフスタイルを提案します。"
+        title: <>コンテンツで世界の「好み」を繋ぐ</>,
+        desc: "Krayは単なるインフルエンサーマーケティングを越え、実質的な販売実績とブランド資産を構築する「コンテンツコマース」企業です。日本現地のお弁当文化を韓国的な感性で再解釈し、日韓両国に新しいライフスタイルを提案します。"
       },
       valuesIntro: { tag: "Executive Summary", title: "高品質なコンテンツで心を繋ぐ" },
       values: [
@@ -199,31 +197,31 @@ const App = () => {
       influencerIntro: { tag: "Unrivaled Reach", title: "1億再生回数が証明する波及力" },
       influencer: {
         title: "圧倒的な波及力のコンテンツパワー",
-        desc: "日本在住の韓国人インフルエンサー「SONA」は、現地で経験한 お弁当文化を独自の感性で再解釈し、世界中の視聴者を魅了しました。単なる動画を超え、「私にもできる」という確信を与えるチュートリアルを提供しています。"
+        desc: "日本在住の韓国人インフルエンサー「SONA」は、現地で経験したお弁当文化を独自の感性で再解釈し、世界中の視聴者を魅了しました。単なる動画を超え、「私にもできる」という確信を与えるチュートリアルを提供しています。"
       },
       strategy: {
         title: "Content Strategy: 'Show & Teach'",
         subtitle: "目を引くビジュアル + 直感的なチュートリアル = 自然な購買への繋がり",
         steps: [
-          { title: "Visual (魅せる)", desc: "可愛いお弁当やセンス溢れる料理が画面を圧倒します。" },
-          { title: "Process (教える)", desc: "分かりやすい動画で、誰でも作れるという自信を与えます。" },
-          { title: "Action (買う)", desc: "自然な購買導線で、実際の購入とファン層の形成を誘導します。" },
+          { title: "Visual (魅せる)", desc: "可愛いお弁当やセンス溢れる料理가 화면을 압도합니다." },
+          { title: "Process (教える)", desc: "分かりやすい動画で、誰でも作れる라는 확신을 줍니다." },
+          { title: "Action (買う)", desc: "自然な購買導線で、実際の購入과 팬덤 형성으로 이끌어냅니다." },
         ]
       },
       brand: { 
         tag: "Our Brand Identity", 
-        title: "食卓と料理に楽しさ大さじ1杯を加える",
+        title: <>食卓と料理に<br />楽しさ大さじ1杯を加える</>,
         caption: "上記の画像は日本で商標登録された SONA and TOKYO の公式ロゴです。"
       },
       products: {
         tag: "Product Lineup",
-        title: "SONAがプロデュースした自社商品ラインナップ",
+        title: <>SONAがプロデュースした<br />自社商品ラインナップ</>,
         footnote: "※弁当デコレーションカテゴリー部門",
         items: [
           {
             title: "星・ハートの卵焼き型",
             badge: "Amazon JP 売れ筋ランキング1位! (※)",
-            desc: "型に入れるだけで誰でも可愛い形が完成します！お弁当初心者の悩みを解決する画期적인 アイテムです。",
+            desc: "型に入れるだけで誰でも可愛い形가 완성합니다! お弁当初心者の悩みを解決する 획기적인 아이템입니다.",
             features: ["日・韓・中にて意匠登録済", "お客様からの高い評価"],
             urls: {
               naver: "https://mkt.shopping.naver.com/link/68f668bf309bbc4b1c8000cb",
@@ -234,7 +232,7 @@ const App = () => {
           {
             title: "星の卵とき",
             badge: "New Release",
-            desc: "軽い力でなめらかな溶き卵が作れるプレミアム調理器具です。",
+            desc: "軽い力でなめらかな溶き卵が作れるプレミアム調理器具です.",
             features: ["18-8ステンレス素材", "ふわふわ卵焼きに最適化"],
             urls: {
               naver: "https://mkt.shopping.naver.com/link/68f668bfdb0ddd370ee27b0a",
@@ -245,15 +243,15 @@ const App = () => {
           {
             title: "トリプルパン (予定)",
             badge: "Coming Soon",
-            desc: "3品同時に！SONAエディションの新色2種と専用ターナーがセットになって発売！",
+            desc: "3品同時に！SONAエディションの新色2種と専用터너가 세트로 발매!",
             features: ["SONA Edition", "3口同時調理システム"],
             urls: { naver: null, amazon: null, rakuten: null }
           }
         ]
       },
-      roadmapIntro: { tag: "Brand Roadmap", title: "持続可能なブランドへと成長する軌跡" },
+      roadmapIntro: { tag: "Brand Roadmap", title: <>持続可能なブランドへと<br />成長する軌跡</> },
       roadmap: [
-        { year: "2024.02", title: "星・ハートの卵焼き型 発売", desc: "星・ハート型プロ듀스" },
+        { year: "2024.02", title: "星・ハートの卵焼き型 発売", desc: "星・ハート型プロデュース" },
         { year: "2024.05", title: "レシピ本出版", desc: "韓国にてベストセラー" },
         { year: "2025.07", title: "星の卵とき 発売", desc: "ラインアップの拡充" },
         { year: "2026.05", title: "トリプルパン 発売予定", desc: "自社ブランドの強化" },
@@ -299,12 +297,12 @@ const App = () => {
       },
       brand: { 
         tag: "Our Brand Identity", 
-        title: "Adding a Tablespoon of Joy to Your Table and Cooking",
+        title: <>Adding a Tablespoon <br /> of Joy to Your Table</>,
         caption: "The image above is the official trademarked logo of SONA and TOKYO in Japan."
       },
       products: {
         tag: "Product Lineup",
-        title: "Proprietary Product Lineup Produced by SONA",
+        title: <>Proprietary Lineup <br /> Produced by SONA</>,
         footnote: "* Bento Decoration Category",
         items: [
           {
@@ -338,7 +336,7 @@ const App = () => {
           }
         ]
       },
-      roadmapIntro: { tag: "Brand Roadmap", title: "Journey of Growing into a Sustainable Brand" },
+      roadmapIntro: { tag: "Brand Roadmap", title: <>Journey of Growing into <br /> a Sustainable Brand</> },
       roadmap: [
         { year: "2024.02", title: "Star & Heart Egg Roll Mold Launch", desc: "Star & Heart Series" },
         { year: "2024.05", title: "Recipe Book", desc: "Published in Korea" },
@@ -356,7 +354,7 @@ const App = () => {
 
   useEffect(() => {
     const browserLang = navigator.language.split('-')[0];
-    if (['ko', 'ja', 'en'].includes(browserLang)) setLang(browserLang);
+    if (['ko', 'ja'].includes(browserLang)) setLang(browserLang);
     else setLang('en');
 
     const handleScroll = () => {
@@ -368,7 +366,7 @@ const App = () => {
 
   return (
     <div className="min-h-screen bg-white font-sans text-black overflow-x-hidden">
-      {/* 🎬 필름 롤 무한 루프 애니메이션 스타일 수정 (끊김 방지) */}
+      {/* 🎬 필름 롤 무한 루프 애니메이션 스타일 수정 (속도 10% 감소: 20s -> 22s) */}
       <style>
         {`
           @keyframes infinite-scroll {
@@ -376,20 +374,19 @@ const App = () => {
             100% { transform: translateX(-50%); }
           }
           .animate-film {
-            animation: infinite-scroll 20s linear infinite;
+            animation: infinite-scroll 22s linear infinite;
             display: flex;
             width: fit-content;
           }
         `}
       </style>
 
-      {/* Navigation */}
+      {/* Navigation - Size Increased, Mobile Text Logo Removed */}
       <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-white/90 backdrop-blur-md shadow-sm py-5' : 'bg-transparent py-8'}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
           <div className="flex items-center gap-4 text-black">
             <a href="#" className="flex items-center">
               <img src="/kray_logo.png" alt="Kray Inc." className="h-12 md:h-16 w-auto object-contain" onError={(e) => { e.target.style.display = 'none'; }} />
-              <span className="text-2xl font-black tracking-tighter leading-none uppercase md:hidden block ml-2">Kray</span>
             </a>
           </div>
           <div className="hidden md:flex items-center gap-10">
@@ -420,16 +417,16 @@ const App = () => {
         </div>
       )}
 
-      {/* Hero Section */}
+      {/* Hero Section - Mobile Gap Reduced */}
       <section id="about" className="relative overflow-hidden pt-48 pb-20 lg:pt-64 lg:pb-32 text-black">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-left">
-          <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
+          <div className="flex flex-col lg:flex-row items-center gap-6 lg:gap-16">
             <div className="flex-1">
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-yellow-100 text-yellow-700 text-xs font-black mb-6">
                 <Star size={14} fill="currentColor" /><span>{t.hero.tag}</span>
               </div>
               <h1 className="text-5xl lg:text-7xl font-black leading-tight mb-8 text-black">{t.hero.title}</h1>
-              <p className="text-gray-600 mb-10 leading-relaxed text-lg max-w-2xl">{t.hero.desc}</p>
+              <p className="text-gray-600 mb-10 leading-relaxed text-lg max-w-2xl text-black">{t.hero.desc}</p>
             </div>
             <div className="relative w-full max-w-lg">
               <div className="absolute -top-10 -right-10 w-48 h-48 bg-yellow-400 rounded-full opacity-20 blur-3xl animate-pulse"></div>
@@ -442,7 +439,7 @@ const App = () => {
                 />
                 <div className="absolute bottom-6 left-6 bg-white/90 backdrop-blur-md px-5 py-2.5 rounded-none shadow-lg text-left">
                   <p className="text-[9px] font-black text-gray-400 uppercase mb-0.5">Creator & CEO</p>
-                  <p className="text-lg font-black leading-none">SONA</p>
+                  <p className="text-lg font-black leading-none text-black">SONA</p>
                 </div>
               </div>
             </div>
@@ -467,13 +464,13 @@ const App = () => {
             />
           </div>
 
-          <div className="grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4 text-black">
             {(t.values || []).map((item, idx) => (
               <div key={idx} className="bg-white px-4 py-10 sm:px-5 rounded-none hover:shadow-lg transition-all border border-gray-100 flex flex-col items-center text-center">
-                <div className="w-24 h-24 bg-yellow-400 rounded-none flex items-center justify-center mb-8 text-black shadow-sm shrink-0">
+                <div className="w-24 h-24 bg-yellow-400 rounded-none flex items-center justify-center mb-8 text-black shadow-sm shrink-0 text-black">
                   {[<UserRound size={48} strokeWidth={1.5} />, <BarChart3 size={48} strokeWidth={1.5} />, <ShoppingBag size={48} strokeWidth={1.5} />, <Globe size={48} strokeWidth={1.5} />][idx]}
                 </div>
-                <h3 className={`${lang === 'ko' ? 'text-lg' : 'text-[14px] sm:text-[15px]'} font-black mb-3 tracking-tighter whitespace-nowrap w-full uppercase`}>
+                <h3 className={`${lang === 'ko' ? 'text-lg' : 'text-[14px] sm:text-[15px]'} font-black mb-3 tracking-tighter whitespace-nowrap w-full uppercase text-black`}>
                   {item.title}
                 </h3>
                 <p className="text-gray-500 text-[11px] sm:text-xs leading-relaxed">{item.desc}</p>
@@ -483,7 +480,7 @@ const App = () => {
         </div>
       </section>
 
-      {/* Influencer Impact Section */}
+      {/* Influencer Impact Section - Card Alignment and Center Button */}
       <section id="influencer" className="py-24 lg:py-40 text-black">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-black">
           <div className="text-center mb-16 lg:mb-24 text-black">
@@ -505,33 +502,30 @@ const App = () => {
 
             <div className="flex-1 w-full flex flex-col gap-12 text-black">
               <div className="text-left border-l-4 border-yellow-400 pl-6 text-black">
-                <h2 className="text-lg lg:text-2xl font-bold mb-6 leading-tight tracking-tight text-black text-black">
+                <h2 className="text-lg lg:text-2xl font-bold mb-6 leading-tight tracking-tight text-black">
                   {t.influencer.title}
                 </h2>
-                <p className="text-gray-600 leading-relaxed text-lg max-w-xl text-black text-black">{t.influencer.desc}</p>
+                <p className="text-gray-600 leading-relaxed text-lg max-w-xl text-black">{t.influencer.desc}</p>
               </div>
               
               <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 text-black">
                 {(t.stats || []).map((stat, idx) => (
-                  <div key={idx} className="bg-white p-6 sm:p-8 rounded-none border-2 border-gray-100 shadow-sm hover:shadow-xl hover:border-yellow-400 transition-all group flex flex-col gap-4 text-black">
-                    <div className="flex items-center justify-between text-black">
-                       <div className="p-3 bg-gray-50 group-hover:bg-yellow-100 transition-colors rounded-none">
-                         {[<Users size={20} />, <Eye size={20} />, <Award size={20} />, <Calendar size={20} />][idx]}
-                       </div>
-                       <TrendingUp className="text-yellow-500 opacity-0 group-hover:opacity-100 transition-opacity" size={20} />
+                  <div key={idx} className="bg-white p-8 rounded-none border border-gray-100 shadow-sm hover:shadow-lg transition-all flex flex-col items-center text-center text-black">
+                    <div className="w-16 h-16 bg-gray-50 flex items-center justify-center mb-6 text-black">
+                       {[<Users size={24} />, <Eye size={24} />, <Award size={24} />, <Calendar size={24} />][idx]}
                     </div>
                     <div>
-                      <p className="text-[10px] font-black text-gray-400 mb-2 uppercase tracking-[0.2em] text-black text-black"> {stat.label}</p>
-                      <p className="text-2xl sm:text-3xl lg:text-4xl font-bold leading-none mb-2 tracking-tighter whitespace-nowrap text-black text-black text-black">
+                      <p className="text-[10px] font-black text-gray-400 mb-2 uppercase tracking-[0.2em]">{stat.label}</p>
+                      <p className="text-2xl font-bold leading-none mb-2 tracking-tighter whitespace-nowrap text-black">
                         {stat.value}
                       </p>
-                      <p className="text-[9px] text-yellow-600 font-bold uppercase tracking-widest text-black text-black"> {stat.sub}</p>
+                      <p className="text-[9px] text-yellow-600 font-bold uppercase tracking-widest">{stat.sub}</p>
                     </div>
                   </div>
                 ))}
               </div>
               
-              <div className="flex justify-start text-black">
+              <div className="flex justify-center">
                  <a 
                   href="https://www.instagram.com/sona_tokyolife/" 
                   target="_blank" 
@@ -545,7 +539,7 @@ const App = () => {
         </div>
       </section>
 
-      {/* Content Strategy Section - Subtitle moved & Title colors updated & Images Square */}
+      {/* Content Strategy Section - Images 1.5x bigger, slower speed, no grayscale */}
       <section className="bg-black text-white py-24 lg:py-40 text-center">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-white">
           <div className="mb-12 lg:mb-20 text-white">
@@ -556,16 +550,16 @@ const App = () => {
               {t.strategy.subtitle}
             </p>
             
-            {/* 🎥 필름 롤 효과 (이미지 배열 2회 반복으로 무한 루프 구현) */}
+            {/* 🎥 필름 롤 효과 (이미지 배열 2회 반복으로 무한 루프 구현, 크기 1.5x: w-270px) */}
             <div className="relative w-full overflow-hidden mb-16 py-4 bg-white/5 border-y border-white/10 text-white">
-              <div className="animate-film whitespace-nowrap">
+              <div className="animate-film whitespace-nowrap text-white">
                 {[1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5, 6].map((num, i) => (
                   <div key={i} className="inline-block px-2 sm:px-4 text-white">
-                    <div className="w-[180px] sm:w-[280px] aspect-square bg-gray-800 overflow-hidden rounded-none border border-white/10 group text-white">
+                    <div className="w-[270px] sm:w-[280px] aspect-square bg-gray-800 overflow-hidden rounded-none border border-white/10 group text-white">
                       <img 
                         src={`/slide0${num}.jpg`} 
                         alt={`Slide ${num}`} 
-                        className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700 text-white"
+                        className="w-full h-full object-cover group-hover:scale-110 transition-all duration-700 text-white"
                         onError={(e) => { e.target.src = `https://via.placeholder.com/400x400?text=Slide+0${num}`; }}
                       />
                     </div>
@@ -578,9 +572,9 @@ const App = () => {
           <div className="grid gap-8 grid-cols-1 md:grid-cols-3 text-white">
             {(t.strategy.steps || []).map((item, idx) => (
               <div key={idx} className="relative group p-10 rounded-none border border-white/30 hover:border-yellow-400/50 bg-white/5 hover:bg-white/[0.08] transition-all duration-500 text-left text-white">
-                <span className="text-8xl font-black text-yellow-400/20 absolute -top-4 -right-2 pointer-events-none group-hover:text-yellow-400/40 transition-colors">0{idx+1}</span>
+                <span className="text-8xl font-black text-yellow-400/20 absolute -top-4 -right-2 pointer-events-none group-hover:text-yellow-400/40 transition-colors text-white">0{idx+1}</span>
                 <h3 className="text-2xl md:text-3xl font-black mb-6 flex items-center gap-4 text-yellow-400 text-white">
-                  <span className="w-3 h-3 bg-yellow-400 rounded-full shadow-[0_0_10px_rgba(250,204,21,0.5)]"></span>
+                  <span className="w-3 h-3 bg-yellow-400 rounded-full shadow-[0_0_10px_rgba(250,204,21,0.5)] text-white"></span>
                   {item.title}
                 </h3>
                 <p className="text-gray-400 leading-relaxed text-sm md:text-lg font-medium group-hover:text-gray-200 transition-colors text-white">
@@ -592,15 +586,14 @@ const App = () => {
         </div>
       </section>
 
-      {/* Brand Identity Section */}
+      {/* Brand Identity Section - Caption size and Break applied */}
       <section className="bg-gray-50 border-y border-gray-100 py-20 lg:py-48 text-black">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center text-black">
-          <div className="mb-12 text-black">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center">
+          <div className="mb-12">
             <h2 className="text-sm font-black text-yellow-600 uppercase tracking-widest mb-4">Our Brand Identity</h2>
             <p className="text-3xl lg:text-4xl font-black italic tracking-tighter max-w-4xl text-black">{t.brand.title}</p>
           </div>
-          <div className="w-full max-w-[240px] sm:max-w-sm group transition-transform duration-500 hover:scale-105 mb-12 text-black">
-             {/* 간격 확대 mt-12 적용됨 */}
+          <div className="w-full max-w-[240px] sm:max-w-sm group transition-transform duration-500 hover:scale-105 mb-12">
              <img 
               src="/sonaandtokyo-logo.png" 
               alt="SONA AND TOKYO Logo" 
@@ -609,17 +602,17 @@ const App = () => {
               onError={(e) => { e.target.src = 'https://via.placeholder.com/600x200?text=BRAND+LOGO'; }}
              />
           </div>
-          <p className="text-xs text-gray-400 font-medium tracking-tight mt-4 text-black">
+          <p className="text-sm text-gray-400 font-medium tracking-tight mt-4">
             {t.brand.caption}
           </p>
         </div>
       </section>
 
-      {/* Product Lineup Section - Store URLs applied */}
+      {/* Product Lineup Section - Margins reduced by 30% */}
       <section id="products" className="py-24 lg:py-40 text-black">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-black">
           <div className="text-center mb-16 lg:mb-20 text-black">
-            <h2 className="text-sm font-black text-yellow-600 uppercase tracking-widest mb-4">Product Lineup</h2>
+            <h2 className="text-sm font-black text-yellow-600 uppercase tracking-widest mb-4 text-black">Product Lineup</h2>
             <p className="text-3xl lg:text-4xl font-black italic tracking-tighter text-black">{t.products.title}</p>
           </div>
           <div className="grid gap-10 lg:gap-12 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 text-black">
@@ -636,14 +629,16 @@ const App = () => {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none text-black"></div>
                 </div>
                 <div className="px-6 pt-10 pb-10 sm:px-7 flex flex-col h-full text-black">
-                  <h3 className={`${lang === 'en' ? 'text-lg tracking-tight' : 'text-2xl tracking-tight'} font-black mb-4 leading-tight uppercase min-h-[1.2em]`}>{p.title}</h3>
-                  <p className="text-gray-500 text-sm mb-8 leading-relaxed flex-grow">{p.desc}</p>
-                  <div className="flex flex-col gap-3 mb-10 text-black">
+                  <h3 className={`${lang === 'en' ? 'text-lg tracking-tight' : 'text-2xl tracking-tight'} font-black mb-4 leading-tight uppercase min-h-[1.2em] text-black`}>{p.title}</h3>
+                  {/* Margin reduced (mb-8 -> mb-5) */}
+                  <p className="text-gray-500 text-sm mb-5 leading-relaxed flex-grow text-black">{p.desc}</p>
+                  {/* Margin reduced (mb-10 -> mb-7) */}
+                  <div className="flex flex-col gap-3 mb-7 text-black text-black">
                     {(p.features || []).map((f, i) => (
-                      <div key={i} className="flex items-center gap-3 text-xs font-bold text-black"><CheckCircle2 size={16} className={`${idx === 2 ? 'text-gray-300' : 'text-yellow-500'} shrink-0`} /><span className="tracking-tight text-black">{f}</span></div>
+                      <div key={i} className="flex items-center gap-3 text-xs font-bold text-black text-black"><CheckCircle2 size={16} className={`${idx === 2 ? 'text-gray-300' : 'text-yellow-500'} shrink-0`} /><span className="tracking-tight text-black">{f}</span></div>
                     ))}
                   </div>
-                  <div className="mt-auto">
+                  <div className="mt-auto text-black">
                     <PurchaseIcons 
                       lang={lang} 
                       naverUrl={p.urls.naver} 
@@ -655,11 +650,11 @@ const App = () => {
               </div>
             ))}
           </div>
-          <div className="mt-8 text-left max-w-7xl mx-auto px-2 text-gray-400 text-black"><p className="text-[10px] font-bold italic tracking-tighter">{t.products.footnote}</p></div>
+          <div className="mt-8 text-left max-w-7xl mx-auto px-2 text-gray-400 text-black"><p className="text-[10px] font-bold italic tracking-tighter text-black">{t.products.footnote}</p></div>
         </div>
       </section>
 
-      {/* Roadmap Section */}
+      {/* Roadmap Section - Title Break applied */}
       <section id="roadmap" className="bg-gray-50 border-t border-gray-100 py-24 lg:py-40 text-black">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-black">
           <div className="mb-16 lg:mb-20 text-black">
@@ -667,13 +662,13 @@ const App = () => {
             <p className="text-3xl lg:text-4xl font-black italic tracking-tighter text-black">{t.roadmapIntro.title}</p>
           </div>
           <div className="relative text-black">
-            <div className="hidden lg:block absolute top-1/2 left-0 w-full h-px bg-gray-200 -translate-y-1/2"></div>
+            <div className="hidden lg:block absolute top-1/2 left-0 w-full h-px bg-gray-200 -translate-y-1/2 text-black"></div>
             <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 text-black">
               {(t.roadmap || []).map((item, idx) => (
                 <div key={idx} className="relative bg-white px-5 py-8 sm:px-6 rounded-none border border-gray-100 hover:shadow-xl transition-all text-left h-full flex flex-col text-black">
-                  <div className="hidden lg:block absolute -top-3 left-1/2 -translate-x-1/2 w-6 h-6 bg-yellow-400 rounded-none shadow-sm z-10"></div>
-                  <p className="text-base font-black text-yellow-600 mb-2 tracking-tighter uppercase">{item.year}</p>
-                  <h4 className={`${lang === 'en' ? 'text-lg leading-tight' : 'text-lg leading-none'} font-black mb-3 tracking-tighter text-black break-words min-h-[3.5em] flex items-center`}>
+                  <div className="hidden lg:block absolute -top-3 left-1/2 -translate-x-1/2 w-6 h-6 bg-yellow-400 rounded-none shadow-sm z-10 text-black"></div>
+                  <p className="text-base font-black text-yellow-600 mb-2 tracking-tighter uppercase text-black">{item.year}</p>
+                  <h4 className={`${lang === 'en' ? 'text-lg leading-tight' : 'text-lg leading-none'} font-black mb-3 tracking-tighter text-black break-words min-h-[3.5em] flex items-center text-black`}>
                     {item.title}
                   </h4>
                   <p className="text-[11px] text-gray-500 font-medium leading-relaxed mt-auto text-black">{item.desc}</p>
@@ -711,8 +706,8 @@ const App = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white">
           <div className="flex flex-col items-center gap-8 text-white">
             <div className="flex items-center gap-2 text-white">
-              <div className="p-1">
-                <img src="/kray_logo.png" alt="Kray Inc." className="h-10 md:h-14 w-auto invert brightness-100" onError={(e) => { e.target.style.display = 'none'; }} />
+              <div className="p-1 text-white">
+                <img src="/kray_logo.png" alt="Kray Inc." className="h-10 md:h-14 w-auto invert brightness-100 text-white" onError={(e) => { e.target.style.display = 'none'; }} />
               </div>
             </div>
             
