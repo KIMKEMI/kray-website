@@ -378,7 +378,7 @@ const App = () => {
               <div className={`relative w-full ${viewMode === 'mobile' ? 'max-w-[280px]' : 'max-w-lg'}`}>
                 <div className="absolute -top-10 -right-10 w-48 h-48 bg-yellow-400 rounded-full opacity-20 blur-3xl animate-pulse"></div>
                 <div className="relative z-10 aspect-[4/5] bg-gray-100 rounded-none overflow-hidden shadow-2xl border border-gray-100 group">
-                  <img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=800&q=80" alt="Executive" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" onError={(e) => { e.target.src = 'https://via.placeholder.com/600x800?text=Executive'; }} />
+                  <img src="/sona_ceo.jpg" alt="Executive" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" onError={(e) => { e.target.src = 'https://via.placeholder.com/600x800?text=Executive'; }} />
                   <div className="absolute bottom-6 left-6 bg-white/90 backdrop-blur-md px-5 py-2.5 rounded-none shadow-lg text-left"><p className="text-[9px] font-black text-gray-400 uppercase mb-0.5">Creator & CEO</p><p className="text-lg font-black text-black leading-none">SONA</p></div>
                 </div>
               </div>
@@ -512,9 +512,9 @@ const App = () => {
                 <div key={idx} className="group flex flex-col hover:shadow-2xl transition-all h-full bg-white border border-gray-100 rounded-none overflow-hidden text-left relative text-black text-black text-black text-black">
                   <div className="w-full aspect-[4/5] bg-gray-50 flex items-center justify-center overflow-hidden relative">
                     <img src={[ 
-                        "https://images.unsplash.com/photo-1591123120675-6f7f1aae0e5b?auto=format&fit=crop&w=600&q=80", 
-                        "https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?auto=format&fit=crop&w=600&q=80", 
-                        "https://images.unsplash.com/photo-1556910111-a536ce516281?auto=format&fit=crop&w=600&q=80" 
+                        "produc01_thum.jpg", 
+                        "produc02_thum.jpg", 
+                        "produc03_thum.jpg" 
                     ][idx]} alt={p.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
                     <div className="absolute top-4 left-4 z-10"><span className={`px-4 py-1.5 text-[9px] font-black uppercase tracking-widest text-white shadow-lg ${idx === 0 ? 'bg-yellow-600' : idx === 1 ? 'bg-blue-600' : 'bg-gray-400'}`}>{p.badge}</span></div>
                     <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none"></div>
@@ -593,5 +593,6 @@ const App = () => {
     </div>
   );
 };
+
 
 export default App;
