@@ -204,7 +204,7 @@ const App = () => {
         steps: [
           { title: "Visual (魅せる)", desc: "可愛いお弁当やセンス溢れる料理が画面を圧倒します。" },
           { title: "Process (教える)", desc: "分かりやすい動画で、誰でも作れるという自信を与えます。" },
-          { title: "Action (買う)", desc: "自然な購買導線で、実際の購入とファン層の形成を誘導します。" },
+          { title: "Action (買う)", desc: "自然な購買導線で、実際の購入とファン層の形成へと導きます。" },
         ]
       },
       brand: { 
@@ -242,7 +242,7 @@ const App = () => {
           {
             title: "トリプルパン (予定)",
             badge: "Coming Soon",
-            desc: "3品同時に！SONAエディションの新色2種と専用ターナーがセットになって発売！",
+            desc: "3品同時に！SONAエディションの新色2種と専用ターナーがセットで発売！",
             features: ["SONA Edition", "3口同時調理システム"],
             urls: { naver: null, amazon: null, rakuten: null }
           }
@@ -252,7 +252,7 @@ const App = () => {
       roadmap: [
         { year: "2024.02", title: "星・ハートの卵焼き型 発売", desc: "星・ハート型のプロデュース" },
         { year: "2024.05", title: "レシピ本出版", desc: "韓国にてベストセラー" },
-        { year: "2025.07", title: "星の卵とき 発売", desc: "ラインナップの拡充" },
+        { year: "2025.07", title: "星の卵とき 発売", desc: "ラインアップの拡充" },
         { year: "2026.05", title: "トリプルパン 発売予定", desc: "自社ブランドの強化" },
       ],
       contact: {
@@ -392,7 +392,7 @@ const App = () => {
             </a>
           </div>
           
-          <div className="flex items-center gap-4 md:gap-10 text-black">
+          <div className="flex items-center gap-4 md:gap-10">
             <div className="hidden md:flex items-center gap-10">
               {(Object.keys(t.nav) || []).filter(k => k !== 'cta').map((key) => (
                 <a key={key} href={`#${key}`} className="text-base font-medium text-gray-800 hover:text-yellow-600 transition-colors uppercase tracking-tight">{t.nav[key]}</a>
@@ -424,23 +424,23 @@ const App = () => {
           {(Object.keys(t.nav) || []).filter(k => k !== 'cta').map((key) => (
             <a key={key} href={`#${key}`} onClick={() => setIsMenuOpen(false)} className="text-2xl font-medium uppercase text-black">{t.nav[key]}</a>
           ))}
-          <a href="#contact" onClick={() => setIsMenuOpen(false)} className="bg-black text-white px-10 py-5 rounded-full text-xl font-medium text-white">{t.nav.cta}</a>
+          <a href="#contact" onClick={() => setIsMenuOpen(false)} className="bg-black text-white px-10 py-5 rounded-full text-xl font-medium">{t.nav.cta}</a>
         </div>
       )}
 
       {/* Hero Section */}
-      <section id="about" className="relative overflow-hidden pt-48 pb-20 lg:pt-64 lg:pb-32 text-black">
+      <section id="about" className="relative overflow-hidden pt-48 pb-20 lg:pt-64 lg:pb-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-left text-black">
-          <div className="flex flex-col lg:flex-row items-center gap-6 lg:gap-16 text-black">
+          <div className="flex flex-col lg:flex-row items-center gap-6 lg:gap-16">
             <div className="flex-1 text-black">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-yellow-100 text-yellow-700 text-[13px] font-medium mb-8 border border-yellow-100 text-black">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-yellow-100 text-yellow-700 text-[13px] font-medium mb-8 border border-yellow-100">
                 <Star size={14} fill="currentColor" /><span>{t.hero.tag}</span>
               </div>
-              <h1 className="text-4xl md:text-5xl lg:text-7xl font-medium leading-[1.1] mb-10 text-gray-950 tracking-tighter text-black">{t.hero.title}</h1>
-              <p className="text-gray-600 mb-10 leading-relaxed text-lg max-w-2xl font-normal text-black">{t.hero.desc}</p>
+              <h1 className="text-4xl md:text-5xl lg:text-7xl font-medium leading-[1.1] mb-10 text-gray-950 tracking-tighter">{t.hero.title}</h1>
+              <p className="text-gray-600 mb-10 leading-relaxed text-lg max-w-2xl font-normal">{t.hero.desc}</p>
             </div>
-            <div className="relative w-full max-w-lg text-black">
-              <div className="absolute -top-10 -right-10 w-48 h-48 bg-yellow-400 rounded-full opacity-20 blur-3xl animate-pulse text-black"></div>
+            <div className="relative w-full max-w-lg">
+              <div className="absolute -top-10 -right-10 w-48 h-48 bg-yellow-400 rounded-full opacity-20 blur-3xl animate-pulse"></div>
               <div className="relative z-10 aspect-[4/5] bg-gray-50 rounded-none overflow-hidden group">
                 <img src="/sona_ceo.jpg" alt="CEO SONA" className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" onError={(e) => { e.target.src = 'https://via.placeholder.com/600x800?text=CEO+SONA'; }} />
                 <div className="absolute bottom-6 left-6 bg-white/95 backdrop-blur-md px-5 py-3 rounded-none shadow-xl text-left border-l-4 border-yellow-500">
@@ -453,8 +453,8 @@ const App = () => {
         </div>
       </section>
 
-      {/* Executive Summary Section */}
-      <section className="bg-gray-50 py-24 lg:py-40 text-black">
+      {/* Executive Summary Section - Image crop adjusted (object-[center_42%]) */}
+      <section className="bg-gray-50 py-24 lg:py-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16 lg:mb-24">
             <h2 className="text-xs font-medium text-yellow-600 uppercase tracking-[0.2em] mb-6">Executive Summary</h2>
@@ -462,7 +462,8 @@ const App = () => {
           </div>
 
           <div className="w-full max-w-5xl mx-auto mb-16 lg:mb-24 overflow-hidden rounded-none border border-gray-200 bg-white group text-black">
-            <img src="/bento_main.jpg" alt="Bento" className="w-full h-[300px] sm:h-[450px] lg:h-[600px] object-cover object-[center_40%] transition-transform duration-1000 group-hover:scale-105" onError={(e) => { e.target.src = 'https://via.placeholder.com/1200x600?text=Bento+Main'; }} />
+            {/* 📍 요청 사항: 이미지 노출 위치 42%로 조정 */}
+            <img src="/bento_main.jpg" alt="Bento" className="w-full h-[300px] sm:h-[450px] lg:h-[600px] object-cover object-[center_42%] transition-transform duration-1000 group-hover:scale-105" onError={(e) => { e.target.src = 'https://via.placeholder.com/1200x600?text=Bento+Main'; }} />
           </div>
 
           <div className="grid gap-4 sm:gap-8 sm:grid-cols-2 lg:grid-cols-4 text-black">
@@ -482,7 +483,7 @@ const App = () => {
       {/* Influencer Impact Section */}
       <section id="influencer" className="py-24 lg:py-40 text-black">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-black">
-          <div className="text-center mb-16 lg:mb-24 text-black text-black">
+          <div className="text-center mb-16 lg:mb-24 text-black">
             <h2 className="text-xs font-medium text-yellow-600 uppercase tracking-[0.2em] mb-6 text-black">Unrivaled Reach</h2>
             <p className={`${sectionTitleStyle} text-gray-950 uppercase text-black`}>{t.influencerIntro.title}</p>
           </div>
@@ -528,17 +529,17 @@ const App = () => {
       </section>
 
       {/* Content Strategy Section */}
-      <section className="bg-black text-white py-24 lg:py-40 text-center text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-white">
-          <div className="mb-12 lg:mb-20 text-white">
+      <section className="bg-black text-white py-24 lg:py-40 text-center text-white text-white text-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-white text-white">
+          <div className="mb-12 lg:mb-20 text-white text-white">
             <h2 className="text-[11px] font-medium text-yellow-500 uppercase tracking-[0.3em] mb-6 text-white text-white">Content Strategy</h2>
-            <h3 className={`${sectionTitleStyle} text-white mb-6 text-white`}>{t.strategy.title}</h3>
+            <h3 className={`${sectionTitleStyle} text-white mb-6 text-white text-white`}>{t.strategy.title}</h3>
             <p className="text-gray-400 max-w-2xl mx-auto font-normal mb-16 text-base md:text-lg leading-relaxed text-white text-white">{t.strategy.subtitle}</p>
             
             <div className="relative w-full overflow-hidden mb-20 py-6 bg-white/[0.03] border-y border-white/10 text-white text-white">
-              <div className="animate-film whitespace-nowrap text-white text-white text-white">
+              <div className="animate-film whitespace-nowrap text-white text-white">
                 {[1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5, 6].map((num, i) => (
-                  <div key={i} className="inline-block px-3 text-white">
+                  <div className="inline-block px-3 text-white">
                     <div className="w-[270px] aspect-square bg-gray-900 overflow-hidden rounded-none border border-white/10 group shadow-2xl text-white">
                       <img src={`/slide0${num}.jpg`} alt={`Slide ${num}`} className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 text-white" onError={(e) => { e.target.src = `https://via.placeholder.com/400x400?text=Slide+0${num}`; }} />
                     </div>
@@ -551,7 +552,7 @@ const App = () => {
           <div className="grid gap-8 grid-cols-1 md:grid-cols-3 text-white text-white">
             {(t.strategy.steps || []).map((item, idx) => (
               <div key={idx} className="relative group p-10 rounded-none border border-white/20 hover:border-yellow-400/50 bg-white/[0.03] hover:bg-white/[0.06] transition-all duration-500 text-left text-white text-white">
-                <span className="text-7xl font-medium text-yellow-400/10 absolute top-4 right-4 pointer-events-none group-hover:text-yellow-400/20 transition-colors text-white text-white text-white">0{idx+1}</span>
+                <span className="text-7xl font-medium text-yellow-400/10 absolute top-4 right-4 pointer-events-none group-hover:text-yellow-400/20 transition-colors text-white text-white">0{idx+1}</span>
                 <h3 className="text-xl md:text-2xl font-medium text-yellow-400 mb-6 flex items-center gap-4 uppercase tracking-tight text-white text-white">
                   <span className="w-2.5 h-2.5 bg-yellow-400 rounded-full text-white text-white"></span>
                   {item.title}
@@ -566,42 +567,42 @@ const App = () => {
       {/* Brand Identity Section */}
       <section className="bg-gray-50 border-y border-gray-100 py-24 lg:py-48 text-black text-black">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center">
-          <div className="mb-16">
+          <div className="mb-16 text-black">
             <h2 className="text-xs font-medium text-yellow-600 uppercase tracking-[0.2em] mb-6 text-black">Our Brand Identity</h2>
             <p className={`${sectionTitleStyle} text-gray-950 max-w-4xl text-black`}>{t.brand.title}</p>
           </div>
           <div className="w-full max-w-[280px] sm:max-w-md group transition-transform duration-700 hover:scale-105 mb-16 text-black">
-             <img src="/sonaandtokyo-logo.png" alt="Logo" className="w-full h-auto object-contain border-none shadow-none bg-transparent text-black" style={{ mixBlendMode: 'multiply' }} onError={(e) => { e.target.src = 'https://via.placeholder.com/600x200?text=BRAND+LOGO'; }} />
+             <img src="/sonaandtokyo-logo.png" alt="Logo" className="w-full h-auto object-contain border-none shadow-none bg-transparent" style={{ mixBlendMode: 'multiply' }} onError={(e) => { e.target.src = 'https://via.placeholder.com/600x200?text=BRAND+LOGO'; }} />
           </div>
-          <p className="text-sm text-gray-400 font-normal tracking-wide mt-4 opacity-80 leading-relaxed text-black text-black">
+          <p className="text-sm text-gray-400 font-normal tracking-wide mt-4 opacity-80 leading-relaxed text-black">
             {t.brand.caption}
           </p>
         </div>
       </section>
 
-      {/* Product Lineup Section - Super Compact Cards */}
+      {/* Product Lineup Section - Compact Cards */}
       <section id="products" className="py-24 lg:py-40 text-black text-black">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-black text-black text-black">
-          <div className="text-center mb-16 lg:mb-20 text-black text-black text-black">
-            <h2 className="text-xs font-medium text-yellow-600 uppercase tracking-[0.2em] mb-6 text-black text-black text-black">Product Lineup</h2>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-black text-black">
+          <div className="text-center mb-16 lg:mb-20 text-black">
+            <h2 className="text-xs font-medium text-yellow-600 uppercase tracking-[0.2em] mb-6 text-black">Product Lineup</h2>
             <p className={`${sectionTitleStyle} text-gray-950`}>{t.products.title}</p>
           </div>
-          <div className="grid gap-8 lg:gap-10 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 text-black text-black text-black">
+          <div className="grid gap-8 lg:gap-10 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 text-black">
             {(t.products.items || []).map((p, idx) => (
-              <div key={idx} className="flex flex-col text-black text-black">
+              <div key={idx} className="flex flex-col text-black">
                 <div className="group flex flex-col hover:shadow-2xl transition-all h-full bg-white border border-gray-100 rounded-none overflow-hidden text-left relative text-black text-black">
-                  <div className="w-full aspect-[4/5] bg-gray-50 flex items-center justify-center overflow-hidden relative text-black text-black">
+                  <div className="w-full aspect-[4/5] bg-gray-50 flex items-center justify-center overflow-hidden relative">
                     <img src={[`/produc01_thum.jpg`, `/produc02_thum.jpg`, `/produc03_thum.jpg`][idx]} alt={p.title} className={`w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 ${idx === 2 ? 'grayscale-100 opacity-40 contrast-150' : ''}`} onError={(e) => { e.target.src = 'https://via.placeholder.com/600x800?text=Product'; }} />
                   </div>
-                  <div className="px-8 pt-3 pb-5 flex flex-col h-full text-black text-black">
-                    <div className="mb-1 min-h-[18px] text-black">
+                  <div className="px-8 pt-3 pb-5 flex flex-col h-full text-black">
+                    <div className="mb-2 min-h-[18px]">
                       <span className={`px-3 py-0.5 text-[10px] font-medium uppercase tracking-widest shadow-sm text-white ${idx === 0 ? 'bg-orange-500' : idx === 1 ? 'bg-blue-600' : 'bg-gray-400'}`}>
                         {p.badge}
                       </span>
                     </div>
 
                     <h3 className="text-lg md:text-xl font-medium text-gray-950 mb-6 tracking-tight uppercase min-h-[1.2em] text-black">{p.title}</h3>
-                    <p className={`${cardDescriptionStyle} text-gray-600 mb-2 leading-tight flex-grow text-black text-black`}>{p.desc}</p>
+                    <p className={`${cardDescriptionStyle} text-gray-600 mb-2 leading-tight flex-grow text-black`}>{p.desc}</p>
                     
                     <div className="flex flex-col gap-1 mb-10 border-t border-gray-50 pt-2 text-black">
                       {(p.features || []).map((f, i) => (
@@ -611,7 +612,7 @@ const App = () => {
                         </div>
                       ))}
                     </div>
-                    <div className="mt-auto text-black text-black">
+                    <div className="mt-auto">
                       <PurchaseIcons lang={lang} naverUrl={p.urls.naver} amazonUrl={p.urls.amazon} rakutenUrl={p.urls.rakuten} />
                     </div>
                   </div>
@@ -630,21 +631,21 @@ const App = () => {
       </section>
 
       {/* Roadmap Section */}
-      <section id="roadmap" className="py-24 lg:py-40 text-black text-black">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-black text-black">
+      <section id="roadmap" className="bg-gray-50 border-t border-gray-100 py-24 lg:py-40 text-black text-black">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-black">
           <div className="mb-20 text-black">
             <h2 className="text-xs font-medium text-yellow-600 uppercase tracking-[0.2em] mb-6 text-black">Brand Roadmap</h2>
             <p className={`${sectionTitleStyle} text-gray-950`}>{t.roadmapIntro.title}</p>
           </div>
           <div className="relative text-black">
             <div className="hidden lg:block absolute top-1/2 left-0 w-full h-px bg-gray-200 -translate-y-1/2 text-black"></div>
-            <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 text-black text-black">
+            <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 text-black">
               {(t.roadmap || []).map((item, idx) => (
                 <div key={idx} className="relative bg-white px-8 py-12 rounded-none border border-gray-100 hover:shadow-xl transition-all text-left flex flex-col min-h-[220px] text-black">
                   <div className="hidden lg:block absolute -top-3 left-1/2 -translate-x-1/2 w-6 h-6 bg-yellow-400 rounded-none z-10 shadow-sm text-black"></div>
                   <p className="text-lg font-medium text-yellow-600 mb-4 tracking-tighter uppercase text-black"> {item.year}</p>
                   <h4 className="text-lg font-medium text-gray-950 mb-4 tracking-tight leading-tight flex-grow text-black">{item.title}</h4>
-                  <p className={`${unifiedSmallTextStyle} text-gray-500 leading-relaxed text-black`}>{item.desc}</p>
+                  <p className={`${unifiedSmallTextStyle} text-gray-500 leading-relaxed`}>{item.desc}</p>
                 </div>
               ))}
             </div>
@@ -653,8 +654,8 @@ const App = () => {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="bg-black text-white pt-32 pb-32 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white text-white">
+      <section id="contact" className="bg-black text-white pt-32 pb-32 text-white text-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
           <div className="max-w-3xl mx-auto text-white">
             <h2 className="text-4xl lg:text-6xl font-medium mb-10 uppercase italic tracking-tighter text-white text-white">CONNECT US</h2>
             <div className="text-gray-400 mb-16 leading-relaxed text-lg md:text-xl font-normal opacity-90 text-white text-white">{t.contact.desc}</div>
@@ -664,9 +665,9 @@ const App = () => {
                 <div className="w-20 h-20 bg-white/5 flex items-center justify-center group-hover:bg-yellow-400 group-hover:text-black transition-all duration-500 mb-4 text-white">
                   <Mail size={36} strokeWidth={1.5} />
                 </div>
-                <div className="text-center text-white text-white">
+                <div className="text-center text-white">
                   <p className="text-xs text-gray-500 font-medium uppercase tracking-[0.3em] mb-3 text-white">Email Inquiry</p>
-                  <p className="text-2xl md:text-3xl font-medium tracking-tight group-hover:text-yellow-400 transition-colors text-white text-white text-white">business@krayinc.com</p>
+                  <p className="text-2xl md:text-3xl font-medium tracking-tight group-hover:text-yellow-400 transition-colors text-white text-white">business@krayinc.com</p>
                 </div>
               </div>
             </div>
@@ -675,7 +676,7 @@ const App = () => {
       </section>
 
       {/* Footer - Copyright Color & Size Subdued */}
-      <footer className="bg-black py-24 text-center border-t border-white/10 text-white">
+      <footer className="bg-black py-24 text-center border-t border-white/10 text-white text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white">
           <div className="flex flex-col items-center gap-10 text-white text-white">
             <div className="p-2 text-white">
