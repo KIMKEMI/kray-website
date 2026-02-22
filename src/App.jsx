@@ -132,7 +132,7 @@ const App = () => {
         items: [
           {
             title: "별·하트 계란말이 틀",
-            badge: "아마존 재팬 베스트셀러 1위! (※)",
+            badge: "Amazon JP 베스트셀러 1위! (※)",
             desc: "틀에 넣는 것만으로 누구나 예쁜 모양 완성! 초보자의 Pain Point를 해결한 아이템.",
             features: ["한/일/중 디자인 등록", "누적 리뷰 고평가"],
             urls: {
@@ -184,7 +184,7 @@ const App = () => {
       values: [
         { title: "クリエイター経営", desc: "料理・お弁当特化型クリエイターによる経営" },
         { title: "圧倒的なコンテンツ拡散力", desc: "圧倒的なコンテンツ拡散力とリーチ力" },
-        { title: "マーケット適合の商品企画", desc: "市場ニーズを的확에 捉えた最適な商品開発" },
+        { title: "マーケット適合の商品企画", desc: "市場ニーズを的確に捉えた最適な商品開発" },
         { title: "日韓トレンドの架け橋", desc: "韓国の感性と日本製造技術の融合" },
       ],
       stats: [
@@ -196,15 +196,15 @@ const App = () => {
       influencerIntro: { tag: "Unrivaled Reach", title: "1億再生が証明する影響力" },
       influencer: {
         title: "圧倒的なコンテンツパワー",
-        desc: "日本在住の韓国人インフルエンサー「SONA」は、現地で経験したお弁当文化を独自の感性で再解釈し、世界中の視聴者を魅了しました。単なる動画を超え、「私にもできる」という確信を与えるチュートリアルを提供しています。"
+        desc: "日本在住の韓国人インフルエンサー「SONA」は、現地で経験したお弁当文化を独自の感性で再解釈し, 世界中の視聴者を魅了しました. 単なる動画を超え, 「私にもできる」という確信を与えるチュートリアルを提供しています."
       },
       strategy: {
         title: "Content Strategy: 「魅せる」& 「教える」",
         subtitle: "目を引くビジュアル + 直感的なチュートリアル = 自然な購買への繋がり",
         steps: [
           { title: "Visual (魅せる)", desc: "可愛いお弁当やセンス溢れる料理が画面を圧倒します。" },
-          { title: "Process (教える)", desc: "分かりやすい動画で、誰でも作れるという自信を与えます。" },
-          { title: "Action (買う)", desc: "自然な購買導線で、実際の購入とファン層の形成へと導きます。" },
+          { title: "Process (教える)", desc: "分かりやすい動画で, 誰でも作れるという自信を与えます。" },
+          { title: "Action (買う)", desc: "自然な購買導線で, 実際の購入とファン層の形成へと導きます。" },
         ]
       },
       brand: { 
@@ -257,7 +257,7 @@ const App = () => {
       ],
       contact: {
         title: "CONNECT US",
-        desc: <>Krayと共に新しいコンテンツコマースの未来를 創るパートナーを募集しています。<br className="hidden md:block" /> 提携のご提案やお問い合わせは、下記のメールアドレスまでご連絡ください。</>
+        desc: <>Krayと共に新しいコンテンツコマースの未来を創るパートナーを募集しています。<br className="hidden md:block" /> 提携のご提案やお問い合わせは, 下記のメールアドレスまでご連絡ください。</>
       }
     },
     en: {
@@ -352,6 +352,13 @@ const App = () => {
   const t = translations[lang] || translations.en;
 
   useEffect(() => {
+    // 📍 브라우저 상단 탭 아이콘(파비콘) 설정 코드 추가
+    const link = document.querySelector("link[rel*='icon']") || document.createElement('link');
+    link.type = 'image/png';
+    link.rel = 'shortcut icon';
+    link.href = '/favicon.png'; // 제작하신 아이콘 파일을 favicon.png로 저장해 public 폴더에 넣어주세요.
+    document.getElementsByTagName('head')[0].appendChild(link);
+
     const browserLang = navigator.language.split('-')[0];
     if (['ko', 'ja', 'en'].includes(browserLang)) setLang(browserLang);
     else setLang('en');
@@ -432,7 +439,7 @@ const App = () => {
       <section id="about" className="relative overflow-hidden pt-48 pb-20 lg:pt-64 lg:pb-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-left text-black">
           <div className="flex flex-col lg:flex-row items-center gap-6 lg:gap-16">
-            <div className="flex-1">
+            <div className="flex-1 text-black">
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-yellow-100 text-yellow-700 text-[13px] font-medium mb-8 border border-yellow-100">
                 <Star size={14} fill="currentColor" /><span>{t.hero.tag}</span>
               </div>
@@ -443,7 +450,7 @@ const App = () => {
               <div className="absolute -top-10 -right-10 w-48 h-48 bg-yellow-400 rounded-full opacity-20 blur-3xl animate-pulse"></div>
               <div className="relative z-10 aspect-[4/5] bg-gray-50 rounded-none overflow-hidden group">
                 <img src="/sona_ceo.jpg" alt="CEO SONA" className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" onError={(e) => { e.target.src = 'https://via.placeholder.com/600x800?text=CEO+SONA'; }} />
-                <div className="absolute bottom-6 left-6 bg-white/95 backdrop-blur-md px-5 py-3 rounded-none shadow-xl text-left border-l-4 border-yellow-500 text-black">
+                <div className="absolute bottom-6 left-6 bg-white/95 backdrop-blur-md px-5 py-3 rounded-none shadow-xl text-left border-l-4 border-yellow-500">
                   <p className="text-[10px] font-medium text-gray-500 uppercase tracking-widest mb-1 text-black">Creator & CEO</p>
                   <p className="text-xl font-medium text-gray-900 leading-none text-black">SONA</p>
                 </div>
@@ -462,7 +469,7 @@ const App = () => {
           </div>
 
           <div className="w-full max-w-5xl mx-auto mb-16 lg:mb-24 overflow-hidden rounded-none border border-gray-200 bg-white group text-black">
-            {/* 📍 요청 사항: 이미지 노출 위치 38%로 조정 */}
+            {/* 📍 이미지 노출 위치 38%로 조정 */}
             <img src="/bento_main.jpg" alt="Bento" className="w-full h-[300px] sm:h-[450px] lg:h-[600px] object-cover object-[center_38%] transition-transform duration-1000 group-hover:scale-105" onError={(e) => { e.target.src = 'https://via.placeholder.com/1200x600?text=Bento+Main'; }} />
           </div>
 
@@ -482,7 +489,7 @@ const App = () => {
 
       {/* Influencer Impact Section */}
       <section id="influencer" className="py-24 lg:py-40 text-black">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-black">
           <div className="text-center mb-16 lg:mb-24 text-black">
             <h2 className="text-xs font-medium text-yellow-600 uppercase tracking-[0.2em] mb-6 text-black">Unrivaled Reach</h2>
             <p className={`${sectionTitleStyle} text-gray-950 uppercase text-black`}>{t.influencerIntro.title}</p>
@@ -491,7 +498,7 @@ const App = () => {
           <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
             <div className="flex-1 w-full flex justify-center text-black">
               <div className="relative rounded-none overflow-hidden w-full max-w-[480px] aspect-[9/16] group">
-                <img src="/viral_reel.jpg" alt="Viral Reel" className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" onError={(e) => { e.target.src = 'https://via.placeholder.com/600x1066?text=Viral+Reel'; }} />
+                <img src="/viral_reel.jpg" alt="Viral Reel" className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" onError={(e) => { e.target.src = 'https://via.placeholder.com/600x1066?text=Viral+Reel'; }} />
               </div>
             </div>
 
@@ -508,7 +515,7 @@ const App = () => {
                        {[<Users size={36} />, <Eye size={36} />, <Award size={36} />, <Calendar size={36} />][idx]}
                     </div>
                     <div>
-                      <p className={`${unifiedSmallTextStyle} text-gray-400 mb-3 uppercase tracking-widest text-black`}>{stat.label}</p>
+                      <p className={`${unifiedSmallTextStyle} text-gray-400 mb-3 uppercase tracking-widest`}>{stat.label}</p>
                       <p className="text-3xl font-medium text-gray-950 leading-none mb-3 tracking-tighter text-black">
                         {stat.value}
                       </p>
@@ -518,7 +525,7 @@ const App = () => {
                 ))}
               </div>
               
-              <div className="flex justify-center pt-4 text-black text-black text-black text-black">
+              <div className="flex justify-center pt-4 text-black">
                  <a href="https://www.instagram.com/sona_tokyolife/" target="_blank" className="flex items-center gap-3 bg-gradient-to-tr from-[#f9ce34] via-[#ee2a7b] to-[#6228d7] text-white px-10 py-4 font-medium hover:shadow-xl transition-all uppercase tracking-[0.15em] text-[13px] rounded-none shadow-lg text-white">
                    <Instagram size={20} /> @sona_tokyolife
                  </a>
@@ -529,19 +536,19 @@ const App = () => {
       </section>
 
       {/* Content Strategy Section */}
-      <section className="bg-black text-white py-24 lg:py-40 text-center text-white text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-white text-white">
-          <div className="mb-12 lg:mb-20 text-white text-white">
+      <section className="bg-black text-white py-24 lg:py-40 text-center text-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-white">
+          <div className="mb-12 lg:mb-20 text-white">
             <h2 className="text-[11px] font-medium text-yellow-500 uppercase tracking-[0.3em] mb-6 text-white text-white">Content Strategy</h2>
-            <h3 className={`${sectionTitleStyle} text-white mb-6 text-white text-white`}>{t.strategy.title}</h3>
-            <p className="text-gray-400 max-w-2xl mx-auto font-normal mb-16 text-base md:text-lg leading-relaxed text-white text-white text-white text-white text-white text-white">{t.strategy.subtitle}</p>
+            <h3 className={`${sectionTitleStyle} text-white mb-6 text-white`}>{t.strategy.title}</h3>
+            <p className="text-gray-400 max-w-2xl mx-auto font-normal mb-16 text-base md:text-lg leading-relaxed text-white text-white">{t.strategy.subtitle}</p>
             
-            <div className="relative w-full overflow-hidden mb-20 py-6 bg-white/[0.03] border-y border-white/10 text-white text-white text-white">
-              <div className="animate-film whitespace-nowrap text-white text-white text-white">
+            <div className="relative w-full overflow-hidden mb-20 py-6 bg-white/[0.03] border-y border-white/10 text-white text-white">
+              <div className="animate-film whitespace-nowrap text-white text-white">
                 {[1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5, 6].map((num, i) => (
-                  <div key={i} className="inline-block px-3 text-white text-white">
-                    <div className="w-[270px] aspect-square bg-gray-900 overflow-hidden rounded-none border border-white/10 group shadow-2xl text-white text-white">
-                      <img src={`/slide0${num}.jpg`} alt={`Slide ${num}`} className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 text-white text-white" onError={(e) => { e.target.src = `https://via.placeholder.com/400x400?text=Slide+0${num}`; }} />
+                  <div key={i} className="inline-block px-3 text-white">
+                    <div className="w-[270px] aspect-square bg-gray-900 overflow-hidden rounded-none border border-white/10 group shadow-2xl">
+                      <img src={`/slide0${num}.jpg`} alt={`Slide ${num}`} className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 text-white" onError={(e) => { e.target.src = `https://via.placeholder.com/400x400?text=Slide+0${num}`; }} />
                     </div>
                   </div>
                 ))}
@@ -549,15 +556,15 @@ const App = () => {
             </div>
           </div>
 
-          <div className="grid gap-8 grid-cols-1 md:grid-cols-3 text-white text-white text-white text-white">
+          <div className="grid gap-8 grid-cols-1 md:grid-cols-3 text-white text-white">
             {(t.strategy.steps || []).map((item, idx) => (
-              <div key={idx} className="relative group p-10 rounded-none border border-white/20 hover:border-yellow-400/50 bg-white/[0.03] hover:bg-white/[0.06] transition-all duration-500 text-left text-white text-white">
-                <span className="text-7xl font-medium text-yellow-400/10 absolute top-4 right-4 pointer-events-none group-hover:text-yellow-400/20 transition-colors text-white text-white text-white">0{idx+1}</span>
-                <h3 className="text-xl md:text-2xl font-medium text-yellow-400 mb-6 flex items-center gap-4 uppercase tracking-tight text-white text-white text-white">
-                  <span className="w-2.5 h-2.5 bg-yellow-400 rounded-full text-white text-white text-white"></span>
+              <div key={idx} className="relative group p-10 rounded-none border border-white/20 hover:border-yellow-400/50 bg-white/[0.03] hover:bg-white/[0.06] transition-all duration-500 text-left text-white">
+                <span className="text-7xl font-medium text-yellow-400/10 absolute top-4 right-4 pointer-events-none group-hover:text-yellow-400/20 transition-colors text-white text-white">0{idx+1}</span>
+                <h3 className="text-xl md:text-2xl font-medium text-yellow-400 mb-6 flex items-center gap-4 uppercase tracking-tight text-white">
+                  <span className="w-2.5 h-2.5 bg-yellow-400 rounded-full text-white text-white"></span>
                   {item.title}
                 </h3>
-                <p className={`${unifiedSmallTextStyle} text-gray-400 text-white text-white text-white`}>{item.desc}</p>
+                <p className={`${unifiedSmallTextStyle} text-gray-400`}>{item.desc}</p>
               </div>
             ))}
           </div>
@@ -565,61 +572,61 @@ const App = () => {
       </section>
 
       {/* Brand Identity Section */}
-      <section className="bg-gray-50 border-y border-gray-100 py-24 lg:py-48 text-black text-black text-black">
+      <section className="bg-gray-50 border-y border-gray-100 py-24 lg:py-48 text-black text-black">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center">
           <div className="mb-16 text-black">
-            <h2 className="text-xs font-medium text-yellow-600 uppercase tracking-[0.2em] mb-6 text-black text-black text-black">Our Brand Identity</h2>
-            <p className={`${sectionTitleStyle} text-gray-950 max-w-4xl text-black text-black text-black`}>{t.brand.title}</p>
+            <h2 className="text-xs font-medium text-yellow-600 uppercase tracking-[0.2em] mb-6 text-black">Our Brand Identity</h2>
+            <p className={`${sectionTitleStyle} text-gray-950 max-w-4xl text-black`}>{t.brand.title}</p>
           </div>
-          <div className="w-full max-w-[280px] sm:max-w-md group transition-transform duration-700 hover:scale-105 mb-16 text-black text-black">
-             <img src="/sonaandtokyo-logo.png" alt="Logo" className="w-full h-auto object-contain border-none shadow-none bg-transparent text-black text-black" style={{ mixBlendMode: 'multiply' }} onError={(e) => { e.target.src = 'https://via.placeholder.com/600x200?text=BRAND+LOGO'; }} />
+          <div className="w-full max-w-[280px] sm:max-w-md group transition-transform duration-700 hover:scale-105 mb-16 text-black">
+             <img src="/sonaandtokyo-logo.png" alt="Logo" className="w-full h-auto object-contain border-none shadow-none bg-transparent" style={{ mixBlendMode: 'multiply' }} onError={(e) => { e.target.src = 'https://via.placeholder.com/600x200?text=BRAND+LOGO'; }} />
           </div>
-          <p className="text-sm text-gray-400 font-normal tracking-wide mt-4 opacity-80 leading-relaxed text-black text-black text-black">
+          <p className="text-sm text-gray-400 font-normal tracking-wide mt-4 opacity-80 leading-relaxed text-black">
             {t.brand.caption}
           </p>
         </div>
       </section>
 
       {/* Product Lineup Section - Super Compact Cards */}
-      <section id="products" className="py-24 lg:py-40 text-black text-black text-black text-black">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-black text-black text-black text-black">
-          <div className="text-center mb-16 lg:mb-20 text-black text-black text-black text-black">
-            <h2 className="text-xs font-medium text-yellow-600 uppercase tracking-[0.2em] mb-6 text-black text-black text-black text-black">Product Lineup</h2>
-            <p className={`${sectionTitleStyle} text-gray-950 text-black text-black text-black text-black text-black`}>{t.products.title}</p>
+      <section id="products" className="py-24 lg:py-40">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-black text-black">
+          <div className="text-center mb-16 lg:mb-20 text-black">
+            <h2 className="text-xs font-medium text-yellow-600 uppercase tracking-[0.2em] mb-6 text-black">Product Lineup</h2>
+            <p className={`${sectionTitleStyle} text-gray-950`}>{t.products.title}</p>
           </div>
-          <div className="grid gap-8 lg:gap-10 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 text-black text-black text-black text-black">
+          <div className="grid gap-8 lg:gap-10 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 text-black">
             {(t.products.items || []).map((p, idx) => (
-              <div key={idx} className="flex flex-col text-black text-black text-black text-black">
-                <div className="group flex flex-col hover:shadow-2xl transition-all h-full bg-white border border-gray-100 rounded-none overflow-hidden text-left relative text-black text-black text-black text-black">
-                  <div className="w-full aspect-[4/5] bg-gray-50 flex items-center justify-center overflow-hidden relative text-black text-black text-black text-black">
+              <div key={idx} className="flex flex-col text-black">
+                <div className="group flex flex-col hover:shadow-2xl transition-all h-full bg-white border border-gray-100 rounded-none overflow-hidden text-left relative text-black text-black">
+                  <div className="w-full aspect-[4/5] bg-gray-50 flex items-center justify-center overflow-hidden relative">
                     <img src={[`/produc01_thum.jpg`, `/produc02_thum.jpg`, `/produc03_thum.jpg`][idx]} alt={p.title} className={`w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 ${idx === 2 ? 'grayscale-100 opacity-40 contrast-150' : ''}`} onError={(e) => { e.target.src = 'https://via.placeholder.com/600x800?text=Product'; }} />
                   </div>
-                  <div className="px-8 pt-3 pb-5 flex flex-col h-full text-black text-black text-black text-black">
-                    <div className="mb-2 min-h-[18px] text-black text-black text-black text-black">
+                  <div className="px-8 pt-3 pb-5 flex flex-col h-full text-black">
+                    <div className="mb-2 min-h-[18px]">
                       <span className={`px-3 py-0.5 text-[10px] font-medium uppercase tracking-widest shadow-sm text-white ${idx === 0 ? 'bg-orange-500' : idx === 1 ? 'bg-blue-600' : 'bg-gray-400'}`}>
                         {p.badge}
                       </span>
                     </div>
 
-                    <h3 className="text-lg md:text-xl font-medium text-gray-950 mb-6 tracking-tight uppercase min-h-[1.2em] text-black text-black text-black text-black">{p.title}</h3>
-                    <p className={`${cardDescriptionStyle} text-gray-600 mb-2 leading-tight flex-grow text-black text-black text-black text-black`}>{p.desc}</p>
+                    <h3 className="text-lg md:text-xl font-medium text-gray-950 mb-6 tracking-tight uppercase min-h-[1.2em] text-black text-black">{p.title}</h3>
+                    <p className={`${cardDescriptionStyle} text-gray-600 mb-2 leading-tight flex-grow text-black text-black`}>{p.desc}</p>
                     
-                    <div className="flex flex-col gap-1 mb-10 border-t border-gray-50 pt-2 text-black text-black text-black text-black">
+                    <div className="flex flex-col gap-1 mb-10 border-t border-gray-50 pt-2 text-black text-black">
                       {(p.features || []).map((f, i) => (
-                        <div key={i} className="flex items-center gap-2.5 text-black text-black text-black text-black text-black">
+                        <div key={i} className="flex items-center gap-2.5 text-black">
                           <CheckCircle2 size={13} className={`${idx === 2 ? 'text-gray-300' : 'text-yellow-600'} shrink-0`} />
                           <span className={unifiedSmallTextStyle}>{f}</span>
                         </div>
                       ))}
                     </div>
-                    <div className="mt-auto text-black text-black text-black text-black text-black">
+                    <div className="mt-auto text-black">
                       <PurchaseIcons lang={lang} naverUrl={p.urls.naver} amazonUrl={p.urls.amazon} rakutenUrl={p.urls.rakuten} />
                     </div>
                   </div>
                 </div>
-                <div className="min-h-[24px] mt-1.5 text-black text-black text-black text-black text-black text-black">
+                <div className="min-h-[24px] mt-1.5 text-black">
                   {idx === 0 && (
-                    <p className="text-[13px] text-gray-400 font-normal italic leading-tight text-left text-black text-black text-black text-black">
+                    <p className="text-[13px] text-gray-400 font-normal italic leading-tight text-left">
                       {t.products.footnote}
                     </p>
                   )}
@@ -631,21 +638,21 @@ const App = () => {
       </section>
 
       {/* Roadmap Section */}
-      <section id="roadmap" className="py-24 lg:py-40 text-black text-black text-black text-black text-black">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-black text-black text-black text-black text-black text-black">
-          <div className="mb-20 text-black text-black text-black text-black text-black text-black">
-            <h2 className="text-xs font-medium text-yellow-600 uppercase tracking-[0.2em] mb-6 text-black text-black text-black text-black text-black">Brand Roadmap</h2>
-            <p className={`${sectionTitleStyle} text-gray-950 text-black text-black text-black text-black text-black text-black text-black`}>{t.roadmapIntro.title}</p>
+      <section id="roadmap" className="bg-gray-50 border-t border-gray-100 py-24 lg:py-40 text-black text-black">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-black">
+          <div className="mb-20 text-black">
+            <h2 className="text-xs font-medium text-yellow-600 uppercase tracking-[0.2em] mb-6 text-black">Brand Roadmap</h2>
+            <p className={`${sectionTitleStyle} text-gray-950`}>{t.roadmapIntro.title}</p>
           </div>
-          <div className="relative text-black text-black text-black text-black text-black">
-            <div className="hidden lg:block absolute top-1/2 left-0 w-full h-px bg-gray-200 -translate-y-1/2 text-black text-black text-black text-black"></div>
+          <div className="relative text-black">
+            <div className="hidden lg:block absolute top-1/2 left-0 w-full h-px bg-gray-200 -translate-y-1/2 text-black"></div>
             <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 text-black text-black text-black text-black">
               {(t.roadmap || []).map((item, idx) => (
-                <div key={idx} className="relative bg-white px-8 py-12 rounded-none border border-gray-100 hover:shadow-xl transition-all text-left flex flex-col min-h-[220px] text-black text-black text-black text-black text-black text-black">
-                  <div className="hidden lg:block absolute -top-3 left-1/2 -translate-x-1/2 w-6 h-6 bg-yellow-400 rounded-none z-10 shadow-sm text-black text-black text-black text-black text-black text-black text-black"></div>
-                  <p className="text-lg font-medium text-yellow-600 mb-4 tracking-tighter uppercase text-black text-black text-black text-black text-black text-black text-black"> {item.year}</p>
-                  <h4 className="text-lg font-medium text-gray-950 mb-4 tracking-tight leading-tight flex-grow text-black text-black text-black text-black text-black text-black text-black text-black">{item.title}</h4>
-                  <p className={`${unifiedSmallTextStyle} text-gray-500 leading-relaxed text-black text-black text-black text-black text-black text-black text-black`}>{item.desc}</p>
+                <div key={idx} className="relative bg-white px-8 py-12 rounded-none border border-gray-100 hover:shadow-xl transition-all text-left flex flex-col min-h-[220px] text-black">
+                  <div className="hidden lg:block absolute -top-3 left-1/2 -translate-x-1/2 w-6 h-6 bg-yellow-400 rounded-none z-10 shadow-sm text-black"></div>
+                  <p className="text-lg font-medium text-yellow-600 mb-4 tracking-tighter uppercase text-black text-black"> {item.year}</p>
+                  <h4 className="text-lg font-medium text-gray-950 mb-4 tracking-tight leading-tight flex-grow text-black text-black">{item.title}</h4>
+                  <p className={`${unifiedSmallTextStyle} text-gray-500 leading-relaxed`}>{item.desc}</p>
                 </div>
               ))}
             </div>
@@ -654,20 +661,20 @@ const App = () => {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="bg-black text-white pt-32 pb-32 text-white text-white text-white text-white text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white text-white text-white text-white text-white text-white text-white">
-          <div className="max-w-3xl mx-auto text-white text-white text-white text-white text-white text-white text-white">
-            <h2 className="text-4xl lg:text-6xl font-medium mb-10 uppercase italic tracking-tighter text-white text-white text-white text-white text-white text-white text-white text-white">CONNECT US</h2>
-            <div className="text-gray-400 mb-16 leading-relaxed text-lg md:text-xl font-normal opacity-90 text-white text-white text-white text-white text-white text-white text-white text-white text-white">{t.contact.desc}</div>
+      <section id="contact" className="bg-black text-white pt-32 pb-32 text-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white text-white">
+          <div className="max-w-3xl mx-auto text-white">
+            <h2 className="text-4xl lg:text-6xl font-medium mb-10 uppercase italic tracking-tighter text-white text-white">CONNECT US</h2>
+            <div className="text-gray-400 mb-16 leading-relaxed text-lg md:text-xl font-normal opacity-90 text-white text-white">{t.contact.desc}</div>
             
-            <div className="flex justify-center text-white text-white text-white text-white text-white text-white text-white text-white">
-              <div className="flex flex-col items-center gap-6 group cursor-default text-white text-white text-white text-white text-white text-white text-white text-white">
-                <div className="w-20 h-20 bg-white/5 flex items-center justify-center group-hover:bg-yellow-400 group-hover:text-black transition-all duration-500 mb-4 text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white">
+            <div className="flex justify-center text-white">
+              <div className="flex flex-col items-center gap-6 group cursor-default text-white">
+                <div className="w-20 h-20 bg-white/5 flex items-center justify-center group-hover:bg-yellow-400 group-hover:text-black transition-all duration-500 mb-4 text-white">
                   <Mail size={36} strokeWidth={1.5} />
                 </div>
-                <div className="text-center text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white">
-                  <p className="text-xs text-gray-500 font-medium uppercase tracking-[0.3em] mb-3 text-white text-white text-white text-white text-white text-white text-white text-white text-white">Email Inquiry</p>
-                  <p className="text-2xl md:text-3xl font-medium tracking-tight group-hover:text-yellow-400 transition-colors text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white">business@krayinc.com</p>
+                <div className="text-center text-white text-white text-white">
+                  <p className="text-xs text-gray-500 font-medium uppercase tracking-[0.3em] mb-3 text-white">Email Inquiry</p>
+                  <p className="text-2xl md:text-3xl font-medium tracking-tight group-hover:text-yellow-400 transition-colors text-white text-white">business@krayinc.com</p>
                 </div>
               </div>
             </div>
@@ -676,15 +683,15 @@ const App = () => {
       </section>
 
       {/* Footer - Copyright Color & Size Subdued */}
-      <footer className="bg-black py-24 text-center border-t border-white/10 text-white text-white text-white text-white text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white text-white text-white text-white text-white text-white">
-          <div className="flex flex-col items-center gap-10 text-white text-white text-white text-white text-white text-white text-white text-white text-white">
-            <div className="p-2 text-white text-white text-white text-white text-white text-white text-white text-white text-white">
-              <img src="/kray_logo.png" alt="Kray Inc." className="h-12 md:h-16 w-auto invert brightness-100 text-white text-white text-white text-white text-white text-white text-white text-white text-white" onError={(e) => { e.target.style.display = 'none'; }} />
+      <footer className="bg-black py-24 text-center border-t border-white/10 text-white text-white text-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white text-white">
+          <div className="flex flex-col items-center gap-10 text-white text-white">
+            <div className="p-2 text-white text-white text-white">
+              <img src="/kray_logo.png" alt="Kray Inc." className="h-12 md:h-16 w-auto invert brightness-100 text-white text-white" onError={(e) => { e.target.style.display = 'none'; }} />
             </div>
             {/* Copyright: text-zinc-600 적용하여 더 차분하게 처리 */}
-            <p className="text-[11px] md:text-xs text-zinc-600 font-normal uppercase tracking-[0.2em] leading-loose text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white">
-              © 2025 Kray, Inc. All rights reserved. <br className="sm:hidden text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white" /> Established 2025.07 (Japan)
+            <p className="text-[11px] md:text-xs text-zinc-600 font-normal uppercase tracking-[0.2em] leading-loose text-white text-white">
+              © 2025 Kray, Inc. All rights reserved. <br className="sm:hidden text-white" /> Established 2025.07 (Japan)
             </p>
           </div>
         </div>
