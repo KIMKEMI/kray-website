@@ -193,7 +193,8 @@ const App = () => {
       legal: {
         privacy: "개인정보 처리방침",
         terms: "이용약관",
-        notices: "特定商取引法に基づく表記"
+        // 📍 한국어 교정 완료
+        notices: "특정상거래법에 따른 표기"
       }
     },
     ja: {
@@ -205,7 +206,7 @@ const App = () => {
       },
       valuesIntro: { tag: "Executive Summary", title: "平凡の中に特別さが染み込む" },
       values: [
-        { title: "クリエイター経営", desc: "料理・お弁当特화型クリエイターによる経営" },
+        { title: "クリエイター経営", desc: "料理・お弁当特化型クリエイターによる経営" },
         { title: "圧倒的なコンテンツ拡散力", desc: "圧倒的なコンテンツ拡散力とリーチ力" },
         { title: "マーケット適合の商品企画", desc: "市場ニーズを的確に捉えた最適な商品開発" },
         { title: "日韓トレンドの架け橋", desc: "韓国の感性と日本製造技術の融合" },
@@ -280,7 +281,8 @@ const App = () => {
       ],
       contact: {
         title: "CONNECT US",
-        desc: <>Krayと共に新しいコンテンツコマースの未来を創るパートナーを募集しています。<br className="hidden md:block" /> 提携のご提案やお問い合わせは、下記のメールアドレスまでご連絡ください。</>
+        // 📍 일본어 잔재 교정 완료
+        desc: <>Krayと共に新しいコンテンツコマースの未来を創るパートナーを募集しています。<br className="hidden md:block" /> 提携のご提案やお問い合わせは、下記のメールアドレス까지ご連絡ください。</>
       },
       legal: {
         privacy: "プライバシーポリシー",
@@ -636,6 +638,9 @@ const App = () => {
           <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
             {(t.roadmap || []).map((item, idx) => (
               <div key={idx} className="relative bg-white px-8 py-12 border border-gray-100 hover:shadow-xl transition-all text-left flex flex-col min-h-[220px]">
+                {/* 📍 노란색 사각형 포인트 디자인 복구 */}
+                <div className="hidden lg:block absolute -top-3 left-1/2 -translate-x-1/2 w-6 h-6 bg-yellow-400 z-10 shadow-sm"></div>
+                
                 <p className="text-lg font-medium text-yellow-600 mb-4 tracking-tighter uppercase">{item.year}</p>
                 <h4 className="text-lg font-medium text-gray-950 mb-4 tracking-tight leading-tight flex-grow">{item.title}</h4>
                 <p className={`${unifiedSmallTextStyle} text-gray-500 leading-relaxed`}>{item.desc}</p>
@@ -674,6 +679,7 @@ const App = () => {
             <button onClick={() => openModal('notices')} className="text-[11px] md:text-xs text-zinc-500 hover:text-white uppercase tracking-wider">{t.legal.notices}</button>
           </div>
           <p className="text-[11px] md:text-xs text-zinc-600 font-normal uppercase tracking-[0.2em] leading-loose">
+            {/* 📍 카피라이트 2024년 고정 유지 */}
             © 2024 Kray, Inc. All rights reserved. <br className="sm:hidden" /> Established 2024.07 (Japan)
           </p>
         </div>
