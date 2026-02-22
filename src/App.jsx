@@ -33,7 +33,6 @@ const LegalModal = ({ isOpen, title, content, onClose }) => {
         className="relative w-full max-w-4xl max-h-[90vh] bg-white rounded-none shadow-2xl flex flex-col overflow-hidden animate-in zoom-in-95 duration-300 text-black"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* 고정된 헤더 영역 */}
         <div className="sticky top-0 z-10 flex items-center justify-between px-6 py-5 bg-white border-b border-gray-100 text-black">
           <h2 className="text-xl font-medium text-gray-900 tracking-tight">{title}</h2>
           <button 
@@ -44,8 +43,7 @@ const LegalModal = ({ isOpen, title, content, onClose }) => {
           </button>
         </div>
         
-        {/* 스크롤 가능한 본문 영역 */}
-        <div className="flex-1 overflow-y-auto p-6 md:p-12 text-gray-700 leading-relaxed font-normal text-sm md:text-base bg-gray-50/30">
+        <div className="flex-1 overflow-y-auto p-6 md:p-12 text-gray-700 leading-relaxed font-normal text-sm md:text-base bg-gray-50/30 text-black">
           <div className="legal-content-wrapper text-black" dangerouslySetInnerHTML={{ __html: content }} />
         </div>
       </div>
@@ -99,7 +97,7 @@ const PurchaseIcons = ({ lang, naverUrl, amazonUrl, rakutenUrl }) => {
 
   if (lang === 'en') {
     return amazonUrl ? (
-      <a href={amazonUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 bg-[#FF9900] text-black px-4 py-3.5 hover:bg-[#e68a00] transition-colors w-full justify-center rounded-none shadow-sm text-white text-black">
+      <a href={amazonUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 bg-[#FF9900] text-black px-4 py-3.5 hover:bg-[#e68a00] transition-colors w-full justify-center rounded-none shadow-sm text-white text-black text-black">
         <span className={labelStyle}>Amazon US</span>
       </a>
     ) : (
@@ -129,7 +127,7 @@ const App = () => {
       },
       valuesIntro: { tag: "Executive Summary", title: "평범함 속의 특별함" },
       values: [
-        { title: "인플루언서 기반 경영", desc: "요리·도시락에 특화된 인플루언서 CEO 경영" },
+        { title: "인플루언서 기반 경영", desc: "요리·도시락에 특화된 인플루언서 경영" },
         { title: "독보적인 콘텐츠 파급력", desc: "압도적인 도달 범위와 높은 바이럴 잠재력" },
         { title: "최적의 마켓 핏 기획력", desc: "시장의 요구를 정확히 관통하는 상품 개발" },
         { title: "한일 양국 트렌드 가교", desc: "한국적 감성과 일본 제조 기술의 융합" },
@@ -207,9 +205,9 @@ const App = () => {
         desc: <>Kray와 함께 새로운 콘텐츠 커머스의 미래를 만들어갈 비즈니스 파트너를 기다립니다. <br className="hidden md:block" /> 협업 제안 및 문의는 아래 메일로 연락 부탁드립니다.</>
       },
       legal: {
-        privacy: "프라이버시 폴리시",
+        privacy: "개인정보 처리방침",
         terms: "이용약관",
-        notices: "特定商取引法に基づく表記"
+        notices: "특정상거래법에 따른 표기"
       }
     },
     ja: {
@@ -217,6 +215,7 @@ const App = () => {
       hero: {
         tag: "影響力が成果に繋がるエコシステム",
         title: <>コンテンツで世界の<br /><span className="text-yellow-500 underline decoration-black underline-offset-8 text-black text-black">「好み」を繋ぐ</span></>,
+        // 📍 일본어 부호 수정 및 한국어 잔재 제거
         desc: "Krayは単なるインフルエンサーマーケティングを越え、実質的な販売実績とブランド資産を構築する「コンテンツコマース」企業です。日本現地のお弁当文化を韓国的な感性で再解釈し、日韓両国に新しいライフスタイルを提案します。"
       },
       valuesIntro: { tag: "Executive Summary", title: "平凡の中に特別さが染み込む" },
@@ -235,6 +234,7 @@ const App = () => {
       influencerIntro: { tag: "Unrivaled Reach", title: "1億再生が証明する影響力" },
       influencer: {
         title: "圧倒的なコンテンツパワー",
+        // 📍 일본어 부호 수정
         desc: "日本在住の韓国人インフルエンサー「SONA」は、現地で経験したお弁当文化を独自の感性で再解釈し、世界中の視聴者を魅了しました。単なる動画を超え、「私にもできる」という確信を与えるチュートリアルを提供しています。"
       },
       strategy: {
@@ -296,7 +296,7 @@ const App = () => {
       ],
       contact: {
         title: "CONNECT US",
-        // 📍 일본어 번역 수정 (한국어 조사 제거 및 문장 교정)
+        // 📍 일본어 완벽 교정 및 부호 수정
         desc: <>Krayと共に新しいコンテンツコマースの未来を創るパートナーを募集しています。<br className="hidden md:block" /> 提携のご提案やお問い合わせは、下記のメールアドレスまでご連絡ください。</>
       },
       legal: {
@@ -394,7 +394,7 @@ const App = () => {
       legal: {
         privacy: "Privacy Policy",
         terms: "Terms of Use",
-        notices: "Legal Notices"
+        notices: "Legal Notice"
       }
     }
   };
@@ -403,14 +403,12 @@ const App = () => {
 
   /**
    * 📍 스마트 언어 감지 모달 로직
-   * 각 HTML 파일(privacy.html 등) 내의 id="ko"/"ja"/"en" 섹션을 파싱합니다.
-   * 이 파일들은 반드시 'public' 폴더에 있어야 합니다.
    */
   const openModal = async (type) => {
     const fileNameMap = {
       privacy: 'privacy.html',
       terms: 'terms.html',
-      legal: 'legal.html'
+      notices: 'legal.html'
     };
     
     setModalTitle(t.legal[type]);
@@ -426,12 +424,11 @@ const App = () => {
         if (langSection) {
           setModalContent(langSection.innerHTML);
         } else {
-          // 언어 섹션이 없는 경우 일본어(ja)를 기본값으로 사용
           const fallbackSection = doc.getElementById('ja');
           setModalContent(fallbackSection ? fallbackSection.innerHTML : fullHtml);
         }
       } else {
-        setModalContent(`<p class="text-center py-20 text-gray-400 text-black text-black text-black">데이터를 불러올 수 없습니다. (HTTP ${response.status})</p>`);
+        setModalContent(`<p class="text-center py-20 text-gray-400 text-black">데이터를 불러올 수 없습니다. (HTTP ${response.status})</p>`);
       }
     } catch (error) {
       setModalContent(`<p class="text-center py-20 text-gray-400 text-black text-black text-black">데이터 로드 중 오류가 발생했습니다.</p>`);
@@ -440,9 +437,7 @@ const App = () => {
   };
 
   useEffect(() => {
-    // 브라우저 탭 이름 정식 명칭 고정
     document.title = "Kray, Inc. | Official Website";
-    // 파비콘 설정
     const link = document.querySelector("link[rel*='icon']") || document.createElement('link');
     link.type = 'image/png';
     link.rel = 'shortcut icon';
@@ -525,21 +520,21 @@ const App = () => {
       {/* Hero Section */}
       <section id="about" className="relative overflow-hidden pt-48 pb-20 lg:pt-64 lg:pb-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-left text-black text-black">
-          <div className="flex flex-col lg:flex-row items-center gap-6 lg:gap-16 text-black text-black">
-            <div className="flex-1 text-black text-black">
+          <div className="flex flex-col lg:flex-row items-center gap-6 lg:gap-16 text-black text-black text-black">
+            <div className="flex-1 text-black text-black text-black">
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-yellow-100 text-yellow-700 text-[13px] font-medium mb-8 border border-yellow-100 text-black">
                 <Star size={14} fill="currentColor" /><span>{t.hero.tag}</span>
               </div>
-              <h1 className="text-4xl md:text-5xl lg:text-7xl font-medium leading-[1.1] mb-10 text-gray-950 tracking-tighter text-black text-black">{t.hero.title}</h1>
-              <p className="text-gray-600 mb-10 leading-relaxed text-lg max-w-2xl font-normal text-black text-black">{t.hero.desc}</p>
+              <h1 className="text-4xl md:text-5xl lg:text-7xl font-medium leading-[1.1] mb-10 text-gray-950 tracking-tighter text-black text-black text-black">{t.hero.title}</h1>
+              <p className="text-gray-600 mb-10 leading-relaxed text-lg max-w-2xl font-normal text-black text-black text-black">{t.hero.desc}</p>
             </div>
             <div className="relative w-full max-w-lg text-black text-black">
               <div className="absolute -top-10 -right-10 w-48 h-48 bg-yellow-400 rounded-full opacity-20 blur-3xl animate-pulse text-black text-black"></div>
               <div className="relative z-10 aspect-[4/5] bg-gray-50 rounded-none overflow-hidden group text-black text-black">
                 <img src="/sona_ceo.jpg" alt="CEO SONA" className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" onError={(e) => { e.target.src = 'https://via.placeholder.com/600x800?text=CEO+SONA'; }} />
                 <div className="absolute bottom-6 left-6 bg-white/95 backdrop-blur-md px-5 py-3 rounded-none shadow-xl text-left border-l-4 border-yellow-500 text-black text-black text-black text-black">
-                  <p className="text-[10px] font-medium text-gray-500 uppercase tracking-widest mb-1 text-black text-black text-black">Creator & CEO</p>
-                  <p className="text-xl font-medium text-gray-900 leading-none text-black text-black text-black text-black">SONA</p>
+                  <p className="text-[10px] font-medium text-gray-500 uppercase tracking-widest mb-1 text-black text-black text-black">Creator</p>
+                  <p className="text-xl font-medium text-gray-900 leading-none text-black text-black text-black text-black text-black">SONA</p>
                 </div>
               </div>
             </div>
@@ -547,11 +542,11 @@ const App = () => {
         </div>
       </section>
 
-      {/* Executive Summary Section - Image crop adjusted (object-[center_38%]) */}
+      {/* Executive Summary Section - Image crop 38% */}
       <section className="bg-gray-50 py-24 lg:py-40 text-black">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-black text-black">
           <div className="text-center mb-16 lg:mb-24 text-black text-black text-black text-black">
-            <h2 className="text-xs font-medium text-yellow-600 uppercase tracking-[0.2em] mb-6 text-black text-black text-black text-black text-black text-black text-black">Executive Summary</h2>
+            <h2 className="text-xs font-medium text-yellow-600 uppercase tracking-[0.2em] mb-6 text-black text-black text-black text-black text-black">Executive Summary</h2>
             <p className={`${sectionTitleStyle} text-gray-950`}>{t.valuesIntro.title}</p>
           </div>
           <div className="w-full max-w-5xl mx-auto mb-16 lg:mb-24 overflow-hidden rounded-none border border-gray-200 bg-white group text-black text-black">
@@ -574,7 +569,7 @@ const App = () => {
       {/* Influencer Impact Section */}
       <section id="influencer" className="py-24 lg:py-40 text-black">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-black text-black">
-          <div className="text-center mb-16 lg:mb-24 text-black text-black text-black text-black text-black text-black text-black">
+          <div className="text-center mb-16 lg:mb-24 text-black text-black text-black text-black text-black text-black text-black text-black">
             <h2 className="text-xs font-medium text-yellow-600 uppercase tracking-[0.2em] mb-6 text-black text-black text-black text-black text-black text-black text-black">Unrivaled Reach</h2>
             <p className={`${sectionTitleStyle} text-gray-950 uppercase text-black`}>{t.influencerIntro.title}</p>
           </div>
@@ -585,22 +580,22 @@ const App = () => {
               </div>
             </div>
             <div className="flex-1 w-full flex flex-col gap-12 text-black text-black text-black">
-              <div className="text-left border-l-4 border-yellow-500 pl-8 text-black text-black text-black text-black">
-                <h2 className="text-2xl md:text-3xl font-medium text-gray-950 mb-6 leading-tight tracking-tight text-black text-black text-black text-black text-black">{t.influencer.title}</h2>
-                <p className="text-gray-600 leading-relaxed text-lg font-normal text-black text-black text-black text-black text-black text-black text-black">{t.influencer.desc}</p>
+              <div className="text-left border-l-4 border-yellow-500 pl-8 text-black text-black text-black text-black text-black">
+                <h2 className="text-2xl md:text-3xl font-medium text-gray-950 mb-6 leading-tight tracking-tight text-black text-black text-black text-black text-black text-black">{t.influencer.title}</h2>
+                <p className="text-gray-600 leading-relaxed text-lg font-normal text-black text-black text-black text-black text-black text-black text-black text-black">{t.influencer.desc}</p>
               </div>
-              <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 text-black text-black text-black text-black text-black text-black text-black">
+              <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 text-black text-black text-black text-black text-black text-black text-black text-black">
                 {(t.stats || []).map((stat, idx) => (
-                  <div key={idx} className="bg-white p-8 rounded-none border border-gray-100 shadow-sm hover:shadow-xl transition-all flex flex-col items-center text-center text-black text-black text-black text-black text-black text-black">
-                    <div className="w-20 h-20 bg-yellow-400 flex items-center justify-center mb-8 text-black border border-yellow-500 shadow-md text-black text-black text-black">
+                  <div key={idx} className="bg-white p-8 rounded-none border border-gray-100 shadow-sm hover:shadow-xl transition-all flex flex-col items-center text-center text-black text-black text-black text-black text-black text-black text-black">
+                    <div className="w-20 h-20 bg-yellow-400 flex items-center justify-center mb-8 text-black border border-yellow-500 shadow-md text-black text-black text-black text-black">
                        {[<Users size={36} />, <Eye size={36} />, <Award size={36} />, <Calendar size={36} />][idx]}
                     </div>
                     <div>
-                      <p className={`${unifiedSmallTextStyle} text-gray-400 mb-3 uppercase tracking-widest text-black text-black text-black`}>{stat.label}</p>
-                      <p className="text-3xl font-medium text-gray-950 leading-none mb-3 tracking-tighter text-black text-black text-black text-black text-black text-black text-black">
+                      <p className={`${unifiedSmallTextStyle} text-gray-400 mb-3 uppercase tracking-widest text-black text-black text-black text-black`}>{stat.label}</p>
+                      <p className="text-3xl font-medium text-gray-950 leading-none mb-3 tracking-tighter text-black text-black text-black text-black text-black text-black text-black text-black">
                         {stat.value}
                       </p>
-                      <p className="text-[10px] text-yellow-600 font-medium uppercase tracking-[0.1em] text-black text-black text-black text-black text-black text-black text-black">{stat.sub}</p>
+                      <p className="text-[10px] text-yellow-600 font-medium uppercase tracking-[0.1em] text-black text-black text-black text-black text-black text-black text-black text-black">{stat.sub}</p>
                     </div>
                   </div>
                 ))}
@@ -616,33 +611,33 @@ const App = () => {
       </section>
 
       {/* Content Strategy Section */}
-      <section className="bg-black text-white py-24 lg:py-40 text-center text-white text-white text-white text-white text-white text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-white text-white text-white text-white text-white text-white text-white">
-          <div className="mb-12 lg:mb-20 text-white text-white text-white text-white">
+      <section className="bg-black text-white py-24 lg:py-40 text-center text-white text-white text-white text-white text-white text-white text-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-white text-white text-white text-white text-white text-white text-white text-white">
+          <div className="mb-12 lg:mb-20 text-white text-white text-white text-white text-white">
             <h2 className="text-[11px] font-medium text-yellow-500 uppercase tracking-[0.3em] mb-6 text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white">Content Strategy</h2>
-            <h3 className={`${sectionTitleStyle} text-white mb-6 text-white text-white text-white text-white text-white text-white text-white text-white text-white`}>{t.strategy.title}</h3>
-            <p className="text-gray-400 max-w-2xl mx-auto font-normal mb-16 text-base md:text-lg leading-relaxed text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white">{t.strategy.subtitle}</p>
-            <div className="relative w-full overflow-hidden mb-20 py-6 bg-white/[0.03] border-y border-white/10 text-white text-white text-white text-white text-white text-white">
-              <div className="animate-film whitespace-nowrap text-white text-white text-white">
+            <h3 className={`${sectionTitleStyle} text-white mb-6 text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white`}>{t.strategy.title}</h3>
+            <p className="text-gray-400 max-w-2xl mx-auto font-normal mb-16 text-base md:text-lg leading-relaxed text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white">{t.strategy.subtitle}</p>
+            <div className="relative w-full overflow-hidden mb-20 py-6 bg-white/[0.03] border-y border-white/10 text-white text-white text-white text-white text-white text-white text-white">
+              <div className="animate-film whitespace-nowrap text-white text-white text-white text-white">
                 {[1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5, 6].map((num, i) => (
-                  <div key={i} className="inline-block px-3 text-white text-white text-white text-white text-white text-white">
-                    <div className="w-[270px] aspect-square bg-gray-900 overflow-hidden rounded-none border border-white/10 group shadow-2xl text-white text-white text-white">
-                      <img src={`/slide0${num}.jpg`} alt={`Slide ${num}`} className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 text-white text-white text-white text-white text-white text-white text-white" onError={(e) => { e.target.src = `https://via.placeholder.com/400x400?text=Slide+0${num}`; }} />
+                  <div key={i} className="inline-block px-3 text-white text-white text-white text-white text-white text-white text-white">
+                    <div className="w-[270px] aspect-square bg-gray-900 overflow-hidden rounded-none border border-white/10 group shadow-2xl text-white text-white text-white text-white text-white">
+                      <img src={`/slide0${num}.jpg`} alt={`Slide ${num}`} className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 text-white text-white text-white text-white text-white text-white text-white text-white" onError={(e) => { e.target.src = `https://via.placeholder.com/400x400?text=Slide+0${num}`; }} />
                     </div>
                   </div>
                 ))}
               </div>
             </div>
           </div>
-          <div className="grid gap-8 grid-cols-1 md:grid-cols-3 text-white text-white">
+          <div className="grid gap-8 grid-cols-1 md:grid-cols-3 text-white text-white text-white">
             {(t.strategy.steps || []).map((item, idx) => (
-              <div key={idx} className="relative group p-10 rounded-none border border-white/20 hover:border-yellow-400/50 bg-white/[0.03] hover:bg-white/[0.06] transition-all duration-500 text-left text-white text-white text-white text-white text-white text-white text-white">
+              <div key={idx} className="relative group p-10 rounded-none border border-white/20 hover:border-yellow-400/50 bg-white/[0.03] hover:bg-white/[0.06] transition-all duration-500 text-left text-white text-white text-white text-white text-white text-white text-white text-white">
                 <span className="text-7xl font-medium text-yellow-400/10 absolute top-4 right-4 pointer-events-none group-hover:text-yellow-400/20 transition-colors text-white text-white text-white text-white text-white text-white text-white text-white text-white">0{idx+1}</span>
-                <h3 className="text-xl md:text-2xl font-medium text-yellow-400 mb-6 flex items-center gap-4 uppercase tracking-tight text-white text-white text-white text-white text-white text-white text-white text-white text-white">
-                  <span className="w-2.5 h-2.5 bg-yellow-400 rounded-full text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white"></span>
+                <h3 className="text-xl md:text-2xl font-medium text-yellow-400 mb-6 flex items-center gap-4 uppercase tracking-tight text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white">
+                  <span className="w-2.5 h-2.5 bg-yellow-400 rounded-full text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white"></span>
                   {item.title}
                 </h3>
-                <p className={`${unifiedSmallTextStyle} text-gray-400 text-white text-white text-white text-white text-white text-white text-white text-white text-white`}>{item.desc}</p>
+                <p className={`${unifiedSmallTextStyle} text-gray-400 text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white`}>{item.desc}</p>
               </div>
             ))}
           </div>
@@ -650,13 +645,13 @@ const App = () => {
       </section>
 
       {/* Brand Identity Section */}
-      <section className="bg-gray-50 border-y border-gray-100 py-24 lg:py-48 text-black text-black text-black text-black">
+      <section className="bg-gray-50 border-y border-gray-100 py-24 lg:py-48 text-black text-black text-black text-black text-black text-black">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center">
-          <div className="mb-16">
-            <h2 className="text-xs font-medium text-yellow-600 uppercase tracking-[0.2em] mb-6 text-black text-black text-black text-black text-black text-black text-black text-black">Our Brand Identity</h2>
-            <p className={`${sectionTitleStyle} text-gray-950 max-w-4xl text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black`}>{t.brand.title}</p>
+          <div className="mb-16 text-black text-black text-black text-black text-black text-black text-black">
+            <h2 className="text-xs font-medium text-yellow-600 uppercase tracking-[0.2em] mb-6 text-black text-black text-black text-black text-black text-black text-black text-black text-black">Our Brand Identity</h2>
+            <p className={`${sectionTitleStyle} text-gray-950 max-w-4xl text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black`}>{t.brand.title}</p>
           </div>
-          <div className="w-full max-w-[280px] sm:max-w-md group transition-transform duration-700 hover:scale-105 mb-16 text-black text-black text-black text-black text-black text-black text-black text-black">
+          <div className="w-full max-w-[280px] sm:max-w-md group transition-transform duration-700 hover:scale-105 mb-16 text-black text-black text-black text-black text-black text-black text-black text-black text-black">
              <img src="/sonaandtokyo-logo.png" alt="Logo" className="w-full h-auto object-contain border-none shadow-none bg-transparent" style={{ mixBlendMode: 'multiply' }} onError={(e) => { e.target.src = 'https://via.placeholder.com/600x200?text=BRAND+LOGO'; }} />
           </div>
           <p className="text-sm text-gray-400 font-normal tracking-wide mt-4 opacity-80 leading-relaxed text-black text-black text-black text-black text-black text-black text-black">
@@ -666,31 +661,31 @@ const App = () => {
       </section>
 
       {/* Product Lineup Section */}
-      <section id="products" className="py-24 lg:py-40 text-black text-black text-black text-black text-black">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-black text-black text-black text-black text-black text-black text-black">
-          <div className="text-center mb-16 lg:mb-20 text-black text-black text-black text-black text-black text-black text-black text-black">
-            <h2 className="text-xs font-medium text-yellow-600 uppercase tracking-[0.2em] mb-6 text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black">Product Lineup</h2>
+      <section id="products" className="py-24 lg:py-40 text-black text-black text-black text-black text-black text-black text-black">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-black text-black text-black text-black text-black text-black text-black text-black text-black">
+          <div className="text-center mb-16 lg:mb-20 text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black">
+            <h2 className="text-xs font-medium text-yellow-600 uppercase tracking-[0.2em] mb-6 text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black">Product Lineup</h2>
             <p className={`${sectionTitleStyle} text-gray-950`}>{t.products.title}</p>
           </div>
-          <div className="grid gap-8 lg:gap-10 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black">
+          <div className="grid gap-8 lg:gap-10 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black">
             {(t.products.items || []).map((p, idx) => (
-              <div key={idx} className="flex flex-col text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black">
-                <div className="group flex flex-col hover:shadow-2xl transition-all h-full bg-white border border-gray-100 rounded-none overflow-hidden text-left relative text-black text-black text-black text-black text-black text-black">
-                  <div className="w-full aspect-[4/5] bg-gray-50 flex items-center justify-center overflow-hidden relative text-black text-black text-black text-black text-black text-black text-black">
+              <div key={idx} className="flex flex-col text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black">
+                <div className="group flex flex-col hover:shadow-2xl transition-all h-full bg-white border border-gray-100 rounded-none overflow-hidden text-left relative text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black">
+                  <div className="w-full aspect-[4/5] bg-gray-50 flex items-center justify-center overflow-hidden relative text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black">
                     <img src={[`/produc01_thum.jpg`, `/produc02_thum.jpg`, `/produc03_thum.jpg`][idx]} alt={p.title} className={`w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 ${idx === 2 ? 'grayscale-100 opacity-40 contrast-150' : ''}`} onError={(e) => { e.target.src = 'https://via.placeholder.com/600x800?text=Product'; }} />
                   </div>
-                  <div className="px-8 pt-3 pb-5 flex flex-col h-full text-black text-black text-black text-black text-black text-black text-black text-black text-black">
-                    <div className="mb-2 min-h-[18px] text-black text-black">
+                  <div className="px-8 pt-3 pb-5 flex flex-col h-full text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black">
+                    <div className="mb-2 min-h-[18px] text-black text-black text-black text-black">
                       <span className={`px-3 py-0.5 text-[10px] font-medium uppercase tracking-widest shadow-sm text-white ${idx === 0 ? 'bg-orange-500' : idx === 1 ? 'bg-blue-600' : 'bg-gray-400'}`}>
                         {p.badge}
                       </span>
                     </div>
-                    <h3 className="text-lg md:text-xl font-medium text-gray-950 mb-6 tracking-tight uppercase text-black text-black text-black text-black text-black text-black text-black text-black text-black">{p.title}</h3>
-                    <p className={`${cardDescriptionStyle} text-gray-600 mb-2 leading-tight flex-grow text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black`}>{p.desc}</p>
-                    <div className="flex flex-col gap-1 mb-10 border-t border-gray-50 pt-2 text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black">
+                    <h3 className="text-lg md:text-xl font-medium text-gray-950 mb-6 tracking-tight uppercase text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black">{p.title}</h3>
+                    <p className={`${cardDescriptionStyle} text-gray-600 mb-2 leading-tight flex-grow text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black`}>{p.desc}</p>
+                    <div className="flex flex-col gap-1 mb-10 border-t border-gray-50 pt-2 text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black">
                       {(p.features || []).map((f, i) => (
-                        <div key={i} className="flex items-center gap-2.5 text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black">
-                          <CheckCircle2 size={13} className={`${idx === 2 ? 'text-gray-300' : 'text-yellow-600'} shrink-0 text-black text-black text-black`} />
+                        <div key={i} className="flex items-center gap-2.5 text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black">
+                          <CheckCircle2 size={13} className={`${idx === 2 ? 'text-gray-300' : 'text-yellow-600'} shrink-0 text-black text-black text-black text-black text-black`} />
                           <span className={unifiedSmallTextStyle}>{f}</span>
                         </div>
                       ))}
@@ -700,9 +695,9 @@ const App = () => {
                     </div>
                   </div>
                 </div>
-                <div className="min-h-[24px] mt-1.5 text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black">
+                <div className="min-h-[24px] mt-1.5 text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black">
                   {idx === 0 && (
-                    <p className="text-[13px] text-gray-400 font-normal italic leading-tight text-left text-black text-black text-black text-black text-black text-black text-black text-black">
+                    <p className="text-[13px] text-gray-400 font-normal italic leading-tight text-left text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black">
                       {t.products.footnote}
                     </p>
                   )}
@@ -714,21 +709,21 @@ const App = () => {
       </section>
 
       {/* Roadmap Section */}
-      <section id="roadmap" className="py-24 lg:py-40 text-black text-black text-black text-black text-black text-black text-black">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black">
-          <div className="mb-20 text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black">
-            <h2 className="text-xs font-medium text-yellow-600 uppercase tracking-[0.2em] mb-6 text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black">Brand Roadmap</h2>
+      <section id="roadmap" className="py-24 lg:py-40 text-black text-black text-black text-black text-black text-black text-black text-black text-black">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black">
+          <div className="mb-20 text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black">
+            <h2 className="text-xs font-medium text-yellow-600 uppercase tracking-[0.2em] mb-6 text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black">Brand Roadmap</h2>
             <p className={`${sectionTitleStyle} text-gray-950`}>{t.roadmapIntro.title}</p>
           </div>
-          <div className="relative text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black">
-            <div className="hidden lg:block absolute top-1/2 left-0 w-full h-px bg-gray-200 -translate-y-1/2 text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black"></div>
-            <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black">
+          <div className="relative text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black">
+            <div className="hidden lg:block absolute top-1/2 left-0 w-full h-px bg-gray-200 -translate-y-1/2 text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black"></div>
+            <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black">
               {(t.roadmap || []).map((item, idx) => (
                 <div key={idx} className="relative bg-white px-8 py-12 rounded-none border border-gray-100 hover:shadow-xl transition-all text-left flex flex-col min-h-[220px]">
-                  <div className="hidden lg:block absolute -top-3 left-1/2 -translate-x-1/2 w-6 h-6 bg-yellow-400 rounded-none z-10 shadow-sm text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black"></div>
-                  <p className="text-lg font-medium text-yellow-600 mb-4 tracking-tighter uppercase text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black"> {item.year}</p>
-                  <h4 className="text-lg font-medium text-gray-950 mb-4 tracking-tight leading-tight flex-grow text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black">{item.title}</h4>
-                  <p className={`${unifiedSmallTextStyle} text-gray-500 leading-relaxed text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black`}>{item.desc}</p>
+                  <div className="hidden lg:block absolute -top-3 left-1/2 -translate-x-1/2 w-6 h-6 bg-yellow-400 rounded-none z-10 shadow-sm text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black"></div>
+                  <p className="text-lg font-medium text-yellow-600 mb-4 tracking-tighter uppercase text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black"> {item.year}</p>
+                  <h4 className="text-lg font-medium text-gray-950 mb-4 tracking-tight leading-tight flex-grow text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black">{item.title}</h4>
+                  <p className={`${unifiedSmallTextStyle} text-gray-500 leading-relaxed text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black text-black`}>{item.desc}</p>
                 </div>
               ))}
             </div>
@@ -737,19 +732,19 @@ const App = () => {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="bg-black text-white pt-32 pb-32 text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white">
-          <div className="max-w-3xl mx-auto text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white">
-            <h2 className="text-4xl lg:text-6xl font-medium mb-10 uppercase italic tracking-tighter text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white">CONNECT US</h2>
-            <div className="text-gray-400 mb-16 leading-relaxed text-lg md:text-xl font-normal opacity-90 text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white">{t.contact.desc}</div>
-            <div className="flex justify-center text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white">
-              <div className="flex flex-col items-center gap-6 group cursor-default text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white">
-                <div className="w-20 h-20 bg-white/5 flex items-center justify-center group-hover:bg-yellow-400 group-hover:text-black transition-all duration-500 mb-4 text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white">
+      <section id="contact" className="bg-black text-white pt-32 pb-32 text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white">
+          <div className="max-w-3xl mx-auto text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white">
+            <h2 className="text-4xl lg:text-6xl font-medium mb-10 uppercase italic tracking-tighter text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white">CONNECT US</h2>
+            <div className="text-gray-400 mb-16 leading-relaxed text-lg md:text-xl font-normal opacity-90 text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white">{t.contact.desc}</div>
+            <div className="flex justify-center text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white">
+              <div className="flex flex-col items-center gap-6 group cursor-default text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white">
+                <div className="w-20 h-20 bg-white/5 flex items-center justify-center group-hover:bg-yellow-400 group-hover:text-black transition-all duration-500 mb-4 text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white">
                   <Mail size={36} strokeWidth={1.5} />
                 </div>
-                <div className="text-center text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white">
-                  <p className="text-xs text-gray-500 font-medium uppercase tracking-[0.3em] mb-3 text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white">Email Inquiry</p>
-                  <p className="text-2xl md:text-3xl font-medium tracking-tight group-hover:text-yellow-400 transition-colors text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white">business@krayinc.com</p>
+                <div className="text-center text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white">
+                  <p className="text-xs text-gray-500 font-medium uppercase tracking-[0.3em] mb-3 text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white">Email Inquiry</p>
+                  <p className="text-2xl md:text-3xl font-medium tracking-tight group-hover:text-yellow-400 transition-colors text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white">business@krayinc.com</p>
                 </div>
               </div>
             </div>
@@ -758,22 +753,22 @@ const App = () => {
       </section>
 
       {/* Footer */}
-      <footer className="bg-black py-24 text-center border-t border-white/10 text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white">
+      <footer className="bg-black py-24 text-center border-t border-white/10 text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white">
           <div className="flex flex-col items-center gap-10">
-            <div className="p-2 text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white">
-              <img src="/kray_logo.png" alt="Kray, Inc." className="h-12 md:h-16 w-auto invert brightness-100 text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white" onError={(e) => { e.target.style.display = 'none'; }} />
+            <div className="p-2 text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white">
+              <img src="/kray_logo.png" alt="Kray, Inc." className="h-12 md:h-16 w-auto invert brightness-100 text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white" onError={(e) => { e.target.style.display = 'none'; }} />
             </div>
             
             {/* 법적 고지 링크 (현재 홈페이지 언어에 동기화됨) */}
-            <div className="flex flex-wrap justify-center gap-x-8 gap-y-4 mb-4 text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white">
-              <button onClick={() => openModal('privacy')} className="text-[11px] md:text-xs text-zinc-500 hover:text-white transition-colors uppercase tracking-wider text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white">{t.legal.privacy}</button>
-              <button onClick={() => openModal('terms')} className="text-[11px] md:text-xs text-zinc-500 hover:text-white transition-colors uppercase tracking-wider text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white">{t.legal.terms}</button>
-              <button onClick={() => openModal('notices')} className="text-[11px] md:text-xs text-zinc-500 hover:text-white transition-colors uppercase tracking-wider text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white">{t.legal.notices}</button>
+            <div className="flex flex-wrap justify-center gap-x-8 gap-y-4 mb-4 text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white">
+              <button onClick={() => openModal('privacy')} className="text-[11px] md:text-xs text-zinc-500 hover:text-white transition-colors uppercase tracking-wider text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white">{t.legal.privacy}</button>
+              <button onClick={() => openModal('terms')} className="text-[11px] md:text-xs text-zinc-500 hover:text-white transition-colors uppercase tracking-wider text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white">{t.legal.terms}</button>
+              <button onClick={() => openModal('notices')} className="text-[11px] md:text-xs text-zinc-500 hover:text-white transition-colors uppercase tracking-wider text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white">{t.legal.notices}</button>
             </div>
 
-            <p className="text-[11px] md:text-xs text-zinc-600 font-normal uppercase tracking-[0.2em] leading-loose text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white">
-              © 2025 Kray, Inc. All rights reserved. <br className="sm:hidden text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white" /> Established 2025.07 (Japan)
+            <p className="text-[11px] md:text-xs text-zinc-600 font-normal uppercase tracking-[0.2em] leading-loose text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white text-white">
+              © 2024 Kray, Inc. All rights reserved. Established 2024.07 (Japan)
             </p>
           </div>
         </div>
