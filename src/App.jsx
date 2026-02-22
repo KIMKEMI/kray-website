@@ -22,6 +22,7 @@ import {
 /**
  * @component LegalModal
  * 법적 고지 사항 전용 모달
+ * 모바일 환경에서도 타이틀과 닫기 버튼이 항상 상단에 노출되도록 레이아웃을 최적화했습니다.
  */
 const LegalModal = ({ isOpen, title, content, onClose }) => {
   if (!isOpen) return null;
@@ -32,12 +33,19 @@ const LegalModal = ({ isOpen, title, content, onClose }) => {
         className="relative w-full max-w-4xl max-h-[90vh] bg-white rounded-none shadow-2xl flex flex-col overflow-hidden animate-in zoom-in-95 duration-300 text-black"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="sticky top-0 z-10 flex items-center justify-between px-6 py-5 bg-white border-b border-gray-100">
+        {/* 고정 헤더: sticky 대신 flex-shrink-0을 사용하여 모바일에서도 확실히 상단 고정 */}
+        <div className="flex-shrink-0 flex items-center justify-between px-6 py-5 bg-white border-b border-gray-100 z-20">
           <h2 className="text-xl font-medium text-gray-900 tracking-tight">{title}</h2>
-          <button onClick={onClose} className="p-2 text-gray-400 hover:text-gray-900 transition-colors">
+          <button 
+            onClick={onClose} 
+            className="p-2 text-gray-400 hover:text-gray-900 transition-colors focus:outline-none"
+            aria-label="Close"
+          >
             <X size={26} />
           </button>
         </div>
+        
+        {/* 스크롤 본문 영역 */}
         <div className="flex-1 overflow-y-auto p-6 md:p-12 text-gray-700 leading-relaxed text-sm md:text-base bg-gray-50/30">
           <div className="legal-content-wrapper text-black" dangerouslySetInnerHTML={{ __html: content }} />
         </div>
@@ -193,7 +201,6 @@ const App = () => {
       legal: {
         privacy: "개인정보 처리방침",
         terms: "이용약관",
-        // 📍 한국어 교정 완료
         notices: "특정상거래법에 따른 표기"
       }
     },
@@ -281,8 +288,7 @@ const App = () => {
       ],
       contact: {
         title: "CONNECT US",
-        // 📍 일본어 잔재 교정 완료
-        desc: <>Krayと共に新しいコンテンツコマースの未来を創るパートナーを募集しています。<br className="hidden md:block" /> 提携のご提案やお問い合わせは、下記のメールアドレス까지ご連絡ください。</>
+        desc: <>Krayと共に新しいコンテンツコマースの未来を創るパートナーを募集しています。<br className="hidden md:block" /> 提携のご提案やお問い合わせは、下記のメールアドレスまでご連絡ください。</>
       },
       legal: {
         privacy: "プライバシーポリシー",
