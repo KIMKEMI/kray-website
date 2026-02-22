@@ -68,7 +68,7 @@ const PurchaseIcons = ({ lang, naverUrl, amazonUrl, rakutenUrl }) => {
 
   if (lang === 'en') {
     return amazonUrl ? (
-      <a href={amazonUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 bg-[#FF9900] text-black px-4 py-3.5 hover:bg-[#e68a00] transition-colors w-full justify-center rounded-none shadow-sm text-white">
+      <a href={amazonUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 bg-[#FF9900] text-black px-4 py-3.5 hover:bg-[#e68a00] transition-colors w-full justify-center rounded-none shadow-sm text-black">
         <span className={labelStyle}>Amazon US</span>
       </a>
     ) : (
@@ -178,7 +178,7 @@ const App = () => {
       hero: {
         tag: "影響力が成果に繋がるエコシステム",
         title: <>コンテンツで世界の<br /><span className="text-yellow-500 underline decoration-black underline-offset-8">「好み」を繋ぐ</span></>,
-        desc: "Krayは単なるインフルエンサーマーケティングを越え、実質的な販売実績とブランド資産を構築する「コンテンツコマース」企業です。日本現地のお弁当文化を韓国的な感性で再解釈し、日韓両国に新しいライフスタイルを提案します。"
+        desc: "Krayは単なるインフルエンサーマーケティングを越え, 実質的な販売実績とブランド資産を構築する「コンテンツコマース」企業です. 日本現地のお弁当文化を韓国的な感性で再解釈し, 日韓両国に新しいライフスタイルを提案します."
       },
       valuesIntro: { tag: "Executive Summary", title: "平凡の中に特別さが染み込む" },
       values: [
@@ -196,21 +196,21 @@ const App = () => {
       influencerIntro: { tag: "Unrivaled Reach", title: "1億再生が証明する影響力" },
       influencer: {
         title: "圧倒的なコンテンツパワー",
-        desc: "日本在住の韓国人インフルエンサー「SONA」は、現地で経験したお弁当文化を独自の感性で再解釈し, 世界中の視聴者を魅了しました. 単なる動画を超え, 「私にもできる」という確信を与えるチュートリアルを提供しています."
+        desc: "日本在住の韓国人インフルエンサー「SONA」は, 現地で経験したお弁当文化を独自の感性で再解釈し, 世界中の視聴者を魅了しました. 単なる動画を超え, 「私にもできる」という確信を与えるチュートリアルを提供しています."
       },
       strategy: {
         title: "Content Strategy: 「魅せる」& 「教える」",
         subtitle: "目を引くビジュアル + 直感的なチュートリアル = 自然な購買への繋がり",
         steps: [
-          { title: "Visual (魅せる)", desc: "可愛いお弁当やセンス溢れる料理が画面を圧倒します。" },
-          { title: "Process (教える)", desc: "分かりやすい動画で, 誰でも作れるという自信を与えます。" },
-          { title: "Action (買う)", desc: "自然な購買導線で, 実際の購入とファン層の形成へと導きます。" },
+          { title: "Visual (魅せる)", desc: "可愛いお弁当やセンス溢れる料理が画面を圧倒します." },
+          { title: "Process (教える)", desc: "分かりやすい動画で, 誰でも作れるという自信を与えます." },
+          { title: "Action (買う)", desc: "自然な購買導線で, 実際の購入とファン層の形成へと導きます." },
         ]
       },
       brand: { 
         tag: "Our Brand Identity", 
         title: "料理に楽しさ大さじ1杯",
-        caption: "上記の画像は日本で商標登録された SONA and TOKYO の公式ロゴです。"
+        caption: "上記の画像は日本で商標登録された SONA and TOKYO の公式ロゴです."
       },
       products: {
         tag: "Product Lineup",
@@ -220,7 +220,7 @@ const App = () => {
           {
             title: "星・ハートの卵焼き型",
             badge: "Amazon JP 売れ筋ランキング1位! (※)",
-            desc: "型に入れるだけで誰でも可愛い形が完成します！お弁当初心者の悩みを解決する画期的なアイテムです。",
+            desc: "型に入れるだけで誰でも可愛い形が完成します！お弁当初心者の悩みを解決する画期的なアイテムです.",
             features: ["日・韓・中にて意匠登録済", "お客様からの高い評価"],
             urls: {
               naver: "https://mkt.shopping.naver.com/link/68f668bf309bbc4b1c8000cb",
@@ -231,7 +231,7 @@ const App = () => {
           {
             title: "星の卵とき",
             badge: "New Release",
-            desc: "軽い力でなめらかな溶き卵が作れるプレミアム調理器具です。",
+            desc: "軽い力でなめらかな溶き卵が作れるプレミアム調理器具です.",
             features: ["18-8ステンレス素材", "ふわふわ卵焼きに最適化"],
             urls: {
               naver: "https://mkt.shopping.naver.com/link/68f668bfdb0ddd370ee27b0a",
@@ -257,7 +257,7 @@ const App = () => {
       ],
       contact: {
         title: "CONNECT US",
-        desc: <>Krayと共に新しいコンテンツコマースの未来を創るパートナーを募集しています。<br className="hidden md:block" /> 提携のご提案やお問い合わせは, 下記のメールアドレスまでご連絡ください。</>
+        desc: <>Krayと共に新しいコンテンツコマースの未来を創るパートナーを募集しています. <br className="hidden md:block" /> 提携のご提案やお問い合わせは, 下記のメールアドレスまでご連絡ください.</>
       }
     },
     en: {
@@ -352,11 +352,14 @@ const App = () => {
   const t = translations[lang] || translations.en;
 
   useEffect(() => {
-    // 📍 브라우저 상단 탭 아이콘(파비콘) 설정 코드 추가
+    // 📍 브라우저 상단 탭 제목을 정식 명칭 'Kray, Inc.'로 고정
+    document.title = "Kray, Inc. | Official Website";
+
+    // 📍 브라우저 상단 탭 아이콘(파비콘) 설정
     const link = document.querySelector("link[rel*='icon']") || document.createElement('link');
     link.type = 'image/png';
     link.rel = 'shortcut icon';
-    link.href = '/favicon.png'; // 제작하신 아이콘 파일을 favicon.png로 저장해 public 폴더에 넣어주세요.
+    link.href = '/favicon.png'; 
     document.getElementsByTagName('head')[0].appendChild(link);
 
     const browserLang = navigator.language.split('-')[0];
@@ -395,7 +398,7 @@ const App = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center text-black">
           <div className="flex items-center gap-4">
             <a href="#" className="flex items-center">
-              <img src="/kray_logo.png" alt="Kray Inc." className="h-12 md:h-16 w-auto object-contain" onError={(e) => { e.target.style.display = 'none'; }} />
+              <img src="/kray_logo.png" alt="Kray, Inc." className="h-12 md:h-16 w-auto object-contain" onError={(e) => { e.target.style.display = 'none'; }} />
             </a>
           </div>
           
@@ -498,7 +501,7 @@ const App = () => {
           <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
             <div className="flex-1 w-full flex justify-center text-black">
               <div className="relative rounded-none overflow-hidden w-full max-w-[480px] aspect-[9/16] group">
-                <img src="/viral_reel.jpg" alt="Viral Reel" className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" onError={(e) => { e.target.src = 'https://via.placeholder.com/600x1066?text=Viral+Reel'; }} />
+                <img src="/viral_reel.jpg" alt="Viral Reel" className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" onError={(e) => { e.target.src = 'https://via.placeholder.com/600x1066?text=Viral+Reel'; }} />
               </div>
             </div>
 
@@ -525,7 +528,7 @@ const App = () => {
                 ))}
               </div>
               
-              <div className="flex justify-center pt-4 text-black">
+              <div className="flex justify-center pt-4">
                  <a href="https://www.instagram.com/sona_tokyolife/" target="_blank" className="flex items-center gap-3 bg-gradient-to-tr from-[#f9ce34] via-[#ee2a7b] to-[#6228d7] text-white px-10 py-4 font-medium hover:shadow-xl transition-all uppercase tracking-[0.15em] text-[13px] rounded-none shadow-lg text-white">
                    <Instagram size={20} /> @sona_tokyolife
                  </a>
@@ -547,7 +550,7 @@ const App = () => {
               <div className="animate-film whitespace-nowrap text-white text-white">
                 {[1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5, 6].map((num, i) => (
                   <div key={i} className="inline-block px-3 text-white">
-                    <div className="w-[270px] aspect-square bg-gray-900 overflow-hidden rounded-none border border-white/10 group shadow-2xl">
+                    <div className="w-[270px] aspect-square bg-gray-900 overflow-hidden rounded-none border border-white/10 group shadow-2xl text-white">
                       <img src={`/slide0${num}.jpg`} alt={`Slide ${num}`} className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 text-white" onError={(e) => { e.target.src = `https://via.placeholder.com/400x400?text=Slide+0${num}`; }} />
                     </div>
                   </div>
@@ -598,7 +601,7 @@ const App = () => {
             {(t.products.items || []).map((p, idx) => (
               <div key={idx} className="flex flex-col text-black">
                 <div className="group flex flex-col hover:shadow-2xl transition-all h-full bg-white border border-gray-100 rounded-none overflow-hidden text-left relative text-black text-black">
-                  <div className="w-full aspect-[4/5] bg-gray-50 flex items-center justify-center overflow-hidden relative">
+                  <div className="w-full aspect-[4/5] bg-gray-50 flex items-center justify-center overflow-hidden relative text-black text-black">
                     <img src={[`/produc01_thum.jpg`, `/produc02_thum.jpg`, `/produc03_thum.jpg`][idx]} alt={p.title} className={`w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 ${idx === 2 ? 'grayscale-100 opacity-40 contrast-150' : ''}`} onError={(e) => { e.target.src = 'https://via.placeholder.com/600x800?text=Product'; }} />
                   </div>
                   <div className="px-8 pt-3 pb-5 flex flex-col h-full text-black">
@@ -611,7 +614,7 @@ const App = () => {
                     <h3 className="text-lg md:text-xl font-medium text-gray-950 mb-6 tracking-tight uppercase min-h-[1.2em] text-black text-black">{p.title}</h3>
                     <p className={`${cardDescriptionStyle} text-gray-600 mb-2 leading-tight flex-grow text-black text-black`}>{p.desc}</p>
                     
-                    <div className="flex flex-col gap-1 mb-10 border-t border-gray-50 pt-2 text-black text-black">
+                    <div className="flex flex-col gap-1 mb-10 border-t border-gray-50 pt-2 text-black">
                       {(p.features || []).map((f, i) => (
                         <div key={i} className="flex items-center gap-2.5 text-black">
                           <CheckCircle2 size={13} className={`${idx === 2 ? 'text-gray-300' : 'text-yellow-600'} shrink-0`} />
@@ -619,7 +622,7 @@ const App = () => {
                         </div>
                       ))}
                     </div>
-                    <div className="mt-auto text-black">
+                    <div className="mt-auto text-black text-black">
                       <PurchaseIcons lang={lang} naverUrl={p.urls.naver} amazonUrl={p.urls.amazon} rakutenUrl={p.urls.rakuten} />
                     </div>
                   </div>
@@ -640,18 +643,18 @@ const App = () => {
       {/* Roadmap Section */}
       <section id="roadmap" className="bg-gray-50 border-t border-gray-100 py-24 lg:py-40 text-black text-black">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-black">
-          <div className="mb-20 text-black">
-            <h2 className="text-xs font-medium text-yellow-600 uppercase tracking-[0.2em] mb-6 text-black">Brand Roadmap</h2>
+          <div className="mb-20 text-black text-black">
+            <h2 className="text-xs font-medium text-yellow-600 uppercase tracking-[0.2em] mb-6 text-black text-black">Brand Roadmap</h2>
             <p className={`${sectionTitleStyle} text-gray-950`}>{t.roadmapIntro.title}</p>
           </div>
           <div className="relative text-black">
             <div className="hidden lg:block absolute top-1/2 left-0 w-full h-px bg-gray-200 -translate-y-1/2 text-black"></div>
-            <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 text-black text-black text-black text-black">
+            <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 text-black text-black text-black">
               {(t.roadmap || []).map((item, idx) => (
-                <div key={idx} className="relative bg-white px-8 py-12 rounded-none border border-gray-100 hover:shadow-xl transition-all text-left flex flex-col min-h-[220px] text-black">
+                <div key={idx} className="relative bg-white px-8 py-12 rounded-none border border-gray-100 hover:shadow-xl transition-all text-left flex flex-col min-h-[220px]">
                   <div className="hidden lg:block absolute -top-3 left-1/2 -translate-x-1/2 w-6 h-6 bg-yellow-400 rounded-none z-10 shadow-sm text-black"></div>
                   <p className="text-lg font-medium text-yellow-600 mb-4 tracking-tighter uppercase text-black text-black"> {item.year}</p>
-                  <h4 className="text-lg font-medium text-gray-950 mb-4 tracking-tight leading-tight flex-grow text-black text-black">{item.title}</h4>
+                  <h4 className="text-lg font-medium text-gray-950 mb-4 tracking-tight leading-tight flex-grow text-black text-black text-black">{item.title}</h4>
                   <p className={`${unifiedSmallTextStyle} text-gray-500 leading-relaxed`}>{item.desc}</p>
                 </div>
               ))}
@@ -661,20 +664,20 @@ const App = () => {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="bg-black text-white pt-32 pb-32 text-white">
+      <section id="contact" className="bg-black text-white pt-32 pb-32 text-white text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white text-white">
           <div className="max-w-3xl mx-auto text-white">
             <h2 className="text-4xl lg:text-6xl font-medium mb-10 uppercase italic tracking-tighter text-white text-white">CONNECT US</h2>
             <div className="text-gray-400 mb-16 leading-relaxed text-lg md:text-xl font-normal opacity-90 text-white text-white">{t.contact.desc}</div>
             
-            <div className="flex justify-center text-white">
+            <div className="flex justify-center text-white text-white">
               <div className="flex flex-col items-center gap-6 group cursor-default text-white">
-                <div className="w-20 h-20 bg-white/5 flex items-center justify-center group-hover:bg-yellow-400 group-hover:text-black transition-all duration-500 mb-4 text-white">
+                <div className="w-20 h-20 bg-white/5 flex items-center justify-center group-hover:bg-yellow-400 group-hover:text-black transition-all duration-500 mb-4 text-white text-white">
                   <Mail size={36} strokeWidth={1.5} />
                 </div>
-                <div className="text-center text-white text-white text-white">
-                  <p className="text-xs text-gray-500 font-medium uppercase tracking-[0.3em] mb-3 text-white">Email Inquiry</p>
-                  <p className="text-2xl md:text-3xl font-medium tracking-tight group-hover:text-yellow-400 transition-colors text-white text-white">business@krayinc.com</p>
+                <div className="text-center text-white text-white">
+                  <p className="text-xs text-gray-500 font-medium uppercase tracking-[0.3em] mb-3 text-white text-white">Email Inquiry</p>
+                  <p className="text-2xl md:text-3xl font-medium tracking-tight group-hover:text-yellow-400 transition-colors text-white text-white text-white">business@krayinc.com</p>
                 </div>
               </div>
             </div>
@@ -683,11 +686,11 @@ const App = () => {
       </section>
 
       {/* Footer - Copyright Color & Size Subdued */}
-      <footer className="bg-black py-24 text-center border-t border-white/10 text-white text-white text-white">
+      <footer className="bg-black py-24 text-center border-t border-white/10 text-white text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white text-white">
           <div className="flex flex-col items-center gap-10 text-white text-white">
-            <div className="p-2 text-white text-white text-white">
-              <img src="/kray_logo.png" alt="Kray Inc." className="h-12 md:h-16 w-auto invert brightness-100 text-white text-white" onError={(e) => { e.target.style.display = 'none'; }} />
+            <div className="p-2 text-white text-white">
+              <img src="/kray_logo.png" alt="Kray, Inc." className="h-12 md:h-16 w-auto invert brightness-100 text-white text-white" onError={(e) => { e.target.style.display = 'none'; }} />
             </div>
             {/* Copyright: text-zinc-600 적용하여 더 차분하게 처리 */}
             <p className="text-[11px] md:text-xs text-zinc-600 font-normal uppercase tracking-[0.2em] leading-loose text-white text-white">
