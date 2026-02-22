@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { 
   Menu, 
   X, 
@@ -22,7 +22,6 @@ import {
 /**
  * @component LegalModal
  * 법적 고지 사항 전용 모달
- * 모바일 환경에서도 타이틀과 닫기 버튼이 항상 상단에 노출되도록 레이아웃을 최적화했습니다.
  */
 const LegalModal = ({ isOpen, title, content, onClose }) => {
   if (!isOpen) return null;
@@ -33,19 +32,15 @@ const LegalModal = ({ isOpen, title, content, onClose }) => {
         className="relative w-full max-w-4xl max-h-[90vh] bg-white rounded-none shadow-2xl flex flex-col overflow-hidden animate-in zoom-in-95 duration-300 text-black"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* 고정 헤더: sticky 대신 flex-shrink-0을 사용하여 모바일에서도 확실히 상단 고정 */}
         <div className="flex-shrink-0 flex items-center justify-between px-6 py-5 bg-white border-b border-gray-100 z-20">
           <h2 className="text-xl font-medium text-gray-900 tracking-tight">{title}</h2>
           <button 
             onClick={onClose} 
             className="p-2 text-gray-400 hover:text-gray-900 transition-colors focus:outline-none"
-            aria-label="Close"
           >
             <X size={26} />
           </button>
         </div>
-        
-        {/* 스크롤 본문 영역 */}
         <div className="flex-1 overflow-y-auto p-6 md:p-12 text-gray-700 leading-relaxed text-sm md:text-base bg-gray-50/30">
           <div className="legal-content-wrapper text-black" dangerouslySetInnerHTML={{ __html: content }} />
         </div>
@@ -74,14 +69,14 @@ const PurchaseIcons = ({ lang, naverUrl, amazonUrl, rakutenUrl }) => {
     return (
       <div className="flex flex-col gap-1.5 w-full">
         {amazonUrl ? (
-          <a href={amazonUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 bg-[#FF9900] text-black px-4 py-3.5 hover:bg-[#e68a00] transition-colors w-full justify-center rounded-none shadow-sm">
+          <a href={amazonUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 bg-[#FF9900] text-black px-4 py-3.5 hover:bg-[#e68a00] transition-colors w-full justify-center rounded-none shadow-sm text-black">
             <span className={labelStyle}>Amazon JP</span>
           </a>
         ) : (
           <div className={disabledClass}><span className={labelStyle}>Amazon JP</span></div>
         )}
         {rakutenUrl ? (
-          <a href={rakutenUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 bg-[#BF0000] text-white px-4 py-3.5 hover:bg-[#a60000] transition-colors w-full justify-center rounded-none shadow-sm">
+          <a href={rakutenUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 bg-[#BF0000] text-white px-4 py-3.5 hover:bg-[#a60000] transition-colors w-full justify-center rounded-none shadow-sm text-white">
             <span className={labelStyle}>楽天市場</span>
           </a>
         ) : (
@@ -93,7 +88,7 @@ const PurchaseIcons = ({ lang, naverUrl, amazonUrl, rakutenUrl }) => {
 
   if (lang === 'en') {
     return amazonUrl ? (
-      <a href={amazonUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 bg-[#FF9900] text-black px-4 py-3.5 hover:bg-[#e68a00] transition-colors w-full justify-center rounded-none shadow-sm">
+      <a href={amazonUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 bg-[#FF9900] text-black px-4 py-3.5 hover:bg-[#e68a00] transition-colors w-full justify-center rounded-none shadow-sm text-white text-black">
         <span className={labelStyle}>Amazon US</span>
       </a>
     ) : (
@@ -106,7 +101,16 @@ const PurchaseIcons = ({ lang, naverUrl, amazonUrl, rakutenUrl }) => {
 const App = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [lang, setLang] = useState('ko');
+  
+  // 📍 초기 언어 설정을 1회만 브라우저 언어 참고, 이후에는 상태로만 관리
+  const [lang, setLang] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const browserLang = navigator.language.split('-')[0];
+      return ['ko', 'ja', 'en'].includes(browserLang) ? browserLang : 'en';
+    }
+    return 'en';
+  });
+
   const [modalType, setModalType] = useState(null);
   const [modalTitle, setModalTitle] = useState('');
   const [modalContent, setModalContent] = useState('');
@@ -227,12 +231,14 @@ const App = () => {
       influencerIntro: { tag: "Unrivaled Reach", title: "1億再生が証明する影響力" },
       influencer: {
         title: "圧倒的なコンテンツパワー",
+        // 📍 일본어 교정: 한국어 잔재 제거 완료
         desc: "日本在住の韓国人クリエイター「SONA」は、現地で経験したお弁当文化を独自の感性で再解釈し、世界中の視聴者を魅了しました。単なる動画を超え、「私にもできる」という確信を与えるチュートリアルを提供しています。"
       },
       strategy: {
         title: "Content Strategy: 「魅せる」& 「教える」",
         subtitle: "目を引くビジュアル + 直感的なチュートリアル = 自然な購買への繋がり",
         steps: [
+          // 📍 일본어 교정: 한국어 잔재 제거 완료
           { title: "Visual (魅せる)", desc: "可愛いお弁当やセンス溢れる料理が画面を圧倒します。" },
           { title: "Process (教える)", desc: "分かりやすい動画と道具の使い方で、誰でも作れるという自信を与えます。" },
           { title: "Action (買う)", desc: "自然な購買導線で、実際の購入とファン層の形成へと導きます。" },
@@ -251,6 +257,7 @@ const App = () => {
           {
             title: "星・ハートの卵焼き型",
             badge: "Amazon JP 売れ筋ランキング1位! (※)",
+            // 📍 일본어 교정: 한국어 잔재 제거 완료
             desc: "型に入れるだけで誰でも可愛い形が完成します！お弁当初心者の悩みを解決する画期的なアイテムです。",
             features: ["日・韓・中にて意匠登録済", "お客様からの高い評価"],
             urls: {
@@ -288,6 +295,7 @@ const App = () => {
       ],
       contact: {
         title: "CONNECT US",
+        // 📍 일본어 교정: 한국어 잔재 제거 완료
         desc: <>Krayと共に新しいコンテンツコマースの未来を創るパートナーを募集しています。<br className="hidden md:block" /> 提携のご提案やお問い合わせは、下記のメールアドレスまでご連絡ください。</>
       },
       legal: {
@@ -392,9 +400,16 @@ const App = () => {
 
   const t = translations[lang] || translations.en;
 
-  const openModal = async (type) => {
+  /**
+   * 📍 모달을 열고 URL 해시를 변경하는 함수 (useCallback으로 최적화)
+   */
+  const openModal = useCallback(async (type) => {
     const fileNameMap = { privacy: 'privacy.html', terms: 'terms.html', notices: 'legal.html' };
-    setModalTitle(t.legal[type]);
+    
+    // t 객체에 접근하여 제목 설정
+    setModalTitle(translations[lang].legal[type]);
+    window.location.hash = type;
+
     try {
       const response = await fetch(`/${fileNameMap[type]}`);
       if (response.ok) {
@@ -407,9 +422,14 @@ const App = () => {
           const fallbackSection = doc.getElementById('ja');
           setModalContent(fallbackSection ? fallbackSection.innerHTML : fullHtml);
         }
-      } else setModalContent(`<p class="text-center py-20">데이터를 불러올 수 없습니다.</p>`);
-    } catch (error) { setModalContent(`<p class="text-center py-20">오류가 발생했습니다.</p>`); }
+      } else setModalContent(`<p class="text-center py-20 text-gray-400">데이터를 불러올 수 없습니다.</p>`);
+    } catch (error) { setModalContent(`<p class="text-center py-20 text-gray-400">오류가 발생했습니다.</p>`); }
     setModalType(type);
+  }, [lang]); // lang이 변경될 때만 함수 갱신
+
+  const closeModal = () => {
+    setModalType(null);
+    window.history.pushState("", document.title, window.location.pathname + window.location.search);
   };
 
   useEffect(() => {
@@ -418,14 +438,29 @@ const App = () => {
     link.type = 'image/png'; link.rel = 'shortcut icon'; link.href = '/favicon.png'; 
     document.getElementsByTagName('head')[0].appendChild(link);
 
-    const browserLang = navigator.language.split('-')[0];
-    if (['ko', 'ja', 'en'].includes(browserLang)) setLang(browserLang);
-    else setLang('en');
-
     const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+
+    /**
+     * 📍 URL 해시 감지 및 초기 실행 로직
+     */
+    const handleHashChange = () => {
+      const hash = window.location.hash.replace('#', '');
+      if (['privacy', 'terms', 'notices'].includes(hash)) {
+        openModal(hash);
+      } else if (!hash) {
+        setModalType(null);
+      }
+    };
+
+    handleHashChange();
+    window.addEventListener('hashchange', handleHashChange);
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('hashchange', handleHashChange);
+    };
+  }, [openModal]); // openModal 의존성 추가 (lang 변경 감지 포함)
 
   const sectionTitleStyle = "text-3xl md:text-4xl font-medium tracking-tight leading-snug";
   const cardDescriptionStyle = "text-[15px] md:text-base leading-relaxed font-normal";
@@ -644,9 +679,7 @@ const App = () => {
           <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
             {(t.roadmap || []).map((item, idx) => (
               <div key={idx} className="relative bg-white px-8 py-12 border border-gray-100 hover:shadow-xl transition-all text-left flex flex-col min-h-[220px]">
-                {/* 📍 노란색 사각형 포인트 디자인 복구 */}
                 <div className="hidden lg:block absolute -top-3 left-1/2 -translate-x-1/2 w-6 h-6 bg-yellow-400 z-10 shadow-sm"></div>
-                
                 <p className="text-lg font-medium text-yellow-600 mb-4 tracking-tighter uppercase">{item.year}</p>
                 <h4 className="text-lg font-medium text-gray-950 mb-4 tracking-tight leading-tight flex-grow">{item.title}</h4>
                 <p className={`${unifiedSmallTextStyle} text-gray-500 leading-relaxed`}>{item.desc}</p>
@@ -685,13 +718,12 @@ const App = () => {
             <button onClick={() => openModal('notices')} className="text-[11px] md:text-xs text-zinc-500 hover:text-white uppercase tracking-wider">{t.legal.notices}</button>
           </div>
           <p className="text-[11px] md:text-xs text-zinc-600 font-normal uppercase tracking-[0.2em] leading-loose">
-            {/* 📍 카피라이트 2024년 고정 유지 */}
             © 2024 Kray, Inc. All rights reserved. <br className="sm:hidden" /> Established 2024.07 (Japan)
           </p>
         </div>
       </footer>
 
-      <LegalModal isOpen={!!modalType} title={modalTitle} content={modalContent} onClose={() => setModalType(null)} />
+      <LegalModal isOpen={!!modalType} title={modalTitle} content={modalContent} onClose={closeModal} />
     </div>
   );
 };
