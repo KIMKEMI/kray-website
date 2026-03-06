@@ -56,7 +56,7 @@ const PurchaseIcons = ({ lang, naverUrl, amazonUrl, rakutenUrl }) => {
 
   if (lang === 'ko') {
     return naverUrl ? (
-      <a href={naverUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 bg-[#03C75A] text-white px-4 py-3.5 hover:bg-[#02b351] transition-colors w-full justify-center rounded-none shadow-sm">
+      <a href={naverUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 bg-[#03C75A] text-white px-4 py-3.5 hover:bg-[#02b351] transition-colors w-full justify-center rounded-none shadow-sm text-white">
         <ShoppingCart size={18} />
         <span className={labelStyle}>네이버 스마트스토어</span>
       </a>
@@ -102,7 +102,6 @@ const App = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   
-  // 📍 초기 언어 설정을 1회만 브라우저 언어 참고하도록 고정
   const [lang, setLang] = useState(() => {
     if (typeof window !== 'undefined') {
       const browserLang = navigator.language.split('-')[0];
@@ -213,7 +212,8 @@ const App = () => {
       hero: {
         tag: "影響力が成果に繋がるエコシステム",
         title: <>コンテンツで <br /> 世界の <br /><span className="text-yellow-500 underline decoration-black underline-offset-8">「好み」を繋ぐ</span></>,
-        desc: "Krayは単なるインフルエンサーマーケティングを超え、実質的な販売実績とブランド資産を構築하는 「コンテンツコマース」企業です。日本現地のお弁当文化を韓国的な感性で再解釈し、日韓両国に新しいライフスタイルを提案します。"
+        // 📍 일본어 교정: 한국어 잔재 완벽 제거
+        desc: "Krayは単なるインフルエンサーマーケティングを超え、実質的な販売実績とブランド資産を構築する「コンテンツコマース」企業です。日本現地のお弁当文化を韓国的な感性で再解釈し、日韓両国に新しいライフスタイルを提案します。"
       },
       valuesIntro: { tag: "Executive Summary", title: "平凡の中に特別さが染み込む" },
       values: [
@@ -231,12 +231,14 @@ const App = () => {
       influencerIntro: { tag: "Unrivaled Reach", title: "1億再生が証明する影響力" },
       influencer: {
         title: "圧倒的なコンテンツパワー",
+        // 📍 일본어 교정: 한국어 잔재 완벽 제거
         desc: "日本在住の韓国人クリエイター「SONA」は、現地で経験したお弁当文化を独自の感性で再解釈し、世界中の視聴者を魅了しました。単なる動画を超え、「私にもできる」という確信を与えるチュートリアルを提供しています。"
       },
       strategy: {
         title: "Content Strategy: 「魅せる」& 「教える」",
         subtitle: "目を引くビジュアル + 直感的なチュートリアル = 自然な購買への繋がり",
         steps: [
+          // 📍 일본어 교정: 한국어 잔재 완벽 제거
           { title: "Visual (魅せる)", desc: "可愛いお弁当やセンス溢れる料理が画面を圧倒します。" },
           { title: "Process (教える)", desc: "分かりやすい動画と道具の使い方で、誰でも作れるという自信を与えます。" },
           { title: "Action (買う)", desc: "自然な購買導線で、実際の購入とファン層の形成へと導きます。" },
@@ -255,7 +257,7 @@ const App = () => {
           {
             title: "星・ハートの卵焼き型",
             badge: "Amazon JP 売れ筋ランキング1位! (※)",
-            // 📍 일본어 교정: 한국어 잔재 제거 완료
+            // 📍 일본어 교정: 한국어 잔재 완벽 제거
             desc: "型に入れるだけで誰でも可愛い形が完成します！お弁当初心者の悩みを解決する画期的なアイテムです。",
             features: ["日・韓・中にて意匠登録済", "お客様からの高い評価"],
             urls: {
@@ -265,10 +267,9 @@ const App = () => {
             }
           },
           {
-            // 📍 일본어 교정: '의' 제거
             title: "星の卵とき",
             badge: "New Release",
-            // 📍 일본어 교정: 한국어 잔재 제거 완료
+            // 📍 일본어 교정: 한국어 잔재 완벽 제거
             desc: "軽い力でなめらかな溶き卵が作れるプレミアム調理器具です。",
             features: ["18-8ステンレス素材", "ふわふわ卵焼きに最適化"],
             urls: {
@@ -280,7 +281,7 @@ const App = () => {
           {
             title: "トリプルパン (予定)",
             badge: "Coming Soon",
-            // 📍 일본어 교정: '터너가 세트로' 제거
+            // 📍 일본어 교정: 한국어 잔재 완벽 제거
             desc: "3品同時に！SONAエディションの新色2種と専用ターナーがセットになって発売！",
             features: ["SONA Edition", "3口同時調理システム"],
             urls: { naver: null, amazon: null, rakuten: null }
@@ -297,16 +298,15 @@ const App = () => {
       contact: {
         title: "CONNECT US",
         // 📍 일본어 교정: 한국어 잔재 완벽 제거
-        desc: <>Krayと共に新しいコンテンツコマースの未来を創るパートナー를 모집합니다. <br className="hidden md:block" /> 提携のご提案やお問い合わせは, 下記のメールアドレスまでご連絡ください。</>
+        desc: <>Krayと共に新しいコンテンツコマースの未来を創るパートナーを募集しています。<br className="hidden md:block" /> 提携のご提案やお問い合わせは、下記のメールアドレスまでご連絡ください。</>
       },
       legal: {
         privacy: "プライバシーポリシー",
-        // 📍 일본어 교정: '약' 제거
         terms: "利用規約",
         notices: "特定商取引法に基づく表記"
       }
     },
-    en: {
+    刻: {
       nav: { about: 'About', summary: 'Summary', influencer: 'Influencer', brand: 'Brand', products: 'Products', roadmap: 'Roadmap', cta: 'Contact Us' },
       hero: {
         tag: "Ecosystem Where Influence Leads to Results",
@@ -587,19 +587,55 @@ const App = () => {
               </div>
               <div className="grid gap-6 grid-cols-1 sm:grid-cols-2">
                 {(t.stats || []).map((stat, idx) => (
-                  <div key={idx} className="bg-white p-8 border border-gray-100 shadow-sm flex flex-col items-center text-center">
+                  <div key={idx} className="bg-white p-8 border border-gray-100 shadow-sm flex flex-col items-center text-center text-black">
                     <div className="w-20 h-20 bg-yellow-400 flex items-center justify-center mb-8 text-black border border-yellow-500 shadow-md">
                        {[<Users size={36} />, <Eye size={36} />, <Award size={36} />, <Calendar size={36} />][idx]}
                     </div>
                     <div>
                       <p className={`${unifiedSmallTextStyle} text-gray-400 mb-3 uppercase tracking-widest`}>{stat.label}</p>
-                      <p className="text-3xl font-medium text-gray-950 leading-none mb-3 tracking-tighter">{stat.value}</p>
+                      <p className="text-3xl font-medium text-gray-950 leading-none mb-3 tracking-tighter text-black">
+                        {stat.value}
+                      </p>
                       <p className="text-[10px] text-yellow-600 font-medium uppercase tracking-[0.1em]">{stat.sub}</p>
                     </div>
                   </div>
                 ))}
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Content Strategy Section (Show & Teach) */}
+      <section id="strategy" className="bg-black text-white py-24 lg:py-40 text-center">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="mb-12 lg:mb-20">
+            <h2 className="text-[11px] font-medium text-yellow-500 uppercase tracking-[0.3em] mb-6">Content Strategy</h2>
+            <h3 className={`${sectionTitleStyle} text-white mb-6`}>{t.strategy.title}</h3>
+            <p className="text-gray-400 max-w-2xl mx-auto font-normal mb-16 text-base md:text-lg leading-relaxed">{t.strategy.subtitle}</p>
+            <div className="relative w-full overflow-hidden mb-20 py-6 bg-white/[0.03] border-y border-white/10">
+              <div className="animate-film whitespace-nowrap">
+                {[1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5, 6].map((num, i) => (
+                  <div key={i} className="inline-block px-3">
+                    <div className="w-[270px] aspect-square bg-gray-900 overflow-hidden rounded-none border border-white/10 group shadow-2xl">
+                      <img src={`/slide0${num}.jpg`} alt={`Slide ${num}`} className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" onError={(e) => { e.target.src = `https://via.placeholder.com/400x400?text=Slide+0${num}`; }} />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+          <div className="grid gap-8 grid-cols-1 md:grid-cols-3">
+            {(t.strategy.steps || []).map((item, idx) => (
+              <div key={idx} className="relative group p-10 rounded-none border border-white/20 hover:border-yellow-400/50 bg-white/[0.03] hover:bg-white/[0.06] transition-all duration-500 text-left">
+                <span className="text-7xl font-medium text-yellow-400/10 absolute top-4 right-4 pointer-events-none group-hover:text-yellow-400/20 transition-colors">0{idx+1}</span>
+                <h3 className="text-xl md:text-2xl font-medium text-yellow-400 mb-6 flex items-center gap-4 uppercase tracking-tight">
+                  <span className="w-2.5 h-2.5 bg-yellow-400 rounded-full"></span>
+                  {item.title}
+                </h3>
+                <p className={`${unifiedSmallTextStyle} text-gray-400`}>{item.desc}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -638,7 +674,7 @@ const App = () => {
                     <div className="mb-2 min-h-[18px]">
                       <span className={`px-3 py-0.5 text-[10px] font-medium uppercase tracking-widest shadow-sm text-white ${idx === 0 ? 'bg-orange-500' : idx === 1 ? 'bg-blue-600' : 'bg-gray-400'}`}>{p.badge}</span>
                     </div>
-                    <h3 className="text-lg md:text-xl font-medium text-gray-950 mb-6 tracking-tight uppercase">{p.title}</h3>
+                    <h3 className="text-lg md:text-xl font-medium text-gray-950 mb-6 tracking-tight uppercase text-black">{p.title}</h3>
                     <p className={`${cardDescriptionStyle} text-gray-600 mb-2 leading-tight flex-grow`}>{p.desc}</p>
                     <div className="flex flex-col gap-1 mb-10 border-t border-gray-50 pt-2">
                       {(p.features || []).map((f, i) => (
@@ -667,7 +703,7 @@ const App = () => {
           <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
             {(t.roadmap || []).map((item, idx) => (
               <div key={idx} className="relative bg-white px-8 py-12 border border-gray-100 hover:shadow-xl transition-all text-left flex flex-col min-h-[220px]">
-                <div className="hidden lg:block absolute -top-3 left-1/2 -translate-x-1/2 w-6 h-6 bg-yellow-400 z-10 shadow-sm"></div>
+                <div className="hidden lg:block absolute -top-3 left-1/2 -translate-x-1/2 w-6 h-6 bg-yellow-400 rounded-none z-10 shadow-sm"></div>
                 <p className="text-lg font-medium text-yellow-600 mb-4 tracking-tighter uppercase">{item.year}</p>
                 <h4 className="text-lg font-medium text-gray-950 mb-4 tracking-tight leading-tight flex-grow">{item.title}</h4>
                 <p className={`${unifiedSmallTextStyle} text-gray-500 leading-relaxed`}>{item.desc}</p>
