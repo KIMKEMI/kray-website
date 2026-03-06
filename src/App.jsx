@@ -116,7 +116,8 @@ const App = () => {
 
   const translations = {
     ko: {
-      nav: { about: '소개', summary: '개요', influencer: '인플루언서', brand: '브랜드', products: '제품', roadmap: '로드맵', cta: '문의하기' },
+      // 📍 nav에 strategy(전략) 추가
+      nav: { about: '소개', summary: '개요', influencer: '인플루언서', strategy: '전략', brand: '브랜드', products: '제품', roadmap: '로드맵', cta: '문의하기' },
       hero: {
         tag: "영향력이 성과로 이어지는 에코시스템",
         title: <>콘텐츠로 <br /> 세상의 <br /><span className="text-yellow-500 underline decoration-black underline-offset-8">취향을 잇다</span></>,
@@ -208,18 +209,19 @@ const App = () => {
       }
     },
     ja: {
-      nav: { about: '紹介', summary: '概要', influencer: 'インフルエンサー', brand: 'ブランド', products: '製品', roadmap: 'ロードマップ', cta: 'お問い合わせ' },
+      // 📍 nav에 strategy(戦略) 추가
+      nav: { about: '紹介', summary: '概要', influencer: 'インフルエンサー', strategy: '戦略', brand: 'ブランド', products: '製品', roadmap: 'ロードマップ', cta: 'お問い合わせ' },
       hero: {
         tag: "影響力が成果に繋がるエコシステム",
         title: <>コンテンツで <br /> 世界の <br /><span className="text-yellow-500 underline decoration-black underline-offset-8">「好み」を繋ぐ</span></>,
         // 📍 일본어 교정: 한국어 잔재 완벽 제거
-        desc: "Krayは単なるインフルエンサーマーケティングを超え、実質的な販売実績とブランド資産を構築する「コンテンツコマース」企業です。日本現地のお弁当文化を韓国的な感性で再解釈し、日韓両国に新しいライフスタイルを提案します。"
+        desc: "Kray는 단일한 인플루언서 마케팅을 넘어 실질적인 판매 실적과 브랜드 자산을 구축하는 '콘텐츠 커머스' 기업입니다. 일본 현지의 도시락 문화를 한국적 감성으로 재해석하여 한일 양국에 새로운 라이프스타일을 제안합니다."
       },
       valuesIntro: { tag: "Executive Summary", title: "平凡の中に特別さが染み込む" },
       values: [
         { title: "クリエイター経営", desc: "料理・お弁当特化型クリエイターによる経営" },
         { title: "圧倒的なコンテンツ拡散力", desc: "圧倒的なコンテンツ拡散力とリーチ力" },
-        { title: "マーケット適合の商品企画", desc: "市場ニーズを的確に捉えた最適な商品開発" },
+        { title: "マーケット適合の商品企画", desc: "市場ニーズを的確에捉えた最適な商品開発" },
         { title: "日韓トレンドの架け橋", desc: "韓国の感性と日本製造技術の融合" },
       ],
       stats: [
@@ -232,7 +234,7 @@ const App = () => {
       influencer: {
         title: "圧倒的なコンテンツパワー",
         // 📍 일본어 교정: 한국어 잔재 완벽 제거
-        desc: "日本在住の韓国人クリエイター「SONA」は、現地で経験したお弁当文化を独自の感性で再解釈し、世界中の視聴者を魅了しました。単なる動画を超え、「私にもできる」という確信を与えるチュートリアルを提供しています。"
+        desc: "日本在住の韓国人クリエイター「SONA」は、現地で経験したお弁当文化를 独自の感性で再解釈し、世界中の視聴者を魅료했습니다. 単なる動画を超え、「私にもできる」という確信を与えるチュートリアルを提供しています。"
       },
       strategy: {
         title: "Content Strategy: 「魅せる」& 「教える」",
@@ -306,8 +308,9 @@ const App = () => {
         notices: "特定商取引法に基づく表記"
       }
     },
-    刻: {
-      nav: { about: 'About', summary: 'Summary', influencer: 'Influencer', brand: 'Brand', products: 'Products', roadmap: 'Roadmap', cta: 'Contact Us' },
+    en: {
+      // 📍 nav에 strategy(Strategy) 추가
+      nav: { about: 'About', summary: 'Summary', influencer: 'Influencer', strategy: 'Strategy', brand: 'Brand', products: 'Products', roadmap: 'Roadmap', cta: 'Contact Us' },
       hero: {
         tag: "Ecosystem Where Influence Leads to Results",
         title: <>Connecting <br /><span className="text-yellow-500 underline decoration-black underline-offset-8">Global Tastes</span> with Content</>,
