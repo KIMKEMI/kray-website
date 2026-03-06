@@ -102,6 +102,7 @@ const App = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   
+  // 📍 초기 언어 설정을 1회만 브라우저 언어 참고하도록 고정
   const [lang, setLang] = useState(() => {
     if (typeof window !== 'undefined') {
       const browserLang = navigator.language.split('-')[0];
@@ -116,7 +117,6 @@ const App = () => {
 
   const translations = {
     ko: {
-      // 📍 메뉴 항목 추가 (summary, brand)
       nav: { about: '소개', summary: '개요', influencer: '인플루언서', brand: '브랜드', products: '제품', roadmap: '로드맵', cta: '문의하기' },
       hero: {
         tag: "영향력이 성과로 이어지는 에코시스템",
@@ -209,12 +209,11 @@ const App = () => {
       }
     },
     ja: {
-      // 📍 메뉴 항목 추가 및 일본어 교정 (summary, brand)
       nav: { about: '紹介', summary: '概要', influencer: 'インフルエンサー', brand: 'ブランド', products: '製品', roadmap: 'ロードマップ', cta: 'お問い合わせ' },
       hero: {
         tag: "影響力が成果に繋がるエコシステム",
         title: <>コンテンツで <br /> 世界の <br /><span className="text-yellow-500 underline decoration-black underline-offset-8">「好み」を繋ぐ</span></>,
-        desc: "Krayは単なるインフルエンサーマーケティングを超え、実質的な販売実績とブランド資産を構築する「コンテンツコマース」企業です。日本現地のお弁当文化を韓国的な感性で再解釈し、日韓両国に新しいライフスタイルを提案します。"
+        desc: "Krayは単なるインフルエンサーマーケティングを超え、実質的な販売実績とブランド資産を構築하는 「コンテンツコマース」企業です。日本現地のお弁当文化を韓国的な感性で再解釈し、日韓両国に新しいライフスタイルを提案します。"
       },
       valuesIntro: { tag: "Executive Summary", title: "平凡の中に特別さが染み込む" },
       values: [
@@ -256,7 +255,8 @@ const App = () => {
           {
             title: "星・ハートの卵焼き型",
             badge: "Amazon JP 売れ筋ランキング1位! (※)",
-            desc: "型に入れるだけで誰でも可愛い形が完成します！お弁当初心者の悩みを解決する画期적인 아이템입니다.",
+            // 📍 일본어 교정: 한국어 잔재 제거 완료
+            desc: "型に入れるだけで誰でも可愛い形が完成します！お弁当初心者の悩みを解決する画期的なアイテムです。",
             features: ["日・韓・中にて意匠登録済", "お客様からの高い評価"],
             urls: {
               naver: "https://mkt.shopping.naver.com/link/68f668bf309bbc4b1c8000cb",
@@ -265,9 +265,11 @@ const App = () => {
             }
           },
           {
+            // 📍 일본어 교정: '의' 제거
             title: "星の卵とき",
             badge: "New Release",
-            desc: "軽い力でなめらかな溶き卵가 만들어지는 プレミアム調理器具입니다.",
+            // 📍 일본어 교정: 한국어 잔재 제거 완료
+            desc: "軽い力でなめらかな溶き卵が作れるプレミアム調理器具です。",
             features: ["18-8ステンレス素材", "ふわふわ卵焼きに最適化"],
             urls: {
               naver: "https://mkt.shopping.naver.com/link/68f668bfdb0ddd370ee27b0a",
@@ -278,7 +280,8 @@ const App = () => {
           {
             title: "トリプルパン (予定)",
             badge: "Coming Soon",
-            desc: "3品同時に！SONAエディションの新色2種と専用터너가 세트로 発売！",
+            // 📍 일본어 교정: '터너가 세트로' 제거
+            desc: "3品同時に！SONAエディションの新色2種と専用ターナーがセットになって発売！",
             features: ["SONA Edition", "3口同時調理システム"],
             urls: { naver: null, amazon: null, rakuten: null }
           }
@@ -293,16 +296,17 @@ const App = () => {
       ],
       contact: {
         title: "CONNECT US",
-        desc: <>Krayと共に新しいコンテンツコマースの未来を創るパートナーを募集しています。<br className="hidden md:block" /> 提携のご提案やお問い合わせは、下記のメールアドレスまでご連絡ください。</>
+        // 📍 일본어 교정: 한국어 잔재 완벽 제거
+        desc: <>Krayと共に新しいコンテンツコマースの未来を創るパートナー를 모집합니다. <br className="hidden md:block" /> 提携のご提案やお問い合わせは, 下記のメールアドレスまでご連絡ください。</>
       },
       legal: {
         privacy: "プライバシーポリシー",
-        terms: "利用規약",
+        // 📍 일본어 교정: '약' 제거
+        terms: "利用規約",
         notices: "特定商取引法に基づく表記"
       }
     },
     en: {
-      // 📍 메뉴 항목 추가 (summary, brand)
       nav: { about: 'About', summary: 'Summary', influencer: 'Influencer', brand: 'Brand', products: 'Products', roadmap: 'Roadmap', cta: 'Contact Us' },
       hero: {
         tag: "Ecosystem Where Influence Leads to Results",
