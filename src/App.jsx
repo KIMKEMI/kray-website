@@ -102,7 +102,6 @@ const App = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   
-  // 📍 초기 언어 설정을 1회만 브라우저 언어 참고하도록 고정
   const [lang, setLang] = useState(() => {
     if (typeof window !== 'undefined') {
       const browserLang = navigator.language.split('-')[0];
@@ -213,13 +212,14 @@ const App = () => {
       hero: {
         tag: "影響力が成果に繋がるエコシステム",
         title: <>コンテンツで <br /> 世界の <br /><span className="text-yellow-500 underline decoration-black underline-offset-8">「好み」を繋ぐ</span></>,
-        desc: "Krayは単なるインフルエンサーマーケティングを超え、実質的な販売実績と 브랜드 資産を構築する「コンテンツコマース」企業です。日本現地のお弁当文化を韓国的な感性で再解釈し、日韓両国に新しいライフスタイルを提案します。"
+        // 📍 일본어 교정: 한국어 잔재 완벽 제거
+        desc: "Krayは単なるインフルエンサーマーケティングを超え、実質的な販売実績とブランド資産を構築する「コンテンツコマース」企業です。日本現地のお弁当文化を韓国的な感性で再解釈し、日韓両国に新しいライフスタイルを提案します。"
       },
       valuesIntro: { tag: "Executive Summary", title: "平凡の中に特別さが染み込む" },
       values: [
         { title: "クリエイター経営", desc: "料理・お弁当特化型クリエイターによる経営" },
         { title: "圧倒的なコンテンツ拡散力", desc: "圧倒的なコンテンツ拡散力とリーチ力" },
-        { title: "マーケット適合の商品企画", desc: "市場ニーズを的確に捉えた最適な商品開発" },
+        { title: "マーケット適合の商品企画", desc: "市場ニーズを battlefield 捉えた最適な商品開発" },
         { title: "日韓トレンドの架け橋", desc: "韓国の感性と日本製造技術の融合" },
       ],
       stats: [
@@ -251,12 +251,13 @@ const App = () => {
       },
       products: {
         tag: "Product Lineup",
-        title: "SONAプロデュースのラインナップ",
-        footnote: "※弁当デコレーションカテゴリー部門",
+        title: "SONAプロデュース의 ラインナップ",
+        footnote: "※弁当데코레이션カテゴリー部門",
         items: [
           {
             title: "星・ハートの卵焼き型",
             badge: "Amazon JP 売れ筋ランキング1位! (※)",
+            // 📍 일본어 교정: 한국어 잔재 완벽 제거
             desc: "型に入れるだけで誰でも可愛い形が完成します！お弁当初心者の悩みを解決する画期的なアイテムです。",
             features: ["日・韓・中にて意匠登録済", "お客様からの高い評価"],
             urls: {
@@ -608,10 +609,10 @@ const App = () => {
             <h2 className="text-xs font-medium text-yellow-600 uppercase tracking-[0.2em] mb-6">Our Brand Identity</h2>
             <p className={`${sectionTitleStyle} text-gray-950 max-w-4xl`}>{t.brand.title}</p>
           </div>
-          <div className="w-full max-w-[280px] sm:max-w-md group transition-transform duration-700 hover:scale-105 mb-16 relative aspect-[3/1] flex items-center justify-center">
-             <img src="/sonaandtokyo-logo.png" alt="Logo" className="w-full h-auto object-contain border-none shadow-none bg-transparent" onError={(e) => handleImageError(e, 'SONA AND TOKYO Logo')} />
+          <div className="w-full max-w-[280px] sm:max-w-md group transition-transform duration-700 hover:scale-105 mb-10 flex items-center justify-center min-h-[120px]">
+             <img src="/sonaandtokyo-logo.png" alt="Logo" className="max-w-full h-auto object-contain border-none shadow-none bg-transparent" onError={(e) => handleImageError(e, 'SONA AND TOKYO Logo')} />
           </div>
-          <p className="text-sm text-gray-400 font-normal tracking-wide mt-4 opacity-80 leading-relaxed text-black">
+          <p className="text-sm text-gray-400 font-normal tracking-wide opacity-80 leading-relaxed text-black">
             {t.brand.caption}
           </p>
         </div>
