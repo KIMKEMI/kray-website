@@ -102,7 +102,7 @@ const App = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   
-  // 📍 초기 언어 설정을 1회만 브라우저 언어 참고, 이후에는 상태로만 관리
+  // 📍 초기 언어 설정을 1회만 브라우저 언어 참고하도록 고정
   const [lang, setLang] = useState(() => {
     if (typeof window !== 'undefined') {
       const browserLang = navigator.language.split('-')[0];
@@ -213,7 +213,7 @@ const App = () => {
       hero: {
         tag: "影響力が成果に繋がるエコシステム",
         title: <>コンテンツで <br /> 世界の <br /><span className="text-yellow-500 underline decoration-black underline-offset-8">「好み」を繋ぐ</span></>,
-        desc: "Krayは単なるインフルエンサーマーケティングを超え、実質的な販売実績とブランド資産を構築する「コンテンツコマース」企業です。日本現地のお弁当文化を韓国的な感性で再解釈し、日韓両国に新しいライフスタイルを提案します。"
+        desc: "Krayは単なるインフルエンサーマーケティングを超え、実質的な販売実績と 브랜드 資産を構築する「コンテンツコマース」企業です。日本現地のお弁当文化を韓国的な感性で再解釈し、日韓両国に新しいライフスタイルを提案します。"
       },
       valuesIntro: { tag: "Executive Summary", title: "平凡の中に特別さが染み込む" },
       values: [
@@ -231,14 +231,14 @@ const App = () => {
       influencerIntro: { tag: "Unrivaled Reach", title: "1億再生が証明する影響力" },
       influencer: {
         title: "圧倒的なコンテンツパワー",
-        // 📍 일본어 교정: 한국어 잔재 제거 완료
+        // 📍 일본어 교정: 한국어 잔재 완벽 제거
         desc: "日本在住の韓国人クリエイター「SONA」は、現地で経験したお弁当文化を独自の感性で再解釈し、世界中の視聴者を魅了しました。単なる動画を超え、「私にもできる」という確信を与えるチュートリアルを提供しています。"
       },
       strategy: {
         title: "Content Strategy: 「魅せる」& 「教える」",
         subtitle: "目を引くビジュアル + 直感的なチュートリアル = 自然な購買への繋がり",
         steps: [
-          // 📍 일본어 교정: 한국어 잔재 제거 완료
+          // 📍 일본어 교정: 한국어 잔재 완벽 제거
           { title: "Visual (魅せる)", desc: "可愛いお弁当やセンス溢れる料理が画面を圧倒します。" },
           { title: "Process (教える)", desc: "分かりやすい動画と道具の使い方で、誰でも作れるという自信を与えます。" },
           { title: "Action (買う)", desc: "自然な購買導線で、実際の購入とファン層の形成へと導きます。" },
@@ -257,7 +257,6 @@ const App = () => {
           {
             title: "星・ハートの卵焼き型",
             badge: "Amazon JP 売れ筋ランキング1位! (※)",
-            // 📍 일본어 교정: 한국어 잔재 제거 완료
             desc: "型に入れるだけで誰でも可愛い形が完成します！お弁当初心者の悩みを解決する画期的なアイテムです。",
             features: ["日・韓・中にて意匠登録済", "お客様からの高い評価"],
             urls: {
@@ -295,7 +294,7 @@ const App = () => {
       ],
       contact: {
         title: "CONNECT US",
-        // 📍 일본어 교정: 한국어 잔재 제거 완료
+        // 📍 일본어 교정: 한국어 잔재 완벽 제거
         desc: <>Krayと共に新しいコンテンツコマースの未来を創るパートナーを募集しています。<br className="hidden md:block" /> 提携のご提案やお問い合わせは、下記のメールアドレスまでご連絡ください。</>
       },
       legal: {
@@ -400,13 +399,8 @@ const App = () => {
 
   const t = translations[lang] || translations.en;
 
-  /**
-   * 📍 모달을 열고 URL 해시를 변경하는 함수 (useCallback으로 최적화)
-   */
   const openModal = useCallback(async (type) => {
     const fileNameMap = { privacy: 'privacy.html', terms: 'terms.html', notices: 'legal.html' };
-    
-    // t 객체에 접근하여 제목 설정
     setModalTitle(translations[lang].legal[type]);
     window.location.hash = type;
 
@@ -425,11 +419,22 @@ const App = () => {
       } else setModalContent(`<p class="text-center py-20 text-gray-400">데이터를 불러올 수 없습니다.</p>`);
     } catch (error) { setModalContent(`<p class="text-center py-20 text-gray-400">오류가 발생했습니다.</p>`); }
     setModalType(type);
-  }, [lang]); // lang이 변경될 때만 함수 갱신
+  }, [lang]);
 
   const closeModal = () => {
     setModalType(null);
     window.history.pushState("", document.title, window.location.pathname + window.location.search);
+  };
+
+  const handleImageError = (e, text) => {
+    e.target.style.display = 'none';
+    const parent = e.target.parentNode;
+    if (parent && !parent.querySelector('.img-placeholder')) {
+      const placeholder = document.createElement('div');
+      placeholder.className = 'img-placeholder w-full h-full flex items-center justify-center bg-gray-100 text-gray-400 text-xs font-medium uppercase tracking-widest text-center px-4';
+      placeholder.innerText = text || 'Image not found';
+      parent.appendChild(placeholder);
+    }
   };
 
   useEffect(() => {
@@ -441,9 +446,6 @@ const App = () => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll);
 
-    /**
-     * 📍 URL 해시 감지 및 초기 실행 로직
-     */
     const handleHashChange = () => {
       const hash = window.location.hash.replace('#', '');
       if (['privacy', 'terms', 'notices'].includes(hash)) {
@@ -460,7 +462,7 @@ const App = () => {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('hashchange', handleHashChange);
     };
-  }, [openModal]); // openModal 의존성 추가 (lang 변경 감지 포함)
+  }, [openModal]);
 
   const sectionTitleStyle = "text-3xl md:text-4xl font-medium tracking-tight leading-snug";
   const cardDescriptionStyle = "text-[15px] md:text-base leading-relaxed font-normal";
@@ -476,8 +478,8 @@ const App = () => {
       {/* Navigation */}
       <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-white/95 backdrop-blur-md shadow-sm py-5' : 'bg-transparent py-8'}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center text-black">
-          <a href="#" className="flex items-center text-black">
-            <img src="/kray_logo.png" alt="Kray, Inc." className="h-12 md:h-16 w-auto object-contain" />
+          <a href="#" className="flex items-center text-black relative">
+            <img src="/kray_logo.png" alt="Kray, Inc." className="h-12 md:h-16 w-auto object-contain" onError={(e) => handleImageError(e, 'Kray Logo')} />
           </a>
           <div className="flex items-center gap-4 md:gap-10">
             <div className="hidden md:flex items-center gap-10">
@@ -527,7 +529,7 @@ const App = () => {
             <div className="relative w-full max-w-lg">
               <div className="absolute -top-10 -right-10 w-48 h-48 bg-yellow-400 rounded-full opacity-20 blur-3xl animate-pulse"></div>
               <div className="relative z-10 aspect-[4/5] bg-gray-50 rounded-none overflow-hidden group">
-                <img src="/sona_ceo.jpg" alt="CREATOR SONA" className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" />
+                <img src="/sona_ceo.jpg" alt="CREATOR SONA" className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" onError={(e) => handleImageError(e, 'SONA')} />
                 <div className="absolute bottom-6 left-6 bg-white/95 backdrop-blur-md px-5 py-3 rounded-none shadow-xl text-left border-l-4 border-yellow-500">
                   <p className="text-[10px] font-medium text-gray-500 uppercase tracking-widest mb-1 text-black">CREATOR</p>
                   <p className="text-xl font-medium text-gray-900 leading-none text-black">SONA</p>
@@ -545,8 +547,8 @@ const App = () => {
             <h2 className="text-xs font-medium text-yellow-600 uppercase tracking-[0.2em] mb-6">Executive Summary</h2>
             <p className={`${sectionTitleStyle} text-gray-950`}>{t.valuesIntro.title}</p>
           </div>
-          <div className="w-full max-w-5xl mx-auto mb-16 lg:mb-24 overflow-hidden rounded-none border border-gray-200 bg-white group">
-            <img src="/bento_main.jpg" alt="Bento" className="w-full h-[300px] sm:h-[450px] lg:h-[600px] object-cover object-[center_38%] transition-transform duration-1000 group-hover:scale-105" />
+          <div className="w-full max-w-5xl mx-auto mb-16 lg:mb-24 overflow-hidden rounded-none border border-gray-200 bg-white group relative">
+            <img src="/bento_main.jpg" alt="Bento" className="w-full h-[300px] sm:h-[450px] lg:h-[600px] object-cover object-[center_38%] transition-transform duration-1000 group-hover:scale-105" onError={(e) => handleImageError(e, 'Main Visual')} />
           </div>
           <div className="grid gap-4 sm:gap-8 sm:grid-cols-2 lg:grid-cols-4">
             {(t.values || []).map((item, idx) => (
@@ -572,7 +574,7 @@ const App = () => {
           <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
             <div className="flex-1 w-full flex justify-center">
               <div className="relative rounded-none overflow-hidden w-full max-w-[480px] aspect-[9/16] group">
-                <img src="/viral_reel.jpg" alt="Viral Reel" className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" />
+                <img src="/viral_reel.jpg" alt="Viral Reel" className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" onError={(e) => handleImageError(e, 'Viral Content')} />
               </div>
             </div>
             <div className="flex-1 w-full flex flex-col gap-12">
@@ -599,36 +601,19 @@ const App = () => {
         </div>
       </section>
 
-      {/* Content Strategy Section */}
-      <section className="bg-black text-white py-24 lg:py-40 text-center">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="mb-12 lg:mb-20">
-            <h2 className="text-[11px] font-medium text-yellow-500 uppercase tracking-[0.3em] mb-6">Content Strategy</h2>
-            <h3 className={`${sectionTitleStyle} text-white mb-6`}>{t.strategy.title}</h3>
-            <p className="text-gray-400 max-w-2xl mx-auto font-normal mb-16 text-base md:text-lg">{t.strategy.subtitle}</p>
-            <div className="relative w-full overflow-hidden mb-20 py-6 bg-white/[0.03] border-y border-white/10">
-              <div className="animate-film whitespace-nowrap">
-                {[1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5, 6].map((num, i) => (
-                  <div key={i} className="inline-block px-3">
-                    <div className="w-[270px] aspect-square bg-gray-900 overflow-hidden rounded-none border border-white/10 group shadow-2xl">
-                      <img src={`/slide0${num}.jpg`} alt={`Slide ${num}`} className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
+      {/* Brand Identity Section */}
+      <section className="bg-gray-50 border-y border-gray-100 py-24 lg:py-48 text-black">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center">
+          <div className="mb-16">
+            <h2 className="text-xs font-medium text-yellow-600 uppercase tracking-[0.2em] mb-6">Our Brand Identity</h2>
+            <p className={`${sectionTitleStyle} text-gray-950 max-w-4xl`}>{t.brand.title}</p>
           </div>
-          <div className="grid gap-8 grid-cols-1 md:grid-cols-3">
-            {(t.strategy.steps || []).map((item, idx) => (
-              <div key={idx} className="relative group p-10 border border-white/20 hover:border-yellow-400/50 bg-white/[0.03] transition-all duration-500 text-left">
-                <span className="text-7xl font-medium text-yellow-400/10 absolute top-4 right-4 pointer-events-none">0{idx+1}</span>
-                <h3 className="text-xl md:text-2xl font-medium text-yellow-400 mb-6 flex items-center gap-4 uppercase tracking-tight">
-                  <span className="w-2.5 h-2.5 bg-yellow-400 rounded-full"></span>{item.title}
-                </h3>
-                <p className={`${unifiedSmallTextStyle} text-gray-400`}>{item.desc}</p>
-              </div>
-            ))}
+          <div className="w-full max-w-[280px] sm:max-w-md group transition-transform duration-700 hover:scale-105 mb-16 relative aspect-[3/1] flex items-center justify-center">
+             <img src="/sonaandtokyo-logo.png" alt="Logo" className="w-full h-auto object-contain border-none shadow-none bg-transparent" onError={(e) => handleImageError(e, 'SONA AND TOKYO Logo')} />
           </div>
+          <p className="text-sm text-gray-400 font-normal tracking-wide mt-4 opacity-80 leading-relaxed text-black">
+            {t.brand.caption}
+          </p>
         </div>
       </section>
 
@@ -644,7 +629,7 @@ const App = () => {
               <div key={idx} className="flex flex-col">
                 <div className="group flex flex-col hover:shadow-2xl transition-all h-full bg-white border border-gray-100 rounded-none overflow-hidden relative text-left">
                   <div className="w-full aspect-[4/5] bg-gray-50 flex items-center justify-center overflow-hidden relative">
-                    <img src={[`/produc01_thum.jpg`, `/produc02_thum.jpg`, `/produc03_thum.jpg`][idx]} alt={p.title} className={`w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 ${idx === 2 ? 'grayscale-100 opacity-40 contrast-150' : ''}`} />
+                    <img src={[`/produc01_thum.jpg`, `/produc02_thum.jpg`, `/produc03_thum.jpg`][idx]} alt={p.title} className={`w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 ${idx === 2 ? 'grayscale-100 opacity-40 contrast-150' : ''}`} onError={(e) => handleImageError(e, 'Product')} />
                   </div>
                   <div className="px-8 pt-3 pb-5 flex flex-col h-full">
                     <div className="mb-2 min-h-[18px]">
@@ -710,8 +695,8 @@ const App = () => {
 
       {/* Footer */}
       <footer className="bg-black py-24 text-center border-t border-white/10 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white">
-          <img src="/kray_logo.png" alt="Kray, Inc." className="h-12 md:h-16 w-auto invert mx-auto mb-10" />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white flex flex-col items-center">
+          <img src="/kray_logo.png" alt="Kray, Inc." className="h-12 md:h-16 w-auto invert mx-auto mb-10" onError={(e) => handleImageError(e, 'Kray Logo')} />
           <div className="flex flex-wrap justify-center gap-x-8 gap-y-4 mb-10 text-white">
             <button onClick={() => openModal('privacy')} className="text-[11px] md:text-xs text-zinc-500 hover:text-white uppercase tracking-wider">{t.legal.privacy}</button>
             <button onClick={() => openModal('terms')} className="text-[11px] md:text-xs text-zinc-500 hover:text-white uppercase tracking-wider">{t.legal.terms}</button>
