@@ -130,7 +130,7 @@ const App = () => {
         { title: "한일 양국 트렌드 가교", desc: "한국적 감성과 일본 제조 기술의 융합" },
       ],
       stats: [
-        { label: "팔로워 수", value: "13.3만", sub: "Instagram Audience" },
+        { label: "팔로워 수", value: "14.2만", sub: "Instagram Audience" },
         { label: "릴스 누적 재생", value: "1억+", sub: "Short-form Impact" },
         { label: "최대 조회수", value: "1,722만", sub: "Viral Content" },
         { label: "업로드 빈도", value: "주 4~5회", sub: "Daily Engagement" },
@@ -224,7 +224,7 @@ const App = () => {
         { title: "日韓トレンドの架け橋", desc: "韓国の感性と日本製造技術の融合" },
       ],
       stats: [
-        { label: "フォロワー数", value: "13.3万人", sub: "Instagram Audience" },
+        { label: "フォロワー数", value: "14.2万人", sub: "Instagram Audience" },
         { label: "リール累計再生", value: "1億超え", sub: "Short-form Impact" },
         { label: "最多再生回数", value: "1,722万回", sub: "星のキン파動画" },
         { label: "投稿頻度", value: "週4〜5回", sub: "継続的な発信" },
@@ -264,7 +264,7 @@ const App = () => {
             urls: {
               naver: "https://mkt.shopping.naver.com/link/68f668bf309bbc4b1c8000cb",
               amazon: "https://www.amazon.co.jp/gp/product/B0CVNG3VPT/",
-              rakuten: null
+              rakuten: "https://item.rakuten.co.jp/sonaandtokyo/tamagoyakikata/"
             }
           },
           {
@@ -276,7 +276,7 @@ const App = () => {
             urls: {
               naver: "https://mkt.shopping.naver.com/link/68f668bfdb0ddd370ee27b0a",
               amazon: "https://www.amazon.co.jp/gp/product/B0FJLHR5D3/",
-              rakuten: null
+              rakuten: "https://item.rakuten.co.jp/sonaandtokyo/tamagotoki/"
             }
           },
           {
@@ -322,7 +322,7 @@ const App = () => {
         { title: "Cross-Border Bridge", desc: "The fusion of Korean sensibilities and Japanese manufacturing technology" },
       ],
       stats: [
-        { label: "Followers", value: "133K", sub: "Instagram Audience" },
+        { label: "Followers", value: "142K", sub: "Instagram Audience" },
         { label: "Total Reels Views", value: "100M+", sub: "Short-form Impact" },
         { label: "Most Viewed Reel", value: "17.2M", sub: "Star Kimbap Video" },
         { label: "Post Frequency", value: "4-5/Week", sub: "Steady Communication" },
