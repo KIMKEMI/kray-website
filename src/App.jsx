@@ -264,7 +264,7 @@ const App = () => {
           },
           {
             title: "星の卵とき",
-            badge: "New Release",
+            badge: null,
             desc: "軽い力でなめらかな溶き卵が作れるプレミアム調理器具です。",
             features: ["18-8ステンレス素材", "ふわふわ卵焼きに最適化"],
             urls: {
@@ -274,11 +274,11 @@ const App = () => {
             }
           },
           {
-            title: "トリプルパン (予定)",
-            badge: "Coming Soon",
+            title: "トリプルパン",
+            badge: "New Release",
             desc: "3品同時に！SONAエディションの新色2種と専用ターナーがセットになって発売！",
             features: ["SONA Edition", "3口同時調理システム"],
-            urls: { naver: null, amazon: null, rakuten: null }
+            urls: { naver: null, amazon: "https://www.amazon.co.jp/gp/product/B0GZQYP9CN/?th=1", rakuten: null }
           }
         ]
       },
@@ -287,7 +287,7 @@ const App = () => {
         { year: "2024.02", title: "星・ハートの卵焼き型 発売", desc: "星・ハート型のプロデュース" },
         { year: "2024.05", title: "レシピ本出版", desc: "韓国にてベストセラー" },
         { year: "2025.07", title: "星の卵とき 発売", desc: "ラインアップの拡充" },
-        { year: "2026.05", title: "トリプルパン 発売予定", desc: "自社ブランドの強化" },
+        { year: "2026.05", title: "トリプルパン 発売", desc: "自社ブランドの強化" },
       ],
       contact: {
         title: "CONNECT US",
@@ -661,18 +661,18 @@ const App = () => {
               <div key={idx} className="flex flex-col">
                 <div className="group flex flex-col hover:shadow-2xl transition-all h-full bg-white border border-gray-100 rounded-none overflow-hidden relative text-left">
                   <div className="w-full aspect-[4/5] bg-gray-50 flex items-center justify-center overflow-hidden relative">
-                    <img src={[`/produc01_thum.jpg`, `/produc02_thum.jpg`, `/produc03_thum.jpg`][idx]} alt={p.title} className={`w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 ${idx === 2 ? 'grayscale-100 opacity-40 contrast-150' : ''}`} onError={(e) => handleImageError(e, 'Product')} />
+                    <img src={[`/produc01_thum.jpg`, `/produc02_thum.jpg`, `/produc03_thum.jpg`][idx]} alt={p.title} className={`w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110`} onError={(e) => handleImageError(e, 'Product')} />
                   </div>
                   <div className="px-8 pt-3 pb-5 flex flex-col h-full">
                     <div className="mb-2 min-h-[18px]">
-                      <span className={`px-3 py-0.5 text-[10px] font-medium uppercase tracking-widest shadow-sm text-white ${idx === 0 ? 'bg-orange-500' : idx === 1 ? 'bg-blue-600' : 'bg-gray-400'}`}>{p.badge}</span>
+                      {p.badge && <span className={`px-3 py-0.5 text-[10px] font-medium uppercase tracking-widest shadow-sm text-white ${idx === 0 ? 'bg-orange-500' : 'bg-blue-600'}`}>{p.badge}</span>}
                     </div>
                     <h3 className="text-lg md:text-xl font-medium text-gray-950 mb-6 tracking-tight uppercase text-black">{p.title}</h3>
                     <p className={`${cardDescriptionStyle} text-gray-600 mb-2 leading-tight flex-grow`}>{p.desc}</p>
                     <div className="flex flex-col gap-1 mb-10 border-t border-gray-50 pt-2">
                       {(p.features || []).map((f, i) => (
                         <div key={i} className="flex items-center gap-2.5 text-black">
-                          <CheckCircle2 size={13} className={`${idx === 2 ? 'text-gray-300' : 'text-yellow-600'} shrink-0`} />
+                          <CheckCircle2 size={13} className={`text-yellow-600 shrink-0`} />
                           <span className={unifiedSmallTextStyle}>{f}</span>
                         </div>
                       ))}
