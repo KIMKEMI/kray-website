@@ -172,7 +172,7 @@ const App = () => {
           },
           {
             title: "별란스틱",
-            badge: "New Release",
+            badge: null,
             desc: "가벼운 힘으로 매끄러운 계란물을 제조! 알끈 제거 기능까지 포함된 프리미엄 도구.",
             features: ["18-8 스테인리스 소재", "폭신한 계란말이 최적화"],
             urls: {
@@ -199,7 +199,7 @@ const App = () => {
         { year: "2024.02", title: "별·하트 계란말이 틀 출시", desc: "별/하트 모양 프로듀스" },
         { year: "2024.05", title: "도시락 레시피 출간", desc: "한국어판 정식 발행" },
         { year: "2025.07", title: "별란스틱 출시", desc: "본격적인 라인업 확장" },
-        { year: "2026.05", title: "트리플 팬 출시 예정", desc: "자사 브랜드 입지 강화" },
+        { year: "2026.05", title: "트리플 팬 출시", desc: "자사 브랜드 입지 강화" },
       ],
       contact: {
         title: "CONNECT US",
@@ -360,7 +360,7 @@ const App = () => {
           },
           {
             title: "Star-shaped Egg Beater",
-            badge: "New Release",
+            badge: null,
             desc: "Make smooth beaten eggs with light force. Premium tool with egg-spot removal.",
             features: ["18-8 Stainless Steel", "Fluffy egg roll optimized"],
             urls: {
