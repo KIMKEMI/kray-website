@@ -130,7 +130,7 @@ const App = () => {
         { title: "한일 양국 트렌드 가교", desc: "한국적 감성과 일본 제조 기술의 융합" },
       ],
       stats: [
-        { label: "팔로워 수", value: "14.2만", sub: "Instagram Audience" },
+        { label: "팔로워 수", value: "14.8만", sub: "Instagram Audience" },
         { label: "릴스 누적 재생", value: "1억+", sub: "Short-form Impact" },
         { label: "최대 조회수", value: "1,722만", sub: "Viral Content" },
         { label: "업로드 빈도", value: "주 4~5회", sub: "Daily Engagement" },
@@ -182,11 +182,15 @@ const App = () => {
             }
           },
           {
-            title: "트리플 팬 (출시 예정)",
-            badge: "Coming Soon",
+            title: "트리플 팬",
+            badge: "New Release",
             desc: "세 가지 요리를 동시에! SONA 에디션 신규 컬러 2종과 전용 뒤집개 세트 상품!",
             features: ["SONA Edition", "3구 동시 조리 시스템"],
-            urls: { naver: null, amazon: null, rakuten: null }
+            urls: {
+              naver: "https://smartstore.naver.com/sona_tokyolife/products/13633354840",
+              amazon: null,
+              rakuten: null
+            }
           }
         ]
       },
@@ -222,7 +226,7 @@ const App = () => {
         { title: "日韓トレンドの架け橋", desc: "韓国の感性と日本製造技術の融合" },
       ],
       stats: [
-        { label: "フォロワー数", value: "14.2万人", sub: "Instagram Audience" },
+        { label: "フォロワー数", value: "14.8万人", sub: "Instagram Audience" },
         { label: "リール累計再生", value: "1億超え", sub: "Short-form Impact" },
         { label: "最多再生回数", value: "1,722万回", sub: "星のキンパ動画" },
         { label: "投稿頻度", value: "週4〜5回", sub: "継続的な発信" },
@@ -314,7 +318,7 @@ const App = () => {
         { title: "Cross-Border Bridge", desc: "The fusion of Korean sensibilities and Japanese manufacturing technology" },
       ],
       stats: [
-        { label: "Followers", value: "142K", sub: "Instagram Audience" },
+        { label: "Followers", value: "148K", sub: "Instagram Audience" },
         { label: "Total Reels Views", value: "100M+", sub: "Short-form Impact" },
         { label: "Most Viewed Reel", value: "17.2M", sub: "Star Kimbap Video" },
         { label: "Post Frequency", value: "4-5/Week", sub: "Steady Communication" },
@@ -367,7 +371,7 @@ const App = () => {
           },
           {
             title: "Triple Pan",
-            badge: "Coming Soon",
+            badge: "New Release",
             desc: "Three dishes at once! SONA Edition with 2 new colors and a dedicated spatula set!",
             features: ["SONA Edition", "Simultaneous 3-dish system"],
             urls: { naver: null, amazon: null, rakuten: null }
