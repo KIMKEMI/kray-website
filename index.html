@@ -85,9 +85,11 @@ nav.scrolled .nav-logo img{filter:none}
 .c-track{display:flex;height:100%;width:300%;transition:transform .7s cubic-bezier(.4,0,.2,1)}
 .c-slide{flex:0 0 33.333%;height:100%;overflow:hidden}
 .c-slide video{width:100%;height:100%;object-fit:cover;filter:brightness(.62) saturate(1.05)}
-.c-dots{position:absolute;bottom:5rem;left:50%;transform:translateX(-50%);z-index:6;display:flex;gap:.5rem}
-.c-dot{width:5px;height:5px;border-radius:50%;background:rgba(247,246,241,.28);border:none;padding:0;cursor:pointer;transition:background .3s,transform .3s}
-.c-dot.on{background:var(--shu);transform:scale(1.5)}
+/* scroll-cue 제거 */
+.scroll-cue{display:none}
+.c-dots{position:absolute;bottom:2.2rem;left:50%;transform:translateX(-50%);z-index:6;display:flex;gap:.75rem;align-items:center}
+.c-dot{width:7px;height:7px;border-radius:50%;background:rgba(247,246,241,.35);border:1px solid rgba(247,246,241,.5);padding:0;cursor:pointer;transition:background .3s,transform .3s,border-color .3s}
+.c-dot.on{background:var(--shu);border-color:var(--shu);transform:scale(1.4)}
 .c-bar{position:absolute;bottom:0;left:0;height:2px;background:var(--shu);z-index:6;width:0;transition:width linear}
 @media(max-width:760px){
   .triptych{display:none}.carousel{display:block}.tate{display:none}
@@ -362,9 +364,11 @@ nav.scrolled .nav-logo img{filter:none}
 /* 3단: stats — float overlay로 이동됨 */
 
 @media(max-width:760px){
-  .inf-sticky-outer{height:300vh}
+  .inf-sticky-outer{height:250vh} /* 300→250vh: 더 빨리 확대 시작 */
   .phone-frame{width:160px}
-  .inf-sticky-inner{align-items:flex-start;padding-top:15vh}
+  .inf-sticky-inner{align-items:center;padding-top:10vh} /* flex-start→center: 중앙 정렬 */
+  #inf-float-stats .stats-grid{grid-template-columns:repeat(2,1fr)} /* 모바일 2열 */
+  #inf-float-stats .stat-item{padding:1.2rem 1rem}
 }
 
 /* 스탯 그리드 — 다크 배경 위 클린 */
@@ -704,9 +708,14 @@ footer{background:#000;color:rgba(255,255,255,.38);padding:2.4rem 0;
   border-top:1px solid rgba(255,255,255,.07);font-size:.74rem}
 footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.8rem}
 .footer-logo{height:2rem;filter:invert(1);opacity:.4;object-fit:contain}
-.footer-links{display:flex;gap:1.4rem}
-.footer-links button{background:none;border:none;color:inherit;cursor:pointer;font-size:.74rem;font-family:inherit;transition:color .2s}
+.footer-links{display:flex;gap:1.4rem;flex-wrap:nowrap}
+.footer-links button{background:none;border:none;color:inherit;cursor:pointer;font-size:.74rem;font-family:inherit;transition:color .2s;white-space:nowrap}
 .footer-links button:hover{color:#fff}
+@media(max-width:760px){
+  .footer-links{gap:.6rem}
+  .footer-links button{font-size:.6rem;letter-spacing:-.01em}
+  footer .wrap{flex-direction:column;align-items:flex-start;gap:.6rem}
+}
 
 /* ── MODAL ── */
 .modal-wrap{display:none;position:fixed;inset:0;z-index:200;
@@ -1055,7 +1064,9 @@ footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-
   const grid = document.getElementById('ig-grid');
   if(!grid) return;
 
-  const picked = pickRandom(IG_POOL, 4);
+  const isMobile = window.innerWidth <= 760;
+  const count = isMobile ? 2 : 4;
+  const picked = pickRandom(IG_POOL, count);
   picked.forEach(url => {
     const wrap = document.createElement('div');
     wrap.className = 'ig-embed-wrap';
@@ -1399,7 +1410,7 @@ const T = {
       {year:"2025.07",title:"星の卵とき発売",desc:"ラインアップの拡充"},
       {year:"2026.05",title:"トリプルパン発売",desc:"自社ブランドの強化"}
     ],
-    contact:{desc:"Krayと共に新しいコンテンツコマースの未来を創る<br>パートナーを募集しています。<br>提携のご提案やお問い合わせは、下記のメールアドレスまでご連絡ください。"},
+    contact:{desc:"Krayと共に、新しいコンテンツコマースの<br>未来を創るパートナーを募集しています。<br>提携のご提案やお問い合わせは、<br>下記のメールアドレスまでご連絡ください。"},
     legal:{privacy:"プライバシーポリシー",terms:"利用規約",notices:"特定商取引法に基づく表記",rep:"金　東謙"},
     ui:{
       reviewOriginalLabel:"原文（日本語）",
