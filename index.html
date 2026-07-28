@@ -93,8 +93,8 @@ nav.scrolled .nav-logo img{filter:none}
 /* scroll-cue 제거 */
 .scroll-cue{display:none}
 .c-dots{position:absolute;bottom:2.2rem;left:50%;transform:translateX(-50%);z-index:999;display:flex;gap:.75rem;align-items:center}
-.c-dot{width:8px;height:8px;border-radius:50%;background:rgba(247,246,241,.5);border:1.5px solid rgba(247,246,241,.8);padding:0;cursor:pointer;transition:background .3s,transform .3s,border-color .3s}
-.c-dot.on{background:#fff;border-color:#fff;transform:scale(1.5)}
+.c-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.4);border:1.5px solid rgba(255,255,255,.7);padding:0;cursor:pointer;transition:all .35s cubic-bezier(.22,1,.36,1)}
+.c-dot.on{background:#fff;border-color:#fff;width:24px;border-radius:4px;transform:none}
 .c-bar{position:absolute;bottom:0;left:0;height:2px;background:var(--shu);z-index:6;width:0;transition:width linear}
 @media(max-width:760px){
   .triptych{display:none}.carousel{display:block}.tate{display:none}
@@ -388,21 +388,22 @@ nav.scrolled .nav-logo img{filter:none}
   }
   .inf-text-overlay{
     position:absolute;
-    top:3rem;
+    top:4rem;
     left:0; right:0;
     width:100%;
     padding:0 5vw;
     box-sizing:border-box;
     text-align:center;
-    z-index:2;
+    z-index:10;          /* 폰 위에 표시 */
+    pointer-events:none;
   }
   .phone-wrapper{
     position:absolute !important;
     left:50% !important;
-    top:auto !important;
+    top:45vh !important;  /* 텍스트 아래에서 시작 */
     margin:0 !important;
     transform-origin:top center !important;
-    /* JS가 scale() 덮어쓰므로 translateX는 JS에서 처리 */
+    z-index:1;
   }
   #inf-float-stats .stats-grid{grid-template-columns:1fr}
   #inf-float-stats .stat-item{padding:1rem 1.4rem;border-right:none;border-bottom:1px solid rgba(247,246,241,.08)}
@@ -1337,7 +1338,7 @@ initHero();
 const T = {
   ko:{
     nav:{cta:"문의하기",links:["소개","인플루언서","전략","브랜드","제품","로드맵"]},
-    hero:{tag:"일상을 콘텐츠로, 콘텐츠를 비즈니스로",title:"콘텐츠로<br>세상의<br><em>취향을 잇다</em>",desc:"좋아요❤️ 하나가 구매로 이어지는 순간, 콘텐츠는 비즈니스가 됩니다.<br>Kray는 매일 그 순간을 설계합니다.<br>그리고, 그 설계를 가장 잘 합니다."},
+    hero:{tag:"일상을 콘텐츠로, 콘텐츠를 비즈니스로",title:"콘텐츠로<br>세상의<br><em>취향을 잇다</em>",desc:"좋아요❤️ 하나가 구매로 이어지는 순간,<br>콘텐츠는 비즈니스가 됩니다.<br>Kray는 매일 그 순간을 설계합니다.<br>그리고, 그 설계를 가장 잘 합니다."},
     valuesIntro:{title:"평범함 속의 특별함"},
     values:[
       {num:"01",title:"인플루언서 기반 경영",desc:"요리·도시락에 특화된 인플루언서 경영"},
@@ -1401,7 +1402,7 @@ const T = {
   },
   ja:{
     nav:{cta:"お問い合わせ",links:["会社概要","インフルエンサー","戦略","ブランド","製品","ロードマップ"]},
-    hero:{tag:"日常をコンテンツに、コンテンツをビジネスに",title:"コンテンツで<br>世界の<br><em>「好み」を繋ぐ</em>",desc:"いいね❤️ ひとつが、購買につながる瞬間、コンテンツはビジネスになる。<br>Krayは毎日その循環をデザインしています。<br>そして、それが私たちの真骨頂です。"},
+    hero:{tag:"日常をコンテンツに、コンテンツをビジネスに",title:"コンテンツで<br>世界の<br><em>「好み」を繋ぐ</em>",desc:"いいね❤️ ひとつが、購買につながる瞬間、<br>コンテンツはビジネスになる。<br>Krayは毎日その循環をデザインしています。<br>そして、それが私たちの真骨頂です。"},
     valuesIntro:{title:"平凡の中に特別さが染み込む"},
     values:[
       {num:"01",title:"クリエイター経営",desc:"料理・お弁当特化型クリエイターによる経営"},
@@ -1465,7 +1466,7 @@ const T = {
   },
   en:{
     nav:{cta:"Contact Us",links:["About","Influencer","Strategy","Brand","Products","Roadmap"]},
-    hero:{tag:"Turning Everyday Life into Content. Content into Business.",title:"Connecting<br>Global Tastes with<br><em>Content</em>",desc:"One like❤️ is all it takes to turn content into business.<br>Kray is built to create that moment.<br>And we're very good at it."},
+    hero:{tag:"Turning Everyday Life into Content. Content into Business.",title:"Connecting<br>Global Tastes with<br><em>Content</em>",desc:"One like❤️ is all it takes<br>to turn content into business.<br>Kray is built to create that moment.<br>And we're very good at it."},
     valuesIntro:{title:"Infusing Extraordinary Value into the Ordinary"},
     values:[
       {num:"01",title:"Influencer-Led Business",desc:"Management led by specialists in bento content"},
