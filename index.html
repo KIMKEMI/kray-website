@@ -86,34 +86,37 @@ nav.scrolled .nav-logo img{filter:none}
 .panel .p-label{position:absolute;left:1rem;bottom:1.1rem;font-family:var(--mono);font-size:.68rem;letter-spacing:.2em;
   color:rgba(247,246,241,.6);text-transform:uppercase;z-index:3}
 /* 모바일 캐러셀 */
-.carousel{display:none;position:absolute;inset:0;z-index:1}
+.carousel{display:none;position:absolute;inset:0;z-index:3}
 .c-track{display:flex;height:100%;width:300%;transition:transform .7s cubic-bezier(.4,0,.2,1)}
 .c-slide{flex:0 0 33.333%;height:100%;overflow:hidden}
 .c-slide video{width:100%;height:100%;object-fit:cover;filter:brightness(.62) saturate(1.05)}
-/* scroll-cue 제거 */
-.scroll-cue{display:none}
+/* scroll-cue: 모바일에서만 숨김 */
 .c-dots{position:absolute;bottom:2.2rem;left:50%;transform:translateX(-50%);z-index:9999 !important;display:flex;gap:.75rem;align-items:center;filter:drop-shadow(0 2px 12px rgba(0,0,0,.9))}
 .c-dot{width:8px;height:8px;border-radius:50%;background:#fff;opacity:1;border:none;padding:0;cursor:pointer;flex-shrink:0;transition:width .35s cubic-bezier(.22,1,.36,1),border-radius .35s,background .35s}
 .c-dot.on{background:#fff;width:24px;border-radius:4px}
 .c-bar{position:absolute;bottom:0;left:0;height:2px;background:var(--shu);z-index:6;width:0;transition:width linear}
 @media(max-width:760px){
   .triptych{display:none}.carousel{display:block}.tate{display:none}
+  .scroll-cue{display:none}
   .hero-copy{bottom:12vh;left:6vw;right:6vw;max-width:100%}
   .hero-copy h1{font-size:clamp(2rem,7.5vw,2.8rem)}
   .hero-copy p{font-size:.78rem}
+  /* 모바일 여백 최적화 */
+  .summary{padding:4rem 0 2rem}
+  .influencer-section{padding:2rem 0 112px}
 }
 
 /* ── TICKER ── */
 .ticker{background:var(--shu);overflow:hidden;padding:.75rem 0;border-top:2px solid var(--ink);border-bottom:2px solid var(--ink)}
 .ticker-track{display:flex;gap:2.8rem;white-space:nowrap;font-family:var(--mono);font-size:.74rem;
-  letter-spacing:.22em;text-transform:uppercase;color:var(--rice);animation:marquee 28s linear infinite;width:max-content}
+  letter-spacing:.22em;text-transform:uppercase;color:var(--rice);animation:marquee 28s linear infinite;width:max-content;will-change:transform}
 @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 .ticker-track i{font-style:normal;opacity:.45;margin:0 1.2rem}
 
 /* ─────────────────────────────────────
    EXECUTIVE SUMMARY
 ───────────────────────────────────── */
-.summary{padding:7rem 0;background:var(--rice)}
+.summary{padding:7rem 0 3rem;background:var(--rice)}
 
 /* summary 제목 → 리뷰 카드 여백 */
 #summary-title{margin-bottom:3rem}
@@ -279,7 +282,7 @@ nav.scrolled .nav-logo img{filter:none}
 ───────────────────────────────────── */
 .influencer-section{
   background:#000;color:var(--rice);
-  padding:7rem 0 112px; /* 하단은 JS가 isMax 시점에 동적으로 덮어씀 */
+  padding:7rem 0 112px;
 }
 
 /* 1단: 헤더 + 텍스트 */
@@ -828,11 +831,12 @@ footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-
   <!-- 모바일 캐러셀 — JS가 동일 랜덤 영상 주입 -->
   <div class="carousel" id="carousel">
     <div class="c-track" id="ctrack"></div>
-    <div class="c-dots" id="cdots"></div>
     <div class="c-bar" id="cbar"></div>
   </div>
   <div class="hero-veil"></div>
   <div class="hero-copy" id="hero-copy"></div>
+  <!-- 도트: hero 최상위에 별도 배치 → z-index:9999 확실히 적용 -->
+  <div class="c-dots" id="cdots"></div>
   <div class="tate" id="hero-tate"></div>
   <div class="scroll-cue">SCROLL</div>
 </header>
@@ -1793,10 +1797,11 @@ function render() {
   // contact
   document.getElementById('contact-desc').innerHTML = t.contact.desc;
   // footer
+  const PAGE_FILES = {privacy:'./privacy.html', terms:'./terms.html', notices:'./legal.html'};
   document.getElementById('footer-links').innerHTML =
-    `<button onclick="openModal('privacy')">${t.legal.privacy}</button>
-     <button onclick="openModal('terms')">${t.legal.terms}</button>
-     <button onclick="openModal('notices')">${t.legal.notices}</button>`;
+    `<a href="${PAGE_FILES.privacy}" style="color:inherit;text-decoration:none;white-space:nowrap">${t.legal.privacy}</a>
+     <a href="${PAGE_FILES.terms}"   style="color:inherit;text-decoration:none;white-space:nowrap">${t.legal.terms}</a>
+     <a href="${PAGE_FILES.notices}" style="color:inherit;text-decoration:none;white-space:nowrap">${t.legal.notices}</a>`;
   // UI 텍스트 번역 적용
   const ui = t.ui || {};
   const igTitle = document.getElementById('ig-section-title');
