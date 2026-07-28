@@ -312,7 +312,7 @@ nav.scrolled .nav-logo img{filter:none}
 }
 .inf-sticky-inner{
   position:sticky;
-  top:0px;               /* 화면 상단에 바로 고정 → 더 일찍 고정 */
+  top:0px;
   height:100vh;
   display:flex;
   flex-direction:column;
@@ -321,6 +321,12 @@ nav.scrolled .nav-logo img{filter:none}
   overflow:visible;
   padding:3rem 5vw 0;
   gap:1.2rem;
+}
+@media(max-width:760px){
+  .inf-sticky-inner{
+    padding:3rem 0 0;   /* 좌우 패딩 제거 → 완전 중앙 */
+    align-items:center;
+  }
 }
 
 /* 폰 래퍼 — scale 대상 (badge 포함) */
@@ -993,7 +999,7 @@ footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-
     const pastOuter   = outerRect.bottom < 0;
     // 아직 outer 안에 있는지
     const beforeOuter   = outerRect.top > vh;
-    const deepPastOuter = outerRect.bottom < -(vh * 0.1);
+    const deepPastOuter = outerRect.bottom < -(vh * 1.2); /* stats 높이만큼 여유 확보 */
 
     if(isMax && !beforeOuter && !deepPastOuter && overlay){
       const phoneBotFromOuter = phoneRect.bottom - outerRect.top;
