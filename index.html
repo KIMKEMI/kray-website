@@ -376,7 +376,22 @@ nav.scrolled .nav-logo img{filter:none}
 
 /* 3단: stats — float overlay로 이동됨 */
 
+/* 텍스트 래퍼 — 데스크탑에선 sticky 내부와 동일하게 보이도록 */
+.inf-header-wrap{
+  display:none; /* 데스크탑: 기존 inf-text-overlay 사용 */
+}
+
 @media(max-width:760px){
+  /* 텍스트 래퍼: sticky 구간 밖, 정상 플로우 */
+  .inf-header-wrap{
+    display:block;
+    padding:3rem 5vw 2rem;
+    text-align:center;
+  }
+  /* sticky 내부 텍스트는 모바일에서 숨김 */
+  .inf-sticky-inner .inf-text-overlay{
+    display:none;
+  }
   .inf-sticky-outer{height:280vh}
   .inf-sticky-inner{
     position:sticky;
@@ -386,22 +401,10 @@ nav.scrolled .nav-logo img{filter:none}
     padding:0;
     overflow:visible;
     display:flex;
-    flex-direction:column;
     align-items:center;
-    justify-content:flex-start;
+    justify-content:center;
   }
-  /* 텍스트: 상단 */
-  .inf-text-overlay{
-    position:relative;
-    top:auto; left:auto; right:auto;
-    width:100%;
-    padding:3rem 5vw 1rem;
-    box-sizing:border-box;
-    text-align:center;
-    z-index:2;
-    flex-shrink:0;
-  }
-  /* 폰: 텍스트 바로 아래, 중앙 정렬 */
+  /* 폰: 화면 정중앙 */
   .phone-wrapper{
     position:relative !important;
     left:auto !important;
@@ -410,10 +413,9 @@ nav.scrolled .nav-logo img{filter:none}
     transform-origin:top center !important;
     align-self:center !important;
     z-index:1;
-    flex-shrink:0;
-    width:150px !important;
+    width:200px !important;
   }
-  .phone-frame{width:150px}
+  .phone-frame{width:200px}
   #inf-float-stats .stats-grid{grid-template-columns:1fr}
   #inf-float-stats .stat-item{padding:1rem 1.4rem;border-right:none;border-bottom:1px solid rgba(247,246,241,.08)}
 }
@@ -873,18 +875,22 @@ footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-
 <!-- INFLUENCER + STATS -->
 <section class="influencer-section" id="influencer">
 
+  <!-- 텍스트: sticky 구간 밖에 배치 (모바일에서 스크롤하면 올라가 사라짐) -->
+  <div class="inf-header-wrap">
+    <div class="inf-text-overlay">
+      <div class="inf-header">
+        <div class="eyebrow">Unrivaled Reach</div>
+        <h2 id="inf-intro-title"></h2>
+      </div>
+      <div class="inf-text-block">
+        <p id="inf-desc"></p>
+      </div>
+    </div>
+  </div>
+
   <div class="inf-sticky-outer" id="inf-sticky-outer">
     <div class="inf-sticky-inner">
-      <!-- 텍스트 + 폰: sticky 화면에 고정 -->
-      <div class="inf-text-overlay">
-        <div class="inf-header">
-          <div class="eyebrow">Unrivaled Reach</div>
-          <h2 id="inf-intro-title"></h2>
-        </div>
-        <div class="inf-text-block">
-          <p id="inf-desc"></p>
-        </div>
-      </div>
+      <!-- 폰만 sticky 구간에 -->
       <div class="phone-wrapper" id="phone-wrapper">
         <div class="phone-frame" id="phone-frame">
           <video id="inf-phone-video" autoplay muted loop playsinline></video>
@@ -892,7 +898,7 @@ footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-
       </div>
     </div>
 
-    <!-- badge + stats: outer 기준 absolute → JS가 폰 하단 좌표에 맞춰 배치 -->
+    <!-- badge + stats -->
     <div id="inf-float-overlay" style="position:absolute;left:0;right:0;top:0;pointer-events:none;z-index:10;">
       <div id="inf-float-stats" style="opacity:0;transition:opacity .25s;margin-top:6rem;">
         <div class="stats-grid" id="stats-grid"></div>
