@@ -1,26 +1,1804 @@
 <!DOCTYPE html>
 <html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- 정식 명칭 반영 -->
-    <title>Kray, Inc. | Official Website</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- 파비콘 설정 (제작하신 아이콘을 favicon.png로 저장해 public 폴더에 넣어주세요) -->
-    <link rel="shortcut icon" href="/favicon.png" type="image/png" />
-    <style>
-      body { margin: 0; padding: 0; font-family: sans-serif; }
-      /* 법적 고지 스타일 */
-      .legal-content-wrapper h1 { font-size: 1.5rem; font-weight: 600; margin-bottom: 1.5rem; }
-      .legal-content-wrapper h2 { font-size: 1.125rem; font-weight: 500; margin-top: 2rem; margin-bottom: 1rem; }
-      .legal-content-wrapper p { margin-bottom: 1rem; color: #4b5563; }
-      .legal-content-wrapper ul { margin-bottom: 1.5rem; }
-    </style>
-  </head>
-  <body>
-    <div id="root"></div>
-    <!-- 빌드된 main.jsx가 root에 마운트됩니다. -->
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" href="favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kray, Inc. | Renewal Draft v3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700;900&family=Noto+Serif+JP:wght@400;700;900&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#15151A;
+  --rice:#F7F6F1;
+  --shu:#C8402F;
+  --gold:#D4A420;
+  --gray:#8A8A93;
+  --gray-dk:#55555E;
+  --line:rgba(21,21,26,.1);
+  --line-lt:rgba(247,246,241,.12);
+  --serif:'Noto Serif KR','Noto Serif JP','Georgia',serif;
+  --sans:'Noto Sans KR','Noto Sans JP',-apple-system,'Helvetica Neue',sans-serif;
+  --mono:'IBM Plex Mono','Courier New',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--rice);color:var(--ink);line-height:1.7;-webkit-font-smoothing:antialiased}
+img,video{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--shu);color:#fff}
+
+.wrap{max-width:1240px;margin:0 auto;padding:0 5vw}
+.eyebrow{font-family:var(--mono);font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;
+  color:var(--shu);display:flex;align-items:center;gap:.75em;margin-bottom:1.2rem}
+.eyebrow::before{content:"";width:1.8em;height:1px;background:var(--shu);flex-shrink:0}
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .9s ease,transform .9s ease}
+.reveal.on{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+
+/* ── NAV ── */
+nav{position:fixed;inset:0 0 auto;z-index:100;display:flex;align-items:center;justify-content:space-between;
+  padding:1rem 5vw;color:var(--rice);transition:background .4s,color .4s,box-shadow .4s}
+nav.scrolled{background:rgba(247,246,241,.95);backdrop-filter:blur(16px);color:var(--ink);box-shadow:0 1px 0 var(--line)}
+.nav-logo{font-family:var(--serif);font-weight:900;font-size:1.2rem;letter-spacing:.05em}
+.nav-logo img{height:2.6rem;width:auto;object-fit:contain;filter:invert(1)}
+nav.scrolled .nav-logo img{filter:none}
+.nav-links{display:flex;gap:1.8rem;font-size:.8rem;font-weight:500;letter-spacing:.04em}
+.nav-links a{opacity:.78;transition:opacity .2s}.nav-links a:hover{opacity:1}
+.nav-right{display:flex;align-items:center;gap:.9rem}
+.lang{display:flex;gap:.28rem;font-family:var(--mono);font-size:.68rem}
+.lang button{background:none;border:1px solid currentColor;color:inherit;border-radius:99px;
+  padding:.2em .7em;cursor:pointer;opacity:.5;transition:all .2s}
+.lang button.active{opacity:1;background:var(--shu);border-color:var(--shu);color:#fff}
+.nav-cta{background:var(--shu);color:#fff;font-size:.74rem;font-weight:600;
+  padding:.52em 1.3em;border-radius:99px;letter-spacing:.04em;transition:background .2s}
+.nav-cta:hover{background:#a8321e}
+@media(max-width:860px){.nav-links,.nav-cta{display:none}}
+
+/* ── HERO ── */
+.hero{position:relative;height:100svh;min-height:640px;background:var(--ink);overflow:hidden;padding:0}
+.hero-veil{position:absolute;inset:0;z-index:2;
+  background:linear-gradient(to top,rgba(21,21,26,.88) 0%,rgba(21,21,26,.08) 48%,rgba(21,21,26,.4) 100%);pointer-events:none}
+.hero-copy{position:absolute;left:5vw;bottom:10vh;z-index:5;color:var(--rice);max-width:680px;pointer-events:none}
+.hero-copy .eyebrow{color:rgba(247,246,241,.7);margin-bottom:.9rem}
+.hero-copy .eyebrow::before{background:var(--shu)}
+.hero-copy h1{font-family:var(--serif);font-weight:900;font-size:clamp(2.4rem,5.2vw,4.2rem);line-height:1.18;margin-bottom:1rem}
+.hero-copy h1 em{font-style:normal;color:var(--shu)}
+.hero-copy p{font-size:clamp(.92rem,1.3vw,1.02rem);color:rgba(247,246,241,.78);font-weight:300;max-width:33em;line-height:1.8}
+.tate{position:absolute;right:2.4vw;top:50%;transform:translateY(-50%);z-index:5;writing-mode:vertical-rl;
+  font-family:var(--serif);font-size:.8rem;letter-spacing:.55em;color:rgba(247,246,241,.45);pointer-events:none}
+.scroll-cue{position:absolute;left:50%;bottom:1.6rem;transform:translateX(-50%);z-index:5;
+  color:rgba(247,246,241,.5);font-family:var(--mono);font-size:.68rem;letter-spacing:.32em;text-align:center}
+.scroll-cue::after{content:"";display:block;width:1px;height:28px;background:rgba(247,246,241,.4);margin:.45rem auto 0;animation:drip 2.2s infinite}
+@keyframes drip{0%{transform:scaleY(0);transform-origin:top}55%{transform:scaleY(1);transform-origin:top}56%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* PC 3분할 */
+.triptych{position:absolute;inset:0;display:flex;gap:2px;z-index:1}
+.panel{position:relative;flex:1;overflow:hidden;transition:flex .85s cubic-bezier(.22,1,.36,1);min-width:0}
+.panel video{width:100%;height:100%;object-fit:cover;filter:brightness(.58) saturate(1.05);transition:filter .6s}
+.panel:hover{flex:1.7}.panel:hover video{filter:brightness(.82) saturate(1.1)}
+.panel .p-label{position:absolute;left:1rem;bottom:1.1rem;font-family:var(--mono);font-size:.68rem;letter-spacing:.2em;
+  color:rgba(247,246,241,.6);text-transform:uppercase;z-index:3}
+/* 모바일 캐러셀 */
+.carousel{display:none;position:absolute;inset:0;z-index:1}
+.c-track{display:flex;height:100%;width:300%;transition:transform .7s cubic-bezier(.4,0,.2,1)}
+.c-slide{flex:0 0 33.333%;height:100%;overflow:hidden}
+.c-slide video{width:100%;height:100%;object-fit:cover;filter:brightness(.62) saturate(1.05)}
+.c-dots{position:absolute;bottom:5rem;left:50%;transform:translateX(-50%);z-index:6;display:flex;gap:.5rem}
+.c-dot{width:5px;height:5px;border-radius:50%;background:rgba(247,246,241,.28);border:none;padding:0;cursor:pointer;transition:background .3s,transform .3s}
+.c-dot.on{background:var(--shu);transform:scale(1.5)}
+.c-bar{position:absolute;bottom:0;left:0;height:2px;background:var(--shu);z-index:6;width:0;transition:width linear}
+@media(max-width:760px){
+  .triptych{display:none}.carousel{display:block}.tate{display:none}
+  .hero-copy{bottom:12vh;left:6vw;right:6vw;max-width:100%}
+  .hero-copy h1{font-size:clamp(2rem,7.5vw,2.8rem)}
+  .hero-copy p{font-size:.88rem}
+}
+
+/* ── TICKER ── */
+.ticker{background:var(--shu);overflow:hidden;padding:.75rem 0;border-top:2px solid var(--ink);border-bottom:2px solid var(--ink)}
+.ticker-track{display:flex;gap:2.8rem;white-space:nowrap;font-family:var(--mono);font-size:.74rem;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--rice);animation:marquee 28s linear infinite;width:max-content}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.ticker-track i{font-style:normal;opacity:.45;margin:0 1.2rem}
+
+/* ─────────────────────────────────────
+   EXECUTIVE SUMMARY
+───────────────────────────────────── */
+.summary{padding:7rem 0;background:var(--rice)}
+
+/* summary 제목 → 리뷰 카드 여백 */
+#summary-title{margin-bottom:3rem}
+
+/* 리뷰 카드 */
+.episode-wrap{
+  margin:0 0 2.8rem;
+  padding:1.8rem 2.2rem 2rem;
+  border-left:3px solid var(--shu);
+  background:rgba(200,64,47,.03);
+}
+.review-stars{
+  color:var(--gold);          /* 노란색 별 */
+  font-size:1.1rem;
+  letter-spacing:.12em;
+  margin-bottom:1rem;
+}
+.episode-text{
+  font-family:var(--serif);
+  font-size:1.05rem;
+  font-weight:400;
+  line-height:1.85;
+  color:var(--ink);
+  font-style:italic;
+  margin:0 0 1rem;
+}
+/* 번역본↔원문 구분선 */
+.review-original{
+  border-top:1px solid var(--line);
+  padding-top:.9rem;
+  margin-top:.9rem;
+}
+.review-original-label{
+  font-family:var(--mono);
+  font-size:.68rem;
+  color:var(--gray);
+  letter-spacing:.14em;
+  display:block;
+  margin-bottom:.45rem;
+  text-transform:uppercase;
+}
+/* 원문은 연하게 */
+.review-original-text{
+  font-size:.88rem;
+  color:var(--gray-dk);     /* 번역본보다 연한 색 */
+  line-height:1.75;
+  margin:0;
+  font-style:normal;
+}
+.episode-attr{
+  font-family:var(--mono);
+  font-size:.68rem;
+  color:var(--gray);
+  letter-spacing:.12em;
+  display:block;
+  margin-top:.9rem;
+}
+
+/* 벤토 메인 이미지 */
+.bento-wrap{position:relative;width:100%;overflow:hidden;margin:2.8rem 0 5rem}
+.bento-wrap img{width:100%;height:clamp(260px,42vw,560px);object-fit:cover;object-position:center 38%;display:block}
+.bento-wrap .bento-ph{width:100%;height:clamp(260px,42vw,560px);background:#e8e5de;
+  display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.8rem;
+  letter-spacing:.18em;color:var(--gray)}
+
+/* ── 별빛 오버레이 ── */
+.bento-glow-layer{position:absolute;inset:0;pointer-events:none;z-index:2}
+
+/* 중심 글로우 — 별 계란말이 위치 (이미지 우하단 ~72% 68%) */
+.bento-glow-layer::before{
+  content:"";position:absolute;
+  left:70%;top:62%;
+  width:clamp(120px,18vw,240px);height:clamp(120px,18vw,240px);
+  transform:translate(-50%,-50%);
+  background:radial-gradient(circle,
+    rgba(255,230,80,.72) 0%,
+    rgba(255,200,40,.45) 22%,
+    rgba(255,165,0,.18) 48%,
+    transparent 72%);
+  border-radius:50%;
+  animation:glowpulse 2.8s ease-in-out infinite;
+}
+
+/* 빛 산란 레이어 — 조금 더 넓고 연하게 */
+.bento-glow-layer::after{
+  content:"";position:absolute;
+  left:70%;top:62%;
+  width:clamp(200px,30vw,400px);height:clamp(200px,30vw,400px);
+  transform:translate(-50%,-50%);
+  background:radial-gradient(circle,
+    rgba(255,245,150,.38) 0%,
+    rgba(255,220,60,.15) 35%,
+    transparent 68%);
+  border-radius:50%;
+  animation:glowpulse 2.8s ease-in-out infinite .4s;
+}
+
+/* 별 모양 광선 (SVG 필터 없이 순수 CSS) */
+.bento-star-rays{
+  position:absolute;
+  left:70%;top:62%;
+  width:clamp(80px,12vw,160px);height:clamp(80px,12vw,160px);
+  transform:translate(-50%,-50%);
+  animation:glowpulse 2.8s ease-in-out infinite .2s, starspin 8s linear infinite;
+}
+.bento-star-rays::before,.bento-star-rays::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(rgba(255,240,100,.6),transparent),
+             linear-gradient(90deg,rgba(255,240,100,.6),transparent),
+             linear-gradient(45deg,rgba(255,240,100,.4),transparent),
+             linear-gradient(-45deg,rgba(255,240,100,.4),transparent);
+  -webkit-mask:
+    linear-gradient(#000,#000) center/2px 100% no-repeat,
+    linear-gradient(#000,#000) center/100% 2px no-repeat,
+    linear-gradient(45deg,#000,#000) center/2px 100% no-repeat,
+    linear-gradient(-45deg,#000,#000) center/100% 2px no-repeat;
+  mask:
+    linear-gradient(#000,#000) center/2px 100% no-repeat,
+    linear-gradient(#000,#000) center/100% 2px no-repeat;
+  background:linear-gradient(rgba(255,240,120,.0) 0%,rgba(255,240,80,.85) 50%,rgba(255,240,120,.0) 100%);
+  filter:blur(1px);
+}
+.bento-star-rays::before{
+  background:linear-gradient(rgba(255,245,100,0) 0%,rgba(255,230,60,.9) 50%,rgba(255,245,100,0) 100%);
+  width:2px;left:50%;transform:translateX(-50%);height:100%;
+}
+.bento-star-rays::after{
+  background:linear-gradient(90deg,rgba(255,245,100,0) 0%,rgba(255,230,60,.9) 50%,rgba(255,245,100,0) 100%);
+  height:2px;top:50%;transform:translateY(-50%);width:100%;
+}
+
+/* 반짝이 파티클 */
+.bento-sparkles{position:absolute;left:70%;top:62%;transform:translate(-50%,-50%);pointer-events:none}
+.bento-sparkles span{
+  position:absolute;width:4px;height:4px;background:#fff;border-radius:50%;
+  filter:blur(.5px);
+  animation:sparkle 2s ease-in-out infinite;
+}
+.bento-sparkles span:nth-child(1){left:-28px;top:-24px;animation-delay:0s}
+.bento-sparkles span:nth-child(2){left:22px;top:-36px;animation-delay:.4s}
+.bento-sparkles span:nth-child(3){left:38px;top:8px;animation-delay:.8s}
+.bento-sparkles span:nth-child(4){left:14px;top:30px;animation-delay:.2s}
+.bento-sparkles span:nth-child(5){left:-32px;top:18px;animation-delay:.6s}
+.bento-sparkles span:nth-child(6){left:-10px;top:38px;animation-delay:1s}
+.bento-sparkles span:nth-child(7){left:48px;top:-16px;animation-delay:1.4s}
+
+@keyframes glowpulse{
+  0%,100%{opacity:.7;transform:translate(-50%,-50%) scale(1)}
+  50%{opacity:1;transform:translate(-50%,-50%) scale(1.15)}
+}
+@keyframes starspin{
+  from{transform:translate(-50%,-50%) rotate(0deg)}
+  to{transform:translate(-50%,-50%) rotate(360deg)}
+}
+@keyframes sparkle{
+  0%,100%{opacity:0;transform:scale(0)}
+  40%,60%{opacity:1;transform:scale(1.6)}
+}
+
+/* ─────────────────────────────────────
+   INFLUENCER + STATS — 상하 배치
+   구조: 텍스트(상) → 폰 sticky 확대 구간 → stats(하)
+───────────────────────────────────── */
+.influencer-section{
+  background:#000;color:var(--rice);
+  padding:7rem 0 112px; /* 하단은 JS가 isMax 시점에 동적으로 덮어씀 */
+}
+
+/* 1단: 헤더 + 텍스트 */
+.inf-header{padding:4rem 0 1rem;text-align:center}
+.inf-header .eyebrow{justify-content:center;color:rgba(247,246,241,.55)}
+.inf-header .eyebrow::before{background:var(--shu)}
+.inf-header h2{
+  font-family:var(--serif);font-weight:900;
+  font-size:clamp(2rem,3.8vw,3.2rem);line-height:1.2;color:var(--rice)
+}
+.inf-header h2 em{font-style:normal;color:var(--shu)}
+
+.inf-text-block{text-align:center}
+.inf-text-block p{
+  font-size:clamp(.92rem,1.3vw,1.02rem);color:rgba(247,246,241,.72);
+  font-weight:300;line-height:1.9;
+  max-width:36em;margin:0 auto 2rem;
+}
+.inf-quote{
+  font-family:var(--serif);font-weight:700;font-size:1rem;line-height:1.75;
+  color:rgba(247,246,241,.88);text-align:center;
+  border-top:1px solid rgba(247,246,241,.15);
+  border-bottom:1px solid rgba(247,246,241,.15);
+  padding:.9rem 0;
+  max-width:32em;margin:0 auto;
+}
+
+/* 2단: sticky 폰 구간
+   .inf-sticky-outer — 스크롤 공간 확보 (400vh = 폰 확대 + 머무는 시간)
+   .inf-sticky-inner — position:sticky로 화면 중앙에 고정 */
+.inf-sticky-outer{
+  height:300vh;
+  position:relative;
+  overflow:visible; /* stats가 outer 하단 밖으로 나가도 보이도록 */
+}
+.inf-sticky-inner{
+  position:sticky;
+  top:0px;               /* 화면 상단에 바로 고정 → 더 일찍 고정 */
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:flex-start;
+  overflow:visible;
+  padding:3rem 5vw 0;
+  gap:1.2rem;
+}
+
+/* 폰 래퍼 — scale 대상 (badge 포함) */
+.phone-wrapper{
+  display:flex;
+  flex-direction:column;
+  align-items:stretch;
+  width:220px;
+  flex-shrink:0;
+  align-self:center;
+  transform-origin:top center; /* 위에서 아래로만 확대 */
+  will-change:transform;
+}
+/* 폰 프레임 */
+.phone-frame{
+  position:relative;
+  aspect-ratio:9/16;
+  width:100%;
+  border-radius:28px;
+  overflow:hidden;
+  background:#1a1a1a;
+  box-shadow:0 40px 80px -20px rgba(0,0,0,.9),
+             0 0 0 1px rgba(255,255,255,.07);
+  border:6px solid #2a2a2a;
+}
+.phone-frame video{width:100%;height:100%;object-fit:cover}
+.ig-badge{display:none}
+/* float-stats 안의 stats-grid 스타일 오버라이드 */
+#inf-float-stats .stats-grid{
+  border-top:1px solid rgba(247,246,241,.2);
+  width:100%;
+  max-width:1200px;
+  margin:0 auto;
+  padding:0 5vw;
+  box-sizing:border-box;
+}
+#inf-float-stats .stat-item{
+  padding:1.8rem 2rem;
+}
+
+/* 3단: stats — float overlay로 이동됨 */
+
+@media(max-width:760px){
+  .inf-sticky-outer{height:300vh}
+  .phone-frame{width:160px}
+  .inf-sticky-inner{align-items:flex-start;padding-top:15vh}
+}
+
+/* 스탯 그리드 — 다크 배경 위 클린 */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid rgba(247,246,241,.1)}
+.stat-item{padding:2.4rem 1.8rem;border-right:1px solid rgba(247,246,241,.08);position:relative}
+.stat-item:last-child{border-right:none}
+.stat-item::before{content:"";position:absolute;top:0;left:0;width:0;height:1px;
+  background:var(--shu);transition:width .7s ease}
+.stat-item.on::before{width:100%}
+.stat-icon{width:2rem;height:2rem;margin-bottom:1.2rem;opacity:.5}
+.stat-num{font-family:var(--mono);font-weight:500;font-size:clamp(1.6rem,2.8vw,2.4rem);
+  color:var(--rice);line-height:1.1;letter-spacing:-.02em;margin-bottom:.5rem}
+.stat-label{font-size:.8rem;color:rgba(247,246,241,.55);letter-spacing:.04em;margin-bottom:.25rem}
+.stat-sub{font-family:var(--mono);font-size:.68rem;color:var(--shu);letter-spacing:.1em;text-transform:uppercase}
+
+@media(max-width:860px){
+  .inf-top{grid-template-columns:1fr}.phone-col{order:-1}.phone-frame{max-width:240px}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .stat-item{border-right:none;border-bottom:1px solid rgba(247,246,241,.06)}
+}
+@media(max-width:500px){.stats-grid{grid-template-columns:1fr}}
+
+/* ─────────────────────────────────────
+   CONTENT STRATEGY
+───────────────────────────────────── */
+/* ─────────────────────────────────────
+   CONTENT STRATEGY — 2025 Editorial Bento
+   트렌드: 비대칭 그리드 + 키네틱 타이포 + 사진 콜라주
+───────────────────────────────────── */
+.strategy-section{
+  background:var(--ink);color:var(--rice);
+  padding:7rem 0;overflow:hidden;
+  position:relative;
+}
+.strategy-head{text-align:center;padding:0 5vw;position:relative;z-index:2}
+.strategy-head .eyebrow{justify-content:center;color:rgba(247,246,241,.5)}
+.strategy-head .eyebrow::before{background:var(--shu)}
+.strategy-head h2{
+  font-family:var(--serif);font-weight:900;
+  font-size:clamp(1.9rem,3.6vw,3rem);
+  color:var(--rice);line-height:1.2;margin-bottom:.8rem
+}
+.strategy-head p{
+  font-size:clamp(.92rem,1.3vw,1.02rem);color:rgba(247,246,241,.5);
+  font-weight:300;max-width:36em;margin:0 auto 3.5rem;line-height:1.8
+}
+
+/* ── 필름 스트립 — seamless 무한 루프 ── */
+.film-strip{
+  border-top:1px solid rgba(247,246,241,.06);
+  border-bottom:1px solid rgba(247,246,241,.06);
+  padding:.9rem 0;overflow:hidden;
+}
+.film-track{display:flex;gap:.6rem;width:max-content;will-change:transform}
+.film-track.running{animation:filmroll var(--film-dur,30s) linear infinite}
+@keyframes filmroll{from{transform:translateX(0)}to{transform:translateX(var(--film-offset,-50%))}}
+.film-item{width:200px;aspect-ratio:1;flex-shrink:0;overflow:hidden;background:#1c1c22;position:relative}
+.film-item img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s}
+.film-item:hover img{transform:scale(1.08)}
+.film-item .fn{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-family:var(--mono);font-size:.68rem;color:rgba(247,246,241,.2);letter-spacing:.14em
+}
+
+/* ── 3단 스텝 ── */
+.steps-wrap{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:0;
+  border-top:1px solid rgba(247,246,241,.1);
+  max-width:1200px;margin:0 auto;
+}
+.step-block{
+  padding:2.8rem 2.8rem 3rem;
+  border-right:1px solid rgba(247,246,241,.06);
+  position:relative;overflow:hidden;
+  transition:background .3s;
+}
+.step-block:last-child{border-right:none}
+.step-block:hover{background:rgba(247,246,241,.03)}
+.step-block::before{
+  content:attr(data-num);
+  position:absolute;right:1.2rem;top:50%;transform:translateY(-50%);
+  font-family:var(--serif);font-weight:900;font-size:6rem;line-height:1;
+  color:rgba(247,246,241,.14);
+  pointer-events:none;user-select:none;letter-spacing:-.04em;
+}
+.step-block h3{
+  font-family:var(--serif);font-weight:700;font-size:1.08rem;
+  color:var(--rice);margin-bottom:.8rem;line-height:1.35;
+  word-break:keep-all;overflow-wrap:break-word;
+}
+.step-block h3::before{
+  content:"";display:inline-block;width:.45rem;height:.45rem;
+  border-radius:50%;background:var(--shu);
+  margin-right:.65rem;vertical-align:.1em;flex-shrink:0;
+}
+.step-block p{
+  font-size:.88rem;color:rgba(247,246,241,.52);font-weight:300;
+  line-height:1.75;max-width:26em;word-break:keep-all;overflow-wrap:break-word;
+}
+.step-bg-num{display:none}
+.step-tag{display:none}
+@media(max-width:760px){
+  .steps-wrap{grid-template-columns:1fr}
+  .step-block{border-right:none;border-bottom:1px solid rgba(247,246,241,.06)}
+}
+
+/* ── BRAND — 세로 중앙 정렬, 흰 배경 없음 ── */
+.brand-section{background:var(--rice);padding:7rem 0;border-top:1px solid var(--line)}
+.brand-section .wrap{display:flex;flex-direction:column;align-items:center;text-align:center;gap:0}
+.brand-text-col{margin-bottom:2.8rem}
+.brand-text-col .eyebrow{justify-content:center;color:var(--shu)}
+.brand-text-col .eyebrow::before{background:var(--shu)}
+.brand-title{font-family:var(--serif);font-weight:900;font-size:clamp(2rem,3.8vw,3.2rem);
+  color:var(--ink);line-height:1.2;margin:.8rem 0 0}
+.brand-logo-col{display:flex;flex-direction:column;align-items:center;gap:1.4rem}
+/* 로고 — 배경 없음, 이미지만 */
+.brand-logo-frame{background:none;border:none;padding:0;display:flex;align-items:center;justify-content:center}
+.brand-logo-frame img{max-width:480px;height:auto;display:block}
+.brand-logo-ph{width:280px;height:70px;background:#ece9e2;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--mono);font-size:.68rem;color:var(--gray);letter-spacing:.14em}
+.brand-caption{font-size:.88rem;color:var(--gray-dk);font-weight:300;
+  text-align:center;max-width:30em;line-height:1.8}
+@media(max-width:860px){
+  .brand-logo-frame img{max-width:320px}
+}
+
+/* ─────────────────────────────────────
+   PRODUCTS
+───────────────────────────────────── */
+.products-section{padding:7rem 0;background:var(--rice)}
+.products-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-top:2.8rem}
+.prod-card{background:#fff;border:1px solid var(--line);display:flex;flex-direction:column;
+  overflow:hidden;transition:box-shadow .35s,transform .35s}
+.prod-card:hover{box-shadow:0 22px 52px -14px rgba(21,21,26,.15);transform:translateY(-3px)}
+.prod-thumb{aspect-ratio:4/5;overflow:hidden;background:#f2f0ec;position:relative;flex-shrink:0}
+.prod-thumb img{width:100%;height:100%;object-fit:cover;transition:transform 1.1s}
+.prod-card:hover .prod-thumb img{transform:scale(1.06)}
+.prod-thumb .img-ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-family:var(--mono);font-size:.68rem;color:var(--gray);letter-spacing:.12em;background:#ece9e2;text-align:center;padding:1rem}
+.prod-body{padding:1.5rem 1.8rem 1.8rem;flex:1;display:flex;flex-direction:column}
+.prod-badge-row{min-height:1.6rem;margin-bottom:.5rem}
+.badge{display:inline-block;padding:.24em .85em;font-size:.68rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#fff}
+.badge.bestseller{background:var(--shu)}
+.badge.new-release{background:#1d4ed8}
+.prod-body h3{font-family:var(--serif);font-weight:700;font-size:1.08rem;margin-bottom:.6rem;line-height:1.35;letter-spacing:-.01em}
+.prod-desc{font-size:.88rem;color:var(--gray-dk);font-weight:300;line-height:1.7;margin-bottom:.9rem;flex:1}
+.prod-features{list-style:none;border-top:1px solid var(--line);padding-top:.85rem;margin-bottom:1.1rem;
+  display:flex;flex-direction:column;gap:.32rem}
+.prod-features li{font-size:.8rem;color:var(--gray-dk);display:flex;align-items:center;gap:.5rem}
+.prod-features li::before{content:"";width:4px;height:4px;border-radius:50%;background:var(--gold);flex-shrink:0}
+.buy-stack{display:flex;flex-direction:column;gap:.35rem;margin-top:auto}
+.buy-btn{display:flex;align-items:center;justify-content:center;padding:.72em 1em;
+  font-size:.74rem;font-weight:600;letter-spacing:.07em;text-transform:uppercase;transition:filter .2s}
+.buy-btn:hover{filter:brightness(1.1)}
+.buy-naver{background:#03C75A;color:#fff}
+.buy-amazon{background:#FF9900;color:#111}
+.buy-rakuten{background:#BF0000;color:#fff}
+.buy-disabled{background:#f0eeea;color:#bbb;cursor:not-allowed;pointer-events:none}
+.prod-footnote{font-family:var(--mono);font-size:.68rem;color:var(--gray);margin-top:1.6rem;letter-spacing:.04em}
+@media(max-width:900px){.products-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:540px){.products-grid{grid-template-columns:1fr}}
+
+/* ─────────────────────────────────────
+   ROADMAP
+───────────────────────────────────── */
+.roadmap-section{background:var(--ink);color:var(--rice);padding:7rem 0}
+.roadmap-section .eyebrow{color:var(--shu)}
+.roadmap-section .eyebrow::before{background:var(--shu)}
+
+/* 타임라인 카드 순차 등장 */
+.rm-reveal{
+  opacity:0;
+  transform:translateY(28px);
+  transition:opacity .7s ease, transform .7s ease;
+}
+.rm-reveal.rm-on{
+  opacity:1;
+  transform:none;
+}
+
+/* 타임라인 컨테이너 */
+.rm-grid{
+  position:relative;
+  margin-top:3.5rem;
+  padding-bottom:1rem;
+}
+/* 중앙 세로선 */
+.rm-grid::before{
+  content:'';
+  position:absolute;
+  left:50%; top:0; bottom:0;
+  width:1px;
+  background:linear-gradient(to bottom, transparent, var(--shu) 8%, rgba(247,246,241,.2) 50%, var(--shu) 92%, transparent);
+  transform:translateX(-50%);
+}
+
+/* 각 카드 */
+.rm-card{
+  display:flex;
+  width:calc(50% - 2.8rem);
+  position:relative;
+  margin-bottom:3.2rem;
+  padding:1.8rem 2rem;
+  background:transparent;
+  border:none;
+  transition:opacity .3s;
+}
+.rm-card:hover{ opacity:.8; }
+
+/* 홀수 — 왼쪽 */
+.rm-card:nth-child(odd){
+  margin-left:0;
+  margin-right:auto;
+  text-align:right;
+  flex-direction:column;
+  align-items:flex-end;
+}
+/* 짝수 — 오른쪽 */
+.rm-card:nth-child(even){
+  margin-left:auto;
+  margin-right:0;
+  text-align:left;
+  flex-direction:column;
+  align-items:flex-start;
+}
+
+/* 중앙선 위 연결 점 */
+.rm-card::before{
+  content:'';
+  position:absolute;
+  top:50%;
+  width:10px; height:10px;
+  border-radius:50%;
+  background:var(--shu);
+  border:2px solid var(--ink);
+  transform:translateY(-50%);
+  z-index:1;
+}
+.rm-card:nth-child(odd)::before{
+  right:-3.35rem; /* 카드 오른쪽 끝 → 중앙선 */
+}
+.rm-card:nth-child(even)::before{
+  left:-3.35rem; /* 카드 왼쪽 끝 → 중앙선 */
+}
+
+/* 중앙선 → 카드 연결 수평선 */
+.rm-card::after{
+  content:'';
+  position:absolute;
+  top:50%;
+  height:1px;
+  width:2.4rem;
+  background:rgba(247,246,241,.2);
+  transform:translateY(-50%);
+}
+.rm-card:nth-child(odd)::after{ right:-2.85rem; }
+.rm-card:nth-child(even)::after{ left:-2.85rem; }
+
+.rm-year{
+  font-family:var(--mono);
+  font-size:.7rem;
+  color:var(--shu);
+  letter-spacing:.2em;
+  margin-bottom:.7rem;
+  display:block;
+}
+.rm-card h3{
+  font-family:var(--serif);
+  font-weight:700;
+  font-size:1rem;
+  line-height:1.35;
+  color:var(--rice);
+  margin-bottom:.5rem;
+}
+.rm-card p{
+  font-size:.82rem;
+  color:rgba(247,246,241,.5);
+  line-height:1.65;
+  font-weight:300;
+}
+
+@media(max-width:700px){
+  .rm-grid::before{left:1rem}
+  .rm-card{width:calc(100% - 2.8rem);margin-left:2.8rem !important;margin-right:0 !important;text-align:left !important;align-items:flex-start !important}
+  .rm-card::before{left:-2rem !important;right:auto !important}
+  .rm-card::after{left:-1.55rem !important;right:auto !important;width:1.2rem}
+}
+.rm-year{font-family:var(--mono);font-size:.68rem;color:var(--shu);letter-spacing:.18em;margin-bottom:.9rem;display:block}
+.rm-card h3{font-family:var(--serif);font-weight:700;font-size:.96rem;color:var(--rice);margin-bottom:.55rem;line-height:1.35;word-break:keep-all;overflow-wrap:break-word}
+.rm-card p{font-size:.88rem;color:rgba(247,246,241,.45);font-weight:300;line-height:1.7;word-break:keep-all;overflow-wrap:break-word}
+@media(max-width:860px){.rm-grid{grid-template-columns:repeat(2,1fr)}.rm-card{border-right:none;border-bottom:1px solid rgba(247,246,241,.08)}}
+@media(max-width:500px){.rm-grid{grid-template-columns:1fr}}
+
+/* ── INSTAGRAM FEED ── */
+.instagram-section{background:var(--rice);padding:7rem 0;border-top:1px solid var(--line)}
+.instagram-section .eyebrow{color:var(--shu)}
+.instagram-section .eyebrow::before{background:var(--shu)}
+.instagram-section h2{font-family:var(--serif);font-weight:900;
+  font-size:clamp(1.9rem,3.4vw,2.8rem);letter-spacing:-.01em;margin-bottom:2.8rem}
+.ig-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;align-items:start}
+
+/* embed 래퍼 — 높이를 Instagram이 결정하도록 완전히 풀어줌 */
+.ig-embed-wrap{
+  background:#f5f4f0;
+  border:1px solid var(--line);
+  border-radius:8px;
+  overflow:hidden;
+  /* embed.js가 높이를 자유롭게 결정하도록 — 일체 강제하지 않음 */
+}
+/* Instagram blockquote — 일체 CSS 간섭 없음 */
+.ig-embed-wrap .instagram-media{
+  margin:0 auto!important;
+  /* width/height/position — embed.js에 완전 위임 */
+}
+@keyframes igshimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+@media(max-width:640px){.ig-grid{grid-template-columns:1fr}}
+@media(max-width:640px){.ig-grid{grid-template-columns:1fr}}
+
+/* ── CONTACT ── */
+.contact-section{background:#000;color:#fff;padding:7rem 0;text-align:center}
+.contact-section h2{font-size:clamp(2rem,4.5vw,3.6rem);font-weight:500;letter-spacing:-.03em;
+  font-style:italic;text-transform:uppercase;margin-bottom:1rem}
+.contact-section .sub{color:rgba(255,255,255,.5);font-weight:300;font-size:clamp(.92rem,1.3vw,1.02rem);word-break:keep-all;overflow-wrap:break-word;
+  max-width:34em;margin:0 auto 3.5rem;line-height:1.8}
+.contact-card{display:inline-flex;flex-direction:column;align-items:center;gap:1.1rem;cursor:default}
+.contact-icon{width:4.4rem;height:4.4rem;border:1px solid rgba(255,255,255,.12);
+  display:flex;align-items:center;justify-content:center;font-size:1.4rem;
+  transition:background .4s,border-color .4s}
+.contact-card:hover .contact-icon{background:var(--gold);border-color:var(--gold)}
+.contact-label{font-family:var(--mono);font-size:.68rem;color:rgba(255,255,255,.35);letter-spacing:.28em;text-transform:uppercase}
+.contact-email{font-size:clamp(1.1rem,2.2vw,1.7rem);font-weight:500;letter-spacing:-.01em;color:var(--shu);transition:color .3s}
+.contact-card:hover .contact-email{color:var(--gold)}
+
+/* ── FOOTER ── */
+footer{background:#000;color:rgba(255,255,255,.38);padding:2.4rem 0;
+  border-top:1px solid rgba(255,255,255,.07);font-size:.74rem}
+footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.8rem}
+.footer-logo{height:2rem;filter:invert(1);opacity:.4;object-fit:contain}
+.footer-links{display:flex;gap:1.4rem}
+.footer-links button{background:none;border:none;color:inherit;cursor:pointer;font-size:.74rem;font-family:inherit;transition:color .2s}
+.footer-links button:hover{color:#fff}
+
+/* ── MODAL ── */
+.modal-wrap{display:none;position:fixed;inset:0;z-index:200;
+  background:rgba(10,10,12,.75);backdrop-filter:blur(12px);
+  align-items:center;justify-content:center;padding:1.5rem}
+.modal-wrap.open{display:flex}
+.modal-box{
+  background:var(--rice);
+  max-width:900px;width:100%;max-height:90vh;
+  display:flex;flex-direction:column;overflow:hidden;
+  border:1px solid var(--line);
+  box-shadow:0 32px 80px -20px rgba(0,0,0,.4);
+}
+.modal-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.2rem 2rem;
+  border-bottom:1.5px solid var(--shu); /* 주홍 하단 라인 */
+  flex-shrink:0;background:var(--rice);
+}
+.modal-head h3{
+  font-family:var(--serif);font-weight:700;font-size:1.05rem;
+  color:var(--ink);letter-spacing:-.01em
+}
+.modal-close{
+  background:none;border:none;font-size:1.4rem;cursor:pointer;
+  color:var(--gray);line-height:1;padding:.3rem .5rem;
+  transition:color .2s
+}
+.modal-close:hover{color:var(--shu)}
+.modal-body{
+  overflow-y:auto;padding:2.4rem 2.8rem;
+  font-family:var(--sans);font-size:.9rem;line-height:1.8;color:var(--ink);
+  /* 스크롤바 스타일 */
+  scrollbar-width:thin;scrollbar-color:var(--shu) transparent;
+}
+.modal-body::-webkit-scrollbar{width:4px}
+.modal-body::-webkit-scrollbar-track{background:transparent}
+.modal-body::-webkit-scrollbar-thumb{background:var(--shu);border-radius:99px}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="nav-logo">
+    <img id="nav-logo-img" src="kray_logo.png" alt="Kray, Inc.">
+  </div>
+  <div class="nav-links" id="nav-links"></div>
+  <div class="nav-right">
+    <div class="lang">
+      <button class="active" onclick="setLang('ko')">ko</button>
+      <button onclick="setLang('ja')">ja</button>
+      <button onclick="setLang('en')">en</button>
+    </div>
+    <a class="nav-cta" href="#contact" id="nav-cta-btn"></a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <!-- PC 3분할 — JS가 랜덤 영상 3개 주입 -->
+  <div class="triptych" id="triptych"></div>
+  <!-- 모바일 캐러셀 — JS가 동일 랜덤 영상 주입 -->
+  <div class="carousel" id="carousel">
+    <div class="c-track" id="ctrack"></div>
+    <div class="c-dots" id="cdots"></div>
+    <div class="c-bar" id="cbar"></div>
+  </div>
+  <div class="hero-veil"></div>
+  <div class="hero-copy" id="hero-copy"></div>
+  <div class="tate" id="hero-tate"></div>
+  <div class="scroll-cue">SCROLL</div>
+</header>
+
+<!-- TICKER -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track" id="ticker-track"></div>
+</div>
+
+<!-- EXECUTIVE SUMMARY -->
+<section class="summary" id="summary">
+  <div class="wrap">
+    <div class="eyebrow reveal">Executive Summary</div>
+    <h2 class="reveal" id="summary-title"
+      style="font-family:var(--serif);font-weight:900;font-size:clamp(1.9rem,3.4vw,2.8rem);line-height:1.22;letter-spacing:-.01em"></h2>
+
+    <!-- 랜덤 에피소드 -->
+    <div class="episode-wrap reveal" id="episode-wrap">
+      <p class="episode-text" id="episode-text"></p>
+      <span class="episode-attr" id="episode-attr"></span>
+    </div>
+
+    <!-- 벤토 메인 이미지 (파일명 고정: bento_main.jpg) -->
+    <div class="bento-wrap reveal">
+      <img src="bento_main.jpg" alt="Bento Main Visual"
+        onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="bento-ph" style="display:none">bento_main.jpg</div>
+      <!-- 별 계란말이 빛 연출 오버레이 -->
+      <div class="bento-glow-layer"></div>
+      <div class="bento-star-rays"></div>
+      <div class="bento-sparkles">
+        <span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- INFLUENCER + STATS -->
+<section class="influencer-section" id="influencer">
+
+  <div class="inf-sticky-outer" id="inf-sticky-outer">
+    <div class="inf-sticky-inner">
+      <!-- 텍스트 + 폰: sticky 화면에 고정 -->
+      <div class="inf-text-overlay">
+        <div class="inf-header">
+          <div class="eyebrow">Unrivaled Reach</div>
+          <h2 id="inf-intro-title"></h2>
+        </div>
+        <div class="inf-text-block">
+          <p id="inf-desc"></p>
+        </div>
+      </div>
+      <div class="phone-wrapper" id="phone-wrapper">
+        <div class="phone-frame" id="phone-frame">
+          <video id="inf-phone-video" autoplay muted loop playsinline></video>
+        </div>
+      </div>
+    </div>
+
+    <!-- badge + stats: outer 기준 absolute → JS가 폰 하단 좌표에 맞춰 배치 -->
+    <div id="inf-float-overlay" style="position:absolute;left:0;right:0;top:0;pointer-events:none;z-index:10;">
+      <div id="inf-float-stats" style="opacity:0;transition:opacity .25s;margin-top:6rem;">
+        <div class="stats-grid" id="stats-grid"></div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- INSTAGRAM FEED -->
+<section class="instagram-section" id="instagram">
+  <div class="wrap">
+    <div class="eyebrow reveal">Instagram</div>
+    <h2 class="reveal" id="ig-section-title">@sona_tokyolife</h2>
+    <div class="ig-grid" id="ig-grid"></div>
+  </div>
+</section>
+
+<!-- CONTENT STRATEGY -->
+<section class="strategy-section" id="strategy">
+  <div class="strategy-head reveal">
+    <div class="eyebrow">Content Strategy</div>
+    <h2 id="strategy-title"></h2>
+    <p id="strategy-subtitle"></p>
+  </div>
+  <!-- 필름 스트립 — JS가 슬라이드 생성 -->
+  <div class="film-strip" id="film-strip"></div>
+  <!-- 3단 스텝 -->
+  <div class="steps-wrap" id="steps-wrap"></div>
+</section>
+
+<!-- BRAND -->
+<section class="brand-section" id="brand">
+  <div class="wrap">
+    <div class="brand-text-col reveal">
+      <div class="eyebrow">Our Brand Identity</div>
+      <h2 class="brand-title" id="brand-title"></h2>
+    </div>
+    <div class="brand-logo-col reveal">
+      <div class="brand-logo-frame">
+        <img id="brand-logo-img" src="sona_spin_pop_beige.gif" alt="SONA and TOKYO Logo">
+      </div>
+      <p class="brand-caption" id="brand-caption"></p>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section class="products-section" id="products">
+  <div class="wrap">
+    <div class="eyebrow reveal">Product Lineup</div>
+    <h2 class="reveal" id="products-title"
+      style="font-family:var(--serif);font-weight:900;font-size:clamp(1.9rem,3.4vw,2.8rem);letter-spacing:-.01em"></h2>
+    <div class="products-grid reveal" id="products-grid"></div>
+    <p class="prod-footnote reveal" id="products-footnote"></p>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section class="roadmap-section" id="roadmap">
+  <div class="wrap">
+    <div class="eyebrow reveal">Brand Roadmap</div>
+    <h2 class="reveal" id="roadmap-title"
+      style="font-family:var(--serif);font-weight:900;font-size:clamp(1.9rem,3.4vw,2.8rem);color:var(--rice);letter-spacing:-.01em"></h2>
+    <div class="rm-grid" id="rm-grid"></div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+  <div class="wrap">
+    <h2 id="connect-title">CONNECT US</h2>
+    <p class="sub" id="contact-desc"></p>
+    <div class="contact-card">
+      <div class="contact-icon">✉</div>
+      <span class="contact-label" id="contact-label">Email Inquiry</span>
+      <span class="contact-email">business@krayinc.com</span>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <img class="footer-logo" id="footer-logo-img" src="kray_logo.png" alt="Kray">
+    <div class="footer-links" id="footer-links"></div>
+    <p id="footer-copy">© 2024 Kray, Inc. All rights reserved. Established 2024.07 (Japan)</p>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-wrap" id="modal" onclick="if(event.target===this)closeModal()">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h3 id="modal-title"></h3>
+      <button class="modal-close" onclick="closeModal()">×</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
+<script>
+/* ─────────────────────────────────────────────────────────────
+   랜덤 에피소드 (Executive Summary)
+───────────────────────────────────── */
+
+
+/* 폰 스크롤 확대 기능 제거 — 레이아웃 안정성 우선 */
+
+/* ─────────────────────────────────────────────────────────────
+   스크롤 연동 폰 확대 (Unrivaled Reach)
+   .inf-sticky-outer 스크롤 진행도(0→1)에 따라 scale(1→2)
+   sticky이므로 폰은 화면 중앙에 고정된 채로 커짐
+───────────────────────────────────── */
+(function(){
+  const MIN_SCALE = 1.0;
+  const MAX_SCALE = 2.0;
+
+  
+
+  function updatePhoneScale(){
+    const outer   = document.getElementById('inf-sticky-outer');
+    const frame   = document.getElementById('phone-wrapper');
+    const overlay = document.getElementById('inf-float-overlay');
+    const fstats  = document.getElementById('inf-float-stats');
+    if(!outer || !frame) return;
+
+    const outerRect  = outer.getBoundingClientRect();
+    const vh         = window.innerHeight;
+    const scrolled   = -outerRect.top;
+    const scrollable = outerRect.height - vh;
+    const progress   = Math.min(1, Math.max(0, scrolled / scrollable));
+    const scale      = MIN_SCALE + (MAX_SCALE - MIN_SCALE) * progress;
+
+    // 폰 확대
+    frame.style.transform = `scale(${scale.toFixed(3)})`;
+
+    // ── badge + stats 위치 계산 ──
+    // 폰 wrapper의 실제 화면 좌표 (scale 반영됨)
+    const phoneRect   = frame.getBoundingClientRect();
+    // scale이 최대(≥1.98)일 때만 표시
+    const isMax       = scale >= MAX_SCALE - 0.02;
+    // outer를 완전히 지나쳤는지 (더 이상 sticky 없음)
+    const pastOuter   = outerRect.bottom < 0;
+    // 아직 outer 안에 있는지
+    const beforeOuter   = outerRect.top > vh;
+    const deepPastOuter = outerRect.bottom < -(vh * 0.1);
+
+    if(isMax && !beforeOuter && !deepPastOuter && overlay){
+      const phoneBotFromOuter = phoneRect.bottom - outerRect.top;
+      overlay.style.top   = (phoneBotFromOuter + 50) + 'px';
+      fstats.style.opacity= '1';
+
+      // padding-bottom 1회 확정
+      if(!overlay._padSet){
+        overlay._padSet = true;
+        requestAnimationFrame(() => {
+          const overlayTopPx = parseFloat(overlay.style.top) || 0;
+          const overlayH     = overlay.offsetHeight;
+          const outerH       = outer.offsetHeight;
+          const overflow     = (overlayTopPx + overlayH) - outerH;
+          const needed       = Math.max(0, overflow) + 112;
+          const sec = document.getElementById('influencer');
+          if(sec) sec.style.paddingBottom = needed + 'px';
+        });
+      }
+    } else {
+      if(fstats) fstats.style.opacity = '0';
+      if(deepPastOuter || beforeOuter){
+        if(overlay) overlay._padSet = false;
+      }
+    }
+  }
+
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if(!ticking){
+      requestAnimationFrame(() => { updatePhoneScale(); ticking = false; });
+      ticking = true;
+    }
+  }, {passive:true});
+  updatePhoneScale();
+})();
+
+/* ─────────────────────────────────────────────────────────────
+   인스타그램 랜덤 4개 주입
+───────────────────────────────────── */
+(function(){
+  const IG_POOL = [
+    'https://www.instagram.com/reel/DVtB1Gij3uP/',
+    'https://www.instagram.com/reel/DZUupUVvFjn/',
+    'https://www.instagram.com/reel/DWJaFZhj4ge/',
+    'https://www.instagram.com/reel/Cwrq_D5Salg/',
+    'https://www.instagram.com/reel/DaNYaPIPMMu/',
+    'https://www.instagram.com/reel/DZtkqfCzlGB/',
+    'https://www.instagram.com/reel/DW6T-QHyYfB/',
+    'https://www.instagram.com/reel/DSH0wWdj4Ao/',
+    'https://www.instagram.com/reel/DMnDPRjTiSK/',
+    'https://www.instagram.com/reel/DJ_uKt7T1wG/',
+    'https://www.instagram.com/reel/DJHBTOdznhb/',
+    'https://www.instagram.com/reel/DD64I1OTKiV/',
+  ];
+
+  function pickRandom(pool, n) {
+    const arr = [...pool];
+    for(let i = arr.length-1; i > 0; i--){
+      const j = Math.floor(Math.random()*(i+1));
+      [arr[i],arr[j]] = [arr[j],arr[i]];
+    }
+    // 4개 미만이면 반복
+    while(arr.length < n) arr.push(...arr);
+    return arr.slice(0, n);
+  }
+
+  const grid = document.getElementById('ig-grid');
+  if(!grid) return;
+
+  const picked = pickRandom(IG_POOL, 4);
+  picked.forEach(url => {
+    const wrap = document.createElement('div');
+    wrap.className = 'ig-embed-wrap';
+    wrap.innerHTML =
+      `<blockquote class="instagram-media"
+         data-instgrm-captioned
+         data-instgrm-permalink="${url}"
+         data-instgrm-version="14"></blockquote>`;
+    grid.appendChild(wrap);
+  });
+
+  // embed.js가 이미 로드됐다면 재처리
+  if(window.instgrm && window.instgrm.Embeds){
+    window.instgrm.Embeds.process();
+  }
+})();
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 80), {passive:true});
+
+/* ── reveal ── */
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('on'); observer.unobserve(e.target); }});
+}, {threshold:.1});
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+/* ── roadmap 카드 순차 등장 ── */
+const rmObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting){
+      const delay = parseInt(e.target.dataset.delay) || 0;
+      setTimeout(() => e.target.classList.add('rm-on'), delay);
+      rmObserver.unobserve(e.target);
+    }
+  });
+}, {threshold: 0.15});
+
+/* ─────────────────────────────────────────────────────────────
+   히어로 영상 — videos/ 폴더에 sona_reel_01.mp4 ~ 20.mp4 범위 자동 감지
+   실제 파일이 있는 것만 추려 랜덤 3개 선택. 3개 미만이면 반복 사용.
+───────────────────────────────────────────────────────────── */
+/* ── 영상 정책 ──────────────────────────────────────────────
+   SONA 출연 영상 4개 고정 (sona_reel_03~06)
+   NORMAL 풀 14개 고정 (나머지 전체)
+   히어로: SONA 1개 + NORMAL 2개 (3패널)
+   Unrivaled Reach: 히어로에서 선택되지 않은 영상 중 1개 랜덤
+   ※ 영상 추가/삭제 시 NORMAL_POOL 목록만 수정
+────────────────────────────────────────────────────────── */
+const SONA_POOL = [
+  'videos/sona_reel_03.mp4',
+  'videos/sona_reel_04.mp4',
+  'videos/sona_reel_05.mp4',
+  'videos/sona_reel_06.mp4',
+];
+
+const NORMAL_POOL = [
+  'videos/sona_reel_01.mp4',
+  'videos/sona_reel_02.mp4',
+  'videos/sona_reel_07.mp4',
+  'videos/sona_reel_08.mp4',
+  'videos/sona_reel_09.mp4',
+  'videos/sona_reel_10.mp4',
+  'videos/sona_reel_11.mp4',
+  'videos/sona_reel_12.mp4',
+  'videos/sona_reel_13.mp4',
+  'videos/sona_reel_14.mp4',
+  'videos/sona_reel_15.mp4',
+  'videos/sona_reel_16.mp4',
+  'videos/sona_reel_17.mp4',
+  'videos/sona_reel_18.mp4',
+];
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length-1; i > 0; i--) {
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+
+/* 히어로 + Unrivaled Reach 영상 한 번에 결정 */
+function resolveAllVideos() {
+  // ① 히어로용: SONA 1개 + NORMAL 2개
+  const sonaPick = shuffle([...SONA_POOL])[0];
+  const normalShuffled = shuffle([...NORMAL_POOL]);
+  const n1 = normalShuffled[0];
+  const n2 = normalShuffled[1];
+
+  // ② 히어로 3패널 배열 (sona 위치 랜덤)
+  const sonaIdx = Math.floor(Math.random() * 3);
+  const heroPicks = [];
+  let ni = 0;
+  for (let i = 0; i < 3; i++) {
+    heroPicks.push(i === sonaIdx ? sonaPick : [n1, n2][ni++]);
+  }
+
+  // ③ Unrivaled Reach: 히어로에서 사용되지 않은 영상 중 1개
+  const heroSet = new Set(heroPicks);
+  const remaining = shuffle([...SONA_POOL, ...NORMAL_POOL].filter(v => !heroSet.has(v)));
+  const phonePick = remaining[0] || sonaPick;
+
+  return { heroPicks, phonePick };
+}
+
+function initHero() {
+  const { heroPicks: picked, phonePick } = resolveAllVideos();
+
+  // Unrivaled Reach 폰 영상 세팅
+  const phoneVid = document.getElementById('inf-phone-video');
+  if (phoneVid) { phoneVid.src = phonePick; phoneVid.load(); }
+
+  /* PC 3분할 */
+  const triptych = document.getElementById('triptych');
+  picked.forEach((src, i) => {
+    const panel = document.createElement('div');
+    panel.className = 'panel';
+    const vid = document.createElement('video');
+    vid.src = src; vid.autoplay = true; vid.muted = true;
+    vid.loop = true; vid.setAttribute('playsinline','');
+    const lbl = document.createElement('span');
+    lbl.className = 'p-label'; lbl.textContent = `Reel 0${i+1}`;
+    panel.appendChild(vid); panel.appendChild(lbl);
+    triptych.appendChild(panel);
+  });
+
+  /* 모바일 캐러셀 */
+  const DUR = 5000;
+  const track    = document.getElementById('ctrack');
+  const bar      = document.getElementById('cbar');
+  const dotsWrap = document.getElementById('cdots');
+
+  picked.forEach((src, i) => {
+    const slide = document.createElement('div');
+    slide.className = 'c-slide';
+    const vid = document.createElement('video');
+    vid.src = src; vid.muted = true; vid.loop = true; vid.setAttribute('playsinline','');
+    slide.appendChild(vid);
+    track.appendChild(slide);
+
+    const dot = document.createElement('button');
+    dot.className = 'c-dot' + (i===0?' on':'');
+    dot.dataset.i = i;
+    dotsWrap.appendChild(dot);
+  });
+
+  const slides = track.querySelectorAll('.c-slide');
+  const cvids  = track.querySelectorAll('video');
+  const dots   = dotsWrap.querySelectorAll('.c-dot');
+  let cur = 0, ctimer, isMob = false;
+
+  function goTo(idx) {
+    cur = (idx + slides.length) % slides.length;
+    track.style.transform = `translateX(-${cur * 33.333}%)`;
+    dots.forEach((d,j) => d.classList.toggle('on', j===cur));
+    cvids.forEach((v,j) => { j===cur ? v.play() : (v.pause(), v.currentTime=0); });
+    bar.style.transition='none'; bar.style.width='0'; bar.offsetWidth;
+    bar.style.transition=`width ${DUR}ms linear`; bar.style.width='100%';
+  }
+  function autoNext() { clearTimeout(ctimer); ctimer=setTimeout(()=>{goTo(cur+1);autoNext();}, DUR); }
+  function initMob()  { if(!isMob){ isMob=true; goTo(0); autoNext(); } }
+
+  dots.forEach(d => d.addEventListener('click', () => { clearTimeout(ctimer); goTo(+d.dataset.i); autoNext(); }));
+  let tx=0, ty=0, locked=false;
+  const carousel=document.getElementById('carousel');
+  carousel.addEventListener('touchstart', e=>{
+    tx=e.touches[0].clientX;
+    ty=e.touches[0].clientY;
+    locked=false;
+  },{passive:true});
+  carousel.addEventListener('touchmove', e=>{
+    const dx=Math.abs(e.touches[0].clientX-tx);
+    const dy=Math.abs(e.touches[0].clientY-ty);
+    if(!locked){
+      // 첫 움직임이 가로가 더 크면 좌우 스와이프로 판별 → 세로 스크롤 막기
+      if(dx>dy && dx>8){ locked=true; }
+    }
+    if(locked) e.preventDefault();
+  },{passive:false});
+  carousel.addEventListener('touchend', e=>{
+    const dx=e.changedTouches[0].clientX-tx;
+    if(Math.abs(dx)>40){clearTimeout(ctimer);goTo(cur+(dx<0?1:-1));autoNext();}
+  },{passive:true});
+
+  function checkMob(){
+    if(window.innerWidth<=760) initMob();
+    else { isMob=false; clearTimeout(ctimer); cvids.forEach(v=>v.pause()); }
+  }
+  window.addEventListener('resize',()=>setTimeout(checkMob,180));
+  checkMob();
+}
+initHero();
+
+/* ─────────────────────────────────────────────────────────────
+   필름 스트립 — seamless 무한 루프
+───────────────────────────────────────────────────────────── */
+/* ── Content Strategy 필름스트립 ── */
+(function(){
+  const SLIDES=[
+    {src:'slide01.jpg',n:'01'},{src:'slide02.jpg',n:'02'},{src:'slide03.jpg',n:'03'},
+    {src:'slide04.jpg',n:'04'},{src:'slide05.jpg',n:'05'},{src:'slide06.jpg',n:'06'}
+  ];
+  const strip=document.getElementById('film-strip');
+  if(!strip) return;
+  const track=document.createElement('div');
+  track.className='film-track';
+  // 4벌 복제 — 빈 구간 없이 seamless
+  [0,1,2,3].forEach(()=>{
+    SLIDES.forEach(s=>{
+      const item=document.createElement('div');
+      item.className='film-item';
+      const img=document.createElement('img');
+      img.src=s.src; img.alt='slide '+s.n;
+      img.addEventListener('error',function(){this.style.display='none';});
+      const fn=document.createElement('span');
+      fn.className='fn'; fn.textContent=s.n;
+      item.appendChild(img); item.appendChild(fn);
+      track.appendChild(item);
+    });
+  });
+  strip.appendChild(track);
+  const oneSet=SLIDES.length*206;
+  track.style.setProperty('--film-offset',`-${oneSet}px`);
+  track.style.setProperty('--film-dur','28s');
+  requestAnimationFrame(()=>requestAnimationFrame(()=>track.classList.add('running')));
+})();
+
+/* ── 번역 데이터 ── */
+const T = {
+  ko:{
+    nav:{cta:"문의하기",links:["소개","인플루언서","전략","브랜드","제품","로드맵"]},
+    hero:{tag:"영향력이 성과로 이어지는 에코시스템",title:"콘텐츠로<br>세상의<br><em>취향을 잇다</em>",desc:"Kray는 단순한 인플루언서 마케팅을 넘어 실질적인 판매 실적과 브랜드 자산을 구축하는 '콘텐츠 커머스' 기업입니다. 일본 현지의 도시락 문화를 한국적 감성으로 재해석하여 한일 양국에 새로운 라이프스타일을 제안합니다."},
+    valuesIntro:{title:"평범함 속의 특별함"},
+    values:[
+      {num:"01",title:"인플루언서 기반 경영",desc:"요리·도시락에 특화된 인플루언서 경영"},
+      {num:"02",title:"독보적인 콘텐츠 파급력",desc:"압도적인 도달 범위와 높은 바이럴 잠재력"},
+      {num:"03",title:"최적의 마켓 핏 기획력",desc:"시장의 요구를 정확히 관통하는 상품 개발"},
+      {num:"04",title:"한일 양국 트렌드 가교",desc:"한국적 감성과 일본 제조 기술의 융합"}
+    ],
+    stats:[
+      {value:"__FOLLOWERS_KO__",label:"팔로워 수",sub:"Instagram Audience"},
+      {value:"1억+",label:"릴스 누적 재생",sub:"Short-form Impact"},
+      {value:"1,722만",label:"최대 조회수",sub:"Viral Content"},
+      {value:"주 4~5회",label:"업로드 빈도",sub:"Daily Engagement"}
+    ],
+    influencer:{introTitle:"누적 재생 횟수 : <em>1억+</em>",desc:"일본 거주 한국인 인플루언서 'SONA'는<br>현지에서 경험한 도시락 문화를 특유의 감성으로 재해석하여<br>전 세계 시청자들의 마음을 사로잡았습니다.<br>단순한 영상을 넘어, '나도 만들 수 있겠다'는 확신을 주는 튜토리얼을 제공합니다."},
+    strategy:{
+      title:"Content Strategy: 'Show & Teach'",
+      subtitle:"시선을 사로잡는 비주얼 + 직관적 튜토리얼 = 자연스러운 구매로 연결",
+      steps:[
+        {title:"Visual (Show)",desc:"꽃 김밥, 캐릭터 토스트 등 귀여운 도시락과 센스 넘치는 요리로 시선을 압도합니다."},
+        {title:"Process (Teach)",desc:"직관적인 튜토리얼과 도구 활용법으로 '나도 할 수 있다'는 확신을 줍니다."},
+        {title:"Action (Buy)",desc:"자연스러운 구매 경로 제안으로 실제 소비와 팬덤 형성으로 이끌어냅니다."}
+      ]
+    },
+    brand:{title:"요리에 즐거움 1큰술",caption:"위 이미지는 일본에서 상표 등록된 소나앤도쿄의 정식 로고 입니다."},
+    products:{
+      title:"SONA가 프로듀스한 라인업",footnote:"※ 도시락 데코레이션 카테고리 부문",
+      items:[
+        {title:"별·하트 계란말이 틀",badge:"아마존 재팬 베스트셀러 1위! (※)",badgeClass:"bestseller",img:"produc01_thum.jpg",
+          desc:"틀에 넣는 것만으로 누구나 예쁜 모양 완성! 초보자의 Pain Point를 해결한 아이템.",
+          features:["한/일/중 디자인 등록","누적 리뷰 고평가"],
+          urls:{naver:"https://mkt.shopping.naver.com/link/68f668bf309bbc4b1c8000cb",amazon:"https://www.amazon.co.jp/gp/product/B0CVNG3VPT/",rakuten:null}},
+        {title:"별란스틱",badge:null,badgeClass:null,img:"produc02_thum.jpg",
+          desc:"가벼운 힘으로 매끄러운 계란물을 제조! 알끈 제거 기능까지 포함된 프리미엄 도구.",
+          features:["18-8 스테인리스 소재","폭신한 계란말이 최적화"],
+          urls:{naver:"https://mkt.shopping.naver.com/link/68f668bfdb0ddd370ee27b0a",amazon:"https://www.amazon.co.jp/gp/product/B0FJLHR5D3/",rakuten:null}},
+        {title:"트리플 팬",badge:"New Release",badgeClass:"new-release",img:"produc03_thum.jpg",
+          desc:"세 가지 요리를 동시에! SONA 에디션 신규 컬러 2종과 전용 뒤집개 세트 상품!",
+          features:["SONA Edition","3구 동시 조리 시스템"],
+          urls:{naver:"https://smartstore.naver.com/sona_tokyolife/products/13633354840",amazon:null,rakuten:null}}
+      ]
+    },
+    roadmapIntro:{title:"지속 가능한 브랜드로 성장"},
+    roadmap:[
+      {year:"2024.02",title:"별·하트 계란말이 틀 출시",desc:"별/하트 모양 프로듀스"},
+      {year:"2024.05",title:"도시락 레시피 출간",desc:"한국어판 정식 발행"},
+      {year:"2025.07",title:"별란스틱 출시",desc:"본격적인 라인업 확장"},
+      {year:"2026.05",title:"트리플 팬 출시",desc:"자사 브랜드 입지 강화"}
+    ],
+    contact:{desc:"Kray와 함께 새로운 콘텐츠 커머스의 미래를 만들어갈<br>비즈니스 파트너를 기다립니다.<br>협업 제안 및 문의는 아래 메일로 연락 부탁드립니다."},
+    legal:{privacy:"개인정보 처리방침",terms:"이용약관",notices:"특정상거래법에 따른 표기",rep:"KIM DONGGYUM"},
+    ui:{
+      reviewOriginalLabel:"원문 (日本語)",
+      igSectionTitle:"@sona_tokyolife",
+      tate:"도쿄 도시락 라이프",
+      naverBtn:"네이버 스마트스토어",
+      connectTitle:"CONNECT US",
+      emailLabel:"이메일 문의",
+      modalError:"파일을 불러올 수 없습니다.<br><br><small>서버 환경(Vercel)에서 확인해주세요.</small>",
+      footerCopy:"© 2024 Kray, Inc. All rights reserved."
+    }
+  },
+  ja:{
+    nav:{cta:"お問い合わせ",links:["会社概要","インフルエンサー","戦略","ブランド","製品","ロードマップ"]},
+    hero:{tag:"影響力が成果に繋がるエコシステム",title:"コンテンツで<br>世界の<br><em>「好み」を繋ぐ</em>",desc:"Krayは単なるインフルエンサーマーケティングを超え、実質的な販売実績とブランド資産を構築する「コンテンツコマース」企業です。日本現地のお弁当文化を韓国的な感性で再解釈し、日韓両国に新しいライフスタイルを提案します。"},
+    valuesIntro:{title:"平凡の中に特別さが染み込む"},
+    values:[
+      {num:"01",title:"クリエイター経営",desc:"料理・お弁当特化型クリエイターによる経営"},
+      {num:"02",title:"圧倒的なコンテンツ拡散力",desc:"圧倒的なコンテンツ拡散力とリーチ力"},
+      {num:"03",title:"マーケット適合の商品企画",desc:"市場ニーズを的確に捉えた最適な商品開発"},
+      {num:"04",title:"日韓トレンドの架け橋",desc:"韓国の感性と日本製造技術の融合"}
+    ],
+    stats:[
+      {value:"__FOLLOWERS_JA__",label:"フォロワー数",sub:"Instagram Audience"},
+      {value:"1億超え",label:"リール累計再生",sub:"Short-form Impact"},
+      {value:"1,722万回",label:"最多再生回数",sub:"星のキンパ動画"},
+      {value:"週4〜5回",label:"投稿頻度",sub:"継続的な発信"}
+    ],
+    influencer:{introTitle:"累積再生回数：<em>1億超え</em>",desc:"日本在住の韓国人クリエイター「SONA」は、<br>現地で経験したお弁当文化を独自の感性で再解釈し、<br>世界中の視聴者を魅了しました。<br>単なる動画を超え、「私にもできる」という確信を与えるチュートリアルを提供しています。"},
+    strategy:{
+      title:"Content Strategy: 「魅せる」& 「教える」",
+      subtitle:"目を引くビジュアル + 直感的なチュートリアル = 自然な購買への繋がり",
+      steps:[
+        {title:"Visual (魅せる)",desc:"可愛いお弁当やセンス溢れる料理が画面を圧倒します。"},
+        {title:"Process (教える)",desc:"分かりやすい動画と道具の使い方で、誰でも作れるという自信を与えます。"},
+        {title:"Action (買う)",desc:"自然な購買導線で、実際の購入とファン層の形成へと導きます。"}
+      ]
+    },
+    brand:{title:"料理に楽しさ大さじ1杯",caption:"日本で商標登録された SONA and TOKYO の公式ロゴです。"},
+    products:{
+      title:"SONAプロデュースのラインナップ",footnote:"※弁当デコレーションカテゴリー部門",
+      items:[
+        {title:"星・ハートの卵焼き型",badge:"Amazon JP 売れ筋ランキング1位! (※)",badgeClass:"bestseller",img:"produc01_thum.jpg",
+          desc:"型に入れるだけで誰でも可愛い形が完成します！お弁当初心者の悩みを解決する画期的なアイテムです。",
+          features:["日・韓・中にて意匠登録済","お客様からの高い評価"],
+          urls:{naver:"https://mkt.shopping.naver.com/link/68f668bf309bbc4b1c8000cb",amazon:"https://www.amazon.co.jp/gp/product/B0CVNG3VPT/",rakuten:"https://item.rakuten.co.jp/sonaandtokyo/tamagoyakikata/"}},
+        {title:"星の卵とき",badge:null,badgeClass:null,img:"produc02_thum.jpg",
+          desc:"軽い力でなめらかな溶き卵が作れるプレミアム調理器具です。",
+          features:["18-8ステンレス素材","ふわふわ卵焼きに最適化"],
+          urls:{naver:"https://mkt.shopping.naver.com/link/68f668bfdb0ddd370ee27b0a",amazon:"https://www.amazon.co.jp/gp/product/B0FJLHR5D3/",rakuten:"https://item.rakuten.co.jp/sonaandtokyo/tamagotoki/"}},
+        {title:"トリプルパン",badge:"New Release",badgeClass:"new-release",img:"produc03_thum.jpg",
+          desc:"3品同時に！SONAエディションの新色2種と専用ターナーがセットになって発売！",
+          features:["SONA Edition","3口同時調理システム"],
+          urls:{naver:null,amazon:"https://www.amazon.co.jp/gp/product/B0GZQYP9CN/?th=1",rakuten:"https://item.rakuten.co.jp/sonaandtokyo/sona-triple-pan/"}}
+      ]
+    },
+    roadmapIntro:{title:"持続可能なブランドへ成長"},
+    roadmap:[
+      {year:"2024.02",title:"星・ハートの卵焼き型発売",desc:"星・ハート型のプロデュース"},
+      {year:"2024.05",title:"レシピ本出版",desc:"韓国にてベストセラー"},
+      {year:"2025.07",title:"星の卵とき発売",desc:"ラインアップの拡充"},
+      {year:"2026.05",title:"トリプルパン発売",desc:"自社ブランドの強化"}
+    ],
+    contact:{desc:"Krayと共に新しいコンテンツコマースの未来を創る<br>パートナーを募集しています。<br>提携のご提案やお問い合わせは、下記のメールアドレスまでご連絡ください。"},
+    legal:{privacy:"プライバシーポリシー",terms:"利用規約",notices:"特定商取引法に基づく表記",rep:"金　東謙"},
+    ui:{
+      reviewOriginalLabel:"原文（日本語）",
+      igSectionTitle:"@sona_tokyolife",
+      tate:"東京弁当生活 — トーキョー・ベントー・ライフ",
+      naverBtn:"Naver Smart Store",
+      connectTitle:"CONNECT US",
+      emailLabel:"お問い合わせ",
+      modalError:"ファイルを読み込めません。<br><br><small>Vercel環境でご確認ください。</small>",
+      footerCopy:"© 2024 Kray, Inc. All rights reserved."
+    }
+  },
+  en:{
+    nav:{cta:"Contact Us",links:["About","Influencer","Strategy","Brand","Products","Roadmap"]},
+    hero:{tag:"Ecosystem Where Influence Leads to Results",title:"Connecting<br>Global Tastes with<br><em>Content</em>",desc:"Kray is a 'Content Commerce' company that builds brand assets and actual sales records beyond simple influencer marketing. We propose a new lifestyle by reinterpreting Japanese bento culture with Korean sensibilities."},
+    valuesIntro:{title:"Infusing Extraordinary Value into the Ordinary"},
+    values:[
+      {num:"01",title:"Influencer-Led Business",desc:"Management led by specialists in bento content"},
+      {num:"02",title:"Global Content Impact",desc:"Creative expression with unrivaled viral reach"},
+      {num:"03",title:"Market Fit Planning",desc:"Product planning tailored exactly to market needs"},
+      {num:"04",title:"Cross-Border Bridge",desc:"The fusion of Korean sensibilities and Japanese manufacturing technology"}
+    ],
+    stats:[
+      {value:"__FOLLOWERS_EN__",label:"Followers",sub:"Instagram Audience"},
+      {value:"100M+",label:"Total Reels Views",sub:"Short-form Impact"},
+      {value:"17.2M",label:"Most Viewed Reel",sub:"Star Kimbap Video"},
+      {value:"4-5/Week",label:"Post Frequency",sub:"Steady Communication"}
+    ],
+    influencer:{introTitle:"Cumulative View Count: <em>100M+</em>",desc:"SONA, a Korean influencer living in Japan,<br>reinterpreted the local bento culture with her unique sensibility<br>and captured global audiences.<br>Beyond videos, she provides tutorials that give confidence: 'I can do this too'."},
+    strategy:{
+      title:"Content Strategy: 'Show & Teach'",
+      subtitle:"Eye-catching Visuals + Intuitive Tutorials = Natural Connection to Purchase",
+      steps:[
+        {title:"Visual (Show)",desc:"Cute lunch boxes and sensible dishes dominate the screen."},
+        {title:"Process (Teach)",desc:"Tutorials that give everyone the confidence to replicate."},
+        {title:"Action (Buy)",desc:"Natural flow to purchase through strategic call-to-actions."}
+      ]
+    },
+    brand:{title:"A Tablespoon of Joy in Cooking",caption:"Official trademarked logo of SONA and TOKYO in Japan."},
+    products:{
+      title:"Lineup Produced by SONA",footnote:"* Bento Decoration Category",
+      items:[
+        {title:"Star & Heart Egg Roll Mold",badge:"Amazon JP Best Seller #1 (*)",badgeClass:"bestseller",img:"produc01_thum.jpg",
+          desc:"Perfect shapes just by putting eggs in the mold! Solves bento beginners' pain points.",
+          features:["Design Registered","Highly Rated by Users"],
+          urls:{naver:"https://mkt.shopping.naver.com/link/68f668bf309bbc4b1c8000cb",amazon:"https://www.amazon.co.jp/gp/product/B0CVNG3VPT/",rakuten:null}},
+        {title:"Star-shaped Egg Beater",badge:null,badgeClass:null,img:"produc02_thum.jpg",
+          desc:"Make smooth beaten eggs with light force. Premium tool with egg-spot removal.",
+          features:["18-8 Stainless Steel","Fluffy egg roll optimized"],
+          urls:{naver:"https://mkt.shopping.naver.com/link/68f668bfdb0ddd370ee27b0a",amazon:"https://www.amazon.co.jp/gp/product/B0FJLHR5D3/",rakuten:null}},
+        {title:"Triple Pan",badge:"New Release",badgeClass:"new-release",img:"produc03_thum.jpg",
+          desc:"Three dishes at once! SONA Edition with 2 new colors and a dedicated spatula set!",
+          features:["SONA Edition","Simultaneous 3-dish system"],
+          urls:{naver:null,amazon:null,rakuten:null}}
+      ]
+    },
+    roadmapIntro:{title:"Growth as a Sustainable Brand"},
+    roadmap:[
+      {year:"2024.02",title:"Star & Heart Egg Mold Launch",desc:"Star & Heart Series"},
+      {year:"2024.05",title:"Recipe Book",desc:"Published in Korea"},
+      {year:"2025.07",title:"Star Egg Beater Launch",desc:"Lineup Expansion"},
+      {year:"2026.05",title:"Triple Pan Launch",desc:"Planned release"}
+    ],
+    contact:{desc:"We look forward to business partners creating<br>the future of content commerce with Kray.<br>For collaboration inquiries, please contact us via the email below."},
+    legal:{privacy:"Privacy Policy",terms:"Terms of Use",notices:"Legal Notices",rep:"KIM DONGGYUM"},
+    ui:{
+      reviewOriginalLabel:"Original (Japanese)",
+      igSectionTitle:"@sona_tokyolife",
+      tate:"Tokyo Bento Life",
+      naverBtn:"Naver Smart Store",
+      connectTitle:"CONNECT US",
+      emailLabel:"Email Inquiry",
+      modalError:"Unable to load file.<br><br><small>Please check on the Vercel deployment.</small>",
+      footerCopy:"© 2024 Kray, Inc. All rights reserved."
+    }
+  }
+};
+
+let lang = 'ko';
+
+function setLang(l) {
+  lang = l;
+  document.documentElement.lang = l === 'ko' ? 'ko' : l === 'ja' ? 'ja' : 'en';
+  document.querySelectorAll('.lang button').forEach(b => b.classList.toggle('active', b.textContent===l));
+  document.getElementById('nav-cta-btn').textContent = T[l].nav.cta;
+  render();
+}
+
+function buyBtns(urls, l) {
+  const naverLabel = (T[l]?.ui?.naverBtn) || 'Naver Smart Store';
+  if(l==='ko') return urls.naver
+    ? `<a class="buy-btn buy-naver" href="${urls.naver}" target="_blank" rel="noopener">${naverLabel}</a>`
+    : `<div class="buy-btn buy-disabled">${naverLabel}</div>`;
+  if(l==='ja'){
+    let h='';
+    h += urls.amazon  ? `<a class="buy-btn buy-amazon"  href="${urls.amazon}"  target="_blank" rel="noopener">Amazon JP</a>`  : `<div class="buy-btn buy-disabled">Amazon JP</div>`;
+    h += urls.rakuten ? `<a class="buy-btn buy-rakuten" href="${urls.rakuten}" target="_blank" rel="noopener">楽天市場</a>` : `<div class="buy-btn buy-disabled">楽天市場</div>`;
+    return h;
+  }
+  return urls.amazon
+    ? `<a class="buy-btn buy-amazon" href="${urls.amazon}" target="_blank" rel="noopener">Amazon US</a>`
+    : `<div class="buy-btn buy-disabled">Amazon US</div>`;
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   아마존 리뷰 데이터 (별 5개 실제 리뷰)
+───────────────────────────────────── */
+const AMAZON_REVIEWS = [
+  { nameRaw:"ビート", titleKo:"화상 주의", dateJa:"2025年6月9日",
+    textKo:"당연한 말이지만 계란말이를 틀에 넣을 때 엄청 뜨거웠어요(웃음) 계란말이에서 국물이 나오니까 트레이 위에서 감싸주세요. 아주 예쁘게 성형됐습니다 ☆☆☆",
+    textJa:"当たり前なんですけど卵焼きに巻くときにめっちゃ熱かったです(笑) 卵焼きから汁が出るのでトレーの上で巻いてくださいね とても綺麗に成形できました☆☆☆",
+    textEn:"Of course it's hot — wrapping the egg roll in the mold was seriously burning (lol). The egg releases liquid, so make sure to wrap it on a tray. It came out beautifully shaped ☆☆☆" },
+  { nameRaw:"榊", titleKo:"도시락이 예쁘게 완성돼요", dateJa:"2025年11月13日",
+    textKo:"정말 예쁘게 완성되어서 놀란 상품이었어요. 고정하는 게 조금 힘들지만, 조금 삐져나와도 시간을 두면 예쁜 별 모양이 완성돼요. 캐릭터 도시락이 서툰 저도 별 하나 넣는 것만으로 아이가 신나했어요!",
+    textJa:"これは本当に綺麗にできておどろきの商品でした。固定するのはすこし大変ですが多少はみ出ても時間をおくときれいな星の形が出来上がります。キャラ弁が苦手な私ですが星をいれるだけでも子供はテンションがあがってました！",
+    textEn:"I was genuinely surprised by how beautifully it turned out! It's a bit tricky to secure, but even if a little overflows, leaving it for a while gives you a perfect star shape. Even I — who's not great at character bento — had my kid excited just by adding one star!" },
+  { nameRaw:"池本知佳", titleKo:"별 모양 계란이 간단하게 됐어요!", dateJa:"2026年1月16日",
+    textKo:"정말 간단하고 예쁘게 별 모양 계란이 만들어져요! 도시락 색감도 좋아지고, 별 모양으로 귀여운 도시락을 간단하게 만들 수 있어서 만족스러워요.",
+    textJa:"とにかく簡単で、綺麗に星型たまごが作れます！お弁当の彩りもよくなり星型でかわいらしいお弁当が簡単に作れて満足です。",
+    textEn:"It's incredibly easy and makes such a beautiful star-shaped egg! The color balance in the bento improves too, and I can put together an adorable lunch box effortlessly. Very satisfied!" },
+  { nameRaw:"yuki", titleKo:"귀여웠어요", dateJa:"2026年1月16日",
+    textKo:"영상처럼 제대로 하면 예쁜 별★이 완성됐어요. 식히는 게 깔끔하게 자르는 비결이에요.",
+    textJa:"動画のようにきちんとすれば綺麗な星★出来ました。冷ますことが綺麗にカットできる秘訣ですね。",
+    textEn:"Follow the video properly and you get a perfect star★. Letting it cool down first is the key to clean cuts!" },
+  { nameRaw:"yo", titleKo:"아이가 좋아해요", dateJa:"2026年2月11日",
+    textKo:"작은 계란 2개로 네모 프라이팬에 길쭉하게 만든 계란말이를 여기에 넣고 식히기만 하면 돼요. 캐릭터 도시락은 못 만들지만 도시락을 예쁘게 해주고 싶은 마음을 이뤄줘요.",
+    textJa:"小さめたまご２個で四角いフライパンに縦長の卵焼き作ってこれに入れて冷ましておくだけ。キャラ弁は作れないけどお弁当可愛くしてあげたいを叶えてくれる",
+    textEn:"Just make a long egg roll in a square pan with 2 small eggs, pop it in the mold, and let it cool. I can't do character bento, but this lets me make my kid's lunch cute and special." },
+  { nameRaw:"とっきー", titleKo:"진작 살걸 그랬어요", dateJa:"2026年6月20日",
+    textKo:"저렴한 상품을 찾아 다른 제품을 여러 개 샀지만 결국 예쁘게 안 됐고, 이걸 과감하게 구매했어요. 아주 예쁘게 만들 수 있어서 사길 잘했습니다.",
+    textJa:"安さを求めて他の商品(型に入れてレンチン)を何個か買いましたが結局綺麗にできず、こちらを思い切って購入。とてもきれいに作ることができ買ってよかったです。",
+    textEn:"I bought several cheaper alternatives (microwave-in-mold types) but none worked well. Finally took the plunge on this one — it made beautiful shapes instantly. So glad I bought it!" },
+  { nameRaw:"まる", titleKo:"예쁜 별 모양이 완성돼요. 세척도 쉽고!", dateJa:"2026年2月11日",
+    textKo:"편식하는 아이에게 계란말이를 먹이고 싶어서 구매했어요. 설명서대로 하니 사진처럼 귀여운 별 모양 계란말이가 완성! 귀여워요! 아이한테 보여줬더니 '엄마가 먹는 거야!'라고 하더라고요(웃음). 상품 자체는 튼튼해서 오래 쓸 수 있을 것 같아요🐣",
+    textJa:"偏食の子供に玉子焼きを食べて欲しくて購入しました。写真通りのかわいい星形の玉子焼きが出来ました。かわいい！カットラインが入っているので切りやすかったです。肝心の子供には「ママが食べるの！」と言われましたが、長期戦の覚悟。綺麗な星形の玉子焼きが出来るとちょっと感動します🐣",
+    textEn:"Bought it to get my picky eater to try egg rolls. Followed the instructions and got the cutest star-shaped egg just like in the photos! When I showed my kid, they said 'That's for Mama!' (lol). The product is solid and should last a long time 🐣" },
+  { nameRaw:"flower", titleKo:"캐릭터 도시락 필수!", dateJa:"2024年11月4日",
+    textKo:"요즘 빠진 손재주 없는 엄마인 저. 젓가락으로 할 수 있다고 주변 엄마들이 말하지만 그건 무리! 그런데 이 도구 덕분에 어라 간단✨ 임팩트 큰 별 모양 계란말이! 다른 모양도 있으면 좋겠다~",
+    textJa:"最近ハマりだした、不器用ママの私。割り箸でできるよ！なんて周りのママはいうけど、そんなん無理！けど、この器具のお陰で、あら簡単✨インパクト大の星型卵焼き！ほかの形もあったらいいなぁ〜",
+    textEn:"I'm a clumsy mom who just got into this. Other moms say 'you can do it with chopsticks!' — no way! But with this tool, wow, it's so easy ✨ A star egg with massive visual impact! Would love to see other shapes too~" },
+  { nameRaw:"エア太郎", titleKo:"도시락의 포인트가 됐어요", dateJa:"2024年6月7日",
+    textKo:"2살 아이 도시락을 준비하면서 별 모양 계란말이 도구를 발견해서 바로 구매. 작은 계란이라면 딱 2개가 적당했어요. 완성품도 예쁜 별 모양이 돼서 대만족이에요.",
+    textJa:"2歳の子供にお弁当を用意することになり、星型に出来る卵焼きのグッズがあり早速購入。小さめの卵ならちょうど2個だと感じました。出来上がりも綺麗な星型にでき大満足です。",
+    textEn:"Started making bento for my 2-year-old and immediately grabbed this when I found it. Two small eggs is the perfect amount. The finished star shape came out beautifully — totally satisfied!" },
+  { nameRaw:"Mm", titleKo:"간단하게 인스타 감성!", dateJa:"2024年8月14日",
+    textKo:"아이 도시락용으로 구매했어요. 먼저 계란말이를 굽고 틀에 끼워 두면 다른 반찬이나 주먹밥 만드는 사이에 완성돼 있어요. M사이즈 작은 계란 2개가 딱 맞았어요.",
+    textJa:"子供のお弁当用に買ってみました。最初に卵焼きを焼いて型に挟んで置いておけば、他のおかずやおにぎりを作ってる間に出来上がっているので簡単です。Mサイズの小さめ卵2個でちょうどでしたよ。",
+    textEn:"Bought it for my kid's bento. Cook the egg roll first, put it in the mold, and by the time you've finished the other sides and rice balls, it's done. Two size-M small eggs fit perfectly!" },
+  { nameRaw:"User", titleKo:"요리 못하는 나도 쓸 수 있었어요!", dateJa:"2024年5月25日",
+    textKo:"계란말이를 예쁘게 못 굽는 저도 예쁜 별 모양을 만들 수 있었어요! 처음에 스크램블처럼 해서 부드러울 때 프라이팬 끝에 모아 틀에 넣기 쉽게 형태만 잡아줬어요. 제대로 된 별 모양이 됐어요! 인스타 감성 도시락을 못 만드는 저도 조금 화려한 도시락을 만들 수 있었어요! 정말 감사한 상품이에요!",
+    textJa:"卵焼きを綺麗に焼けない私でも、綺麗な星型にできました！最初スクランブルエッグみたいにして、柔らかい内にフライパンの端に寄せて、この型に入れやすくする程度に形が整えるだけ！ちゃんとした星型になりました！映える弁当を作れない私でも、少し華やかな弁当を作ることができました！大変有難い商品です！",
+    textEn:"Even someone like me who can't make a neat egg roll made a perfect star shape! I scrambled the eggs slightly, pushed them to the edge of the pan while still soft, shaped them just enough to fit in the mold — and got a proper star! Even I can now make a gorgeous-looking bento. What an amazing product!" },
+];
+
+function maskName(name) {
+  if (!name || name.length === 0) return '*';
+  // 앞 1글자만 표시, 나머지는 실제 글자 수만큼 * 마스킹
+  const visible = name.slice(0, 1);
+  const masked  = '*'.repeat(Math.max(name.length - 1, 1));
+  return visible + masked;
+}
+
+function renderReview(lang) {
+  const wrap = document.getElementById('episode-wrap');
+  if (!wrap) return;
+  const r = AMAZON_REVIEWS[Math.floor(Math.random() * AMAZON_REVIEWS.length)];
+  const maskedName = maskName(r.nameRaw);
+  const stars = '★★★★★';
+  let content = '';
+  if (lang === 'ko') {
+    content = '<div class="review-stars">' + stars + '</div>'
+      + '<p class="episode-text">' + r.textKo + '</p>'
+      + '<div class="review-original"><span class="review-original-label">' + (T[lang]?.ui?.reviewOriginalLabel || '원문') + '</span>'
+      + '<p class="review-original-text">' + r.textJa + '</p></div>'
+      + '<span class="episode-attr">— ' + maskedName + ' / Amazon JP · ' + r.dateJa + '</span>';
+  } else if (lang === 'ja') {
+    content = '<div class="review-stars">' + stars + '</div>'
+      + '<p class="episode-text">' + r.textJa + '</p>'
+      + '<span class="episode-attr">— ' + maskedName + ' / Amazon JP · ' + r.dateJa + '</span>';
+  } else {
+    // en: textEn(영어 번역) 표시, 원문(일본어) 함께 표시
+    content = '<div class="review-stars">' + stars + '</div>'
+      + '<p class="episode-text">' + (r.textEn || r.textKo) + '</p>'
+      + '<div class="review-original"><span class="review-original-label">' + (T[lang]?.ui?.reviewOriginalLabel || 'Original (Japanese)') + '</span>'
+      + '<p class="review-original-text">' + r.textJa + '</p></div>'
+      + '<span class="episode-attr">— ' + maskedName + ' / Amazon JP · ' + r.dateJa + '</span>';
+  }
+  wrap.innerHTML = content;
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   Ticker — 선택 언어에 맞는 키워드만 표시
+───────────────────────────────────── */
+const TICKER_KEYWORDS = {
+  ko: [
+    'Kray, Inc.', 'SONA and TOKYO', '콘텐츠 커머스',
+    '인플루언서 기반 커머스', '도시락 라이프스타일',
+    '아마존 재팬 베스트셀러', '1억 재생 돌파',
+    '별·하트 계란말이 틀', '별란스틱', '트리플 팬',
+    '한일 크로스보더', '네이버 스마트스토어',
+    '도쿄에서 태어난 브랜드', '일상을 제품으로',
+    'K-라이프스타일', 'SONA 프로듀스',
+  ],
+  ja: [
+    'Kray, Inc.', 'SONA and TOKYO', 'コンテンツコマース',
+    'クリエイター経営', 'お弁当ライフスタイル',
+    'Amazon JP 売れ筋1位', '1億回再生突破',
+    '星・ハートの卵焼き型', '星の卵とき', 'トリプルパン',
+    '日韓クロスボーダー', '楽天市場',
+    '東京発ブランド', '日常をプロダクトに',
+    'SONAプロデュース', 'インフルエンサーコマース',
+  ],
+  en: [
+    'Kray, Inc.', 'SONA and TOKYO', 'Content Commerce',
+    'Influencer-Led Commerce', 'Bento Lifestyle',
+    'Amazon JP Best Seller', '100M+ Views',
+    'Star & Heart Egg Mold', 'Star Egg Beater', 'Triple Pan',
+    'Japan × Korea Cross-border', 'Born in Tokyo',
+    'Everyday Life into Products', 'SONA Produces',
+    'K-Lifestyle', 'Short-form to Commerce',
+  ],
+};
+
+function renderTicker(lang) {
+  const track = document.getElementById('ticker-track');
+  if (!track) return;
+  const kws = TICKER_KEYWORDS[lang] || TICKER_KEYWORDS.en;
+  const sep = '<i>·</i>';
+  const line = kws.join(sep) + sep;
+  // seamless 루프: 2벌
+  track.innerHTML = `<span>${line}</span><span>${line}</span>`;
+}
+/* ── 팔로워 수 마커 안전장치 ──
+   GitHub Actions가 아직 안 돌았거나 실패했을 때
+   __FOLLOWERS_XX__ 마커가 화면에 그대로 노출되는 것 방지 */
+const FOLLOWERS_FALLBACK = { ko: '14.8만', ja: '14.8万人', en: '148K' };
+(function sanitizeFollowerMarkers(){
+  ['ko','ja','en'].forEach(lg => {
+    const marker = '__FOLLOWERS_' + lg.toUpperCase() + '__';
+    const stats = T[lg] && T[lg].stats;
+    if(!stats) return;
+    stats.forEach(s => {
+      if(s.value === marker) s.value = FOLLOWERS_FALLBACK[lg];
+    });
+  });
+})();
+
+function render() {
+  const t = T[lang];
+  // 리뷰 렌더링
+  renderReview(lang);
+  // ticker 언어 갱신
+  renderTicker(lang);
+
+  // nav 링크
+  const NAV_ANCHORS = ['summary','influencer','strategy','brand','products','roadmap'];
+  const navLinks = document.getElementById('nav-links');
+  if(navLinks && t.nav.links){
+    navLinks.innerHTML = t.nav.links.map((label, i) =>
+      `<a href="#${NAV_ANCHORS[i]}">${label}</a>`
+    ).join('');
+  }
+  // hero
+  document.getElementById('hero-copy').innerHTML =
+    `<div class="eyebrow">${t.hero.tag}</div><h1>${t.hero.title}</h1><p>${t.hero.desc}</p>`;
+  // summary
+  document.getElementById('summary-title').textContent = t.valuesIntro.title;
+  // influencer
+  document.getElementById('inf-intro-title').innerHTML = t.influencer.introTitle;
+  document.getElementById('inf-desc').innerHTML = t.influencer.desc;
+  // inf-quote 제거됨
+  // stats
+  document.getElementById('stats-grid').innerHTML = t.stats.map(s =>
+    `<div class="stat-item reveal">
+      <div class="stat-num">${s.value}</div>
+      <div class="stat-label">${s.label}</div>
+      <div class="stat-sub">${s.sub}</div>
+    </div>`
+  ).join('');
+  // strategy
+  document.getElementById('strategy-title').textContent = t.strategy.title;
+  document.getElementById('strategy-subtitle').textContent = t.strategy.subtitle;
+  document.getElementById('steps-wrap').innerHTML = t.strategy.steps.map((s,i)=>
+    `<div class="step-block reveal" data-num="0${i+1}"><h3>${s.title}</h3><p>${s.desc}</p></div>`
+  ).join('');
+  // brand
+  document.getElementById('brand-title').textContent = t.brand.title;
+  document.getElementById('brand-caption').textContent = t.brand.caption;
+  // products
+  document.getElementById('products-title').textContent = t.products.title;
+  document.getElementById('products-footnote').textContent = t.products.footnote;
+  document.getElementById('products-grid').innerHTML = t.products.items.map(p =>
+    `<div class="prod-card">
+      <div class="prod-thumb">
+        <img src="${p.img}" alt="${p.title}" data-ph="${p.title}">
+      </div>
+      <div class="prod-body">
+        <div class="prod-badge-row">${p.badge ? `<span class="badge ${p.badgeClass}">${p.badge}</span>` : ''}</div>
+        <h3>${p.title}</h3>
+        <p class="prod-desc">${p.desc}</p>
+        <ul class="prod-features">${p.features.map(f=>`<li>${f}</li>`).join('')}</ul>
+        <div class="buy-stack">${buyBtns(p.urls, lang)}</div>
+      </div>
+    </div>`
+  ).join('');
+  // roadmap
+  document.getElementById('roadmap-title').textContent = t.roadmapIntro.title;
+  document.getElementById('rm-grid').innerHTML = t.roadmap.map((r, i) =>
+    `<div class="rm-card rm-reveal" data-delay="${i * 180}">
+      <span class="rm-year">${r.year}</span>
+      <h3>${r.title}</h3>
+      <p>${r.desc}</p>
+    </div>`
+  ).join('');
+  // rm-reveal 옵저버 재등록
+  document.querySelectorAll('.rm-reveal:not(.rm-on)').forEach(el => rmObserver.observe(el));
+  // contact
+  document.getElementById('contact-desc').innerHTML = t.contact.desc;
+  // footer
+  document.getElementById('footer-links').innerHTML =
+    `<button onclick="openModal('privacy')">${t.legal.privacy}</button>
+     <button onclick="openModal('terms')">${t.legal.terms}</button>
+     <button onclick="openModal('notices')">${t.legal.notices}</button>`;
+  // UI 텍스트 번역 적용
+  const ui = t.ui || {};
+  const igTitle = document.getElementById('ig-section-title');
+  if(igTitle) igTitle.textContent = ui.igSectionTitle || '@sona_tokyolife';
+  const connectT = document.getElementById('connect-title');
+  if(connectT) connectT.textContent = ui.connectTitle || 'CONNECT US';
+  const tatEl = document.getElementById('hero-tate');
+  if(tatEl) tatEl.textContent = ui.tate || '';
+  const emailL = document.getElementById('contact-label');
+  if(emailL) emailL.textContent = ui.emailLabel || 'Email Inquiry';
+  const footerC = document.getElementById('footer-copy');
+  if(footerC) footerC.textContent = (ui.footerCopy || '© 2024 Kray, Inc. All rights reserved.') + ' Established 2024.07 (Japan)';
+
+  // reveal 재적용
+  requestAnimationFrame(() => {
+    document.querySelectorAll('.reveal:not(.on)').forEach(el => observer.observe(el));
+    document.querySelectorAll('.stat-item:not(.on)').forEach(el => observer.observe(el));
+  });
+}
+
+/* ── 모달 ── */
+const MODAL_FILES = {privacy:'./privacy.html', terms:'./terms.html', notices:'./legal.html'};
+function openModal(type) {
+  document.getElementById('modal-title').textContent = T[lang].legal[type];
+  // 모달 먼저 열기
+  document.getElementById('modal').classList.add('open');
+  document.getElementById('modal-body').innerHTML =
+    '<p style="text-align:center;padding:3rem;color:#999;font-family:var(--mono);font-size:.74rem;letter-spacing:.1em">LOADING...</p>';
+
+  fetch(MODAL_FILES[type], {cache:'no-cache'})
+    .then(r => {
+      if(!r.ok) throw new Error('HTTP '+r.status);
+      return r.text();
+    })
+    .then(raw => {
+      const doc = new DOMParser().parseFromString(raw,'text/html');
+      // 현재 언어 섹션 → ja fallback → 전체
+      const sec = doc.getElementById(lang)
+               || doc.getElementById('ja')
+               || doc.querySelector('section')
+               || doc.body;
+      document.getElementById('modal-body').innerHTML =
+        sec ? (sec.tagName === 'BODY' ? sec.innerHTML : sec.outerHTML) : raw;
+    })
+    .catch(err => {
+      console.warn('[Modal]', type, err.message);
+      const errMsg = (T[lang]?.ui?.modalError) || 'Unable to load file.';
+      document.getElementById('modal-body').innerHTML =
+        '<p style="text-align:center;padding:4rem;color:#999;font-family:var(--mono);font-size:.74rem">'+
+        errMsg+'</p>';
+    });
+}
+function closeModal() { document.getElementById('modal').classList.remove('open'); }
+
+/* ── 이미지 fallback ── */
+function handleImgError(img) {
+  img.style.display = 'none';
+  if(img.id === 'nav-logo-img'){
+    img.parentNode.insertAdjacentHTML('beforeend',
+      '<span style="font-family:serif;font-weight:900;font-size:1.2rem;letter-spacing:.05em">Kray, Inc.</span>');
+    return;
+  }
+  if(img.id === 'brand-logo-img'){
+    img.insertAdjacentHTML('afterend','<div class="brand-logo-ph">sonaandtokyo-logo.png</div>');
+    return;
+  }
+  const ph = img.getAttribute('data-ph');
+  if(ph) img.insertAdjacentHTML('afterend', `<div class="img-ph">${ph}</div>`);
+}
+document.addEventListener('error', e => { if(e.target.tagName==='IMG') handleImgError(e.target); }, true);
+
+render();
+</script>
+<!-- Instagram oEmbed 렌더링 스크립트 -->
+<script async src="https://www.instagram.com/embed.js"></script>
+</body>
 </html>
