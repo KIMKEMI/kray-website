@@ -1,10 +1,56 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700;900&family=Noto+Serif+JP:wght@400;700;900&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --shu:#C8402F; --gold:#D4A420; --ink:#15151A; --rice:#F7F6F1;
+      --gray:#8A8A93; --gray-dk:#55555E; --line:rgba(21,21,26,.1);
+      --serif:'Noto Serif KR','Noto Serif JP','Georgia',serif;
+      --sans:'Noto Sans KR','Noto Sans JP',-apple-system,'Helvetica Neue',sans-serif;
+      --mono:'IBM Plex Mono',monospace;
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{font-family:var(--sans);background:var(--rice);color:var(--ink);-webkit-font-smoothing:antialiased}
+    /* 기존 Tailwind 클래스 지원 */
+    .text-gray-800{color:#1f2937}.text-gray-700{color:#374151}.text-gray-600{color:#4b5563}
+    .text-gray-900,.text-gray-950{color:#111827}.text-amber-800{color:#92400e}
+    .bg-amber-50{background:#fffbeb}.border-amber-400{border-color:#fbbf24}
+    .bg-yellow-400{background:#facc15}.border-yellow-400{border-color:#facc15}
+    .bg-gray-50{background:#f9fafb}.bg-gray-100{background:#f3f4f6}
+    .border-gray-100{border-color:#f3f4f6}.border-gray-50{border-color:#f9fafb}
+    .border-b{border-bottom-width:1px;border-style:solid}.border-b-2{border-bottom-width:2px;border-style:solid}
+    .border-l-4{border-left-width:4px;border-style:solid}.border-collapse{border-collapse:collapse}
+    .text-2xl{font-size:1.5rem}.text-xl{font-size:1.25rem}.text-lg{font-size:1.125rem}
+    .text-sm{font-size:.875rem}.text-base{font-size:1rem}.text-xs{font-size:.75rem}
+    .font-medium{font-weight:500}.font-normal{font-weight:400}.font-semibold{font-weight:600}
+    .font-bold{font-weight:700}.font-light{font-weight:300}
+    .leading-relaxed{line-height:1.625}.leading-snug{line-height:1.375}
+    .tracking-tight{letter-spacing:-.025em}.tracking-widest{letter-spacing:.1em}
+    .uppercase{text-transform:uppercase}
+    .mb-2{margin-bottom:.5rem}.mb-4{margin-bottom:1rem}.mb-6{margin-bottom:1.5rem}
+    .mb-8{margin-bottom:2rem}.mb-10{margin-bottom:2.5rem}.mb-14{margin-bottom:3.5rem}
+    .mt-2{margin-top:.5rem}.mt-4{margin-top:1rem}
+    .p-4{padding:1rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}
+    .py-4{padding-top:1rem;padding-bottom:1rem}.pb-4{padding-bottom:1rem}.pl-4{padding-left:1rem}
+    .pl-5{padding-left:1.25rem}.pl-9{padding-left:2.25rem}
+    .flex{display:flex}.items-center{align-items:center}.gap-2{gap:.5rem}
+    .space-y-1>*+*{margin-top:.25rem}.space-y-6>*+*{margin-top:1.5rem}
+    .w-full{width:100%}.w-1\/3{width:33.333%}.w-1\.5{width:.375rem}.h-6{height:1.5rem}
+    .block{display:block}.overflow-hidden{overflow:hidden}
+    .list-disc{list-style-type:disc}.pl-5{padding-left:1.25rem}
+    table{width:100%}
+    @media(min-width:768px){.md\:text-base{font-size:1rem}}
+  </style>
 </head>
 <body>
-  <!-- 📍 한국어 섹션 (Korean Translation) -->
+<!-- 📍 한국어 섹션 (Korean Translation) -->
   <div id="ko" class="legal-content text-gray-800">
     <div class="bg-amber-50 border-l-4 border-amber-400 p-4 mb-10 text-sm text-amber-800">
       <p>※ 본 내용은 일본어 원문을 우선으로 하며, 참조를 위해 번역된 내용입니다. 해석상 차이가 있을 경우 일본어 본문이 우선합니다.</p>
