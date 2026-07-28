@@ -42,6 +42,19 @@
     td,th{padding:.45rem .5rem;font-size:.78rem}
     p,li{font-size:.82rem}
   }
+
+  .legal-dl{margin:1rem 0}
+  .dl-row{display:grid;grid-template-columns:9rem 1fr;gap:.5rem .8rem;padding:.7rem 0;border-bottom:1px solid #e8e5de;align-items:start}
+  .dl-row:last-child{border-bottom:none}
+  dt{font-weight:600;font-size:.82rem;color:#555;line-height:1.5}
+  dd{font-size:.85rem;color:#222;line-height:1.65}
+  dd ul{margin:.3rem 0 0 1rem;padding:0}
+  dd ul li{list-style-type:disc;font-size:.82rem;margin-bottom:.2rem}
+  @media(max-width:480px){
+    .dl-row{grid-template-columns:7rem 1fr}
+    dt{font-size:.75rem}
+    dd{font-size:.78rem}
+  }
 </style>
 </head>
 <body>
@@ -56,121 +69,111 @@
       <p>※ 본 내용은 일본어 원문을 우선으로 하며, 참조를 위해 번역된 내용입니다. 해석상 차이가 있을 경우 일본어 본문이 우선합니다.</p>
     </div>
     <h1 class="text-2xl font-medium mb-8 border-b-2 border-yellow-400 pb-4 tracking-tight text-gray-900 uppercase">특정상거래법에 따른 표기</h1>
-    <div class="overflow-hidden border border-gray-100 mb-10">
-      <table class="w-full text-sm md:text-base border-collapse text-gray-900">
-        <tbody>
-          <tr class="border-b border-gray-50">
-            <td class="py-4 px-6 bg-gray-50 font-medium text-gray-900 w-1/3">판매 사업자</td>
-            <td class="py-4 px-6 text-gray-600">Kray, Inc.</td>
-          </tr>
-          <tr class="border-b border-gray-50">
-            <td class="py-4 px-6 bg-gray-50 font-medium text-gray-900">대표 책임자</td>
-            <td class="py-4 px-6 text-gray-600">KIM DONGGYUM</td>
-          </tr>
-          <tr class="border-b border-gray-50">
-            <td class="py-4 px-6 bg-gray-50 font-medium text-gray-900">소재지</td>
-            <td class="py-4 px-6 text-gray-600">Room 701, 1-13-9 Kameido, Koto-ku, Tokyo, 136-0071, Japan</td>
-          </tr>
-          <tr class="border-b border-gray-50">
-            <td class="py-4 px-6 bg-gray-50 font-medium text-gray-900">전화번호</td>
-            <td class="py-4 px-6 text-gray-600">+81-3-6826-2046 (접수 시간: 평일 10:00~17:00, 토·일·공휴일 제외)</td>
-          </tr>
-          <tr class="border-b border-gray-50">
-            <td class="py-4 px-6 bg-gray-50 font-medium text-gray-900">이메일 주소</td>
-            <td class="py-4 px-6 text-gray-600">cs@krayinc.com</td>
-          </tr>
-          <tr class="border-b border-gray-50">
-            <td class="py-4 px-6 bg-gray-50 font-medium text-gray-900">판매 가격</td>
-            <td class="py-4 px-6 text-gray-600">각 상품 및 서비스 페이지에 부가세 포함 가격으로 표시합니다.</td>
-          </tr>
-          <tr class="border-b border-gray-50">
-            <td class="py-4 px-6 bg-gray-50 font-medium text-gray-900">상품 대금 이외의 필요 요금</td>
-            <td class="py-4 px-6 text-gray-600">
-              <ul class="list-disc pl-5 space-y-1">
+    <dl class="legal-dl">
+  <div class="dl-row">
+    <dt>판매 사업자</dt>
+    <dd>Kray, Inc.</dd>
+  </div>
+  <div class="dl-row">
+    <dt>대표 책임자</dt>
+    <dd>KIM DONGGYUM</dd>
+  </div>
+  <div class="dl-row">
+    <dt>소재지</dt>
+    <dd>Room 701, 1-13-9 Kameido, Koto-ku, Tokyo, 136-0071, Japan</dd>
+  </div>
+  <div class="dl-row">
+    <dt>전화번호</dt>
+    <dd>+81-3-6826-2046 (접수 시간: 평일 10:00~17:00, 토·일·공휴일 제외)</dd>
+  </div>
+  <div class="dl-row">
+    <dt>이메일 주소</dt>
+    <dd>cs@krayinc.com</dd>
+  </div>
+  <div class="dl-row">
+    <dt>판매 가격</dt>
+    <dd>각 상품 및 서비스 페이지에 부가세 포함 가격으로 표시합니다.</dd>
+  </div>
+  <div class="dl-row">
+    <dt>상품 대금 이외의 필요 요금</dt>
+    <dd><ul class="list-disc pl-5 space-y-1">
                 <li>배송비: 전국 일괄 800엔 (부가세 포함) ※부가세 포함 8,000엔 이상 구매 시 무료 배송</li>
                 <li>은행 송금 수수료 (해당하는 경우)</li>
-              </ul>
-            </td>
-          </tr>
-          <tr class="border-b border-gray-50">
-            <td class="py-4 px-6 bg-gray-50 font-medium text-gray-900">지불 방법</td>
-            <td class="py-4 px-6 text-gray-600">신용카드 결제, 각종 온라인 결제 (LINE 플랫폼 결제 포함), 기타 당사가 지정하는 방법</td>
-          </tr>
-          <tr class="border-b border-gray-50">
-            <td class="py-4 px-6 bg-gray-50 font-medium text-gray-900">지불 시기</td>
-            <td class="py-4 px-6 text-gray-600">주문 확정 시 결제가 확정됩니다. 후불 등을 이용하는 경우 각 결제 사업자의 규정에 따릅니다.</td>
-          </tr>
-          <tr class="border-b border-gray-50">
-            <td class="py-4 px-6 bg-gray-50 font-medium text-gray-900">상품 인도 시기</td>
-            <td class="py-4 px-6 text-gray-600">통상적으로 주문 확정 후 영업일 기준 3일 이내에 발송합니다.</td>
-          </tr>
-          <tr>
-            <td class="py-4 px-6 bg-gray-50 font-medium text-gray-900">반품 및 교환에 대하여</td>
-            <td class="py-4 px-6 text-gray-600">원칙적으로 상품 발송 후의 고객 변심에 의한 반품은 받지 않습니다. 불량품의 경우 도착 후 7일 이내에 연락 주시면 교환 대응해 드립니다.</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+              </ul></dd>
+  </div>
+  <div class="dl-row">
+    <dt>지불 방법</dt>
+    <dd>신용카드 결제, 각종 온라인 결제 (LINE 플랫폼 결제 포함), 기타 당사가 지정하는 방법</dd>
+  </div>
+  <div class="dl-row">
+    <dt>지불 시기</dt>
+    <dd>주문 확정 시 결제가 확정됩니다. 후불 등을 이용하는 경우 각 결제 사업자의 규정에 따릅니다.</dd>
+  </div>
+  <div class="dl-row">
+    <dt>상품 인도 시기</dt>
+    <dd>통상적으로 주문 확정 후 영업일 기준 3일 이내에 발송합니다.</dd>
+  </div>
+  <div class="dl-row">
+    <dt>반품 및 교환에 대하여</dt>
+    <dd>원칙적으로 상품 발송 후의 고객 변심에 의한 반품은 받지 않습니다. 불량품의 경우 도착 후 7일 이내에 연락 주시면 교환 대응해 드립니다.</dd>
+  </div>
+</dl>
+
   </div>
 
   <!-- 📍 일본어 섹션 (Japanese Original) -->
   <div id="ja" class="legal-content Japanese text-gray-800">
     <h1 class="text-2xl font-medium mb-8 border-b-2 border-yellow-400 pb-4 tracking-tight text-black uppercase">特定商取引法に基づく表記</h1>
-    <div class="overflow-hidden border border-gray-100 mb-10">
-      <table class="w-full text-sm md:text-base border-collapse text-black">
-        <tbody>
-          <tr class="border-b border-gray-50">
-            <td class="py-4 px-6 bg-gray-50 font-medium text-gray-900 w-1/3">販売事業者</td>
-            <td class="py-4 px-6 text-gray-600">株式会社Ｋｒａｙ</td>
-          </tr>
-          <tr class="border-b border-gray-50">
-            <td class="py-4 px-6 bg-gray-50 font-medium text-gray-900">代表責任者</td>
-            <td class="py-4 px-6 text-gray-600">金　東謙</td>
-          </tr>
-          <tr class="border-b border-gray-50">
-            <td class="py-4 px-6 bg-gray-50 font-medium text-gray-900">所在地</td>
-            <td class="py-4 px-6 text-gray-600">〒136-0071 東京都江東区亀戸１丁目１３番９－７０１号</td>
-          </tr>
-          <tr class="border-b border-gray-50">
-            <td class="py-4 px-6 bg-gray-50 font-medium text-gray-900">電話番号</td>
-            <td class="py-4 px-6 text-gray-600">03-6826-2046（受付時間：平日10:00〜17:00、土日祝日を除く）</td>
-          </tr>
-          <tr class="border-b border-gray-50">
-            <td class="py-4 px-6 bg-gray-50 font-medium text-gray-900">メールアドレス</td>
-            <td class="py-4 px-6 text-gray-600">cs@krayinc.com</td>
-          </tr>
-          <tr class="border-b border-gray-50">
-            <td class="py-4 px-6 bg-gray-50 font-medium text-gray-900">販売価格</td>
-            <td class="py-4 px-6 text-gray-600">各商品・サービスページに税込価格で表示します。</td>
-          </tr>
-          <tr class="border-b border-gray-50">
-            <td class="py-4 px-6 bg-gray-50 font-medium text-gray-900">商品代金以外の必要料金</td>
-            <td class="py-4 px-6 text-gray-600">
-              <ul class="list-disc pl-5 space-y-1">
+    <dl class="legal-dl">
+  <div class="dl-row">
+    <dt>販売事業者</dt>
+    <dd>株式会社Ｋｒａｙ</dd>
+  </div>
+  <div class="dl-row">
+    <dt>代表責任者</dt>
+    <dd>金　東謙</dd>
+  </div>
+  <div class="dl-row">
+    <dt>所在地</dt>
+    <dd>〒136-0071 東京都江東区亀戸１丁目１３番９－７０１号</dd>
+  </div>
+  <div class="dl-row">
+    <dt>電話番号</dt>
+    <dd>03-6826-2046（受付時間：平日10:00〜17:00、土日祝日を除く）</dd>
+  </div>
+  <div class="dl-row">
+    <dt>メールアドレス</dt>
+    <dd>cs@krayinc.com</dd>
+  </div>
+  <div class="dl-row">
+    <dt>販売価格</dt>
+    <dd>各商品・サービスページに税込価格で表示します。</dd>
+  </div>
+  <div class="dl-row">
+    <dt>商品代金以外の必要料金</dt>
+    <dd><ul class="list-disc pl-5 space-y-1">
                 <li>送料：全国一律800円（税込）。※税込8,000円以上のご購入で送料無料。</li>
                 <li>銀行振込手数料（該当する場合）。</li>
-              </ul>
-            </td>
-          </tr>
-          <tr class="border-b border-gray-50">
-            <td class="py-4 px-6 bg-gray-50 font-medium text-gray-900">お支払い方法</td>
-            <td class="py-4 px-6 text-gray-600">クレジットカード決済、各種オンライン決済、その他当社が指定する方法。</td>
-          </tr>
-          <tr class="border-b border-gray-50">
-            <td class="py-4 px-6 bg-gray-50 font-medium text-gray-900">お支払い時期</td>
-            <td class="py-4 px-6 text-gray-600">ご注文確定時に決済が確定します。</td>
-          </tr>
-          <tr class="border-b border-gray-50">
-            <td class="py-4 px-6 bg-gray-50 font-medium text-gray-900">商品の引渡時期</td>
-            <td class="py-4 px-6 text-gray-600">通常、ご注文確定後3営業日以内に発送します。</td>
-          </tr>
-          <tr>
-            <td class="py-4 px-6 bg-gray-50 font-medium text-gray-900">返品・交換について</td>
-            <td class="py-4 px-6 text-gray-600">原則として、商品発送後のお客様都合による返品・交換はお受けしておりません。不良品の場合は到着後7日以内にご連絡ください。</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+              </ul></dd>
+  </div>
+  <div class="dl-row">
+    <dt>お支払い方法</dt>
+    <dd>クレジットカード決済、各種オンライン決済、その他当社が指定する方法。</dd>
+  </div>
+  <div class="dl-row">
+    <dt>お支払い時期</dt>
+    <dd>ご注文確定時に決済が確定します。</dd>
+  </div>
+  <div class="dl-row">
+    <dt>商品の引渡時期</dt>
+    <dd>通常、ご注文確定後3営業日以内に発送します。</dd>
+  </div>
+  <div class="dl-row">
+    <dt>返品・交換について</dt>
+    <dd>原則として、商品発送後のお客様都合による返品・交換はお受けしておりません。不良品の場合は到着後7日以内にご連絡ください。</dd>
+  </div>
+</dl>
+
   </div>
 
   <!-- 📍 영어 섹션 (English Translation) -->
@@ -179,57 +182,82 @@
       <p>* This English version is a translation of the original Japanese version for reference purposes only.</p>
     </div>
     <h1 class="text-2xl font-medium mb-8 border-b-2 border-yellow-400 pb-4 tracking-tight text-black uppercase">Legal Notice</h1>
-    <div class="overflow-hidden border border-gray-100 mb-10">
-      <table class="w-full text-sm md:text-base border-collapse text-black">
-        <tbody>
-          <tr class="border-b border-gray-50">
-            <td class="py-4 px-6 bg-gray-50 font-medium text-gray-900 w-1/3">Seller</td>
-            <td class="py-4 px-6 text-gray-600">Kray, Inc.</td>
-          </tr>
-          <tr class="border-b border-gray-50">
-            <td class="py-4 px-6 bg-gray-50 font-medium text-gray-900">Representative</td>
-            <td class="py-4 px-6 text-gray-600">KIM DONGGYUM</td>
-          </tr>
-          <tr class="border-b border-gray-50">
-            <td class="py-4 px-6 bg-gray-50 font-medium text-gray-900">Location</td>
-            <td class="py-4 px-6 text-gray-600">Room 701, 1-13-9 Kameido, Koto-ku, Tokyo, 136-0071, Japan</td>
-          </tr>
-          <tr class="border-b border-gray-50">
-            <td class="py-4 px-6 bg-gray-50 font-medium text-gray-900">Phone</td>
-            <td class="py-4 px-6 text-gray-600">+81-3-6826-2046 (Weekdays 10:00–17:00 JST)</td>
-          </tr>
-          <tr class="border-b border-gray-50">
-            <td class="py-4 px-6 bg-gray-50 font-medium text-gray-900">Email</td>
-            <td class="py-4 px-6 text-gray-600">cs@krayinc.com</td>
-          </tr>
-          <tr class="border-b border-gray-50">
-            <td class="py-4 px-6 bg-gray-50 font-medium text-gray-900">Sales Price</td>
-            <td class="py-4 px-6 text-gray-600">Displayed on each product page including tax.</td>
-          </tr>
-          <tr class="border-b border-gray-50">
-            <td class="py-4 px-6 bg-gray-50 font-medium text-gray-900">Additional Fees</td>
-            <td class="py-4 px-6 text-gray-600">Shipping fee: 800 JPY (Free for orders over 8,000 JPY).</td>
-          </tr>
-          <tr class="border-b border-gray-50">
-            <td class="py-4 px-6 bg-gray-50 font-medium text-gray-900">Payment Methods</td>
-            <td class="py-4 px-6 text-gray-600">Credit Card, Online Payments, etc.</td>
-          </tr>
-          <tr class="border-b border-gray-50">
-            <td class="py-4 px-6 bg-gray-50 font-medium text-gray-900">Payment Timing</td>
-            <td class="py-4 px-6 text-gray-600">At the time of order confirmation.</td>
-          </tr>
-          <tr class="border-b border-gray-50">
-            <td class="py-4 px-6 bg-gray-50 font-medium text-gray-900">Delivery Timing</td>
-            <td class="py-4 px-6 text-gray-600">Within 3 business days after order confirmation.</td>
-          </tr>
-          <tr>
-            <td class="py-4 px-6 bg-gray-50 font-medium text-gray-900">Returns</td>
-            <td class="py-4 px-6 text-gray-600">Returns for customer convenience are not accepted. Defective items must be reported within 7 days.</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <dl class="legal-dl">
+  <div class="dl-row">
+    <dt>Seller</dt>
+    <dd>Kray, Inc.</dd>
+  </div>
+  <div class="dl-row">
+    <dt>Representative</dt>
+    <dd>KIM DONGGYUM</dd>
+  </div>
+  <div class="dl-row">
+    <dt>Location</dt>
+    <dd>Room 701, 1-13-9 Kameido, Koto-ku, Tokyo, 136-0071, Japan</dd>
+  </div>
+  <div class="dl-row">
+    <dt>Phone</dt>
+    <dd>+81-3-6826-2046 (Weekdays 10:00–17:00 JST)</dd>
+  </div>
+  <div class="dl-row">
+    <dt>Email</dt>
+    <dd>cs@krayinc.com</dd>
+  </div>
+  <div class="dl-row">
+    <dt>Sales Price</dt>
+    <dd>Displayed on each product page including tax.</dd>
+  </div>
+  <div class="dl-row">
+    <dt>Additional Fees</dt>
+    <dd>Shipping fee: 800 JPY (Free for orders over 8,000 JPY).</dd>
+  </div>
+  <div class="dl-row">
+    <dt>Payment Methods</dt>
+    <dd>Credit Card, Online Payments, etc.</dd>
+  </div>
+  <div class="dl-row">
+    <dt>Payment Timing</dt>
+    <dd>At the time of order confirmation.</dd>
+  </div>
+  <div class="dl-row">
+    <dt>Delivery Timing</dt>
+    <dd>Within 3 business days after order confirmation.</dd>
+  </div>
+  <div class="dl-row">
+    <dt>Returns</dt>
+    <dd>Returns for customer convenience are not accepted. Defective items must be reported within 7 days.</dd>
+  </div>
+</dl>
+
   </div>
 </div>
+
+<script>
+(function(){
+  // index.html에서 넘어올 때 ?lang=ko/ja/en 파라미터 사용
+  const params = new URLSearchParams(location.search);
+  let lang = params.get('lang') || localStorage.getItem('kray_lang') || 'ko';
+  if(!['ko','ja','en'].includes(lang)) lang = 'ko';
+  
+  // 모든 언어 섹션 숨기기
+  document.querySelectorAll('#ko,#ja,#en').forEach(el => el.style.display='none');
+  
+  // 선택된 언어만 표시
+  const sec = document.getElementById(lang);
+  if(sec) sec.style.display='block';
+  
+  // 뒤로가기 버튼 텍스트 다국어
+  const backBtn = document.querySelector('.page-nav a');
+  if(backBtn){
+    const labels = {ko:'뒤로가기', ja:'戻る', en:'Back'};
+    backBtn.textContent = labels[lang] || '뒤로가기';
+  }
+  
+  // 페이지 타이틀 다국어
+  const titleEl = document.querySelector('.page-title');
+  // 타이틀은 각 파일에서 처리
+})();
+</script>
+
 </body>
 </html>

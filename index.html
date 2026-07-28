@@ -39,16 +39,17 @@ a{color:inherit;text-decoration:none}
 
 /* ── NAV ── */
 nav{position:fixed;inset:0 0 auto;z-index:100;display:flex;align-items:center;justify-content:space-between;
-  padding:1rem 5vw;color:var(--rice);transition:background .4s,color .4s,box-shadow .4s}
+  padding:1rem 5vw;color:var(--rice);transition:background .4s,color .4s,box-shadow .4s,padding .3s}
 @media(max-width:760px){
   nav{padding:.5rem 4vw}
   .nav-logo img{height:1.3rem}
   .nav-logo{font-size:.9rem}
 }
-nav.scrolled{background:rgba(247,246,241,.95);backdrop-filter:blur(16px);color:var(--ink);box-shadow:0 1px 0 var(--line)}
+nav.scrolled{background:rgba(247,246,241,.95);backdrop-filter:blur(16px);color:var(--ink);box-shadow:0 1px 0 var(--line);padding:.35rem 5vw;transition:padding .3s}
 .nav-logo{font-family:var(--serif);font-weight:900;font-size:1.2rem;letter-spacing:.05em}
 .nav-logo img{height:2.6rem;width:auto;object-fit:contain;filter:invert(1)}
 nav.scrolled .nav-logo img{filter:none}
+nav.scrolled .nav-logo img{height:1.6rem;transition:height .3s}
 .nav-links{display:flex;gap:1.8rem;font-size:.8rem;font-weight:500;letter-spacing:.04em}
 .nav-links a{opacity:.78;transition:opacity .2s}.nav-links a:hover{opacity:1}
 .nav-right{display:flex;align-items:center;gap:.9rem}
@@ -59,7 +60,7 @@ nav.scrolled .nav-logo img{filter:none}
 .nav-cta{background:var(--shu);color:#fff;font-size:.74rem;font-weight:600;
   padding:.52em 1.3em;border-radius:99px;letter-spacing:.04em;transition:background .2s}
 .nav-cta:hover{background:#a8321e}
-@media(max-width:860px){.nav-links,.nav-cta{display:none}}
+@media(max-width:860px){.nav-links{display:none}}
 
 /* ── HERO ── */
 .hero{position:relative;height:100svh;min-height:640px;background:var(--ink);overflow:hidden;padding:0}
@@ -103,11 +104,11 @@ nav.scrolled .nav-logo img{filter:none}
   .hero-copy p{font-size:.78rem}
   /* 모바일 여백 최적화 */
   .summary{padding:4rem 0 2rem}
-  .influencer-section{padding:2rem 0 112px}
+  .influencer-section{padding:0 0 112px}
 }
 
 /* ── TICKER ── */
-.ticker{background:var(--shu);overflow:hidden;padding:.75rem 0;border-top:2px solid var(--ink);border-bottom:2px solid var(--ink)}
+.ticker{background:var(--shu);overflow:hidden;padding:.75rem 0;border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);position:relative;z-index:5}
 .ticker-track{display:flex;gap:2.8rem;white-space:nowrap;font-family:var(--mono);font-size:.74rem;
   letter-spacing:.22em;text-transform:uppercase;color:var(--rice);animation:marquee 28s linear infinite;width:max-content;will-change:transform}
 @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
@@ -388,7 +389,7 @@ nav.scrolled .nav-logo img{filter:none}
   /* 텍스트 래퍼: sticky 구간 밖, 정상 플로우 */
   .inf-header-wrap{
     display:block;
-    padding:3rem 5vw 2rem;
+    padding:1.5rem 5vw 1.5rem;
     text-align:center;
   }
   /* sticky 내부 텍스트는 모바일에서 숨김 */
@@ -412,7 +413,7 @@ nav.scrolled .nav-logo img{filter:none}
     position:relative !important;
     left:auto !important;
     top:auto !important;
-    margin:-100px auto 0 !important;
+    margin:-150px auto 0 !important;
     transform-origin:top center !important;
     align-self:center !important;
     z-index:1;
@@ -884,10 +885,10 @@ footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-
     <div class="inf-text-overlay">
       <div class="inf-header">
         <div class="eyebrow">Unrivaled Reach</div>
-        <h2 id="inf-intro-title"></h2>
+        <h2 id="inf-intro-title-mob"></h2>
       </div>
       <div class="inf-text-block">
-        <p id="inf-desc"></p>
+        <p id="inf-desc-mob"></p>
       </div>
     </div>
   </div>
@@ -1376,7 +1377,7 @@ const T = {
       {value:"1,722만",label:"최대 조회수",sub:"Viral Content"},
       {value:"주 4~5회",label:"업로드 빈도",sub:"Daily Engagement"}
     ],
-    influencer:{introTitle:"누적 재생 횟수 : <em>1억+</em>",desc:"일본 거주 한국인 인플루언서 'SONA'는<br>현지에서 경험한 도시락 문화를 특유의 감성으로 재해석하여<br>전 세계 시청자들의 마음을 사로잡았습니다.<br>단순한 영상을 넘어, '나도 만들 수 있겠다'는 확신을 주는 튜토리얼을 제공합니다."},
+    influencer:{introTitle:"누적 재생 횟수 : <em>1억+</em>",desc:"일본 거주 한국인 인플루언서 'SONA'는<br>현지에서 경험한 도시락 문화를 특유의 감성으로 재해석하여 전 세계 시청자들의 마음을 사로잡았습니다.<br>단순한 영상을 넘어, '나도 만들 수 있겠다'는 확신을 주는 튜토리얼을 제공합니다."},
     strategy:{
       title:"Content Strategy: 'Show & Teach'",
       subtitle:"시선을 사로잡는 비주얼 + 직관적 튜토리얼 = 자연스러운 구매로 연결",
@@ -1388,7 +1389,7 @@ const T = {
     },
     brand:{title:"요리에 즐거움 1큰술",caption:"위 이미지는 일본에서 상표 등록된 소나앤도쿄의 정식 로고 입니다."},
     products:{
-      title:"SONA가 프로듀스한 라인업",footnote:"※ 도시락 데코레이션 카테고리 부문",
+      title:"SONA 프로듀스 라인업",footnote:"※ 도시락 데코레이션 카테고리 부문",
       items:[
         {title:"별·하트 계란말이 틀",badge:"아마존 재팬 베스트셀러 1위! (※)",badgeClass:"bestseller",img:"produc01_thum.jpg",
           desc:"틀에 넣는 것만으로 누구나 예쁜 모양 완성! 초보자의 Pain Point를 해결한 아이템.",
@@ -1404,7 +1405,7 @@ const T = {
           urls:{naver:"https://smartstore.naver.com/sona_tokyolife/products/13633354840",amazon:null,rakuten:null}}
       ]
     },
-    roadmapIntro:{title:"지속 가능한 브랜드로 성장"},
+    roadmapIntro:{title:"자사 브랜드 구축"},
     roadmap:[
       {year:"2024.02",title:"별·하트 계란말이 틀 출시",desc:"별/하트 모양 프로듀스"},
       {year:"2024.05",title:"도시락 레시피 출간",desc:"한국어판 정식 발행"},
@@ -1440,7 +1441,7 @@ const T = {
       {value:"1,722万回",label:"最多再生回数",sub:"星のキンパ動画"},
       {value:"週4〜5回",label:"投稿頻度",sub:"継続的な発信"}
     ],
-    influencer:{introTitle:"累積再生回数：<em>1億超え</em>",desc:"日本在住の韓国人クリエイター「SONA」は、<br>現地で経験したお弁当文化を独自の感性で再解釈し、<br>世界中の視聴者を魅了しました。<br>単なる動画を超え、「私にもできる」という確信を与えるチュートリアルを提供しています。"},
+    influencer:{introTitle:"累積再生回数：<em>1億超え</em>",desc:"日本在住の韓国人クリエイター「SONA」は、<br>現地で経験したお弁当文化を独自の感性で再解釈し、世界中の視聴者を魅了しました。<br>単なる動画を超え、「私にもできる」という確信を与えるチュートリアルを提供しています。"},
     strategy:{
       title:"Content Strategy: 「魅せる」& 「教える」",
       subtitle:"目を引くビジュアル + 直感的なチュートリアル = 自然な購買への繋がり",
@@ -1468,7 +1469,7 @@ const T = {
           urls:{naver:null,amazon:"https://www.amazon.co.jp/gp/product/B0GZQYP9CN/?th=1",rakuten:"https://item.rakuten.co.jp/sonaandtokyo/sona-triple-pan/"}}
       ]
     },
-    roadmapIntro:{title:"持続可能なブランドへ成長"},
+    roadmapIntro:{title:"自社ブランドの構築"},
     roadmap:[
       {year:"2024.02",title:"星・ハートの卵焼き型発売",desc:"星・ハート型のプロデュース"},
       {year:"2024.05",title:"レシピ本出版",desc:"韓国にてベストセラー"},
@@ -1532,7 +1533,7 @@ const T = {
           urls:{naver:null,amazon:null,rakuten:null}}
       ]
     },
-    roadmapIntro:{title:"Growth as a Sustainable Brand"},
+    roadmapIntro:{title:"Building Our Own Brand"},
     roadmap:[
       {year:"2024.02",title:"Star & Heart Egg Mold Launch",desc:"Star & Heart Series"},
       {year:"2024.05",title:"Recipe Book",desc:"Published in Korea"},
@@ -1748,6 +1749,11 @@ function render() {
   // influencer
   document.getElementById('inf-intro-title').innerHTML = t.influencer.introTitle;
   document.getElementById('inf-desc').innerHTML = t.influencer.desc;
+  // 모바일용 (id 분리)
+  const mobTitle = document.getElementById('inf-intro-title-mob');
+  const mobDesc  = document.getElementById('inf-desc-mob');
+  if(mobTitle) mobTitle.innerHTML = t.influencer.introTitle;
+  if(mobDesc)  mobDesc.innerHTML  = t.influencer.desc;
   // inf-quote 제거됨
   // stats
   document.getElementById('stats-grid').innerHTML = t.stats.map(s =>
@@ -1799,9 +1805,9 @@ function render() {
   // footer
   const PAGE_FILES = {privacy:'./privacy.html', terms:'./terms.html', notices:'./legal.html'};
   document.getElementById('footer-links').innerHTML =
-    `<a href="${PAGE_FILES.privacy}" style="color:inherit;text-decoration:none;white-space:nowrap">${t.legal.privacy}</a>
-     <a href="${PAGE_FILES.terms}"   style="color:inherit;text-decoration:none;white-space:nowrap">${t.legal.terms}</a>
-     <a href="${PAGE_FILES.notices}" style="color:inherit;text-decoration:none;white-space:nowrap">${t.legal.notices}</a>`;
+    `<a href="${PAGE_FILES.privacy}?lang=${lang}" style="color:inherit;text-decoration:none;white-space:nowrap">${t.legal.privacy}</a>
+     <a href="${PAGE_FILES.terms}?lang=${lang}"   style="color:inherit;text-decoration:none;white-space:nowrap">${t.legal.terms}</a>
+     <a href="${PAGE_FILES.notices}?lang=${lang}" style="color:inherit;text-decoration:none;white-space:nowrap">${t.legal.notices}</a>`;
   // UI 텍스트 번역 적용
   const ui = t.ui || {};
   const igTitle = document.getElementById('ig-section-title');

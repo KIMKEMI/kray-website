@@ -337,5 +337,33 @@
     <p class="text-right text-gray-400 text-sm mt-24">Established: July 1, 2024</p>
   </div>
 </div>
+
+<script>
+(function(){
+  // index.html에서 넘어올 때 ?lang=ko/ja/en 파라미터 사용
+  const params = new URLSearchParams(location.search);
+  let lang = params.get('lang') || localStorage.getItem('kray_lang') || 'ko';
+  if(!['ko','ja','en'].includes(lang)) lang = 'ko';
+  
+  // 모든 언어 섹션 숨기기
+  document.querySelectorAll('#ko,#ja,#en').forEach(el => el.style.display='none');
+  
+  // 선택된 언어만 표시
+  const sec = document.getElementById(lang);
+  if(sec) sec.style.display='block';
+  
+  // 뒤로가기 버튼 텍스트 다국어
+  const backBtn = document.querySelector('.page-nav a');
+  if(backBtn){
+    const labels = {ko:'뒤로가기', ja:'戻る', en:'Back'};
+    backBtn.textContent = labels[lang] || '뒤로가기';
+  }
+  
+  // 페이지 타이틀 다국어
+  const titleEl = document.querySelector('.page-title');
+  // 타이틀은 각 파일에서 처리
+})();
+</script>
+
 </body>
 </html>
