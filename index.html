@@ -46,6 +46,8 @@ nav{position:fixed;inset:0 0 auto;z-index:100;display:flex;align-items:center;ju
   .nav-logo{font-size:.9rem}
 }
 nav.scrolled{background:rgba(247,246,241,.95);backdrop-filter:blur(16px);color:var(--ink);box-shadow:0 1px 0 var(--line);padding:.35rem 5vw;transition:padding .3s}
+nav.scrolled .lang button{font-size:.65rem;padding:.28em .7em}
+nav.scrolled .nav-cta{font-size:.65rem;padding:.28em .9em}
 .nav-logo{font-family:var(--serif);font-weight:900;font-size:1.2rem;letter-spacing:.05em}
 .nav-logo img{height:2.6rem;width:auto;object-fit:contain;filter:invert(1)}
 nav.scrolled .nav-logo img{filter:none}
@@ -55,10 +57,10 @@ nav.scrolled .nav-logo img{height:1.6rem;transition:height .3s}
 .nav-right{display:flex;align-items:center;gap:.9rem}
 .lang{display:flex;gap:.28rem;font-family:var(--mono);font-size:.68rem}
 .lang button{background:none;border:1px solid currentColor;color:inherit;border-radius:99px;
-  padding:.2em .7em;cursor:pointer;opacity:.5;transition:all .2s}
+  font-size:.74rem;padding:.35em .85em;line-height:1.4;cursor:pointer;opacity:.5;transition:all .2s,font-size .3s,padding .3s}
 .lang button.active{opacity:1;background:var(--shu);border-color:var(--shu);color:#fff}
 .nav-cta{background:var(--shu);color:#fff;font-size:.74rem;font-weight:600;
-  padding:.52em 1.3em;border-radius:99px;letter-spacing:.04em;transition:background .2s}
+  padding:.35em 1.1em;line-height:1.4;border-radius:99px;letter-spacing:.04em;transition:background .2s,font-size .3s,padding .3s}
 .nav-cta:hover{background:#a8321e}
 @media(max-width:860px){.nav-links{display:none}}
 
