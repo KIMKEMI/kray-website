@@ -2,6 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
+<meta name="format-detection" content="telephone=no,address=no,email=no">
 <link rel="icon" href="/favicon.png" type="image/png">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>특정상거래법에 따른 표기</title>
@@ -56,6 +57,23 @@
     dt{font-size:.75rem}
     dd{font-size:.78rem}
   }
+
+  /* 푸터 */
+  .page-footer{
+    position:fixed;
+    bottom:0;left:0;right:0;
+    background:rgba(247,246,241,.97);
+    border-top:1px solid rgba(0,0,0,.08);
+    padding:.6rem 1.4rem;
+    font-family:'Noto Sans KR','Noto Sans JP',-apple-system,sans-serif;
+    font-size:.68rem;
+    color:#888;
+    text-align:center;
+    z-index:10;
+    backdrop-filter:blur(8px);
+  }
+  /* 푸터 공간 확보 */
+  .content{padding-bottom:4rem}
 </style>
 </head>
 <body>
@@ -257,6 +275,21 @@
   // 페이지 타이틀 다국어
   const titleEl = document.querySelector('.page-title');
   // 타이틀은 각 파일에서 처리
+})();
+</script>
+<footer class="page-footer"><span id="page-footer-copy"></span></footer>
+
+<script>
+(function(){
+  const footers = {
+    ko: '© 2024 Kray, Inc. All rights reserved. 설립 2024.07 (일본)',
+    ja: '© 2024 Kray, Inc. All rights reserved. 設立 2024.07 (日本)',
+    en: '© 2024 Kray, Inc. All rights reserved. Established 2024.07 (Japan)',
+  };
+  const params = new URLSearchParams(location.search);
+  const lang = params.get('lang') || 'ko';
+  const el = document.getElementById('page-footer-copy');
+  if(el) el.textContent = footers[lang] || footers.ko;
 })();
 </script>
 
