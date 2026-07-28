@@ -1303,14 +1303,7 @@ function initHero() {
   window.addEventListener('resize',()=>setTimeout(checkMob,180));
   checkMob();
 }
-render();           /* 텍스트/UI 즉시 렌더 */
-renderTicker(lang); /* 티커 즉시 표시 */
-/* 영상은 UI 렌더 후 비동기로 */
-if(typeof requestIdleCallback !== "undefined"){
-  requestIdleCallback(() => initHero());
-} else {
-  setTimeout(initHero, 0);
-}
+/* 초기화는 T 선언 이후로 이동 */
 
 /* ─────────────────────────────────────────────────────────────
    필름 스트립 — seamless 무한 루프
@@ -1860,6 +1853,10 @@ function handleImgError(img) {
 }
 document.addEventListener('error', e => { if(e.target.tagName==='IMG') handleImgError(e.target); }, true);
 
+/* ── 초기화 (T 선언 이후) ── */
+render();
+renderTicker(lang);
+initHero();
 </script>
 <!-- Instagram oEmbed 렌더링 스크립트 -->
 <script async src="https://www.instagram.com/embed.js"></script>
