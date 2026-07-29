@@ -224,14 +224,44 @@ if __name__ == "__main__":
     count = fetch_followers()
     if count is None:
         print("\n[FAIL] 팔로워 수 수집 실패")
-        print("  → Instagram 프로필 페이지가 정상 접근 가능한지 확인하세요.")
         sys.exit(1)
 
     formatted = format_followers(count)
     print(f"\n수집된 팔로워 수: {count:,}")
     print(f"포맷: {formatted}")
 
-    success = update_index(formatted)
-    if success:
-        print("\n✅ 완료! GitHub Desktop으로 index.html 을 Push하세요.")
-    sys.exit(0 if success else 1)
+    updated = update_index(formatted)
+    if not updated:
+        print("\n[INFO] index.html 변경 없음 — 이미 최신 상태")
+        sys.exit(0)
+
+    print("\n[git] GitHub에 자동 Push 중...")
+    pushed = git_push()
+    if pushed:
+        print("\n✅ 완료! 팔로워 수 업데이트 및 Push 성공!")
+    else:
+        print("\n⚠️  Push 실패. GitHub Desktop으로 수동 Push 해주세요.")
+    sys.exit(0 if pushed else 1)
+
+
+# ── Git Push ─────────────────────────────────────────────────
+def git_push() -> bool:
+    import subprocess
+    repo_dir = INDEX_PATH.parent
+
+    cmds = [
+        ["git", "add", "index.html"],
+        ["git", "commit", "-m", "chore: update Instagram follower count [skip ci]"],
+        ["git", "push"],
+    ]
+    for cmd in cmds:
+        result = subprocess.run(cmd, cwd=repo_dir, capture_output=True, text=True)
+        if result.returncode != 0:
+            # commit 실패는 "nothing to commit" 일 수 있으므로 무시
+            if "nothing to commit" in result.stdout + result.stderr:
+                print("[git] 변경 없음 — push 생략")
+                return True
+            print(f"[git] {' '.join(cmd)} 실패: {result.stderr.strip()}")
+            return False
+        print(f"[git] {' '.join(cmd)} ✅")
+    return True
