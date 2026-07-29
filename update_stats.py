@@ -1,38 +1,24 @@
 """
 update_stats.py
-Instagram @sona_tokyolife 팔로워 수를 수집해
-index.html 내 __FOLLOWERS_KO__ / __FOLLOWERS_JA__ / __FOLLOWERS_EN__ 마커를 교체합니다.
-
-수집 방법 (순서대로 시도):
-  1. Instagram web_profile_info API
-  2. Instagram JSON 엔드포인트
-  3. HTML 파싱
-  실패 시 마커 교체하지 않음 (fallback 값이 화면에 표시됨)
-
-실행: python update_stats.py
-의존: requests
+Instagram @sona_tokyolife 프로필 페이지에 Playwright로 접속해
+스크린샷을 찍고, 팔로워 수 텍스트를 직접 파싱합니다.
+로그인 불필요.
 """
 
 import re
 import sys
 import time
-import random
 from pathlib import Path
 
 try:
-    import requests
+    from playwright.sync_api import sync_playwright
 except ImportError:
-    print("[ERROR] requests 패키지가 없습니다. pip install requests", file=sys.stderr)
+    print("[ERROR] playwright 없음. pip install playwright", file=sys.stderr)
     sys.exit(1)
 
 USERNAME   = "sona_tokyolife"
+TARGET_URL = f"https://www.instagram.com/{USERNAME}/"
 INDEX_PATH = Path(__file__).parent / "index.html"
-
-UA_LIST = [
-    "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1",
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36",
-    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Safari/605.1.15",
-]
 
 
 # ── 팔로워 수 포맷 변환 ──────────────────────────────────────
@@ -44,97 +30,117 @@ def format_followers(count: int) -> dict:
     return {"ko": f"{count:,}", "ja": f"{count:,}人", "en": f"{count:,}"}
 
 
-def make_session() -> requests.Session:
-    s = requests.Session()
-    s.headers.update({
-        "User-Agent": random.choice(UA_LIST),
-        "Accept-Language": "ja-JP,ja;q=0.9,en-US;q=0.8",
-        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-    })
-    # 쿠키 초기화
-    try:
-        s.get("https://www.instagram.com/", timeout=10)
-        time.sleep(1.5)
-    except Exception:
-        pass
-    return s
-
-
-# ── 방법 1: web_profile_info API ─────────────────────────────
-def fetch_web_profile(s: requests.Session) -> int | None:
-    url = f"https://www.instagram.com/api/v1/users/web_profile_info/?username={USERNAME}"
-    try:
-        r = s.get(url, timeout=15, headers={
-            **dict(s.headers),
-            "X-IG-App-ID": "936619743392459",
-            "X-Requested-With": "XMLHttpRequest",
-            "Referer": f"https://www.instagram.com/{USERNAME}/",
-        })
-        if r.status_code == 200:
-            data  = r.json()
-            count = (data.get("data", {}).get("user", {})
-                        .get("edge_followed_by", {}).get("count"))
-            if count is not None:
-                print(f"[web_profile_info] 팔로워: {count:,}")
-                return int(count)
-        print(f"[web_profile_info] HTTP {r.status_code}")
-    except Exception as e:
-        print(f"[web_profile_info] 실패: {e}")
+# ── 팔로워 수 텍스트 → 정수 변환 ────────────────────────────
+def parse_count(text: str) -> int | None:
+    """
+    '148K' / '14.8万' / '148,500' / '1.2M' 등을 정수로 변환
+    """
+    text = text.strip().replace(",", "").replace(" ", "")
+    # M / million
+    m = re.match(r"([\d.]+)\s*[Mm]", text)
+    if m:
+        return int(float(m.group(1)) * 1_000_000)
+    # K / k
+    m = re.match(r"([\d.]+)\s*[Kk]", text)
+    if m:
+        return int(float(m.group(1)) * 1_000)
+    # 万
+    m = re.match(r"([\d.]+)\s*万", text)
+    if m:
+        return int(float(m.group(1)) * 10_000)
+    # 純数字
+    m = re.match(r"(\d+)", text)
+    if m:
+        return int(m.group(1))
     return None
 
 
-# ── 방법 2: JSON 엔드포인트 ──────────────────────────────────
-def fetch_json_api(s: requests.Session) -> int | None:
-    url = f"https://www.instagram.com/{USERNAME}/?__a=1&__d=dis"
-    try:
-        r = s.get(url, timeout=15)
-        if r.status_code == 200:
-            data  = r.json()
-            count = (data.get("graphql", {}).get("user", {})
-                        .get("edge_followed_by", {}).get("count"))
-            if count is not None:
-                print(f"[JSON API] 팔로워: {count:,}")
-                return int(count)
-        print(f"[JSON API] HTTP {r.status_code}")
-    except Exception as e:
-        print(f"[JSON API] 실패: {e}")
-    return None
-
-
-# ── 방법 3: HTML 파싱 ─────────────────────────────────────────
-def fetch_html(s: requests.Session) -> int | None:
-    url = f"https://www.instagram.com/{USERNAME}/"
-    try:
-        time.sleep(random.uniform(1.5, 3.0))
-        r = s.get(url, timeout=20)
-        if r.status_code != 200:
-            print(f"[HTML] HTTP {r.status_code}")
-            return None
-        html = r.text
-        patterns = [
-            r'"edge_followed_by"\s*:\s*\{"count"\s*:\s*(\d+)\}',
-            r'"followers_count"\s*:\s*(\d+)',
-        ]
-        for pat in patterns:
-            m = re.search(pat, html)
-            if m:
-                n = int(m.group(1))
-                print(f"[HTML] 팔로워: {n:,}")
-                return n
-        print("[HTML] 팔로워 수 패턴 없음")
-    except Exception as e:
-        print(f"[HTML] 실패: {e}")
-    return None
-
-
-# ── 수집 ────────────────────────────────────────────────────
+# ── Playwright でスクレイピング ──────────────────────────────
 def fetch_followers() -> int | None:
-    s = make_session()
-    for method in [fetch_web_profile, fetch_json_api, fetch_html]:
-        result = method(s)
-        if result is not None:
-            return result
-        time.sleep(random.uniform(1.5, 3.0))
+    with sync_playwright() as p:
+        browser = p.chromium.launch(headless=True)
+        ctx = browser.new_context(
+            user_agent=(
+                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                "AppleWebKit/537.36 (KHTML, like Gecko) "
+                "Chrome/124.0.0.0 Safari/537.36"
+            ),
+            locale="en-US",
+            viewport={"width": 1280, "height": 800},
+        )
+        page = ctx.new_page()
+
+        try:
+            print(f"[Playwright] {TARGET_URL} 접속 중...")
+            page.goto(TARGET_URL, wait_until="domcontentloaded", timeout=30_000)
+            time.sleep(3)
+
+            # 팝업(로그인 권유) 닫기 시도
+            for sel in ["[aria-label='Close']", "button:has-text('Not now')",
+                        "button:has-text('나중에')", "button:has-text('後で')"]:
+                try:
+                    btn = page.locator(sel).first
+                    if btn.is_visible(timeout=2000):
+                        btn.click()
+                        print(f"[Playwright] 팝업 닫음: {sel}")
+                        time.sleep(1)
+                        break
+                except Exception:
+                    pass
+
+            # 스크린샷 저장 (디버그용)
+            page.screenshot(path="debug_instagram.png", full_page=False)
+            print("[Playwright] 스크린샷 저장: debug_instagram.png")
+
+            # ── 방법 1: li 안의 팔로워 수 span ──────────────────
+            # Instagram 구조: <li><span><span>148K</span></span> followers</li>
+            for li in page.locator("ul li").all():
+                text = li.inner_text()
+                if re.search(r"follower|フォロワー|팔로워", text, re.IGNORECASE):
+                    # 숫자 부분만 추출
+                    nums = re.findall(r"[\d,.]+\s*[KkMm万]?", text)
+                    for n in nums:
+                        val = parse_count(n)
+                        if val and val > 100:
+                            print(f"[li] 팔로워: {val:,}")
+                            return val
+
+            # ── 방법 2: meta description ──────────────────────────
+            meta = page.locator('meta[name="description"]').get_attribute("content") or ""
+            print(f"[meta] description: {meta[:120]}")
+            m = re.search(
+                r"([\d,\.]+\s*[KkMm万]?)\s*(Followers|フォロワー|팔로워)",
+                meta, re.IGNORECASE
+            )
+            if m:
+                val = parse_count(m.group(1))
+                if val:
+                    print(f"[meta] 팔로워: {val:,}")
+                    return val
+
+            # ── 방법 3: 페이지 전체 텍스트에서 패턴 검색 ──────────
+            body = page.inner_text("body")
+            patterns = [
+                r"([\d,\.]+\s*[KkMm万]?)\s*[Ff]ollowers",
+                r"([\d,\.]+\s*[KkMm万]?)\s*フォロワー",
+                r"([\d,\.]+\s*[KkMm万]?)\s*팔로워",
+            ]
+            for pat in patterns:
+                m = re.search(pat, body)
+                if m:
+                    val = parse_count(m.group(1))
+                    if val and val > 100:
+                        print(f"[body] 팔로워: {val:,}")
+                        return val
+
+            print("[Playwright] 팔로워 수를 찾지 못했습니다.")
+            print("[body 앞 500자]", body[:500])
+
+        except Exception as e:
+            print(f"[ERROR] {e}", file=sys.stderr)
+        finally:
+            browser.close()
+
     return None
 
 
@@ -161,7 +167,7 @@ if __name__ == "__main__":
     print("=== Instagram 팔로워 수 업데이트 시작 ===")
     count = fetch_followers()
     if count is None:
-        print("[FAIL] 팔로워 수 수집 실패 — 마커를 교체하지 않습니다.", file=sys.stderr)
+        print("[FAIL] 팔로워 수 수집 실패", file=sys.stderr)
         sys.exit(1)
     formatted = format_followers(count)
     print(f"포맷: {formatted}")
