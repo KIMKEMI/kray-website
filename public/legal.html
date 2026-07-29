@@ -274,7 +274,13 @@
   
   // 페이지 타이틀 다국어
   const titleEl = document.querySelector('.page-title');
-  // 타이틀은 각 파일에서 처리
+  if(titleEl){
+    const titles = {ko:'특정상거래법에 따른 표기', ja:'特定商取引法に基づく表記', en:'Legal Notices'};
+    titleEl.textContent = titles[lang] || titles.ko;
+  }
+  // 브라우저 탭 타이틀
+  const tabTitles = {ko:'특정상거래법에 따른 표기', ja:'特定商取引法に基づく表記', en:'Legal Notices'};
+  document.title = tabTitles[lang] || tabTitles.ko;
 })();
 </script>
 <footer class="page-footer"><span id="page-footer-copy"></span></footer>
