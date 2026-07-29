@@ -1,27 +1,24 @@
 """
 update_stats.py
-Instagram @sona_tokyolife 프로필 페이지에 Playwright로 접속해
-스크린샷을 찍고, 팔로워 수 텍스트를 직접 파싱합니다.
-로그인 불필요.
+Instagram 모바일 API를 흉내내어 로그인 없이 팔로워 수를 수집합니다.
 """
 
 import re
 import sys
 import time
+import random
 from pathlib import Path
 
 try:
-    from playwright.sync_api import sync_playwright
+    import requests
 except ImportError:
-    print("[ERROR] playwright 없음. pip install playwright", file=sys.stderr)
+    print("[ERROR] requests 없음", file=sys.stderr)
     sys.exit(1)
 
 USERNAME   = "sona_tokyolife"
-TARGET_URL = f"https://www.instagram.com/{USERNAME}/"
 INDEX_PATH = Path(__file__).parent / "index.html"
 
-
-# ── 팔로워 수 포맷 변환 ──────────────────────────────────────
+# ── 포맷 변환 ────────────────────────────────────────────────
 def format_followers(count: int) -> dict:
     if count >= 10_000:
         man     = count / 10_000
@@ -29,122 +26,146 @@ def format_followers(count: int) -> dict:
         return {"ko": f"{man_str}만", "ja": f"{man_str}万人", "en": f"{round(count/1000)}K"}
     return {"ko": f"{count:,}", "ja": f"{count:,}人", "en": f"{count:,}"}
 
-
-# ── 팔로워 수 텍스트 → 정수 변환 ────────────────────────────
-def parse_count(text: str) -> int | None:
+# ── 방법 1: oEmbed API (로그인 불필요, 공식 지원) ────────────
+def fetch_via_oembed() -> int | None:
     """
-    '148K' / '14.8万' / '148,500' / '1.2M' 등을 정수로 변환
+    Instagram oEmbed는 공개 프로필 정보를 반환합니다.
+    단, 팔로워 수는 포함되지 않을 수 있음 → 시도만
     """
-    text = text.strip().replace(",", "").replace(" ", "")
-    # M / million
-    m = re.match(r"([\d.]+)\s*[Mm]", text)
-    if m:
-        return int(float(m.group(1)) * 1_000_000)
-    # K / k
-    m = re.match(r"([\d.]+)\s*[Kk]", text)
-    if m:
-        return int(float(m.group(1)) * 1_000)
-    # 万
-    m = re.match(r"([\d.]+)\s*万", text)
-    if m:
-        return int(float(m.group(1)) * 10_000)
-    # 純数字
-    m = re.match(r"(\d+)", text)
-    if m:
-        return int(m.group(1))
+    url = f"https://graph.facebook.com/v18.0/instagram_oembed?url=https://www.instagram.com/{USERNAME}/&access_token=anonymous"
+    try:
+        r = requests.get(url, timeout=10)
+        print(f"[oEmbed] HTTP {r.status_code}")
+    except Exception as e:
+        print(f"[oEmbed] 실패: {e}")
     return None
 
+# ── 방법 2: Instagram i.instagram.com API ────────────────────
+def fetch_via_i_api(session: requests.Session) -> int | None:
+    """
+    i.instagram.com은 모바일 앱용 API로, 봇 감지가 덜합니다.
+    """
+    url = f"https://i.instagram.com/api/v1/users/web_profile_info/?username={USERNAME}"
+    headers = {
+        "User-Agent": "Instagram 269.0.0.18.75 Android (26/8.0.0; 480dpi; 1080x1920; "
+                      "OnePlus; ONEPLUS A3010; OnePlus3T; qcom; en_US; 314665256)",
+        "Accept": "*/*",
+        "Accept-Language": "en-US",
+        "Accept-Encoding": "gzip, deflate",
+        "X-IG-App-ID": "936619743392459",
+        "X-IG-Capabilities": "3brTvwE=",
+        "X-IG-Connection-Type": "WIFI",
+        "X-IG-Device-ID": f"{random.randint(10**15, 10**16-1):016x}",
+    }
+    try:
+        r = session.get(url, headers=headers, timeout=15)
+        print(f"[i.instagram] HTTP {r.status_code}")
+        if r.status_code == 200:
+            data  = r.json()
+            count = (data.get("data", {}).get("user", {})
+                        .get("edge_followed_by", {}).get("count"))
+            if count is not None:
+                print(f"[i.instagram] 팔로워: {count:,}")
+                return int(count)
+    except Exception as e:
+        print(f"[i.instagram] 실패: {e}")
+    return None
 
-# ── Playwright でスクレイピング ──────────────────────────────
-def fetch_followers() -> int | None:
-    with sync_playwright() as p:
-        browser = p.chromium.launch(headless=True)
-        ctx = browser.new_context(
-            user_agent=(
-                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-                "AppleWebKit/537.36 (KHTML, like Gecko) "
-                "Chrome/124.0.0.0 Safari/537.36"
-            ),
-            locale="en-US",
-            viewport={"width": 1280, "height": 800},
-        )
-        page = ctx.new_page()
-
-        try:
-            print(f"[Playwright] {TARGET_URL} 접속 중...")
-            page.goto(TARGET_URL, wait_until="domcontentloaded", timeout=30_000)
-            time.sleep(3)
-
-            # 팝업(로그인 권유) 닫기 시도
-            for sel in ["[aria-label='Close']", "button:has-text('Not now')",
-                        "button:has-text('나중에')", "button:has-text('後で')"]:
-                try:
-                    btn = page.locator(sel).first
-                    if btn.is_visible(timeout=2000):
-                        btn.click()
-                        print(f"[Playwright] 팝업 닫음: {sel}")
-                        time.sleep(1)
-                        break
-                except Exception:
-                    pass
-
-            # 스크린샷 저장 (디버그용)
-            page.screenshot(path="debug_instagram.png", full_page=False)
-            print("[Playwright] 스크린샷 저장: debug_instagram.png")
-
-            # ── 방법 1: li 안의 팔로워 수 span ──────────────────
-            # Instagram 구조: <li><span><span>148K</span></span> followers</li>
-            for li in page.locator("ul li").all():
-                text = li.inner_text()
-                if re.search(r"follower|フォロワー|팔로워", text, re.IGNORECASE):
-                    # 숫자 부분만 추출
-                    nums = re.findall(r"[\d,.]+\s*[KkMm万]?", text)
-                    for n in nums:
-                        val = parse_count(n)
-                        if val and val > 100:
-                            print(f"[li] 팔로워: {val:,}")
-                            return val
-
-            # ── 방법 2: meta description ──────────────────────────
-            meta = page.locator('meta[name="description"]').get_attribute("content") or ""
-            print(f"[meta] description: {meta[:120]}")
-            m = re.search(
-                r"([\d,\.]+\s*[KkMm万]?)\s*(Followers|フォロワー|팔로워)",
-                meta, re.IGNORECASE
-            )
+# ── 방법 3: 공개 GraphQL API ─────────────────────────────────
+def fetch_via_graphql(session: requests.Session) -> int | None:
+    url = (
+        "https://www.instagram.com/graphql/query/"
+        "?query_hash=c9100bf9110dd6361671f113dd02e7d"
+        f"&variables=%7B%22user_id%22%3A%22{USERNAME}%22%2C%22include_reel%22%3Atrue%7D"
+    )
+    try:
+        r = session.get(url, timeout=15)
+        print(f"[GraphQL] HTTP {r.status_code}")
+        if r.status_code == 200:
+            m = re.search(r'"edge_followed_by"\s*:\s*\{"count"\s*:\s*(\d+)\}', r.text)
             if m:
-                val = parse_count(m.group(1))
-                if val:
-                    print(f"[meta] 팔로워: {val:,}")
-                    return val
+                n = int(m.group(1))
+                print(f"[GraphQL] 팔로워: {n:,}")
+                return n
+    except Exception as e:
+        print(f"[GraphQL] 실패: {e}")
+    return None
 
-            # ── 방법 3: 페이지 전체 텍스트에서 패턴 검색 ──────────
-            body = page.inner_text("body")
+# ── 방법 4: 모바일 UA로 프로필 HTML 접근 ─────────────────────
+def fetch_via_mobile_html(session: requests.Session) -> int | None:
+    """
+    모바일 UA를 사용하면 로그인 없이 프로필 접근 가능한 경우 있음
+    """
+    mobile_uas = [
+        "Mozilla/5.0 (Linux; Android 13; SM-G998B) AppleWebKit/537.36 "
+        "(KHTML, like Gecko) Chrome/112.0.0.0 Mobile Safari/537.36",
+        "Mozilla/5.0 (iPhone; CPU iPhone OS 16_5 like Mac OS X) "
+        "AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.5 "
+        "Mobile/15E148 Safari/604.1",
+    ]
+    headers = {
+        "User-Agent": random.choice(mobile_uas),
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        "Accept-Language": "en-US,en;q=0.5",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Connection": "keep-alive",
+        "Upgrade-Insecure-Requests": "1",
+        "Sec-Fetch-Dest": "document",
+        "Sec-Fetch-Mode": "navigate",
+        "Sec-Fetch-Site": "none",
+        "Cache-Control": "max-age=0",
+    }
+    try:
+        # 먼저 instagram.com 방문해서 쿠키 획득
+        session.get("https://www.instagram.com/", headers=headers, timeout=10)
+        time.sleep(2)
+
+        url = f"https://www.instagram.com/{USERNAME}/"
+        r = session.get(url, headers=headers, timeout=20)
+        print(f"[mobile HTML] HTTP {r.status_code}, 크기: {len(r.text):,}자")
+
+        if r.status_code == 200:
+            html = r.text
+            # 로그인 페이지 감지
+            if "Log in" in html and "edge_followed_by" not in html:
+                print("[mobile HTML] 로그인 페이지 감지됨")
+                return None
+
             patterns = [
-                r"([\d,\.]+\s*[KkMm万]?)\s*[Ff]ollowers",
-                r"([\d,\.]+\s*[KkMm万]?)\s*フォロワー",
-                r"([\d,\.]+\s*[KkMm万]?)\s*팔로워",
+                r'"edge_followed_by"\s*:\s*\{"count"\s*:\s*(\d+)\}',
+                r'"followers_count"\s*:\s*(\d+)',
+                r'([\d,]+)\s*[Ff]ollowers',
             ]
             for pat in patterns:
-                m = re.search(pat, body)
+                m = re.search(pat, html)
                 if m:
-                    val = parse_count(m.group(1))
-                    if val and val > 100:
-                        print(f"[body] 팔로워: {val:,}")
-                        return val
+                    raw = m.group(1).replace(",", "")
+                    if raw.isdigit():
+                        n = int(raw)
+                        if n > 1000:
+                            print(f"[mobile HTML] 팔로워: {n:,}")
+                            return n
+    except Exception as e:
+        print(f"[mobile HTML] 실패: {e}")
+    return None
 
-            print("[Playwright] 팔로워 수를 찾지 못했습니다.")
-            print("[body 앞 500자]", body[:500])
+# ── 수집 메인 ────────────────────────────────────────────────
+def fetch_followers() -> int | None:
+    session = requests.Session()
 
-        except Exception as e:
-            print(f"[ERROR] {e}", file=sys.stderr)
-        finally:
-            browser.close()
+    for method in [
+        lambda: fetch_via_i_api(session),
+        lambda: fetch_via_mobile_html(session),
+        lambda: fetch_via_graphql(session),
+    ]:
+        result = method()
+        if result is not None:
+            return result
+        time.sleep(random.uniform(2, 4))
 
     return None
 
-
-# ── index.html 마커 교체 ────────────────────────────────────
+# ── index.html 마커 교체 ─────────────────────────────────────
 def update_index(formatted: dict) -> bool:
     if not INDEX_PATH.exists():
         print(f"[ERROR] {INDEX_PATH} 없음", file=sys.stderr)
@@ -161,8 +182,7 @@ def update_index(formatted: dict) -> bool:
     print(f"[OK] 업데이트 완료: {formatted}")
     return True
 
-
-# ── 메인 ────────────────────────────────────────────────────
+# ── 메인 ─────────────────────────────────────────────────────
 if __name__ == "__main__":
     print("=== Instagram 팔로워 수 업데이트 시작 ===")
     count = fetch_followers()
