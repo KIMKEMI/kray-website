@@ -1,38 +1,13 @@
+# 이 워크플로우는 로컬 PC에서 실행하는 방식으로 변경되었습니다.
+# python update_stats.py 를 로컬에서 실행 후 GitHub Desktop으로 Push하세요.
 name: Update Instagram Follower Count
 
 on:
-  schedule:
-    - cron: '0 0 * * *'
-  workflow_dispatch:
+  workflow_dispatch:  # 수동 실행만 (자동 스케줄 비활성화)
 
 jobs:
-  update-followers:
+  placeholder:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
-
     steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-
-      - name: Install dependencies
-        run: pip install requests
-
-      - name: Run follower update script
-        run: python update_stats.py
-        continue-on-error: true
-
-      - name: Check for changes
-        id: changes
-        run: git diff --quiet index.html || echo "changed=true" >> $GITHUB_OUTPUT
-
-      - name: Commit and push if changed
-        if: steps.changes.outputs.changed == 'true'
-        run: |
-          git config user.name  "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add index.html
-          git commit -m "chore: update Instagram follower count [skip ci]"
-          git push
+      - name: Notice
+        run: echo "로컬 PC에서 update_stats.py 를 실행 후 Push해주세요."
