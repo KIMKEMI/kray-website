@@ -158,20 +158,57 @@ def fetch_followers() -> int | None:
     return None
 
 
-# ── index.html 마커 교체 ─────────────────────────────────────
+# ── index.html 팔로워 수 교체 ─────────────────────────────────
 def update_index(formatted: dict) -> bool:
     if not INDEX_PATH.exists():
         print(f"[ERROR] index.html 을 찾을 수 없습니다: {INDEX_PATH}")
         print("  → 이 스크립트를 kray-website 폴더 안에서 실행하세요.")
         return False
+
     html     = INDEX_PATH.read_text(encoding="utf-8")
     original = html
-    html     = html.replace("__FOLLOWERS_KO__", formatted["ko"])
-    html     = html.replace("__FOLLOWERS_JA__", formatted["ja"])
-    html     = html.replace("__FOLLOWERS_EN__", formatted["en"])
+
+    # ── 방법 1: __FOLLOWERS_XX__ 마커 교체 ─────────────────
+    html = html.replace("__FOLLOWERS_KO__", formatted["ko"])
+    html = html.replace("__FOLLOWERS_JA__", formatted["ja"])
+    html = html.replace("__FOLLOWERS_EN__", formatted["en"])
+
+    # ── 방법 2: stats 배열의 value 값 직접 교체 ─────────────
+    # {value:"XX만",label:"팔로워 수",...}  → 새 값으로
+    import re
+    html = re.sub(
+        r'(\{value:")([^"]+)(",label:"팔로워 수")',
+        lambda m: m.group(1) + formatted["ko"] + m.group(3),
+        html
+    )
+    html = re.sub(
+        r'(\{value:")([^"]+)(",label:"フォロワー数")',
+        lambda m: m.group(1) + formatted["ja"] + m.group(3),
+        html
+    )
+    html = re.sub(
+        r'(\{value:")([^"]+)(",label:"Followers")',
+        lambda m: m.group(1) + formatted["en"] + m.group(3),
+        html
+    )
+
+    # ── FOLLOWERS_FALLBACK도 최신값으로 ─────────────────────
+    html = re.sub(
+        r"(const FOLLOWERS_FALLBACK = \{ ko: ')[^']+(' , ja: ')[^']+(' , en: ')[^']+(' \};)",
+        lambda m: f"{m.group(1)}{formatted['ko']}{m.group(2)}{formatted['ja']}{m.group(3)}{formatted['en']}{m.group(4)}",
+        html
+    )
+    # 공백 차이 대응
+    html = re.sub(
+        r"(const FOLLOWERS_FALLBACK = \{ ko: ')[^']+(',\s*ja: ')[^']+(',\s*en: ')[^']+(' \};)",
+        lambda m: f"{m.group(1)}{formatted['ko']}{m.group(2)}{formatted['ja']}{m.group(3)}{formatted['en']}{m.group(4)}",
+        html
+    )
+
     if html == original:
-        print("[WARN] 마커를 찾지 못했습니다. 이미 업데이트된 상태일 수 있습니다.")
+        print("[WARN] 변경된 내용이 없습니다. 이미 최신 상태이거나 구조가 다를 수 있습니다.")
         return False
+
     INDEX_PATH.write_text(html, encoding="utf-8")
     print(f"[OK] index.html 업데이트 완료!")
     print(f"     ko: {formatted['ko']} / ja: {formatted['ja']} / en: {formatted['en']}")
