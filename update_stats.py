@@ -214,7 +214,7 @@ def update_index(formatted: dict) -> bool:
 
     INDEX_PATH.write_text(html, encoding="utf-8")
     print(f"[OK] index.html 업데이트 완료!")
-    print(f"     ko: {formatted['ko']} / ja: {formatted['ja']} / en: {formatted['en']}")
+    print(f"[OK] Updated: {formatted['en']}")
     return True
 
 
@@ -231,7 +231,7 @@ if __name__ == "__main__":
 
     formatted = format_followers(count)
     print(f"\nFollowers collected: {count:,}")
-    print(f"Format: {formatted}")
+    print(f"Format: ko={formatted['ko']} / ja={formatted['ja']} / en={formatted['en']}")
 
     updated = update_index(formatted)
     if not updated:
