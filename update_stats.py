@@ -13,6 +13,9 @@ index.html 의 __FOLLOWERS_KO__ / __FOLLOWERS_JA__ / __FOLLOWERS_EN__ 마커를 
 
 import re
 import sys
+import io
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
+sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8")
 import time
 from pathlib import Path
 
@@ -29,7 +32,7 @@ TARGET_URL = f"https://www.instagram.com/{USERNAME}/"
 INDEX_PATH = Path(__file__).parent / "index.html"
 
 
-# ── 팔로워 수 포맷 변환 ──────────────────────────────────────
+# ── 팔로워 수 Format 변환 ──────────────────────────────────────
 def format_followers(count: int) -> dict:
     if count >= 10_000:
         man     = count / 10_000
@@ -87,7 +90,7 @@ def fetch_followers() -> int | None:
                     btn = page.locator(sel).first
                     if btn.is_visible(timeout=1500):
                         btn.click()
-                        print(f"[팝업] 닫음: {sel}")
+                        print(f"[popup] closed: {sel}")
                         time.sleep(1)
                         break
                 except Exception:
@@ -147,8 +150,8 @@ def fetch_followers() -> int | None:
                         print(f"[body] 팔로워: {val:,}")
                         return val
 
-            print("[WARN] 팔로워 수를 찾지 못했습니다.")
-            print("  → 브라우저에서 Instagram 프로필이 정상 표시되는지 확인하세요.")
+            print("[WARN] Could not find follower count.")
+            print("  -> Check if Instagram profile is accessible in browser.")
 
         except Exception as e:
             print(f"[ERROR] {e}", file=sys.stderr)
@@ -161,8 +164,8 @@ def fetch_followers() -> int | None:
 # ── index.html 팔로워 수 교체 ─────────────────────────────────
 def update_index(formatted: dict) -> bool:
     if not INDEX_PATH.exists():
-        print(f"[ERROR] index.html 을 찾을 수 없습니다: {INDEX_PATH}")
-        print("  → 이 스크립트를 kray-website 폴더 안에서 실행하세요.")
+        print(f"[ERROR] index.html not found: {INDEX_PATH}")
+        print("  -> Run this script inside the kray-website folder.")
         return False
 
     html     = INDEX_PATH.read_text(encoding="utf-8")
@@ -206,7 +209,7 @@ def update_index(formatted: dict) -> bool:
     )
 
     if html == original:
-        print("[WARN] 변경된 내용이 없습니다. 이미 최신 상태이거나 구조가 다를 수 있습니다.")
+        print("[WARN] No changes detected.")
         return False
 
     INDEX_PATH.write_text(html, encoding="utf-8")
@@ -218,29 +221,29 @@ def update_index(formatted: dict) -> bool:
 # ── 메인 ─────────────────────────────────────────────────────
 if __name__ == "__main__":
     print("=" * 50)
-    print(" Instagram 팔로워 수 업데이트")
+    print(" Instagram Follower Count Update")
     print("=" * 50)
 
     count = fetch_followers()
     if count is None:
-        print("\n[FAIL] 팔로워 수 수집 실패")
+        print("\n[FAIL] Failed to fetch follower count")
         sys.exit(1)
 
     formatted = format_followers(count)
-    print(f"\n수집된 팔로워 수: {count:,}")
-    print(f"포맷: {formatted}")
+    print(f"\nFollowers collected: {count:,}")
+    print(f"Format: {formatted}")
 
     updated = update_index(formatted)
     if not updated:
-        print("\n[INFO] index.html 변경 없음 — 이미 최신 상태")
+        print("\n[INFO] index.html - already up to date")
         sys.exit(0)
 
-    print("\n[git] GitHub에 자동 Push 중...")
+    print("\n[git] Pushing to GitHub...")
     pushed = git_push()
     if pushed:
-        print("\n✅ 완료! 팔로워 수 업데이트 및 Push 성공!")
+        print("\n[DONE] Follower count updated and pushed!")
     else:
-        print("\n⚠️  Push 실패. GitHub Desktop으로 수동 Push 해주세요.")
+        print("\n[WARN] Push failed. Please push manually.")
     sys.exit(0 if pushed else 1)
 
 
@@ -259,7 +262,7 @@ def git_push() -> bool:
         if result.returncode != 0:
             # commit 실패는 "nothing to commit" 일 수 있으므로 무시
             if "nothing to commit" in result.stdout + result.stderr:
-                print("[git] 변경 없음 — push 생략")
+                print("[git] No changes - skip push")
                 return True
             print(f"[git] {' '.join(cmd)} 실패: {result.stderr.strip()}")
             return False
