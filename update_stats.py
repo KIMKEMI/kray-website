@@ -166,9 +166,9 @@ def update_index(formatted: dict) -> bool:
     html = html.replace("__FOLLOWERS_JA__", formatted["ja"])
     html = html.replace("__FOLLOWERS_EN__", formatted["en"])
 
-    html = re.sub(r'(\{value:")([^"]+)(",label:"[^"]*\ub9cc[^"]*")',
+    html = re.sub(r'(\{value:")([^"]+)(",label:"팔로워 수")',
                   lambda m: m.group(1) + formatted["ko"] + m.group(3), html)
-    html = re.sub(r'(\{value:")([^"]+)(",label:"[^"]*\u30d5\u30a9\u30ed\u30ef\u30fc[^"]*")',
+    html = re.sub(r'(\{value:")([^"]+)(",label:"フォロワー数")',
                   lambda m: m.group(1) + formatted["ja"] + m.group(3), html)
     html = re.sub(r'(\{value:")([^"]+)(",label:"Followers")',
                   lambda m: m.group(1) + formatted["en"] + m.group(3), html)
