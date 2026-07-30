@@ -59,7 +59,8 @@ GITHUB_REPO_URL = f"https://{_token}@github.com/KIMKEMI/kray-website.git" if _to
 
 def git_pull():
     result = subprocess.run(["git", "-c", "credential.helper=", "pull", GITHUB_REPO_URL, "main"],
-                           cwd=REPO_DIR, capture_output=True, text=True)
+                           cwd=REPO_DIR, capture_output=True, text=True,
+                           env={**os.environ, "GIT_TERMINAL_PROMPT": "0", "GIT_ASKPASS": "echo"})
     print(f"[git pull] {result.stdout.strip() or result.stderr.strip()}")
 
 
@@ -181,10 +182,12 @@ def update_index(formatted: dict) -> bool:
 def git_push():
     # 파일 타임스탬프 강제 갱신 → git이 반드시 변경으로 감지
     INDEX_PATH.touch()
+    # GIT_TERMINAL_PROMPT=0: 터미널 입력 요청 차단
+    git_env = {**os.environ, "GIT_TERMINAL_PROMPT": "0", "GIT_ASKPASS": "echo"}
     for cmd in [["git", "-c", "credential.helper=", "add", "index.html"],
                 ["git", "-c", "credential.helper=", "commit", "--allow-empty", "-m", "chore: update Instagram follower count [skip ci]"],
                 ["git", "-c", "credential.helper=", "push", GITHUB_REPO_URL, "main"]]:
-        result = subprocess.run(cmd, cwd=REPO_DIR, capture_output=True, text=True)
+        result = subprocess.run(cmd, cwd=REPO_DIR, capture_output=True, text=True, env=git_env)
         out = result.stdout.strip() + result.stderr.strip()
         if result.returncode != 0:
             if "nothing to commit" in out:
