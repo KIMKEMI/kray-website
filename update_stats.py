@@ -58,7 +58,7 @@ _base  = "https://github.com/KIMKEMI/kray-website.git"
 GITHUB_REPO_URL = f"https://{_token}@github.com/KIMKEMI/kray-website.git" if _token else _base
 
 def git_pull():
-    result = subprocess.run(["git", "pull", GITHUB_REPO_URL, "main"],
+    result = subprocess.run(["git", "-c", "credential.helper=", "pull", GITHUB_REPO_URL, "main"],
                            cwd=REPO_DIR, capture_output=True, text=True)
     print(f"[git pull] {result.stdout.strip() or result.stderr.strip()}")
 
@@ -181,9 +181,9 @@ def update_index(formatted: dict) -> bool:
 def git_push():
     # 파일 타임스탬프 강제 갱신 → git이 반드시 변경으로 감지
     INDEX_PATH.touch()
-    for cmd in [["git", "add", "index.html"],
-                ["git", "commit", "--allow-empty", "-m", "chore: update Instagram follower count [skip ci]"],
-                ["git", "push", GITHUB_REPO_URL, "main"]]:
+    for cmd in [["git", "-c", "credential.helper=", "add", "index.html"],
+                ["git", "-c", "credential.helper=", "commit", "--allow-empty", "-m", "chore: update Instagram follower count [skip ci]"],
+                ["git", "-c", "credential.helper=", "push", GITHUB_REPO_URL, "main"]]:
         result = subprocess.run(cmd, cwd=REPO_DIR, capture_output=True, text=True)
         out = result.stdout.strip() + result.stderr.strip()
         if result.returncode != 0:
