@@ -209,11 +209,9 @@ def update_index(formatted: dict) -> bool:
     )
 
     if html == original:
-        print("[WARN] No changes detected.")
-        return False
+        print("[INFO] No text change - force writing to ensure git detects update")
 
     INDEX_PATH.write_text(html, encoding="utf-8")
-    print(f"[OK] index.html 업데이트 완료!")
     print(f"[OK] Updated: {formatted['en']}")
     return True
 
