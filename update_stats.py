@@ -128,8 +128,10 @@ def update_index(formatted: dict) -> bool:
 
 
 def git_push():
+    # 파일 타임스탬프 강제 갱신 → git이 반드시 변경으로 감지
+    INDEX_PATH.touch()
     for cmd in [["git", "add", "index.html"],
-                ["git", "commit", "-m", "chore: update Instagram follower count [skip ci]"],
+                ["git", "commit", "--allow-empty", "-m", "chore: update Instagram follower count [skip ci]"],
                 ["git", "push"]]:
         result = subprocess.run(cmd, cwd=REPO_DIR, capture_output=True, text=True)
         out = result.stdout.strip() + result.stderr.strip()
