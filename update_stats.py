@@ -61,8 +61,8 @@ def parse_count(text: str) -> int | None:
 # ── Playwright로 팔로워 수 수집 ──────────────────────────────
 def fetch_followers() -> int | None:
     with sync_playwright() as p:
-        # 로컬 실행: headless=False 로 실제 브라우저 창을 보여줌
-        browser = p.chromium.launch(headless=False)
+        # headless=True: 백그라운드(스케줄러) 실행 가능
+        browser = p.chromium.launch(headless=True)
         ctx = browser.new_context(
             user_agent=(
                 "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
