@@ -44,7 +44,18 @@ def parse_count(text: str):
     return None
 
 
-GITHUB_REPO_URL = "https://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@github.com/KIMKEMI/kray-website.git"
+# 토큰은 환경변수 또는 .env 파일에서 읽음
+import os
+# .env 파일에서 토큰 로드
+_env_path = Path(__file__).parent / ".env"
+if _env_path.exists():
+    for line in _env_path.read_text().splitlines():
+        if "=" in line and not line.startswith("#"):
+            k, v = line.split("=", 1)
+            os.environ.setdefault(k.strip(), v.strip())
+_token = os.environ.get("GITHUB_TOKEN", "")
+_base  = "https://github.com/KIMKEMI/kray-website.git"
+GITHUB_REPO_URL = f"https://{_token}@github.com/KIMKEMI/kray-website.git" if _token else _base
 
 def git_pull():
     result = subprocess.run(["git", "pull", GITHUB_REPO_URL, "main"],
