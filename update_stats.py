@@ -75,22 +75,28 @@ def fetch_followers():
         try:
             print(f"[Playwright] Accessing {TARGET_URL}")
             page.goto(TARGET_URL, wait_until="domcontentloaded", timeout=30_000)
-            time.sleep(4)
+            time.sleep(6)
 
-            for sel in ["[aria-label='Close']", "button:has-text('Not now')", "button:has-text('Later')"]:
+            # 팝업 닫기
+            for sel in ["[aria-label='Close']", "button:has-text('Not now')", 
+                        "button:has-text('Later')", "button:has-text('나중에')",
+                        "button:has-text('後で')", "._a9--._ap36._a9_1"]:
                 try:
                     btn = page.locator(sel).first
-                    if btn.is_visible(timeout=1500):
+                    if btn.is_visible(timeout=2000):
                         btn.click()
-                        time.sleep(1)
+                        print(f"[popup] closed: {sel}")
+                        time.sleep(2)
                         break
                 except Exception:
                     pass
 
+            time.sleep(3)
+
             for li in page.locator("ul li").all():
                 try:
                     text = li.inner_text()
-                    if re.search(r"follower", text, re.IGNORECASE):
+                    if re.search(r"follower|フォロワー|팔로워", text, re.IGNORECASE):
                         nums = re.findall(r"[\d,.]+\s*[KkMm\u4e07]?", text)
                         for n in nums:
                             val = parse_count(n.strip())
@@ -100,9 +106,28 @@ def fetch_followers():
                 except Exception:
                     pass
 
+            # span에서 직접 찾기
+            try:
+                spans = page.locator("span").all()
+                for span in spans:
+                    try:
+                        text = span.inner_text().strip()
+                        if re.match(r"^[\d,.]+[KkMm]?$", text):
+                            val = parse_count(text)
+                            if val and 10000 < val < 10000000:
+                                parent_text = span.locator("xpath=../..").inner_text()
+                                if re.search(r"follower|フォロワー|팔로워", parent_text, re.IGNORECASE):
+                                    print(f"[span] Followers: {val:,}")
+                                    return val
+                    except Exception:
+                        pass
+            except Exception:
+                pass
+
             html = page.content()
             for pat in [r'"edge_followed_by"\s*:\s*\{"count"\s*:\s*(\d+)\}',
-                        r'"followers_count"\s*:\s*(\d+)']:
+                        r'"followers_count"\s*:\s*(\d+)',
+                        r'"follower_count"\s*:\s*(\d+)']:
                 m = re.search(pat, html)
                 if m:
                     val = int(m.group(1))
@@ -110,7 +135,19 @@ def fetch_followers():
                         print(f"[JSON] Followers: {val:,}")
                         return val
 
+            # 페이지 텍스트 전체 검색
+            body = page.inner_text("body")
+            for pat in [r"([\d,]+)\s*[Ff]ollowers", r"([\d,]+)\s*フォロワー", r"([\d,]+)\s*팔로워"]:
+                m = re.search(pat, body)
+                if m:
+                    val = parse_count(m.group(1))
+                    if val and val > 1000:
+                        print(f"[body] Followers: {val:,}")
+                        return val
+
             print("[WARN] Could not find follower count.")
+            print(f"[DEBUG] title: {page.title()}")
+            print(f"[DEBUG] url: {page.url}")
         except Exception as e:
             print(f"[ERROR] {e}", file=sys.stderr)
         finally:
