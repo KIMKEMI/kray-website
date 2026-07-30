@@ -1,0 +1,6 @@
+.env
+*.log
+update_log.txt
+debug_instagram.png
+__pycache__/
+*.pyc
