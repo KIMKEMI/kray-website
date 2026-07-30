@@ -44,8 +44,11 @@ def parse_count(text: str):
     return None
 
 
+GITHUB_REPO_URL = "https://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@github.com/KIMKEMI/kray-website.git"
+
 def git_pull():
-    result = subprocess.run(["git", "pull"], cwd=REPO_DIR, capture_output=True, text=True)
+    result = subprocess.run(["git", "pull", GITHUB_REPO_URL, "main"],
+                           cwd=REPO_DIR, capture_output=True, text=True)
     print(f"[git pull] {result.stdout.strip() or result.stderr.strip()}")
 
 
@@ -132,7 +135,7 @@ def git_push():
     INDEX_PATH.touch()
     for cmd in [["git", "add", "index.html"],
                 ["git", "commit", "--allow-empty", "-m", "chore: update Instagram follower count [skip ci]"],
-                ["git", "push"]]:
+                ["git", "push", GITHUB_REPO_URL, "main"]]:
         result = subprocess.run(cmd, cwd=REPO_DIR, capture_output=True, text=True)
         out = result.stdout.strip() + result.stderr.strip()
         if result.returncode != 0:
