@@ -1,78 +1,21 @@
 <!doctype html>
 <html lang="ko">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Kray AI NEWS</title>
-  <style>
-    :root{--bg:#f6f7fb;--card:#fff;--text:#111827;--muted:#6b7280;--line:#e5e7eb;--accent:#111827;--good:#067647;--warn:#b54708;--bad:#b42318}
-    *{box-sizing:border-box} body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans KR",sans-serif;background:var(--bg);color:var(--text)}
-    .wrap{max-width:1180px;margin:auto;padding:24px}.top{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;margin-bottom:18px}.title{font-size:28px;font-weight:800}.sub{color:var(--muted);margin-top:6px}.pill{background:#fff;border:1px solid var(--line);padding:8px 12px;border-radius:999px;font-size:13px}
-    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}.metric{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px}.metric b{font-size:24px}.metric span{display:block;color:var(--muted);font-size:13px;margin-top:6px}
-    .layout{display:grid;grid-template-columns:1.55fr 1fr;gap:16px}.section{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;margin-bottom:16px}.section h2{font-size:17px;margin:0 0 14px}.row{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:12px 0;border-top:1px solid var(--line)}.row:first-of-type{border-top:0}.name{font-weight:700}.meta{color:var(--muted);font-size:13px;margin-top:4px}.rank{font-weight:800;white-space:nowrap}.up{color:var(--good)}.down{color:var(--bad)}.flat{color:var(--muted)}
-    .tag{display:inline-block;font-size:12px;padding:4px 8px;border-radius:999px;background:#f3f4f6;margin-right:5px}.hot{background:#ecfdf3;color:var(--good)}.risk{background:#fff7ed;color:var(--warn)}
-    .brief{white-space:pre-line;background:#111827;color:#fff;border-radius:16px;padding:16px;font-size:14px;line-height:1.6}.small{font-size:12px;color:var(--muted)}
-    @media(max-width:850px){.grid{grid-template-columns:repeat(2,1fr)}.layout{grid-template-columns:1fr}.top{flex-direction:column}.wrap{padding:14px}}
-  </style>
-</head>
-<body>
-<div class="wrap">
-  <div class="top">
-    <div><div class="title">Kray AI NEWS</div><div class="sub">AI 뉴스 · 라쿠텐 셀러 신호 통합 대시보드</div></div>
-    <div class="pill" id="today"></div>
-  </div>
-
-  <div class="grid">
-    <div class="metric"><b>5</b><span>오늘의 AI 핵심 뉴스</span></div>
-    <div class="metric"><b>5</b><span>라쿠텐 셀러 핵심 신호</span></div>
-    <div class="metric"><b class="up">3</b><span>급상승 감지 상품</span></div>
-  </div>
-
-  <div class="layout">
-    <main>
-      <section class="section">
-        <h2>🔥 Rising Items</h2>
-        <div class="row"><div><div class="name">遮光100% 折りたたみ日傘</div><div class="meta"><span class="tag hot">지속 상승</span>여름 · UV · 휴대용</div></div><div class="rank up">18위 ↑12</div></div>
-        <div class="row"><div><div class="name">冷感 ネックリング</div><div class="meta"><span class="tag hot">급상승</span>폭염 수요 가능성</div></div><div class="rank up">34위 ↑41</div></div>
-        <div class="row"><div><div class="name">モバイルバッテリー 薄型</div><div class="meta"><span class="tag risk">관찰</span>여행 · 방재 수요</div></div><div class="rank up">27위 ↑9</div></div>
-      </section>
-
-      <section class="section">
-        <h2>🛒 Rakuten Seller Top 5</h2>
-        <div class="row"><div><div class="name">1. UV/냉감 계절 상품 동반 상승</div><div class="meta">단일 상품보다 카테고리 전반이 움직이는 신호</div></div></div>
-        <div class="row"><div><div class="name">2. 휴대용 배터리 상위권 진입 증가</div><div class="meta">휴가·방재 수요 교차 가능성</div></div></div>
-        <div class="row"><div><div class="name">3. 5と0のつく日 준비</div><div class="meta">쿠폰·광고·재고 체크 권장</div></div></div>
-        <div class="row"><div><div class="name">4. 경쟁 상품 가격 변동 확대</div><div class="meta">Watchlist 내 가격·랭킹 동시 모니터링</div></div></div>
-        <div class="row"><div><div class="name">5. Today’s Action</div><div class="meta">상승 카테고리 보유 상품의 광고 키워드와 재고 우선 점검</div></div></div>
-      </section>
-
-      <section class="section">
-        <h2>🤖 AI & Tech Top 5</h2>
-        <div id="aiNews"></div>
-      </section>
-    </main>
-
-    <aside>
-      <section class="section">
-        <h2>📩 Daily LINE Briefing</h2>
-        <div class="brief" id="brief"></div>
-      </section>
-    </aside>
-  </div>
-</div>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>KRAY AI NEWS</title>
+<style>
+:root{--bg:#f6f7fb;--card:#fff;--text:#111827;--muted:#6b7280;--line:#e5e7eb;--good:#067647;--bad:#b42318}
+*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans KR",sans-serif;background:var(--bg);color:var(--text)}.wrap{max-width:1180px;margin:auto;padding:24px}.top{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;margin-bottom:18px}.title{font-size:28px;font-weight:800}.sub,.meta{color:var(--muted)}.sub{margin-top:6px}.pill{background:#fff;border:1px solid var(--line);padding:8px 12px;border-radius:999px;font-size:13px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}.metric,.section{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px}.metric b{font-size:24px}.metric span{display:block;color:var(--muted);font-size:13px;margin-top:6px}.layout{display:grid;grid-template-columns:1.55fr 1fr;gap:16px}.section{margin-bottom:16px}.section h2{font-size:17px;margin:0 0 14px}.row{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:12px 0;border-top:1px solid var(--line)}.row:first-of-type{border-top:0}.name{font-weight:700}.meta{font-size:13px;margin-top:4px}.rank{font-weight:800;white-space:nowrap}.up{color:var(--good)}.down{color:var(--bad)}.brief{white-space:pre-line;background:#111827;color:#fff;border-radius:16px;padding:16px;font-size:14px;line-height:1.65}.empty{color:var(--muted);padding:10px 0}@media(max-width:850px){.grid{grid-template-columns:1fr}.layout{grid-template-columns:1fr}.top{flex-direction:column}.wrap{padding:14px}}
+</style>
+</head><body><div class="wrap">
+<div class="top"><div><div class="title">KRAY AI NEWS</div><div class="sub">AI 뉴스 · 라쿠텐 셀러 신호 통합 대시보드</div></div><div class="pill" id="today"></div></div>
+<div class="grid"><div class="metric"><b id="newsCount">-</b><span>오늘의 AI 핵심 뉴스</span></div><div class="metric"><b id="watchCount">-</b><span>라쿠텐 추적 상품</span></div><div class="metric"><b class="up" id="risingCount">-</b><span>랭킹 상승 상품</span></div></div>
+<div class="layout"><main><section class="section"><h2>🔥 Rising Items</h2><div id="rising"><div class="empty">데이터 연결 대기 중</div></div></section><section class="section"><h2>🤖 AI & Tech Top 5</h2><div id="aiNews"><div class="empty">데이터 연결 대기 중</div></div></section></main><aside><section class="section"><h2>📩 Daily LINE Briefing</h2><div class="brief" id="brief">데이터 연결 대기 중</div></section></aside></div></div>
 <script>
-  const ai = [
-    'OpenAI — 기업용 에이전트 기능 확대',
-    'Google — Gemini 생태계 업데이트',
-    'Anthropic — Claude 개발자 기능 강화',
-    'NVIDIA — AI 인프라 투자 확대',
-    'AI 정책 — 규제·저작권 변화 주목'
-  ];
-  document.getElementById('aiNews').innerHTML = ai.map((x,i)=>`<div class="row"><div><div class="name">${i+1}. ${x}</div><div class="meta">실서비스에서는 매일 최신 기사로 자동 교체</div></div></div>`).join('');
-
-  const API_BASE = ''; // Apps Script Web App URL 연결 예정
-  const d=new Date(); document.getElementById('today').textContent=new Intl.DateTimeFormat('ko-KR',{dateStyle:'full'}).format(d);
-  document.getElementById('brief').textContent=`☀️ KRAY AI NEWS\n\n🤖 AI & TECH TOP 5\n① OpenAI — 핵심 업데이트\n② Google — Gemini 동향\n③ Anthropic — Claude 동향\n④ AI 인프라 주요 뉴스\n⑤ 정책·시장 핵심 변화\n\n🛒 RAKUTEN SELLER TOP 5\n🔥 UV/냉감 상품 상승\n📈 휴대용 배터리 수요 관찰\n🎯 5と0のつく日 준비\n⚠️ 경쟁상품 가격 변동\n💡 TODAY: 광고·재고 우선 점검`;
-</script>
-</body>
-</html>
+const API_BASE=''; // GAS Web App /exec URL 입력 후 자동 실데이터 연결
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const dateLabel=()=>new Intl.DateTimeFormat('ko-KR',{dateStyle:'full',timeZone:'Asia/Tokyo'}).format(new Date());document.getElementById('today').textContent=dateLabel();
+function render(data){const ai=data.aiNews||{};const news=Array.isArray(ai.news)?ai.news:[];const watch=Array.isArray(data.watchlist)?data.watchlist:[];const rising=watch.filter(x=>Number(x.delta)>0).sort((a,b)=>Number(b.delta)-Number(a.delta));document.getElementById('newsCount').textContent=news.length;document.getElementById('watchCount').textContent=watch.length;document.getElementById('risingCount').textContent=rising.length;document.getElementById('aiNews').innerHTML=news.length?news.map((x,i)=>`<div class="row"><div><div class="name">${i+1}. ${esc(x.title)}</div><div class="meta">${esc(x.summary)}</div></div></div>`).join(''):'<div class="empty">오늘의 AI 뉴스가 없습니다.</div>';document.getElementById('rising').innerHTML=rising.length?rising.slice(0,10).map(x=>`<div class="row"><div><div class="name">${esc(x.label||x.itemCode)}</div><div class="meta">전일 대비 ${Number(x.delta)}계단 상승</div></div><div class="rank up">${x.rank?esc(x.rank)+'위':'1000위 밖'} ↑${Number(x.delta)}</div></div>`).join(''):'<div class="empty">오늘 상승 감지 상품이 없습니다.</div>';const lines=['☀️ KRAY AI NEWS','',...news.flatMap((x,i)=>[`${i+1}. ${x.title}`,x.summary,'']),ai.trend?'💡 오늘의 핵심 흐름\n'+ai.trend:'','', '🎯 RAKUTEN WATCHLIST','',...watch.map((x,i)=>`${i+1}. ${x.label||x.itemCode}\n현재 ${x.rank?x.rank+'위':'1000위 밖'}${x.prevRank?' / 전일 '+x.prevRank+'위':''}`)];document.getElementById('brief').textContent=lines.filter((x,i,a)=>!(x===''&&a[i-1]==='')).join('\n').trim();}
+async function load(){if(!API_BASE){document.getElementById('brief').textContent='GAS Web App URL 연결 대기 중';return;}try{const r=await fetch(API_BASE+'?action=dashboard',{cache:'no-store'});if(!r.ok)throw new Error('HTTP '+r.status);render(await r.json());}catch(e){document.getElementById('brief').textContent='데이터를 불러오지 못했습니다.\n'+e.message;}}
+load();
+</script></body></html>
