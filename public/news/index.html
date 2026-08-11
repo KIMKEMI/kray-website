@@ -6,15 +6,18 @@
 <style>
 :root{--bg:#f6f7fb;--card:#fff;--text:#111827;--muted:#6b7280;--line:#e5e7eb;--good:#067647;--bad:#b42318;--soft:#f9fafb}
 *{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans KR",sans-serif;background:var(--bg);color:var(--text)}
-.wrap{max-width:1180px;margin:auto;padding:24px}.top{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;margin-bottom:18px}.title{font-size:28px;font-weight:800;letter-spacing:-.02em}.sub,.meta,.updated{color:var(--muted)}.sub{margin-top:6px}.topRight{text-align:right}.pill{display:inline-block;background:#fff;border:1px solid var(--line);padding:8px 12px;border-radius:999px;font-size:13px}.updated{font-size:12px;margin-top:7px}
+.wrap{max-width:1180px;margin:auto;padding:24px}.top{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;margin-bottom:18px}.brand{display:flex;align-items:center;gap:15px}.brandLogo{display:block;width:auto;height:48px;object-fit:contain;flex:0 0 auto}.brandText{min-width:0}.title{font-size:28px;font-weight:800;letter-spacing:-.02em;line-height:1.1}.sub,.meta,.updated{color:var(--muted)}.sub{margin-top:6px}.topRight{text-align:right}.pill{display:inline-block;background:#fff;border:1px solid var(--line);padding:8px 12px;border-radius:999px;font-size:13px}.updated{font-size:12px;margin-top:7px}
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}.metric,.section{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px}.metric b{font-size:24px}.metric span{display:block;color:var(--muted);font-size:13px;margin-top:6px}.layout{display:grid;grid-template-columns:1.55fr 1fr;gap:16px}.section{margin-bottom:16px}.section h2{font-size:17px;margin:0 0 14px}.row{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:13px 0;border-top:1px solid var(--line)}.row:first-of-type{border-top:0}.name{font-weight:700;line-height:1.45}.meta{font-size:13px;line-height:1.55;margin-top:5px}.rank{font-weight:800;white-space:nowrap}.up{color:var(--good)}.down{color:var(--bad)}.brief{white-space:pre-line;background:#111827;color:#fff;border-radius:16px;padding:16px;font-size:14px;line-height:1.68}.empty{color:var(--muted);padding:10px 0;line-height:1.55}.trend{background:var(--soft);border:1px solid var(--line);border-radius:14px;padding:14px;line-height:1.6}.trend b{display:block;margin-bottom:5px}.status{font-size:12px;color:var(--muted);margin-top:12px}
-@media(max-width:850px){.grid{grid-template-columns:1fr}.layout{grid-template-columns:1fr}.top{flex-direction:column}.topRight{text-align:left}.wrap{padding:14px}}
+@media(max-width:850px){.grid{grid-template-columns:1fr}.layout{grid-template-columns:1fr}.top{flex-direction:column}.topRight{text-align:left}.wrap{padding:14px}.brand{gap:12px}.brandLogo{height:40px}.title{font-size:24px}}
 </style>
 </head>
 <body>
 <div class="wrap">
   <div class="top">
-    <div><div class="title">KRAY AI NEWS</div><div class="sub">AI·테크 뉴스와 Rakuten 랭킹 신호를 한눈에 보는 모닝 브리핑 서비스</div></div>
+    <div class="brand">
+      <img class="brandLogo" src="/kray_logo.png" alt="Kray, Inc.">
+      <div class="brandText"><div class="title">KRAY AI NEWS</div><div class="sub">AI·테크 뉴스와 Rakuten 랭킹 신호를 한눈에 보는 모닝 브리핑 서비스</div></div>
+    </div>
     <div class="topRight"><div class="pill" id="today"></div><div class="updated" id="updated">데이터 불러오는 중</div></div>
   </div>
 
