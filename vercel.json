@@ -2,22 +2,10 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "rewrites": [
     {
-      "source": "/",
-      "has": [
-        {
-          "type": "header",
-          "key": "host",
-          "value": "news.krayinc.com"
-        }
-      ],
-      "destination": "/news/index.html"
-    },
-    {
       "source": "/:path*",
       "has": [
         {
-          "type": "header",
-          "key": "host",
+          "type": "host",
           "value": "news.krayinc.com"
         }
       ],
