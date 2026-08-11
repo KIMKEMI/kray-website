@@ -4,18 +4,60 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>KRAY AI NEWS</title>
 <style>
-:root{--bg:#f6f7fb;--card:#fff;--text:#111827;--muted:#6b7280;--line:#e5e7eb;--good:#067647;--bad:#b42318}
-*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans KR",sans-serif;background:var(--bg);color:var(--text)}.wrap{max-width:1180px;margin:auto;padding:24px}.top{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;margin-bottom:18px}.title{font-size:28px;font-weight:800}.sub,.meta{color:var(--muted)}.sub{margin-top:6px}.pill{background:#fff;border:1px solid var(--line);padding:8px 12px;border-radius:999px;font-size:13px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}.metric,.section{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px}.metric b{font-size:24px}.metric span{display:block;color:var(--muted);font-size:13px;margin-top:6px}.layout{display:grid;grid-template-columns:1.55fr 1fr;gap:16px}.section{margin-bottom:16px}.section h2{font-size:17px;margin:0 0 14px}.row{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:12px 0;border-top:1px solid var(--line)}.row:first-of-type{border-top:0}.name{font-weight:700}.meta{font-size:13px;margin-top:4px}.rank{font-weight:800;white-space:nowrap}.up{color:var(--good)}.down{color:var(--bad)}.brief{white-space:pre-line;background:#111827;color:#fff;border-radius:16px;padding:16px;font-size:14px;line-height:1.65}.empty{color:var(--muted);padding:10px 0}@media(max-width:850px){.grid{grid-template-columns:1fr}.layout{grid-template-columns:1fr}.top{flex-direction:column}.wrap{padding:14px}}
+:root{--bg:#f6f7fb;--card:#fff;--text:#111827;--muted:#6b7280;--line:#e5e7eb;--good:#067647;--bad:#b42318;--soft:#f9fafb}
+*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans KR",sans-serif;background:var(--bg);color:var(--text)}
+.wrap{max-width:1180px;margin:auto;padding:24px}.top{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;margin-bottom:18px}.title{font-size:28px;font-weight:800;letter-spacing:-.02em}.sub,.meta,.updated{color:var(--muted)}.sub{margin-top:6px}.topRight{text-align:right}.pill{display:inline-block;background:#fff;border:1px solid var(--line);padding:8px 12px;border-radius:999px;font-size:13px}.updated{font-size:12px;margin-top:7px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}.metric,.section{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px}.metric b{font-size:24px}.metric span{display:block;color:var(--muted);font-size:13px;margin-top:6px}.layout{display:grid;grid-template-columns:1.55fr 1fr;gap:16px}.section{margin-bottom:16px}.section h2{font-size:17px;margin:0 0 14px}.row{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:13px 0;border-top:1px solid var(--line)}.row:first-of-type{border-top:0}.name{font-weight:700;line-height:1.45}.meta{font-size:13px;line-height:1.55;margin-top:5px}.rank{font-weight:800;white-space:nowrap}.up{color:var(--good)}.down{color:var(--bad)}.brief{white-space:pre-line;background:#111827;color:#fff;border-radius:16px;padding:16px;font-size:14px;line-height:1.68}.empty{color:var(--muted);padding:10px 0;line-height:1.55}.trend{background:var(--soft);border:1px solid var(--line);border-radius:14px;padding:14px;line-height:1.6}.trend b{display:block;margin-bottom:5px}.status{font-size:12px;color:var(--muted);margin-top:12px}
+@media(max-width:850px){.grid{grid-template-columns:1fr}.layout{grid-template-columns:1fr}.top{flex-direction:column}.topRight{text-align:left}.wrap{padding:14px}}
 </style>
-</head><body><div class="wrap">
-<div class="top"><div><div class="title">KRAY AI NEWS</div><div class="sub">AI 뉴스 · 라쿠텐 셀러 신호 통합 대시보드</div></div><div class="pill" id="today"></div></div>
-<div class="grid"><div class="metric"><b id="newsCount">-</b><span>오늘의 AI 핵심 뉴스</span></div><div class="metric"><b id="watchCount">-</b><span>라쿠텐 추적 상품</span></div><div class="metric"><b class="up" id="risingCount">-</b><span>랭킹 상승 상품</span></div></div>
-<div class="layout"><main><section class="section"><h2>🔥 Rising Items</h2><div id="rising"><div class="empty">데이터 연결 대기 중</div></div></section><section class="section"><h2>🤖 AI & Tech Top 5</h2><div id="aiNews"><div class="empty">데이터 연결 대기 중</div></div></section></main><aside><section class="section"><h2>📩 Daily LINE Briefing</h2><div class="brief" id="brief">데이터 연결 대기 중</div></section></aside></div></div>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div><div class="title">KRAY AI NEWS</div><div class="sub">AI·테크 뉴스와 Rakuten 랭킹 신호를 한눈에 보는 모닝 브리핑 서비스</div></div>
+    <div class="topRight"><div class="pill" id="today"></div><div class="updated" id="updated">데이터 불러오는 중</div></div>
+  </div>
+
+  <div class="grid">
+    <div class="metric"><b id="newsCount">-</b><span>오늘의 AI 핵심 뉴스</span></div>
+    <div class="metric"><b id="watchCount">-</b><span>랭킹 모니터링 상품</span></div>
+    <div class="metric"><b class="up" id="risingCount">-</b><span>전일 대비 상승 상품</span></div>
+  </div>
+
+  <div class="layout">
+    <main>
+      <section class="section"><h2>🤖 오늘의 AI & Tech</h2><div id="aiNews"><div class="empty">데이터 연결 중입니다.</div></div><div id="trendWrap" style="display:none;margin-top:14px"><div class="trend"><b>💡 오늘의 핵심 흐름</b><span id="trend"></span></div></div></section>
+      <section class="section"><h2>🔥 Rising Items</h2><div id="rising"><div class="empty">랭킹 비교 데이터를 확인 중입니다.</div></div><div class="status">※ 전일 스냅샷이 존재하는 상품만 상승·하락 비교가 가능합니다.</div></section>
+    </main>
+    <aside>
+      <section class="section"><h2>📩 오늘의 LINE 브리핑</h2><div class="brief" id="brief">데이터 연결 중입니다.</div></section>
+    </aside>
+  </div>
+</div>
 <script>
 const API_BASE='https://script.google.com/a/macros/krayinc.com/s/AKfycbyth6DLCBAMXKoENL4gk5z7yxt36Uwg8rN44QsrQpwnn-Bc7Y1hKUuMmzqXXNjG0_0K/exec';
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const dateLabel=()=>new Intl.DateTimeFormat('ko-KR',{dateStyle:'full',timeZone:'Asia/Tokyo'}).format(new Date());document.getElementById('today').textContent=dateLabel();
-function render(data){const ai=data.aiNews||{};const news=Array.isArray(ai.news)?ai.news:[];const watch=Array.isArray(data.watchlist)?data.watchlist:[];const rising=watch.filter(x=>Number(x.delta)>0).sort((a,b)=>Number(b.delta)-Number(a.delta));document.getElementById('newsCount').textContent=news.length;document.getElementById('watchCount').textContent=watch.length;document.getElementById('risingCount').textContent=rising.length;document.getElementById('aiNews').innerHTML=news.length?news.map((x,i)=>`<div class="row"><div><div class="name">${i+1}. ${esc(x.title)}</div><div class="meta">${esc(x.summary)}</div></div></div>`).join(''):'<div class="empty">오늘의 AI 뉴스가 없습니다.</div>';document.getElementById('rising').innerHTML=rising.length?rising.slice(0,10).map(x=>`<div class="row"><div><div class="name">${esc(x.label||x.itemCode)}</div><div class="meta">전일 대비 ${Number(x.delta)}계단 상승</div></div><div class="rank up">${x.rank?esc(x.rank)+'위':'1000위 밖'} ↑${Number(x.delta)}</div></div>`).join(''):'<div class="empty">오늘 상승 감지 상품이 없습니다.</div>';const lines=['☀️ KRAY AI NEWS','',...news.flatMap((x,i)=>[`${i+1}. ${x.title}`,x.summary,'']),ai.trend?'💡 오늘의 핵심 흐름\n'+ai.trend:'','', '🎯 RAKUTEN WATCHLIST','',...watch.map((x,i)=>`${i+1}. ${x.label||x.itemCode}\n현재 ${x.rank?x.rank+'위':'1000위 밖'}${x.prevRank?' / 전일 '+x.prevRank+'위':''}`)];document.getElementById('brief').textContent=lines.filter((x,i,a)=>!(x===''&&a[i-1]==='')).join('\n').trim();}
-async function load(){try{const r=await fetch(API_BASE+'?action=dashboard',{cache:'no-store'});if(!r.ok)throw new Error('HTTP '+r.status);render(await r.json());}catch(e){document.getElementById('brief').textContent='데이터를 불러오지 못했습니다.\n'+e.message;}}
-load();
-</script></body></html>
+const fmtRank=x=>x.rank?`${x.rank}위`:'1000위 밖';
+const dateLabel=()=>new Intl.DateTimeFormat('ko-KR',{dateStyle:'full',timeZone:'Asia/Tokyo'}).format(new Date());
+document.getElementById('today').textContent=dateLabel();
+function render(data){
+  const ai=data.aiNews||{};
+  const news=Array.isArray(ai.news)?ai.news:[];
+  const watch=Array.isArray(data.watchlist)?data.watchlist:[];
+  const comparable=watch.filter(x=>x.prevRank!==null&&x.prevRank!==undefined);
+  const rising=comparable.filter(x=>Number(x.delta)>0).sort((a,b)=>Number(b.delta)-Number(a.delta));
+  document.getElementById('newsCount').textContent=news.length;
+  document.getElementById('watchCount').textContent=watch.length;
+  document.getElementById('risingCount').textContent=rising.length;
+  document.getElementById('aiNews').innerHTML=news.length?news.map((x,i)=>`<div class="row"><div><div class="name">${i+1}. ${esc(x.title)}</div><div class="meta">${esc(x.summary)}</div></div></div>`).join(''):'<div class="empty">오늘 수집된 AI·테크 뉴스가 없습니다.</div>';
+  if(ai.trend){document.getElementById('trend').textContent=ai.trend;document.getElementById('trendWrap').style.display='block'}else{document.getElementById('trendWrap').style.display='none'}
+  if(rising.length){document.getElementById('rising').innerHTML=rising.slice(0,10).map(x=>`<div class="row"><div><div class="name">${esc(x.label||x.itemCode)}</div><div class="meta">전일 ${esc(x.prevRank)}위 → 현재 ${esc(x.rank)}위</div></div><div class="rank up">${fmtRank(x)} ↑${Number(x.delta)}</div></div>`).join('')}else if(!comparable.length){document.getElementById('rising').innerHTML='<div class="empty">아직 전일 비교 데이터가 없습니다. 오늘 스냅샷이 쌓인 뒤 다음 수집부터 상승 상품이 표시됩니다.</div>'}else{document.getElementById('rising').innerHTML='<div class="empty">오늘 전일 대비 상승한 모니터링 상품이 없습니다.</div>'}
+  const lines=['☀️ KRAY AI NEWS','',...news.flatMap((x,i)=>[`${i+1}. ${x.title}`,x.summary,'']),ai.trend?`💡 오늘의 핵심 흐름\n${ai.trend}`:'','', '🎯 RAKUTEN WATCHLIST','',...watch.map((x,i)=>{let s=`${i+1}. ${x.label||x.itemCode}\n현재 ${fmtRank(x)}`;if(x.prevRank!==null&&x.prevRank!==undefined){const d=Number(x.delta);s+=` / ${d>0?'↑':d<0?'↓':'→'}${Math.abs(d)} / 전일 ${x.prevRank}위`}else{s+=' / 전일 데이터 없음'}return s})];
+  document.getElementById('brief').textContent=lines.filter((x,i,a)=>!(x===''&&a[i-1]==='')).join('\n').trim();
+  document.getElementById('updated').textContent='최종 갱신 · '+new Intl.DateTimeFormat('ko-KR',{hour:'2-digit',minute:'2-digit',timeZone:'Asia/Tokyo'}).format(new Date());
+}
+async function load(){try{const r=await fetch(API_BASE+'?action=dashboard&_='+Date.now(),{cache:'no-store'});if(!r.ok)throw new Error('HTTP '+r.status);const data=await r.json();if(!data||data.ok===false)throw new Error(data&&data.error?data.error:'API 응답 오류');render(data)}catch(e){document.getElementById('brief').textContent='데이터를 불러오지 못했습니다.\n'+e.message;document.getElementById('updated').textContent='데이터 연결 오류'}}
+load();setInterval(load,300000);
+</script>
+</body>
+</html>
