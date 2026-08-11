@@ -5,7 +5,8 @@
       "source": "/:path*",
       "has": [
         {
-          "type": "host",
+          "type": "header",
+          "key": "host",
           "value": "news.krayinc.com"
         }
       ],
