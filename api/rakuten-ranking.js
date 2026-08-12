@@ -1,4 +1,4 @@
-const RANKING_UPSTREAM = 'http://168.110.52.250:8080/ichibaranking/api/IchibaItem/Ranking/20220601';
+const RANKING_UPSTREAM = 'https://openapi.rakuten.co.jp/ichibaranking/api/IchibaItem/Ranking/20220601';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -12,13 +12,12 @@ export default async function handler(req, res) {
   const genreId = String(body.genreId || '').trim();
   const page = Number(body.page || 1);
 
-  if (!applicationId || !accessKey || !genreId || !Number.isFinite(page) || page < 1) {
+  if (!applicationId || !accessKey || !genreId || !Number.isFinite(page) || page < 1 || page > 34) {
     return res.status(400).json({ ok: false, error: 'Missing or invalid parameters' });
   }
 
   const upstream = new URL(RANKING_UPSTREAM);
   upstream.searchParams.set('applicationId', applicationId);
-  upstream.searchParams.set('accessKey', accessKey);
   upstream.searchParams.set('format', 'json');
   upstream.searchParams.set('formatVersion', '2');
   upstream.searchParams.set('genreId', genreId);
@@ -32,7 +31,10 @@ export default async function handler(req, res) {
       method: 'GET',
       cache: 'no-store',
       signal: controller.signal,
-      headers: { Accept: 'application/json,text/plain,*/*' },
+      headers: {
+        Accept: 'application/json,text/plain,*/*',
+        accessKey,
+      },
     });
 
     const text = await response.text();
