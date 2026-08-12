@@ -40,7 +40,7 @@
   </div>
 </div>
 <script>
-const API_BASE='https://script.google.com/a/macros/krayinc.com/s/AKfycbyth6DLCBAMXKoENL4gk5z7yxt36Uwg8rN44QsrQpwnn-Bc7Y1hKUuMmzqXXNjG0_0K/exec';
+const API_BASE='/api/news';
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fmtRank=x=>x.rank?`${x.rank}위`:'1000위 밖';
 const dateLabel=()=>new Intl.DateTimeFormat('ko-KR',{dateStyle:'full',timeZone:'Asia/Tokyo'}).format(new Date());
@@ -61,7 +61,7 @@ function render(data){
   document.getElementById('brief').textContent=lines.filter((x,i,a)=>!(x===''&&a[i-1]==='')).join('\n').trim();
   document.getElementById('updated').textContent='최종 갱신 · '+new Intl.DateTimeFormat('ko-KR',{hour:'2-digit',minute:'2-digit',timeZone:'Asia/Tokyo'}).format(new Date());
 }
-async function load(){try{const r=await fetch(API_BASE+'?action=dashboard&_='+Date.now(),{cache:'no-store'});if(!r.ok)throw new Error('HTTP '+r.status);const data=await r.json();if(!data||data.ok===false)throw new Error(data&&data.error?data.error:'API 응답 오류');render(data)}catch(e){document.getElementById('brief').textContent='데이터를 불러오지 못했습니다.\n'+e.message;document.getElementById('updated').textContent='데이터 연결 오류'}}
+async function load(){try{const r=await fetch(API_BASE+'?_='+Date.now(),{cache:'no-store'});if(!r.ok)throw new Error('HTTP '+r.status);const data=await r.json();if(!data||data.ok===false)throw new Error(data&&data.error?data.error:'API 응답 오류');render(data)}catch(e){document.getElementById('brief').textContent='데이터를 불러오지 못했습니다.\n'+e.message;document.getElementById('updated').textContent='데이터 연결 오류'}}
 load();setInterval(load,300000);
 </script>
 </body>
