@@ -2,13 +2,18 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Kray AI 모닝 브리핑</title>
+<title>Kray EC Intelligence 시스템</title>
 <style>
-:root{--bg:#f6f7fb;--card:#fff;--text:#111827;--muted:#6b7280;--line:#e5e7eb;--good:#067647;--bad:#b42318;--soft:#f9fafb}
+:root{--bg:#f6f7fb;--card:#fff;--text:#111827;--muted:#6b7280;--line:#e5e7eb;--good:#067647;--bad:#b42318;--warn:#b54708;--soft:#f9fafb;--dark:#111827}
 *{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans KR",sans-serif;background:var(--bg);color:var(--text)}
-.wrap{max-width:1180px;margin:auto;padding:24px}.header{display:flex;justify-content:space-between;gap:16px;align-items:center;margin-bottom:30px}.brandLogo{display:block;width:auto;height:46px;object-fit:contain}.topRight{text-align:right}.pill{display:inline-block;background:#fff;border:1px solid var(--line);padding:8px 12px;border-radius:999px;font-size:13px}.updated{font-size:12px;margin-top:7px;color:var(--muted)}.hero{margin-bottom:18px}.title{font-size:30px;font-weight:800;letter-spacing:-.03em;line-height:1.15}.sub,.meta{color:var(--muted)}.sub{margin-top:8px;font-size:15px;line-height:1.55}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}.metric,.section{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px}.metric b{font-size:24px}.metric span{display:block;color:var(--muted);font-size:13px;margin-top:6px}.layout{display:grid;grid-template-columns:1.55fr 1fr;gap:16px}.section{margin-bottom:16px}.section h2{font-size:17px;margin:0 0 14px}.row{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:13px 0;border-top:1px solid var(--line)}.row:first-of-type{border-top:0}.name{font-weight:700;line-height:1.45}.meta{font-size:13px;line-height:1.55;margin-top:5px}.rank{font-weight:800;white-space:nowrap}.up{color:var(--good)}.down{color:var(--bad)}.brief{white-space:pre-line;background:#111827;color:#fff;border-radius:16px;padding:16px;font-size:14px;line-height:1.68}.empty{color:var(--muted);padding:10px 0;line-height:1.55}.trend{background:var(--soft);border:1px solid var(--line);border-radius:14px;padding:14px;line-height:1.6}.trend b{display:block;margin-bottom:5px}.status{font-size:12px;color:var(--muted);margin-top:12px}
-@media(max-width:850px){.grid{grid-template-columns:1fr}.layout{grid-template-columns:1fr}.header{align-items:flex-start}.topRight{text-align:right}.wrap{padding:14px}.brandLogo{height:40px}.title{font-size:26px}}
+.wrap{max-width:1220px;margin:auto;padding:24px}.header{display:flex;justify-content:space-between;gap:16px;align-items:center;margin-bottom:28px}.brandLogo{display:block;width:auto;height:46px;object-fit:contain}.topRight{text-align:right}.pill{display:inline-block;background:#fff;border:1px solid var(--line);padding:8px 12px;border-radius:999px;font-size:13px}.updated{font-size:12px;margin-top:7px;color:var(--muted)}.hero{margin-bottom:18px}.title{font-size:32px;font-weight:850;letter-spacing:-.035em;line-height:1.12}.sub,.meta{color:var(--muted)}.sub{margin-top:9px;font-size:15px;line-height:1.55}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:18px 0}.metric,.section,.productCard,.signalCard{background:var(--card);border:1px solid var(--line);border-radius:18px}.metric{padding:18px}.metric b{font-size:24px}.metric span{display:block;color:var(--muted);font-size:13px;margin-top:6px}.layout{display:grid;grid-template-columns:1.5fr 1fr;gap:16px}.section{padding:18px;margin-bottom:16px}.section h2{font-size:17px;margin:0 0 14px}.row{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;padding:13px 0;border-top:1px solid var(--line)}.row:first-of-type{border-top:0}.name{font-weight:750;line-height:1.5}.meta{font-size:13px;line-height:1.55;margin-top:5px}.rank{font-weight:800;white-space:nowrap}.up{color:var(--good)}.down{color:var(--bad)}.flat{color:var(--muted)}.brief{white-space:pre-line;background:var(--dark);color:#fff;border-radius:16px;padding:16px;font-size:14px;line-height:1.68;max-height:560px;overflow:auto}.empty{color:var(--muted);padding:10px 0;line-height:1.55}.trend{background:var(--soft);border:1px solid var(--line);border-radius:14px;padding:14px;line-height:1.6}.trend b{display:block;margin-bottom:5px}.status{font-size:12px;color:var(--muted);margin-top:12px}
+.sectionTitleRow{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:14px}.sectionTitleRow h2{margin:0}.small{font-size:12px;color:var(--muted)}
+.signalGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.signalCard{padding:16px}.signalCard .kicker{font-size:12px;color:var(--muted);margin-bottom:7px}.signalCard .headline{font-size:16px;font-weight:800;line-height:1.45}.signalCard .desc{font-size:13px;color:var(--muted);line-height:1.55;margin-top:7px}
+.watchGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.productCard{padding:16px}.productTop{display:flex;justify-content:space-between;gap:14px;align-items:flex-start}.productName{font-weight:800;line-height:1.5}.productRank{font-size:24px;font-weight:900;white-space:nowrap}.productMeta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}.tag{font-size:12px;border:1px solid var(--line);border-radius:999px;padding:5px 8px;background:var(--soft)}.tag.good{color:var(--good);border-color:#b7dfcf;background:#f1fbf6}.tag.bad{color:var(--bad);border-color:#f1b9b4;background:#fff5f4}.tag.warn{color:var(--warn);border-color:#f2d0aa;background:#fff9f2}
+.chartWrap{margin-top:14px;border:1px solid var(--line);border-radius:14px;padding:10px;background:#fff}.chartHead{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:6px}.rangeBtns{display:flex;gap:6px}.rangeBtn{border:1px solid var(--line);background:#fff;border-radius:999px;padding:4px 8px;font-size:11px;cursor:pointer}.rangeBtn.active{background:var(--dark);color:#fff;border-color:var(--dark)}.spark{width:100%;height:120px;display:block}.chartEmpty{height:120px;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:12px;text-align:center}.insight{margin-top:12px;background:var(--soft);border-radius:12px;padding:11px 12px;font-size:13px;line-height:1.55}.productLink{display:inline-block;margin-top:10px;font-size:12px;color:#344054;text-decoration:none}.productLink:hover{text-decoration:underline}
+@media(max-width:950px){.grid{grid-template-columns:repeat(2,1fr)}.layout{grid-template-columns:1fr}.watchGrid,.signalGrid{grid-template-columns:1fr}}
+@media(max-width:600px){.wrap{padding:14px}.header{align-items:flex-start}.brandLogo{height:40px}.title{font-size:27px}.grid{grid-template-columns:1fr 1fr}.metric{padding:14px}.metric b{font-size:21px}.productTop{display:block}.productRank{margin-top:8px}}
 </style>
 </head>
 <body>
@@ -19,25 +24,36 @@
   </header>
 
   <section class="hero">
-    <div class="title">Kray AI 모닝 브리핑</div>
-    <div class="sub">AI·테크 뉴스와 Rakuten 랭킹 신호를 매일 아침 한눈에 정리합니다.</div>
+    <div class="title">Kray EC Intelligence 시스템</div>
+    <div class="sub">AI·테크 뉴스와 Rakuten 상품 랭킹 데이터를 연결해, 매일의 변화와 실행 신호를 한눈에 확인합니다.</div>
   </section>
 
   <div class="grid">
     <div class="metric"><b id="newsCount">-</b><span>오늘의 AI 핵심 뉴스</span></div>
     <div class="metric"><b id="watchCount">-</b><span>랭킹 모니터링 상품</span></div>
     <div class="metric"><b class="up" id="risingCount">-</b><span>전일 대비 상승 상품</span></div>
+    <div class="metric"><b id="avgRank">-</b><span>평균 현재 랭킹</span></div>
   </div>
 
   <div class="layout">
     <main>
       <section class="section"><h2>🤖 오늘의 AI & Tech</h2><div id="aiNews"><div class="empty">데이터 연결 중입니다.</div></div><div id="trendWrap" style="display:none;margin-top:14px"><div class="trend"><b>💡 오늘의 핵심 흐름</b><span id="trend"></span></div></div></section>
-      <section class="section"><h2>🔥 Rising Items</h2><div id="rising"><div class="empty">랭킹 비교 데이터를 확인 중입니다.</div></div><div class="status">※ 전일 스냅샷이 존재하는 상품만 상승·하락 비교가 가능합니다.</div></section>
     </main>
     <aside>
       <section class="section"><h2>📩 오늘의 LINE 브리핑</h2><div class="brief" id="brief">데이터 연결 중입니다.</div></section>
     </aside>
   </div>
+
+  <section class="section">
+    <div class="sectionTitleRow"><h2>🎯 오늘의 전략 신호</h2><span class="small">현재 확보된 랭킹 데이터 기반</span></div>
+    <div class="signalGrid" id="strategySignals"><div class="empty">전략 신호를 계산 중입니다.</div></div>
+  </section>
+
+  <section class="section">
+    <div class="sectionTitleRow"><h2>📈 Rakuten Watchlist Intelligence</h2><span class="small">상품별 주간·월간 랭킹 추이</span></div>
+    <div class="watchGrid" id="watchGrid"><div class="empty">Watchlist 데이터를 불러오는 중입니다.</div></div>
+    <div class="status">※ 랭킹 숫자가 작을수록 성과가 좋습니다. 7일/30일 히스토리는 API에 해당 데이터가 있을 때 자동 표시됩니다.</div>
+  </section>
 </div>
 <script>
 const API_BASE='/api/news';
@@ -45,21 +61,64 @@ const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&
 const fmtRank=x=>x.rank?`${x.rank}위`:'1000위 밖';
 const dateLabel=()=>new Intl.DateTimeFormat('ko-KR',{dateStyle:'full',timeZone:'Asia/Tokyo'}).format(new Date());
 document.getElementById('today').textContent=dateLabel();
+
+function signalFor(x){
+  if(x.prevRank==null&&x.rank!=null)return {label:'신규 관찰',cls:'warn',text:'전일 비교 데이터가 아직 부족합니다.'};
+  const d=Number(x.delta||0);
+  if(d>=20)return {label:'급상승',cls:'good',text:`전일 대비 ${d}계단 상승. 광고·재고·노출 확대를 우선 검토할 가치가 있습니다.`};
+  if(d>=5)return {label:'상승',cls:'good',text:`전일 대비 ${d}계단 상승. 상승세 지속 여부를 3일간 확인해 보세요.`};
+  if(d<=-20)return {label:'급하락',cls:'bad',text:`전일 대비 ${Math.abs(d)}계단 하락. 가격·재고·광고·경쟁 상품 변화를 점검하세요.`};
+  if(d<=-5)return {label:'하락',cls:'bad',text:`전일 대비 ${Math.abs(d)}계단 하락. 추가 하락 여부를 모니터링하세요.`};
+  return {label:'정체',cls:'',text:'전일 대비 큰 변동이 없습니다. 장기 추이와 함께 판단하는 것이 좋습니다.'};
+}
+
+function historyFor(x,range){
+  if(range===30&&Array.isArray(x.history30))return x.history30;
+  if(range===7&&Array.isArray(x.history7))return x.history7;
+  if(Array.isArray(x.history))return range===7?x.history.slice(-7):x.history.slice(-30);
+  const fallback=[];
+  if(x.prevRank!=null)fallback.push(Number(x.prevRank));
+  if(x.rank!=null)fallback.push(Number(x.rank));
+  return fallback;
+}
+
+function drawSpark(svg,values){
+  const clean=values.map(v=>v==null?null:Number(v)).filter(v=>Number.isFinite(v));
+  if(clean.length<2){svg.parentElement.innerHTML='<div class="chartEmpty">랭킹 히스토리가 더 쌓이면 추이 그래프가 표시됩니다.</div>';return;}
+  const w=520,h=120,p=12;const min=Math.min(...clean),max=Math.max(...clean);const span=Math.max(1,max-min);
+  const pts=values.map((v,i)=>{if(v==null||!Number.isFinite(Number(v)))return null;const x=p+(i*(w-2*p)/Math.max(1,values.length-1));const y=p+((Number(v)-min)*(h-2*p)/span);return [x,y]}).filter(Boolean);
+  svg.setAttribute('viewBox',`0 0 ${w} ${h}`);
+  svg.innerHTML=`<line x1="${p}" y1="${p}" x2="${w-p}" y2="${p}" stroke="#eef0f3"/><line x1="${p}" y1="${h-p}" x2="${w-p}" y2="${h-p}" stroke="#eef0f3"/><polyline fill="none" stroke="#111827" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" points="${pts.map(p=>p.join(',')).join(' ')}"/>${pts.map((p,i)=>`<circle cx="${p[0]}" cy="${p[1]}" r="3" fill="#111827"><title>${clean[i]??''}위</title></circle>`).join('')}<text x="${p}" y="11" font-size="10" fill="#6b7280">상위 ${min}위</text><text x="${p}" y="${h-2}" font-size="10" fill="#6b7280">하위 ${max}위</text>`;
+}
+
+function renderWatch(watch){
+  if(!watch.length){document.getElementById('watchGrid').innerHTML='<div class="empty">모니터링 상품이 없습니다.</div>';return;}
+  document.getElementById('watchGrid').innerHTML=watch.map((x,i)=>{const s=signalFor(x);const d=x.prevRank==null?null:Number(x.delta||0);return `<article class="productCard" data-index="${i}"><div class="productTop"><div><div class="productName">${esc(x.label||x.itemCode)}</div><div class="productMeta"><span class="tag ${s.cls}">${s.label}</span><span class="tag">전일 ${x.prevRank==null?'데이터 없음':esc(x.prevRank)+'위'}</span>${d==null?'':`<span class="tag ${d>0?'good':d<0?'bad':''}">${d>0?'↑':d<0?'↓':'→'}${Math.abs(d)}</span>`}</div></div><div class="productRank">${fmtRank(x)}</div></div><div class="chartWrap"><div class="chartHead"><span class="small">랭킹 추이</span><div class="rangeBtns"><button class="rangeBtn active" data-range="7">7일</button><button class="rangeBtn" data-range="30">30일</button></div></div><svg class="spark"></svg></div><div class="insight"><b>전략 메모</b><br>${esc(s.text)}</div>${x.itemUrl?`<a class="productLink" href="${esc(x.itemUrl)}" target="_blank" rel="noopener">Rakuten 상품 보기 →</a>`:''}</article>`}).join('');
+  [...document.querySelectorAll('.productCard')].forEach(card=>{const idx=Number(card.dataset.index);const x=watch[idx];const svg=card.querySelector('.spark');drawSpark(svg,historyFor(x,7));card.querySelectorAll('.rangeBtn').forEach(btn=>btn.addEventListener('click',()=>{card.querySelectorAll('.rangeBtn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');const wrap=card.querySelector('.chartWrap');let old=wrap.querySelector('.chartEmpty');if(old){old.remove();const ns='http://www.w3.org/2000/svg';const newSvg=document.createElementNS(ns,'svg');newSvg.setAttribute('class','spark');wrap.appendChild(newSvg);drawSpark(newSvg,historyFor(x,Number(btn.dataset.range)));}else{drawSpark(card.querySelector('.spark'),historyFor(x,Number(btn.dataset.range)));}}));});
+}
+
+function renderSignals(watch){
+  const withDelta=watch.filter(x=>x.delta!=null);
+  const best=[...withDelta].sort((a,b)=>Number(b.delta)-Number(a.delta))[0];
+  const worst=[...withDelta].sort((a,b)=>Number(a.delta)-Number(b.delta))[0];
+  const top=[...watch].filter(x=>x.rank!=null).sort((a,b)=>Number(a.rank)-Number(b.rank))[0];
+  const cards=[];
+  if(best&&Number(best.delta)>0)cards.push({k:'상승 모멘텀',h:best.label||best.itemCode,d:`현재 ${best.rank}위, 전일 대비 ${best.delta}계단 상승. 상승세가 이어지면 광고·재고 확대 후보입니다.`});
+  if(worst&&Number(worst.delta)<0)cards.push({k:'리스크 체크',h:worst.label||worst.itemCode,d:`현재 ${worst.rank}위, 전일 대비 ${Math.abs(worst.delta)}계단 하락. 가격·재고·광고 변화를 확인하세요.`});
+  if(top)cards.push({k:'현재 최고 성과',h:top.label||top.itemCode,d:`Watchlist 내 현재 ${top.rank}위로 가장 높은 순위입니다. 전환·마진까지 함께 보면 집중 투자 판단에 도움이 됩니다.`});
+  if(!cards.length)cards.push({k:'오늘의 상태',h:'큰 랭킹 변동 없음',d:'현재는 전일 대비 큰 변화가 없습니다. 7일·30일 데이터가 쌓이면 추세 신호의 정확도가 높아집니다.'});
+  document.getElementById('strategySignals').innerHTML=cards.slice(0,3).map(c=>`<div class="signalCard"><div class="kicker">${esc(c.k)}</div><div class="headline">${esc(c.h)}</div><div class="desc">${esc(c.d)}</div></div>`).join('');
+}
+
 function render(data){
-  const ai=data.aiNews||{};
-  const news=Array.isArray(ai.news)?ai.news:[];
-  const watch=Array.isArray(data.watchlist)?data.watchlist:[];
-  const comparable=watch.filter(x=>x.prevRank!==null&&x.prevRank!==undefined);
-  const rising=comparable.filter(x=>Number(x.delta)>0).sort((a,b)=>Number(b.delta)-Number(a.delta));
-  document.getElementById('newsCount').textContent=news.length;
-  document.getElementById('watchCount').textContent=watch.length;
-  document.getElementById('risingCount').textContent=rising.length;
+  const ai=data.aiNews||{};const news=Array.isArray(ai.news)?ai.news:[];const watch=Array.isArray(data.watchlist)?data.watchlist:[];const comparable=watch.filter(x=>x.prevRank!==null&&x.prevRank!==undefined);const rising=comparable.filter(x=>Number(x.delta)>0).sort((a,b)=>Number(b.delta)-Number(a.delta));
+  const ranks=watch.map(x=>Number(x.rank)).filter(Number.isFinite);const avg=ranks.length?Math.round(ranks.reduce((a,b)=>a+b,0)/ranks.length):null;
+  document.getElementById('newsCount').textContent=news.length;document.getElementById('watchCount').textContent=watch.length;document.getElementById('risingCount').textContent=rising.length;document.getElementById('avgRank').textContent=avg==null?'-':avg+'위';
   document.getElementById('aiNews').innerHTML=news.length?news.map((x,i)=>`<div class="row"><div><div class="name">${i+1}. ${esc(x.title)}</div><div class="meta">${esc(x.summary)}</div></div></div>`).join(''):'<div class="empty">오늘 수집된 AI·테크 뉴스가 없습니다.</div>';
   if(ai.trend){document.getElementById('trend').textContent=ai.trend;document.getElementById('trendWrap').style.display='block'}else{document.getElementById('trendWrap').style.display='none'}
-  if(rising.length){document.getElementById('rising').innerHTML=rising.slice(0,10).map(x=>`<div class="row"><div><div class="name">${esc(x.label||x.itemCode)}</div><div class="meta">전일 ${esc(x.prevRank)}위 → 현재 ${esc(x.rank)}위</div></div><div class="rank up">${fmtRank(x)} ↑${Number(x.delta)}</div></div>`).join('')}else if(!comparable.length){document.getElementById('rising').innerHTML='<div class="empty">아직 전일 비교 데이터가 없습니다. 오늘 스냅샷이 쌓인 뒤 다음 수집부터 상승 상품이 표시됩니다.</div>'}else{document.getElementById('rising').innerHTML='<div class="empty">오늘 전일 대비 상승한 모니터링 상품이 없습니다.</div>'}
+  renderSignals(watch);renderWatch(watch);
   const lines=['☀️ Kray AI 모닝 브리핑','',...news.flatMap((x,i)=>[`${i+1}. ${x.title}`,x.summary,'']),ai.trend?`💡 오늘의 핵심 흐름\n${ai.trend}`:'','', '🎯 RAKUTEN WATCHLIST','',...watch.map((x,i)=>{let s=`${i+1}. ${x.label||x.itemCode}\n현재 ${fmtRank(x)}`;if(x.prevRank!==null&&x.prevRank!==undefined){const d=Number(x.delta);s+=` / ${d>0?'↑':d<0?'↓':'→'}${Math.abs(d)} / 전일 ${x.prevRank}위`}else{s+=' / 전일 데이터 없음'}return s})];
-  document.getElementById('brief').textContent=lines.filter((x,i,a)=>!(x===''&&a[i-1]==='')).join('\n').trim();
-  document.getElementById('updated').textContent='최종 갱신 · '+new Intl.DateTimeFormat('ko-KR',{hour:'2-digit',minute:'2-digit',timeZone:'Asia/Tokyo'}).format(new Date());
+  document.getElementById('brief').textContent=lines.filter((x,i,a)=>!(x===''&&a[i-1]==='')).join('\n').trim();document.getElementById('updated').textContent='최종 갱신 · '+new Intl.DateTimeFormat('ko-KR',{hour:'2-digit',minute:'2-digit',timeZone:'Asia/Tokyo'}).format(new Date());
 }
 async function load(){try{const r=await fetch(API_BASE+'?_='+Date.now(),{cache:'no-store'});if(!r.ok)throw new Error('HTTP '+r.status);const data=await r.json();if(!data||data.ok===false)throw new Error(data&&data.error?data.error:'API 응답 오류');render(data)}catch(e){document.getElementById('brief').textContent='데이터를 불러오지 못했습니다.\n'+e.message;document.getElementById('updated').textContent='데이터 연결 오류'}}
 load();setInterval(load,300000);
