@@ -1,4 +1,4 @@
-const GAS_DASHBOARD_URL = 'https://script.google.com/a/macros/krayinc.com/s/AKfycbyth6DLCBAMXKoENL4gk5z7yxt36Uwg8rN44QsrQpwnn-Bc7Y1hKUuMmzqXXNjG0_0K/exec';
+const GAS_DASHBOARD_URL = 'https://script.google.com/macros/s/AKfycbyth6DLCBAMXKoENL4gk5z7yxt36Uwg8rN44QsrQpwnn-Bc7Y1hKUuMmzqXXNjG0_0K/exec';
 
 export default async function handler(req, res) {
   if (req.method !== 'GET') {
