@@ -1,4 +1,4 @@
-const RANKING_UPSTREAM = 'https://openapi.rakuten.co.jp/ichibaranking/api/IchibaItem/Ranking/20220601';
+const FIXED_IP_PROXY = 'http://168.110.52.250:8080/ichibaranking/api/IchibaItem/Ranking/20220601';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -16,13 +16,16 @@ export default async function handler(req, res) {
     return res.status(400).json({ ok: false, error: 'Missing or invalid parameters' });
   }
 
-  const upstream = new URL(RANKING_UPSTREAM);
+  const upstream = new URL(FIXED_IP_PROXY);
   upstream.searchParams.set('applicationId', applicationId);
+  upstream.searchParams.set('accessKey', accessKey);
   upstream.searchParams.set('format', 'json');
   upstream.searchParams.set('formatVersion', '2');
   upstream.searchParams.set('genreId', genreId);
   upstream.searchParams.set('page', String(page));
 
+  // The fixed-IP proxy is allowlisted by Rakuten. Vercel is only a timeout guard:
+  // Apps Script -> Vercel -> fixed-IP proxy -> Rakuten.
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), 8000);
 
@@ -31,10 +34,7 @@ export default async function handler(req, res) {
       method: 'GET',
       cache: 'no-store',
       signal: controller.signal,
-      headers: {
-        Accept: 'application/json,text/plain,*/*',
-        accessKey,
-      },
+      headers: { Accept: 'application/json,text/plain,*/*' },
     });
 
     const text = await response.text();
@@ -42,7 +42,7 @@ export default async function handler(req, res) {
     if (!response.ok) {
       return res.status(response.status).json({
         ok: false,
-        error: `Rakuten upstream HTTP ${response.status}`,
+        error: `Fixed-IP proxy HTTP ${response.status}`,
         upstreamBody: text.slice(0, 500),
       });
     }
@@ -51,7 +51,11 @@ export default async function handler(req, res) {
     try {
       data = JSON.parse(text);
     } catch {
-      return res.status(502).json({ ok: false, error: 'Rakuten upstream returned non-JSON' });
+      return res.status(502).json({
+        ok: false,
+        error: 'Fixed-IP proxy returned non-JSON',
+        upstreamBody: text.slice(0, 500),
+      });
     }
 
     res.setHeader('Cache-Control', 'no-store, max-age=0');
@@ -60,7 +64,9 @@ export default async function handler(req, res) {
     const timedOut = error && error.name === 'AbortError';
     return res.status(timedOut ? 504 : 502).json({
       ok: false,
-      error: timedOut ? 'Rakuten upstream timeout after 8s' : (error instanceof Error ? error.message : 'Rakuten proxy error'),
+      error: timedOut
+        ? 'Fixed-IP proxy timeout after 8s'
+        : (error instanceof Error ? error.message : 'Ranking proxy error'),
     });
   } finally {
     clearTimeout(timer);
