@@ -1,14 +1,101 @@
-const FIXED_IP_PROXY = 'http://168.110.52.250:8080/ichibaranking/api/IchibaItem/Ranking/20220601';
+const GAS_DASHBOARD_URL = 'https://script.google.com/macros/s/AKfycbyth6DLCBAMXKoENL4gk5z7yxt36Uwg8rN44QsrQpwnn-Bc7Y1hKUuMmzqXXNjG0_0K/exec';
 
-function cleanText(s = '') {
-  return String(s).replace(/<[^>]+>/g, ' ').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/\s+/g, ' ').trim();
+function flagsFromText(text = '') {
+  const t = String(text);
+  return {
+    coupon: /クーポン|OFF|割引|セール/i.test(t),
+    freeShipping: /送料無料/i.test(t),
+    points: /ポイント|P[0-9]+倍/i.test(t),
+    socialProof: /楽天1位|ランキング1位|人気|高評価/i.test(t),
+    urgency: /限定|本日|まで|即納|当日発送/i.test(t),
+  };
 }
-function num(v){const n=Number(String(v==null?'':v).replace(/[^0-9.]/g,''));return Number.isFinite(n)&&n>0?n:null}
-function pick(o,keys){for(const k of keys){if(o&&o[k]!=null&&o[k]!=='')return o[k]}return null}
-function flagsFrom(p){const t=cleanText([p.itemName,p.catchcopy,p.itemCaption,p.shopName].filter(Boolean).join(' '));return{coupon:/クーポン|OFF|割引|セール/i.test(t),freeShipping:/送料無料/i.test(t),points:/ポイント|P[0-9]+倍/i.test(t),socialProof:/楽天1位|ランキング1位|人気|高評価/i.test(t),urgency:/限定|本日|まで|即納|当日発送/i.test(t)}}
-function normalize(raw,i){const p=raw&&raw.Item?raw.Item:raw||{};let images=pick(p,['mediumImageUrls','smallImageUrls','imageUrls']);let image='';if(Array.isArray(images)&&images.length){const z=images[0];image=typeof z==='string'?z:(z&&pick(z,['imageUrl','url']))||''}image=image||pick(p,['mediumImageUrl','smallImageUrl','imageUrl'])||'';return{rank:num(pick(p,['rank','ranking','rankNumber']))||i+1,url:pick(p,['itemUrl','affiliateUrl'])||'',title:cleanText(pick(p,['itemName','name','title'])||'').slice(0,220),imageUrl:String(image||'').replace(/^http:\/\//i,'https://'),price:num(pick(p,['itemPrice','price'])),reviews:num(pick(p,['reviewCount','reviews'])),reviewAverage:num(pick(p,['reviewAverage','reviewScore'])),pointRate:num(pick(p,['pointRate','pointTimes'])),shopName:cleanText(pick(p,['shopName','shop'])||''),flags:flagsFrom(p)}}
-function listFrom(data){const c=[data&&data.Items,data&&data.items,data&&data.rankingItems,data&&data.result&&data.result.Items,data&&data.result&&data.result.items];for(const x of c)if(Array.isArray(x))return x;return[]}
-function median(nums){const a=nums.filter(Number.isFinite).sort((a,b)=>a-b);return a.length?a[Math.floor(a.length/2)]:null}
-function buildInsights(top,myRank){const prices=top.map(x=>x.price).filter(Number.isFinite),reviews=top.map(x=>x.reviews).filter(Number.isFinite),mp=median(prices),mr=median(reviews),obs=[],actions=[];if(Number.isFinite(mp))obs.push(`상위 3개 가격 중앙값은 약 ¥${mp.toLocaleString()}입니다.`);if(Number.isFinite(mr))obs.push(`상위 3개 리뷰 중앙값은 ${mr.toLocaleString()}건입니다.`);const coupons=top.filter(x=>x.flags.coupon).length,points=top.filter(x=>x.flags.points).length;if(coupons)obs.push(`상위 3개 중 ${coupons}개에서 쿠폰·할인 메시지가 확인됩니다.`);if(points)obs.push(`상위 3개 중 ${points}개에서 포인트 메시지가 확인됩니다.`);actions.push('상위 3개와 첫 이미지·상품명·가격·리뷰·쿠폰·포인트를 같은 화면에서 비교해 가장 큰 격차부터 개선하세요.');actions.push('상품명 첫 부분에 핵심 검색어와 차별점을 배치하고, 첫 이미지에서 구매 이유가 즉시 보이게 테스트하세요.');if(!Number.isFinite(myRank)||myRank>20)actions.push('변경 전후 3~7일 순위를 기록해 실제로 순위와 함께 움직이는 요소를 찾으세요.');else actions.push('이미 상위권이므로 가격을 크게 바꾸기보다 쿠폰·포인트·썸네일을 한 요소씩 테스트하세요.');return{observations:obs.slice(0,4),actions:actions.slice(0,4),note:'Rakuten은 랭킹 산정 원인을 공개하지 않으므로, 공개된 상위 상품 데이터의 차이를 바탕으로 한 비교 분석입니다.'}}
-async function rankingViaProxy(genreId,page){const applicationId=String(process.env.RAKUTEN_APPLICATION_ID||'').trim(),accessKey=String(process.env.RAKUTEN_ACCESS_KEY||'').trim(),proxyToken=String(process.env.KRAY_PROXY_TOKEN||process.env.RAKUTEN_PROXY_TOKEN||'').trim();if(!applicationId||!accessKey||!proxyToken)throw new Error('Rakuten ranking credentials are not configured');const u=new URL(FIXED_IP_PROXY);u.searchParams.set('applicationId',applicationId);u.searchParams.set('accessKey',accessKey);u.searchParams.set('format','json');u.searchParams.set('formatVersion','2');u.searchParams.set('genreId',genreId);u.searchParams.set('page',String(page||1));const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),10000);try{const r=await fetch(u,{cache:'no-store',signal:controller.signal,headers:{Accept:'application/json,text/plain,*/*','X-Kray-Proxy-Token':proxyToken}});const text=await r.text();if(!r.ok)throw new Error(`Fixed-IP proxy HTTP ${r.status}: ${text.slice(0,120)}`);return JSON.parse(text)}finally{clearTimeout(timer)}}
-export default async function handler(req,res){if(req.method!=='GET'){res.setHeader('Allow','GET');return res.status(405).json({ok:false,error:'Method not allowed'})}const genreId=String(req.query.genreId||'').trim(),myRank=Number(req.query.myRank||0)||null;if(!/^\d{3,10}$/.test(genreId))return res.status(400).json({ok:false,error:'Invalid genreId'});try{const data=await rankingViaProxy(genreId,1),items=listFrom(data),top=items.slice(0,3).map(normalize),insights=buildInsights(top,myRank);res.setHeader('Cache-Control','public, s-maxage=900, stale-while-revalidate=1800');return res.status(200).json({ok:true,genreId,source:'Rakuten Ichiba Ranking API via Kray fixed-IP proxy',top,insights})}catch(error){console.error('competitor-analysis',genreId,error);return res.status(502).json({ok:false,error:error instanceof Error?error.message:'Competitor analysis failed'})}}
+
+function normalizeTop(item) {
+  const p = item || {};
+  return {
+    rank: p.rank ?? null,
+    url: p.itemUrl || p.url || '',
+    title: p.title || '',
+    imageUrl: p.imageUrl || '',
+    price: p.price ?? null,
+    reviews: p.reviewCount ?? p.reviews ?? null,
+    reviewAverage: p.reviewAverage ?? null,
+    pointRate: p.pointRate ?? null,
+    shopName: p.shopName || '',
+    flags: flagsFromText(`${p.title || ''} ${p.catchcopy || ''}`),
+  };
+}
+
+export default async function handler(req, res) {
+  if (req.method !== 'GET') {
+    res.setHeader('Allow', 'GET');
+    return res.status(405).json({ ok: false, error: 'Method not allowed' });
+  }
+
+  const genreId = String(req.query.genreId || '').trim();
+  const myRank = String(req.query.myRank || '').trim();
+  if (!/^\d{3,10}$/.test(genreId)) {
+    return res.status(400).json({ ok: false, error: 'Invalid genreId' });
+  }
+
+  try {
+    const upstream = new URL(GAS_DASHBOARD_URL);
+    upstream.searchParams.set('action', 'competitor');
+    upstream.searchParams.set('genreId', genreId);
+    if (myRank) upstream.searchParams.set('myRank', myRank);
+    upstream.searchParams.set('_', Date.now().toString());
+
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 12000);
+    let response;
+    try {
+      response = await fetch(upstream, {
+        redirect: 'follow',
+        cache: 'no-store',
+        signal: controller.signal,
+        headers: {
+          Accept: 'application/json,text/plain,*/*',
+          'User-Agent': 'Kray-EC-Intelligence/1.0',
+        },
+      });
+    } finally {
+      clearTimeout(timer);
+    }
+
+    const text = await response.text();
+    if (!response.ok) {
+      return res.status(502).json({ ok: false, error: `Apps Script HTTP ${response.status}` });
+    }
+
+    let data;
+    try {
+      data = JSON.parse(text);
+    } catch {
+      return res.status(502).json({ ok: false, error: 'Apps Script returned non-JSON' });
+    }
+
+    if (!data.ok) {
+      return res.status(502).json({ ok: false, error: data.error || 'Competitor analysis failed' });
+    }
+
+    const top = Array.isArray(data.top) ? data.top.map(normalizeTop) : [];
+    res.setHeader('Cache-Control', 'public, s-maxage=600, stale-while-revalidate=1800');
+    return res.status(200).json({
+      ok: true,
+      genreId,
+      source: data.source || 'Rakuten Ichiba Ranking API',
+      top,
+      mine: null,
+      insights: data.insights || { observations: [], actions: [], note: '' },
+      fetchedAt: data.fetchedAt || null,
+      cached: !!data.cached,
+    });
+  } catch (error) {
+    const message = error && error.name === 'AbortError'
+      ? 'Competitor analysis timed out'
+      : (error instanceof Error ? error.message : 'Competitor analysis failed');
+    console.error('competitor-analysis', genreId, message);
+    return res.status(502).json({ ok: false, error: message });
+  }
+}
