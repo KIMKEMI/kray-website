@@ -1,5 +1,19 @@
 const GAS_DASHBOARD_URL = 'https://script.google.com/macros/s/AKfycbyth6DLCBAMXKoENL4gk5z7yxt36Uwg8rN44QsrQpwnn-Bc7Y1hKUuMmzqXXNjG0_0K/exec';
 
+const WATCHLIST_IMAGE_FALLBACKS = {
+  'onni-style:10000258': '/api/rakuten-item-image?shop=onni-style&item=tw-hyd-3',
+};
+
+function applyWatchlistFallbacks(data) {
+  if (!data || !Array.isArray(data.watchlist)) return data;
+  data.watchlist = data.watchlist.map((item) => {
+    if (!item || item.imageUrl) return item;
+    const fallback = WATCHLIST_IMAGE_FALLBACKS[item.itemCode];
+    return fallback ? { ...item, imageUrl: fallback } : item;
+  });
+  return data;
+}
+
 export default async function handler(req, res) {
   if (req.method !== 'GET') {
     res.setHeader('Allow', 'GET');
@@ -40,6 +54,8 @@ export default async function handler(req, res) {
     } catch {
       return res.status(502).json({ ok: false, error: 'Upstream API returned a non-JSON response' });
     }
+
+    data = applyWatchlistFallbacks(data);
 
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0');
