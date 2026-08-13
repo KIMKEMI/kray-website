@@ -1,7 +1,7 @@
 const GAS_DASHBOARD_URL = 'https://script.google.com/macros/s/AKfycbyth6DLCBAMXKoENL4gk5z7yxt36Uwg8rN44QsrQpwnn-Bc7Y1hKUuMmzqXXNjG0_0K/exec';
 
 const WATCHLIST_IMAGE_FALLBACKS = {
-  'onni-style:10000258': '/api/rakuten-item-image?shop=onni-style&item=tw-hyd-3',
+  'onni-style:10000258': '/api/rakuten-item-image?shop=onni-style&item=tw-hyd',
 };
 
 function applyWatchlistFallbacks(data) {
