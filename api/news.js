@@ -11,40 +11,46 @@ export default async function handler(req, res) {
     upstream.searchParams.set('action', 'dashboard');
     upstream.searchParams.set('_', Date.now().toString());
 
-    const response = await fetch(upstream, {
-      method: 'GET',
-      redirect: 'follow',
-      cache: 'no-store',
-      headers: {
-        Accept: 'application/json,text/plain,*/*',
-      },
-    });
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 12000);
+    let response;
+    try {
+      response = await fetch(upstream, {
+        method: 'GET',
+        redirect: 'follow',
+        cache: 'no-store',
+        signal: controller.signal,
+        headers: {
+          Accept: 'application/json,text/plain,*/*',
+          'User-Agent': 'Kray-EC-Intelligence/1.0',
+        },
+      });
+    } finally {
+      clearTimeout(timer);
+    }
 
     const text = await response.text();
-
     if (!response.ok) {
-      return res.status(502).json({
-        ok: false,
-        error: `Upstream API HTTP ${response.status}`,
-      });
+      return res.status(502).json({ ok: false, error: `Upstream API HTTP ${response.status}` });
     }
 
     let data;
     try {
       data = JSON.parse(text);
     } catch {
-      return res.status(502).json({
-        ok: false,
-        error: 'Upstream API returned a non-JSON response',
-      });
+      return res.status(502).json({ ok: false, error: 'Upstream API returned a non-JSON response' });
     }
 
-    res.setHeader('Cache-Control', 'no-store, max-age=0');
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0');
+    res.setHeader('CDN-Cache-Control', 'no-store');
+    res.setHeader('Vercel-CDN-Cache-Control', 'no-store');
     return res.status(200).json(data);
   } catch (error) {
-    return res.status(502).json({
-      ok: false,
-      error: error instanceof Error ? error.message : 'Failed to fetch dashboard data',
-    });
+    const message = error && error.name === 'AbortError'
+      ? 'Dashboard upstream timed out'
+      : (error instanceof Error ? error.message : 'Failed to fetch dashboard data');
+    res.setHeader('Cache-Control', 'no-store');
+    return res.status(502).json({ ok: false, error: message });
   }
 }
