@@ -76,12 +76,72 @@
     root.innerHTML=h;
   }
 
-  function load(root,o){
+  /* ===== cache =====
+   * 랭킹 데이터는 하루 한 번(약 08:00 JST)만 갱신되므로, 같은 날 안에는
+   * 매번 다시 요청하지 않고 캐시된 결과를 즉시 보여준다.
+   * 메모리 캐시(같은 세션) + localStorage(다음 방문까지) 이중 구조.
+   */
+  var TTL_MS=20*60*60*1000; // 20시간
+  var memCache={};
+  function cacheKey(g){return 'ca_cache_v1_'+g}
+  function readCache(g){
+    if(memCache[g])return memCache[g];
+    try{
+      var raw=localStorage.getItem(cacheKey(g));
+      if(!raw)return null;
+      var parsed=JSON.parse(raw);
+      memCache[g]=parsed;
+      return parsed;
+    }catch(e){return null}
+  }
+  function writeCache(g,data){
+    var entry={data:data,ts:Date.now()};
+    memCache[g]=entry;
+    try{localStorage.setItem(cacheKey(g),JSON.stringify(entry))}catch(e){}
+  }
+
+  function renderFrom(root,entry,o,opts){
+    draw(root,entry.data,o);
+    if(opts&&opts.stale){
+      var note=document.createElement('div');
+      note.className='ca-note';
+      note.style.marginTop='10px';
+      note.textContent='⚠ 최신 데이터를 불러오지 못해 이전 데이터를 표시하고 있습니다.';
+      root.appendChild(note);
+    }
+    var refresh=document.createElement('a');
+    refresh.href='javascript:void(0)';
+    refresh.className='ca-source';
+    refresh.style.display='block';
+    refresh.style.cursor='pointer';
+    refresh.textContent='↻ 새로고침';
+    refresh.onclick=function(){delete memCache[o.__genre];try{localStorage.removeItem(cacheKey(o.__genre))}catch(e){}load(root,o,true)};
+    root.appendChild(refresh);
+  }
+
+  function load(root,o,force){
     var g=genre(o);
+    o.__genre=g;
     if(!g){root.innerHTML='<div class="ca-state">이 상품의 genreId가 없어 경쟁 분석을 시작할 수 없습니다.</div>';return}
+
+    var cached=force?null:readCache(g);
+    if(cached&&(Date.now()-cached.ts)<TTL_MS){
+      renderFrom(root,cached,o);
+      return;
+    }
+
     root.innerHTML='<div class="ca-state">동일 카테고리 1~3위와 비교 분석 중…</div>';
     var u='/api/competitor-analysis?genreId='+encodeURIComponent(g)+'&myRank='+encodeURIComponent(o.rank||'')+'&itemUrl='+encodeURIComponent(itemUrl(o));
-    fetch(u,{cache:'no-store'}).then(function(r){return r.json()}).then(function(d){draw(root,d,o)}).catch(function(){root.innerHTML='<div class="ca-state">경쟁 분석을 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.</div>'});
+    fetch(u,{cache:'no-store'}).then(function(r){return r.json()}).then(function(d){
+      if(!d||!d.ok)throw new Error('bad response');
+      writeCache(g,d);
+      renderFrom(root,{data:d,ts:Date.now()},o);
+    }).catch(function(){
+      // 실패 시, 기간이 지난 캐시라도 있으면 그걸 보여주고 실패했다는 걸 알려준다.
+      var stale=memCache[g]||(function(){try{var raw=localStorage.getItem(cacheKey(g));return raw?JSON.parse(raw):null}catch(e){return null}})();
+      if(stale){renderFrom(root,stale,o,{stale:true})}
+      else{root.innerHTML='<div class="ca-state">경쟁 분석을 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.</div>'}
+    });
   }
 
   function init(w){

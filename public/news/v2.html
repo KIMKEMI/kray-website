@@ -164,9 +164,6 @@ a{color:inherit}
   border-radius:7px;cursor:pointer;color:var(--ink-soft);font-family:var(--sans);transition:.15s}
 .range button.active{background:#fff;color:var(--ink);font-weight:700;box-shadow:0 1px 3px rgba(0,0,0,.15)}
 .spark{width:100%;height:148px;display:block}
-.insight{margin-top:16px;padding:16px 18px;border-radius:var(--r-sm);background:var(--bg-alt);font-size:var(--fs-sm);line-height:1.6}
-.insight b{font-size:var(--fs-2xs);font-weight:700;color:var(--blue);display:block;margin-bottom:4px;
-  text-transform:uppercase;letter-spacing:.03em}
 .link{font-size:var(--fs-sm);text-decoration:none;display:inline-flex;align-items:center;gap:3px;margin-top:14px;
   color:var(--blue);font-weight:600}
 .empty{color:var(--ink-faint);font-size:var(--fs-sm);padding:24px 0}
@@ -272,12 +269,12 @@ footer{margin:64px 0 44px;padding-top:22px;border-top:1px solid var(--line);
   </section>
 
   <section class="section">
-    <div class="sectionhead"><h2>Ranking Trend</h2><span class="small">최대 1년 · X축 날짜 · Y축 순위</span></div>
+    <div class="sectionhead"><h2>Ranking Trend</h2></div>
     <div class="card chartbox"><svg id="overview" class="overview"></svg><div id="legend" class="legend"></div></div>
   </section>
 
   <section class="section">
-    <div class="sectionhead"><h2>Rakuten Watchlist Detail</h2><span class="small">7일 · 30일 · 90일 · 1년</span></div>
+    <div class="sectionhead"><h2>Rakuten Watchlist Detail</h2></div>
     <div class="watchgrid" id="watchGrid"></div>
     <div class="historymeta">※ rank_snapshots는 삭제하지 않고 계속 누적합니다. 웹 API에는 최대 최근 365일을 전달합니다.</div>
   </section>
@@ -340,7 +337,9 @@ function pack(x,n){
 }
 
 let sparkId=0;
-function spark(svg,v,d){
+const trendColor={up:'#1a7f37',down:'#d70015',flat:'#86868b'};
+function spark(svg,v,d,state){
+  const color=trendColor[state]||trendColor.flat;
   const a=v.map((z,i)=>({v:z==null?null:+z,i})).filter(o=>Number.isFinite(o.v));
   svg.setAttribute('viewBox','0 0 500 148');
   if(a.length<2){svg.innerHTML='<text x="250" y="74" text-anchor="middle" fill="#a1a1a6" font-size="12">데이터가 더 쌓이면 그래프가 표시됩니다.</text>';return}
@@ -351,12 +350,12 @@ function spark(svg,v,d){
   const line=p.map(o=>`${o.x},${o.y}`).join(' ');
   const area=`${L},${H-B} ${line} ${p[p.length-1].x},${H-B}`;
   svg.innerHTML=`<defs><linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#0071e3" stop-opacity=".22"/>
-      <stop offset="100%" stop-color="#0071e3" stop-opacity="0"/>
+      <stop offset="0%" stop-color="${color}" stop-opacity=".20"/>
+      <stop offset="100%" stop-color="${color}" stop-opacity="0"/>
     </linearGradient></defs>
     <polygon points="${area}" fill="url(#${id})"/>
-    <polyline fill="none" stroke="#0071e3" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points="${line}"/>
-    <circle cx="${p[p.length-1].x}" cy="${p[p.length-1].y}" r="3.5" fill="#0071e3"/>
+    <polyline fill="none" stroke="${color}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points="${line}"/>
+    <circle cx="${p[p.length-1].x}" cy="${p[p.length-1].y}" r="3.5" fill="${color}"/>
     <text x="${L}" y="${H-4}" font-size="10" fill="#a1a1a6">${fd(d[a[0].i])}</text>
     <text x="${W-R}" y="${H-4}" text-anchor="end" font-size="10" fill="#a1a1a6">${fd(d[a[a.length-1].i])}</text>`;
 }
@@ -411,18 +410,17 @@ function watch(w){
         <div class="range"><button class="active" data-r="7">7일</button><button data-r="30">30일</button><button data-r="90">90일</button><button data-r="365">1년</button></div>
       </div>
       <svg class="spark" style="margin-top:10px"></svg>
-      <div class="insight"><b>전략 메모</b>${esc(s[2])}</div>
       ${x.itemUrl?`<a class="link" href="${esc(x.itemUrl)}" target="_blank" rel="noopener">Rakuten 상품 보기 →</a>`:''}
     </div></article>`;
   }).join('');
   [...document.querySelectorAll('.product')].forEach(c=>{
-    const x=w[+c.dataset.i]; let p=pack(x,7);
-    spark(c.querySelector('.spark'),p.x,p.d);
+    const x=w[+c.dataset.i]; const st=sig(x)[1]; let p=pack(x,7);
+    spark(c.querySelector('.spark'),p.x,p.d,st);
     c.querySelectorAll('[data-r]').forEach(b=>b.onclick=()=>{
       c.querySelectorAll('[data-r]').forEach(z=>z.classList.remove('active'));
       b.classList.add('active');
       p=pack(x,+b.dataset.r);
-      spark(c.querySelector('.spark'),p.x,p.d);
+      spark(c.querySelector('.spark'),p.x,p.d,st);
     });
   });
 }
