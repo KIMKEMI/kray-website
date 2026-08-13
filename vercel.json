@@ -14,7 +14,7 @@
           "value": "news.krayinc.com"
         }
       ],
-      "dest": "/news/index.html"
+      "dest": "/news/v2.html"
     },
     {
       "handle": "filesystem"
