@@ -136,7 +136,7 @@
       return;
     }
 
-    root.innerHTML='<div class="ca-state">동일 카테고리 1~3위와 비교 분석 중…</div>';
+    root.innerHTML='<div class="ca-state">동일 카테고리 상위권과 비교 분석 중…</div>';
     var u='/api/competitor-analysis?genreId='+encodeURIComponent(g)+'&myRank='+encodeURIComponent(o.rank||'')+'&itemUrl='+encodeURIComponent(itemUrl(o));
     fetch(u,{cache:'no-store'}).then(function(r){return r.json()}).then(function(d){
       if(!d||!d.ok)throw new Error('bad response');
