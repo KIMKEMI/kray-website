@@ -32,7 +32,9 @@
       +'.ca-wrap{flex:1;min-width:0}'
       +'.ca-state{padding:20px;color:var(--ca-ink-soft);font-size:14px;text-align:center;'
       +'border:1px dashed var(--ca-line);border-radius:16px}'
-      +'.ca-table{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}'
+      +'.ca-table{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}'
+      +'.ca-catline{font-size:13px;color:var(--ca-ink-soft);margin-bottom:12px}'
+      +'.ca-catline b{color:var(--ca-ink);font-weight:700}'
       +'.ca-card{padding:14px;border-radius:16px;background:var(--ca-card);border:1px solid var(--ca-line);'
       +'box-shadow:0 1px 2px rgba(0,0,0,.04),0 8px 18px rgba(0,0,0,.03);min-width:0}'
       +'.ca-card.mine{background:var(--ca-blue-tint);border-color:rgba(0,113,227,.15)}'
@@ -57,7 +59,7 @@
       +'@media(max-width:720px){.ca-layout{flex-direction:column}'
       +'.ca-rail{flex-direction:row;width:auto;overflow-x:auto;padding-bottom:4px}'
       +'.ca-thumbbtn{flex-shrink:0}'
-      +'.ca-table{grid-template-columns:1fr 1fr}.ca-insights{grid-template-columns:1fr}}';
+      +'.ca-table{grid-template-columns:repeat(auto-fill,minmax(120px,1fr))}.ca-insights{grid-template-columns:1fr}}';
     document.head.appendChild(s);
   }
 
@@ -67,8 +69,12 @@
   function draw(root,data,o){
     if(!data||!data.ok){root.innerHTML='<div class="ca-state">경쟁 상품 데이터를 불러오지 못했습니다.</div>';return}
     var top=data.top||[],mine=data.mine||{title:o.label,imageUrl:o.imageUrl};
-    var h='<div class="ca-table">'+card(mine,'내 상품 · '+(o.rank==null?'순위 미확인':o.rank+'위'),true);
-    for(var i=0;i<3;i++)h+=card(top[i],(i+1)+'위',false);
+    var n=Math.min(10,top.length);
+    var cat=o.categoryPath||o.category||'';
+    var h='';
+    if(cat)h+='<div class="ca-catline">카테고리 · <b>'+esc(cat)+'</b></div>';
+    h+='<div class="ca-table">'+card(mine,'내 상품 · '+(o.rank==null?'순위 미확인':o.rank+'위'),true);
+    for(var i=0;i<n;i++)h+=card(top[i],(i+1)+'위',false);
     h+='</div>';
     var ins=data.insights||{};
     h+='<div class="ca-insights"><div class="ca-box"><h3>🔎 상위권과의 차이</h3><ul>'+((ins.observations||[]).map(function(v){return'<li>'+esc(v)+'</li>'}).join('')||'<li>비교 가능한 공개 데이터가 충분하지 않습니다.</li>')+'</ul></div><div class="ca-box ca-actions"><h3>🚀 순위 상승 액션</h3><ul>'+((ins.actions||[]).map(function(v){return'<li>'+esc(v)+'</li>'}).join(''))+'</ul></div></div><div class="ca-note">'+esc(ins.note||'')+'</div>';
@@ -151,7 +157,7 @@
     var sec=document.createElement('section');
     sec.className='section';
     sec.id='competitorSection';
-    sec.innerHTML='<div class="sectionhead"><h2>Top Competitor Analysis</h2><span class="small">동일 카테고리 1~3위 비교</span></div>'
+    sec.innerHTML='<div class="sectionhead"><h2>Top Competitor Analysis</h2><span class="small">동일 카테고리 1~10위 비교</span></div>'
       +'<div class="ca-layout"><div class="ca-rail" id="caRail"></div><div class="ca-wrap" id="caRoot"></div></div>';
     anchor.closest('.section').insertAdjacentElement('afterend',sec);
     var rail=sec.querySelector('#caRail'),root=sec.querySelector('#caRoot');
