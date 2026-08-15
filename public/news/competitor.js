@@ -78,7 +78,8 @@
     h+='</div>';
     var ins=data.insights||{};
     h+='<div class="ca-insights"><div class="ca-box"><h3>🔎 상위권과의 차이</h3><ul>'+((ins.observations||[]).map(function(v){return'<li>'+esc(v)+'</li>'}).join('')||'<li>비교 가능한 공개 데이터가 충분하지 않습니다.</li>')+'</ul></div><div class="ca-box ca-actions"><h3>🚀 순위 상승 액션</h3><ul>'+((ins.actions||[]).map(function(v){return'<li>'+esc(v)+'</li>'}).join(''))+'</ul></div></div><div class="ca-note">'+esc(ins.note||'')+'</div>';
-    if(data.source)h+='<div class="ca-source"><a href="'+esc(data.source)+'" target="_blank" rel="noopener">Rakuten 카테고리 랭킹 원본 보기 ↗</a></div>';
+    var g=genre(o);
+    if(g)h+='<div class="ca-source"><a href="https://ranking.rakuten.co.jp/genre/'+encodeURIComponent(g)+'/" target="_blank" rel="noopener">Rakuten 공식 랭킹 페이지에서 직접 확인 ↗</a></div>';
     root.innerHTML=h;
   }
 
