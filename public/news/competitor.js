@@ -35,6 +35,7 @@
       +'.ca-table{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}'
       +'.ca-catline{font-size:13px;color:var(--ca-ink-soft);margin-bottom:12px}'
       +'.ca-catline b{color:var(--ca-ink);font-weight:700}'
+      +'.ca-catline a{color:var(--ca-blue);font-weight:500;text-decoration:none}'
       +'.ca-card{padding:14px;border-radius:16px;background:var(--ca-card);border:1px solid var(--ca-line);'
       +'box-shadow:0 1px 2px rgba(0,0,0,.04),0 8px 18px rgba(0,0,0,.03);min-width:0}'
       +'.ca-card.mine{background:var(--ca-blue-tint);border-color:rgba(0,113,227,.15)}'
@@ -71,15 +72,20 @@
     var top=data.top||[],mine=data.mine||{title:o.label,imageUrl:o.imageUrl};
     var n=Math.min(10,top.length);
     var cat=o.categoryPath||o.category||'';
+    var g=genre(o);
     var h='';
-    if(cat)h+='<div class="ca-catline">카테고리 · <b>'+esc(cat)+'</b></div>';
+    if(cat||g){
+      h+='<div class="ca-catline">';
+      if(cat)h+='카테고리 · <b>'+esc(cat)+'</b>';
+      if(g)h+=(cat?'  ·  ':'')+'<a href="https://ranking.rakuten.co.jp/daily/'+encodeURIComponent(g)+'/" target="_blank" rel="noopener">Rakuten 공식 랭킹 페이지 보기 ↗</a>';
+      h+='</div>';
+    }
     h+='<div class="ca-table">'+card(mine,'내 상품 · '+(o.rank==null?'순위 미확인':o.rank+'위'),true);
     for(var i=0;i<n;i++)h+=card(top[i],(i+1)+'위',false);
     h+='</div>';
     var ins=data.insights||{};
     h+='<div class="ca-insights"><div class="ca-box"><h3>🔎 상위권과의 차이</h3><ul>'+((ins.observations||[]).map(function(v){return'<li>'+esc(v)+'</li>'}).join('')||'<li>비교 가능한 공개 데이터가 충분하지 않습니다.</li>')+'</ul></div><div class="ca-box ca-actions"><h3>🚀 순위 상승 액션</h3><ul>'+((ins.actions||[]).map(function(v){return'<li>'+esc(v)+'</li>'}).join(''))+'</ul></div></div><div class="ca-note">'+esc(ins.note||'')+'</div>';
-    var g=genre(o);
-    if(g)h+='<div class="ca-source"><a href="https://ranking.rakuten.co.jp/genre/'+encodeURIComponent(g)+'/" target="_blank" rel="noopener">Rakuten 공식 랭킹 페이지에서 직접 확인 ↗</a></div>';
+    if(g)h+='<div class="ca-source"><a href="https://ranking.rakuten.co.jp/daily/'+encodeURIComponent(g)+'/" target="_blank" rel="noopener">Rakuten 공식 랭킹 페이지에서 직접 확인 ↗</a></div>';
     root.innerHTML=h;
   }
 
@@ -153,7 +159,7 @@
 
   function init(w){
     if(!Array.isArray(w)||!w.length)return;
-    var anchor=document.getElementById('watchGrid');
+    var anchor=document.getElementById('execGrid');
     if(!anchor||document.getElementById('competitorSection'))return;
     var sec=document.createElement('section');
     sec.className='section';
