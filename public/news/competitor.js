@@ -20,6 +20,7 @@
       +'--ca-bg-alt:#f5f5f7;--ca-card:#fff;--ca-line:rgba(0,0,0,.06);--ca-green:#1a7f37;--ca-green-tint:#edf9f0;'
       +'--ca-red:#d70015;--ca-blue-tint:#f0f6ff}'
       +'.ca-err{color:var(--ca-red);font-weight:700}'
+      +'.ca-ph{color:var(--ca-ink-faint);font-weight:500}'
       +'.ca-layout{display:flex;gap:20px;align-items:flex-start;margin-top:4px}'
       +'.ca-rail{display:flex;flex-direction:column;gap:8px;width:64px;flex-shrink:0}'
       +'.ca-thumbbtn{width:56px;height:56px;border-radius:14px;overflow:hidden;padding:0;cursor:pointer;'
@@ -67,22 +68,20 @@
 
   function flags(f){if(!f)return'';var a=[];if(f.coupon)a.push('쿠폰/할인');if(f.freeShipping)a.push('무료배송');if(f.points)a.push('포인트');if(f.socialProof)a.push('인기/수상');if(f.urgency)a.push('한정/즉납');return a.map(function(v){return'<span class="ca-flag">'+v+'</span>'}).join('')}
   function metricPrice(p,isMine){
-    if(isMine) return '<span class="ca-err">error</span>';
-    return p.price==null ? '<span class="ca-err">error</span>' : yen(p.price);
+    if(p.price==null) return isMine ? '<span class="ca-ph">—</span>' : '<span class="ca-err">error</span>';
+    return yen(p.price);
   }
-  function metricReviews(p,isMine){
-    if(isMine) return '<span class="ca-err">error</span>';
+  function metricReviews(p){
     return p.reviews==null ? '0건' : Number(p.reviews).toLocaleString()+'건';
   }
-  function metricPoint(p,isMine){
-    if(isMine) return '<span class="ca-err">error</span>';
+  function metricPoint(p){
     return p.pointRate==null ? '0%' : p.pointRate+(p.pointRate>20?'배':'%');
   }
-  function card(p,label,mine){p=p||{};return'<div class="ca-card '+(mine?'mine':'')+'"><div class="ca-rank">'+esc(label)+'</div>'+thumb(p.imageUrl,'ca-thumb')+'<div class="ca-name" title="'+esc(p.title||'상품 정보 확인 중')+'">'+esc(trunc(p.title||'상품 정보 미확인',44))+'</div><div class="ca-metrics"><div>가격 <b>'+metricPrice(p,mine)+'</b></div><div>리뷰 <b>'+metricReviews(p,mine)+'</b></div><div>포인트 <b>'+metricPoint(p,mine)+'</b></div></div><div class="ca-flags">'+flags(p.flags)+'</div></div>'}
+  function card(p,label,mine){p=p||{};return'<div class="ca-card '+(mine?'mine':'')+'"><div class="ca-rank">'+esc(label)+'</div>'+thumb(p.imageUrl,'ca-thumb')+'<div class="ca-name" title="'+esc(p.title||'상품 정보 확인 중')+'">'+esc(trunc(p.title||'상품 정보 미확인',44))+'</div><div class="ca-metrics"><div>가격 <b>'+metricPrice(p,mine)+'</b></div><div>리뷰 <b>'+metricReviews(p)+'</b></div><div>포인트 <b>'+metricPoint(p)+'</b></div></div><div class="ca-flags">'+flags(p.flags)+'</div></div>'}
 
   function draw(root,data,o){
     if(!data||!data.ok){root.innerHTML='<div class="ca-state">경쟁 상품 데이터를 불러오지 못했습니다.</div>';return}
-    var top=data.top||[],mine=data.mine||{title:o.label,imageUrl:o.imageUrl};
+    var top=data.top||[],mine=data.mine||{title:o.label,imageUrl:o.imageUrl,price:o.price,reviews:o.reviewCount,pointRate:o.pointRate};
     var n=Math.min(10,top.length);
     var cat=o.categoryPath||o.category||'';
     var g=genre(o);
