@@ -93,7 +93,7 @@
       h+='</div>';
     }
     h+='<div class="ca-table">'+card(mine,'내 상품 · '+(o.rank==null?'순위 미확인':o.rank+'위'),true);
-    for(var i=0;i<n;i++)h+=card(top[i],(i+1)+'위',false);
+    for(var i=0;i<n;i++){var rk=(top[i]&&top[i].rank!=null)?top[i].rank:(i+1);h+=card(top[i],rk+'위',false);}
     h+='</div>';
     var ins=data.insights||{};
     h+='<div class="ca-insights"><div class="ca-box"><h3>🔎 상위권과의 차이</h3><ul>'+((ins.observations||[]).map(function(v){return'<li>'+esc(v)+'</li>'}).join('')||'<li>비교 가능한 공개 데이터가 충분하지 않습니다.</li>')+'</ul></div><div class="ca-box ca-actions"><h3>🚀 순위 상승 액션</h3><ul>'+((ins.actions||[]).map(function(v){return'<li>'+esc(v)+'</li>'}).join(''))+'</ul></div></div><div class="ca-note">'+esc(ins.note||'')+'</div>';
