@@ -18,7 +18,8 @@
     s.textContent=
       ':root{--ca-blue:#0071e3;--ca-ink:#1d1d1f;--ca-ink-soft:#6e6e73;--ca-ink-faint:#a1a1a6;'
       +'--ca-bg-alt:#f5f5f7;--ca-card:#fff;--ca-line:rgba(0,0,0,.06);--ca-green:#1a7f37;--ca-green-tint:#edf9f0;'
-      +'--ca-blue-tint:#f0f6ff}'
+      +'--ca-red:#d70015;--ca-blue-tint:#f0f6ff}'
+      +'.ca-err{color:var(--ca-red);font-weight:700}'
       +'.ca-layout{display:flex;gap:20px;align-items:flex-start;margin-top:4px}'
       +'.ca-rail{display:flex;flex-direction:column;gap:8px;width:64px;flex-shrink:0}'
       +'.ca-thumbbtn{width:56px;height:56px;border-radius:14px;overflow:hidden;padding:0;cursor:pointer;'
@@ -65,7 +66,19 @@
   }
 
   function flags(f){if(!f)return'';var a=[];if(f.coupon)a.push('쿠폰/할인');if(f.freeShipping)a.push('무료배송');if(f.points)a.push('포인트');if(f.socialProof)a.push('인기/수상');if(f.urgency)a.push('한정/즉납');return a.map(function(v){return'<span class="ca-flag">'+v+'</span>'}).join('')}
-  function card(p,label,mine){p=p||{};return'<div class="ca-card '+(mine?'mine':'')+'"><div class="ca-rank">'+esc(label)+'</div>'+thumb(p.imageUrl,'ca-thumb')+'<div class="ca-name" title="'+esc(p.title||'상품 정보 확인 중')+'">'+esc(trunc(p.title||'상품 정보 미확인',44))+'</div><div class="ca-metrics"><div>가격 <b>'+yen(p.price)+'</b></div><div>리뷰 <b>'+(p.reviews==null?'—':Number(p.reviews).toLocaleString()+'건')+'</b></div><div>포인트 <b>'+(p.pointRate==null?'—':p.pointRate+(p.pointRate>20?'배':'%'))+'</b></div></div><div class="ca-flags">'+flags(p.flags)+'</div></div>'}
+  function metricPrice(p,isMine){
+    if(isMine) return '<span class="ca-err">error</span>';
+    return p.price==null ? '<span class="ca-err">error</span>' : yen(p.price);
+  }
+  function metricReviews(p,isMine){
+    if(isMine) return '<span class="ca-err">error</span>';
+    return p.reviews==null ? '0건' : Number(p.reviews).toLocaleString()+'건';
+  }
+  function metricPoint(p,isMine){
+    if(isMine) return '<span class="ca-err">error</span>';
+    return p.pointRate==null ? '0%' : p.pointRate+(p.pointRate>20?'배':'%');
+  }
+  function card(p,label,mine){p=p||{};return'<div class="ca-card '+(mine?'mine':'')+'"><div class="ca-rank">'+esc(label)+'</div>'+thumb(p.imageUrl,'ca-thumb')+'<div class="ca-name" title="'+esc(p.title||'상품 정보 확인 중')+'">'+esc(trunc(p.title||'상품 정보 미확인',44))+'</div><div class="ca-metrics"><div>가격 <b>'+metricPrice(p,mine)+'</b></div><div>리뷰 <b>'+metricReviews(p,mine)+'</b></div><div>포인트 <b>'+metricPoint(p,mine)+'</b></div></div><div class="ca-flags">'+flags(p.flags)+'</div></div>'}
 
   function draw(root,data,o){
     if(!data||!data.ok){root.innerHTML='<div class="ca-state">경쟁 상품 데이터를 불러오지 못했습니다.</div>';return}
