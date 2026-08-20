@@ -1,5 +1,13 @@
 const GAS_DASHBOARD_URL = 'https://script.google.com/macros/s/AKfycbyth6DLCBAMXKoENL4gk5z7yxt36Uwg8rN44QsrQpwnn-Bc7Y1hKUuMmzqXXNjG0_0K/exec';
 
+// rakuten-ranking.js가 내부적으로 15초 타임아웃 + 1회 재시도까지 하므로
+// 그보다 넉넉하게 잡아야 정상적으로 느린 응답도 기다려줄 수 있다.
+export const maxDuration = 40;
+
+export const config = {
+  maxDuration: 40,
+};
+
 function flagsFromText(text = '') {
   const t = String(text);
   return {
@@ -47,7 +55,7 @@ export default async function handler(req, res) {
     upstream.searchParams.set('_', Date.now().toString());
 
     const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), 12000);
+    const timer = setTimeout(() => controller.abort(), 35000);
     let response;
     try {
       response = await fetch(upstream, {
