@@ -43,6 +43,7 @@ export default async function handler(req, res) {
 
   const genreId = String(req.query.genreId || '').trim();
   const myRank = String(req.query.myRank || '').trim();
+  const itemCode = String(req.query.itemCode || '').trim();
   if (!/^\d{3,10}$/.test(genreId)) {
     return res.status(400).json({ ok: false, error: 'Invalid genreId' });
   }
@@ -52,6 +53,7 @@ export default async function handler(req, res) {
     upstream.searchParams.set('action', 'competitor');
     upstream.searchParams.set('genreId', genreId);
     if (myRank) upstream.searchParams.set('myRank', myRank);
+    if (itemCode) upstream.searchParams.set('myItemCode', itemCode);
     upstream.searchParams.set('_', Date.now().toString());
 
     const controller = new AbortController();
@@ -88,13 +90,14 @@ export default async function handler(req, res) {
     }
 
     const top = Array.isArray(data.top) ? data.top.map(normalizeTop) : [];
+    const mine = data.mine ? normalizeTop(data.mine) : null;
     res.setHeader('Cache-Control', 'public, s-maxage=600, stale-while-revalidate=1800');
     return res.status(200).json({
       ok: true,
       genreId,
       source: data.source || 'Rakuten Ichiba Ranking API',
       top,
-      mine: null,
+      mine,
       insights: data.insights || { observations: [], actions: [], note: '' },
       fetchedAt: data.fetchedAt || null,
       cached: !!data.cached,
