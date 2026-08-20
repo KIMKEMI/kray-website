@@ -20,6 +20,14 @@
   --red:#d70015;
   --red-tint:#fdeeee;
   --orange:#b06400;
+  --surgeup:#a4001a;
+  --surgeup-tint:#f8d6d9;
+  --up:#e2574a;
+  --up-tint:#fdeceb;
+  --down:#3f7fbf;
+  --down-tint:#eaf2fb;
+  --surgedown:#0b3d91;
+  --surgedown-tint:#e2e9fb;
   --sans:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Helvetica Neue","Apple SD Gothic Neo","Noto Sans KR",Arial,sans-serif;
   --r-lg:28px;--r-md:20px;--r-sm:12px;
   --ease:cubic-bezier(.16,1,.3,1);
@@ -129,7 +137,7 @@ a{color:inherit}
 .execrank{font-size:var(--fs-xl);font-weight:700;margin-top:10px;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
 .execdelta{font-size:var(--fs-xs);margin-top:3px;font-weight:600}
 .execdelta span{font-weight:400;color:var(--ink-faint)}
-.up{color:var(--green)} .down{color:var(--red)} .flat{color:var(--ink-faint)}
+.surgeup{color:var(--surgeup)} .up{color:var(--up)} .down{color:var(--down)} .surgedown{color:var(--surgedown)} .stable{color:var(--green)} .outrange{color:var(--ink-faint)}
 
 /* ===== overview chart ===== */
 .chartbox{padding:24px 26px}
@@ -155,8 +163,12 @@ a{color:inherit}
 .tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:11px}
 .tag{font-size:var(--fs-xs);padding:5px 10px;border-radius:999px;background:var(--bg-alt);color:var(--ink-soft);
   display:inline-flex;align-items:center;gap:4px;font-weight:500}
-.tag.up{background:var(--green-tint);color:var(--green)}
-.tag.down{background:var(--red-tint);color:var(--red)}
+.tag.surgeup{background:var(--surgeup-tint);color:var(--surgeup);font-weight:700}
+.tag.up{background:var(--up-tint);color:var(--up)}
+.tag.down{background:var(--down-tint);color:var(--down)}
+.tag.surgedown{background:var(--surgedown-tint);color:var(--surgedown);font-weight:700}
+.tag.stable{background:var(--green-tint);color:var(--green)}
+.tag.outrange{background:var(--bg-alt);color:var(--ink-faint)}
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:16px}
 .stat{padding:11px 10px;background:var(--bg-alt);border-radius:var(--r-sm)}
 .stat span{font-size:var(--fs-2xs);color:var(--ink-faint);display:block}
@@ -254,7 +266,7 @@ footer{margin:64px 0 44px;padding-top:22px;border-top:1px solid var(--line);
   </section>
 
   <section class="section">
-    <div class="sectionhead"><h2>오늘의 AI &amp; Tech</h2><span class="small">SELECTED · 5</span></div>
+    <div class="sectionhead"><h2>오늘의 AI &amp; Tech</h2><span class="small" id="aiUpdated">업데이트 —</span></div>
     <div class="card">
       <div id="aiNews"><div class="empty">데이터 연결 중입니다.</div></div>
     </div>
@@ -267,7 +279,7 @@ footer{margin:64px 0 44px;padding-top:22px;border-top:1px solid var(--line);
   </section>
 
   <section class="section">
-    <div class="sectionhead"><h2>Executive Summary</h2><span class="small">썸네일 · 카테고리 · 현재 순위</span></div>
+    <div class="sectionhead"><h2>Executive Summary</h2><span class="small" id="execUpdated">업데이트 —</span></div>
     <div class="execgrid" id="execGrid"></div>
   </section>
 
@@ -297,12 +309,12 @@ document.getElementById('today').textContent=new Intl.DateTimeFormat('ko-KR',{da
 
 function sig(x){
   const d=x.delta==null?null:+x.delta, c=x.change7==null?null:+x.change7;
-  if(c>=20) return['급상승','up',`관측 시작 대비 ${c}계단 개선됐습니다.`];
-  if(c<=-20) return['급하락','down',`관측 시작 대비 ${Math.abs(c)}계단 하락했습니다.`];
+  if(x.rank==null) return['순위권 밖','outrange',`현재 관측 범위 내 순위가 없습니다.`];
+  if(c>=20) return['급상승','surgeup',`관측 시작 대비 ${c}계단 개선됐습니다.`];
+  if(c<=-20) return['급하락','surgedown',`관측 시작 대비 ${Math.abs(c)}계단 하락했습니다.`];
   if(d>0) return['상승','up',`전일 대비 ${d}계단 상승했습니다.`];
   if(d<0) return['하락','down',`전일 대비 ${Math.abs(d)}계단 하락했습니다.`];
-  if(x.rank==null) return['순위권 밖','flat',`현재 관측 범위 내 순위가 없습니다.`];
-  return['안정','flat',`현재 큰 변동이 없습니다.`];
+  return['안정','stable',`현재 큰 변동이 없습니다.`];
 }
 function img(url,cls){return url?`<img class="${cls}" src="${esc(url)}" alt="" loading="lazy" onerror="this.style.display='none'">`:`<div class="${cls}"></div>`}
 
@@ -340,9 +352,9 @@ function pack(x,n){
 }
 
 let sparkId=0;
-const trendColor={up:'#1a7f37',down:'#d70015',flat:'#86868b'};
+const trendColor={surgeup:'#a4001a',up:'#e2574a',down:'#3f7fbf',surgedown:'#0b3d91',stable:'#1a7f37',outrange:'#86868b'};
 function spark(svg,v,d,state){
-  const color=trendColor[state]||trendColor.flat;
+  const color=trendColor[state]||trendColor.outrange;
   const a=v.map((z,i)=>({v:z==null?null:+z,i})).filter(o=>Number.isFinite(o.v));
   svg.setAttribute('viewBox','0 0 500 148');
   if(a.length<2){svg.innerHTML='<text x="250" y="74" text-anchor="middle" fill="#a1a1a6" font-size="12">데이터가 더 쌓이면 그래프가 표시됩니다.</text>';return}
@@ -398,7 +410,7 @@ function watch(w){
           <div class="productname" title="${esc(x.label)}">${esc(name)}</div>
           <div class="category" title="${esc(x.categoryPath||x.category||'')}">${esc(cat)}</div>
         </div><div class="rank">${fr(x)}</div></div>
-        <div class="tags"><span class="tag">${esc(trunc(x.category||'',12))}</span><span class="tag ${s[1]}">${esc(s[0])}</span><span class="tag">${dt(x.delta)}</span></div>
+        <div class="tags"><span class="tag">${esc(trunc(x.category||'',12))}</span><span class="tag ${s[1]}">${esc(x.delta==null?s[0]:`${s[0]} ${dt(x.delta)}`)}</span></div>
       </div>
     </div>
     <div class="detailbody">
@@ -410,7 +422,7 @@ function watch(w){
       </div>
       <div style="display:flex;justify-content:space-between;align-items:center;margin-top:20px">
         <span style="font-size:var(--fs-xs);color:var(--ink-faint)">랭킹 추이</span>
-        <div class="range"><button class="active" data-r="7">7일</button><button data-r="30">30일</button><button data-r="90">90일</button><button data-r="365">1년</button></div>
+        <div class="range"><button class="active" data-r="7">7일</button><button data-r="30">30일</button></div>
       </div>
       <svg class="spark" style="margin-top:10px"></svg>
       ${x.itemUrl?`<a class="link" href="${esc(x.itemUrl)}" target="_blank" rel="noopener">Rakuten 상품 보기 →</a>`:''}
@@ -444,8 +456,11 @@ function render(d){
   if(a.trend){document.getElementById('trend').textContent=a.trend;document.getElementById('trendWrap').style.display='block'}
   signals(w); exec(w); overview(w); watch(w);
   const t=new Intl.DateTimeFormat('ko-KR',{hour:'2-digit',minute:'2-digit',timeZone:'Asia/Tokyo'}).format(new Date());
+  const dstamp=new Intl.DateTimeFormat('ko-KR',{month:'long',day:'numeric',timeZone:'Asia/Tokyo'}).format(new Date());
   document.getElementById('updated').textContent='최종 갱신 '+t;
   document.getElementById('foottime').textContent=t+' JST 기준';
+  document.getElementById('aiUpdated').textContent=dstamp+' 업데이트';
+  document.getElementById('execUpdated').textContent=dstamp+' 업데이트';
 }
 
 async function load(){
