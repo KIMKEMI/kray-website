@@ -178,7 +178,7 @@ a{color:inherit}
 .range button{border:0;background:transparent;padding:5px 12px;font-size:var(--fs-xs);font-weight:500;
   border-radius:7px;cursor:pointer;color:var(--ink-soft);font-family:var(--sans);transition:.15s}
 .range button.active{background:#fff;color:var(--ink);font-weight:700;box-shadow:0 1px 3px rgba(0,0,0,.15)}
-.spark{width:100%;height:110px;display:block}
+.spark{width:100%;height:200px;display:block}
 .link{font-size:var(--fs-sm);text-decoration:none;display:inline-flex;align-items:center;gap:3px;margin-top:14px;
   color:var(--blue);font-weight:600}
 .empty{color:var(--ink-faint);font-size:var(--fs-sm);padding:24px 0}
@@ -354,25 +354,30 @@ function pack(x,n){
 let sparkId=0;
 const trendColor={surgeup:'#a4001a',up:'#e2574a',down:'#3f7fbf',surgedown:'#0b3d91',stable:'#1a7f37',outrange:'#86868b'};
 function spark(svg,v,d,state){
+  /* Ranking Trend(overview) 섹션 그래프와 시각적으로 동일한 스타일을 쓴다:
+     그리드 라인 + 순위 축 라벨, 그라데이션 채우기 없는 단순 라인, 여러 지점의 날짜 라벨. */
   const color=trendColor[state]||trendColor.outrange;
   const a=v.map((z,i)=>({v:z==null?null:+z,i})).filter(o=>Number.isFinite(o.v));
-  svg.setAttribute('viewBox','0 0 500 148');
-  if(a.length<2){svg.innerHTML='<text x="250" y="74" text-anchor="middle" fill="#a1a1a6" font-size="12">데이터가 더 쌓이면 그래프가 표시됩니다.</text>';return}
-  const id='sg'+(sparkId++);
-  const W=500,H=148,L=6,R=6,T=14,B=22;
+  const W=500,H=220,L=40,R=16,T=16,B=32;
+  svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
+  if(a.length<2){svg.innerHTML='<text x="250" y="110" text-anchor="middle" fill="#a1a1a6" font-size="13">데이터가 더 쌓이면 그래프가 표시됩니다.</text>';return}
   const mn=Math.min(...a.map(o=>o.v)),mx=Math.max(...a.map(o=>o.v)),sp=Math.max(1,mx-mn);
   const p=a.map(o=>({x:L+o.i*(W-L-R)/Math.max(1,v.length-1),y:T+(o.v-mn)*(H-T-B)/sp,v:o.v,i:o.i}));
   const line=p.map(o=>`${o.x},${o.y}`).join(' ');
-  const area=`${L},${H-B} ${line} ${p[p.length-1].x},${H-B}`;
-  svg.innerHTML=`<defs><linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="${color}" stop-opacity=".20"/>
-      <stop offset="100%" stop-color="${color}" stop-opacity="0"/>
-    </linearGradient></defs>
-    <polygon points="${area}" fill="url(#${id})"/>
-    <polyline fill="none" stroke="${color}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points="${line}"/>
-    <circle cx="${p[p.length-1].x}" cy="${p[p.length-1].y}" r="3.5" fill="${color}"/>
-    <text x="${L}" y="${H-4}" font-size="10" fill="#a1a1a6">${fd(d[a[0].i])}</text>
-    <text x="${W-R}" y="${H-4}" text-anchor="end" font-size="10" fill="#a1a1a6">${fd(d[a[a.length-1].i])}</text>`;
+  let h='';
+  for(let g=0;g<4;g++){
+    const y=T+g*(H-T-B)/3, rankVal=Math.round(mn+g*sp/3);
+    h+=`<line x1="${L}" y1="${y}" x2="${W-R}" y2="${y}" stroke="#eeeef0"/><text x="0" y="${y+4}" font-size="10" fill="#a1a1a6">${rankVal}위</text>`;
+  }
+  v.forEach((_,i)=>{
+    if(i===0||i===v.length-1||i%Math.max(1,Math.floor(v.length/6))===0){
+      const x=L+i*(W-L-R)/Math.max(1,v.length-1);
+      h+=`<text x="${x}" y="${H-8}" text-anchor="middle" font-size="12" fill="#6e6e73">${fd(d[i])}</text>`;
+    }
+  });
+  h+=`<polyline fill="none" stroke="${color}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" points="${line}"/>`;
+  h+=`<circle cx="${p[p.length-1].x}" cy="${p[p.length-1].y}" r="3.5" fill="${color}"/>`;
+  svg.innerHTML=h;
 }
 
 function overview(w){
