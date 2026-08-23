@@ -32,17 +32,25 @@
   --r-lg:28px;--r-md:20px;--r-sm:12px;
   --ease:cubic-bezier(.16,1,.3,1);
 
-  /* ===== type scale — every font-size in this file references one of these ===== */
-  --fs-2xs:12px;   /* footnotes, timestamps */
-  --fs-xs:13px;    /* tags, meta labels, categories */
-  --fs-sm:14px;    /* secondary body text */
-  --fs-base:15px;  /* default body / links */
-  --fs-md:17px;    /* card & row titles */
-  --fs-lg:20px;    /* hero subhead */
-  --fs-xl:26px;    /* section headers */
-  --fs-2xl:32px;   /* prominent numerals (rank) */
-  --fs-3xl:40px;   /* hero stat numerals */
-  --fs-hero:46px;  /* hero headline */
+  /* =====================================================================
+   * type scale — every font-size in this file references one of these.
+   *
+   * Kemi 지정 4단계 기준:
+   *   최소 보조 텍스트                12px  -> --fs-2xs
+   *   일반 작은 설명/표/본문 보조      14px  -> --fs-sm
+   *   기본 본문                       16px  -> --fs-base
+   *   섹션 제목                       20px  -> --fs-xl
+   * 나머지(카드 제목, 히어로 헤드라인, 순위 숫자 등)는 위 4단계 사이/위로
+   * 전체 밸런스를 고려해 보완.
+   * ===================================================================== */
+  --fs-2xs:12px;    /* 최소 보조: 뱃지, 타임스탬프, 메타 라벨, 카테고리 */
+  --fs-sm:14px;     /* 작은 설명/표/본문 보조: 보조 문단, 통계 라벨 */
+  --fs-base:16px;   /* 기본 본문: 뉴스 본문, 링크, 기본 텍스트 */
+  --fs-md:17px;     /* 카드/행 제목 */
+  --fs-subhead:18px;/* 히어로 서브헤드 */
+  --fs-xl:20px;     /* 섹션 제목 */
+  --fs-2xl:28px;    /* 강조 숫자(순위) */
+  --fs-hero:38px;   /* 히어로 헤드라인 */
 }
 *{box-sizing:border-box}
 html{-webkit-font-smoothing:antialiased}
@@ -60,12 +68,15 @@ a{color:inherit}
   align-items:center;justify-content:space-between}
 .navbrand{display:flex;align-items:center;gap:9px}
 .navbrand img{height:18px;width:auto;display:block}
-.navtitle{font-size:var(--fs-base);font-weight:600;letter-spacing:-.01em}
-.navmeta{font-size:var(--fs-xs);color:var(--ink-soft);display:flex;align-items:center;gap:6px}
+.navtitle{font-size:var(--fs-sm);font-weight:600;letter-spacing:-.01em}
+.navright{display:flex;align-items:center;gap:14px}
+.navmeta{font-size:var(--fs-2xs);color:var(--ink-soft);display:flex;align-items:center;gap:6px}
 .navmeta .dot{color:var(--ink-faint)}
+.navcorp{font-size:var(--fs-2xs);font-weight:700;letter-spacing:.04em;color:var(--ink-soft);
+  padding:5px 12px;border:1px solid var(--line);border-radius:999px;white-space:nowrap}
 
 /* ===== hero ===== */
-.hero{position:relative;padding:72px 0 44px;overflow:hidden}
+.hero{position:relative;padding:72px 0 48px;overflow:hidden}
 .herograph{position:absolute;top:-10px;right:-40px;width:420px;height:250px;z-index:-1;
   opacity:.9;pointer-events:none}
 .herograph svg{width:100%;height:100%;display:block}
@@ -81,22 +92,28 @@ a{color:inherit}
 }
 @keyframes hgPing{0%{transform:translate(-50%,-50%) scale(1);opacity:.55}100%{transform:translate(-50%,-50%) scale(3.2);opacity:0}}
 @keyframes hgBreathe{0%,100%{opacity:.55}50%{opacity:1}}
-.eyebrow{font-size:var(--fs-xs);font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--blue);margin:0 0 14px}
-.hero h1{font-size:var(--fs-hero);font-weight:700;letter-spacing:-.03em;line-height:1.08;margin:0;max-width:16ch}
-.herosub{font-size:var(--fs-lg);color:var(--ink-soft);margin:16px 0 0;max-width:46ch;line-height:1.55}
-.herostats{display:flex;margin-top:46px;border-top:1px solid var(--line);padding-top:26px;gap:0}
-.herostat{flex:1;padding-right:20px;border-right:1px solid var(--line)}
-.herostat:last-child{border-right:0;padding-right:0}
-.herostat b{display:block;font-size:var(--fs-3xl);font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
-.herostat span{display:block;margin-top:5px;font-size:var(--fs-xs);color:var(--ink-soft)}
+.eyebrow{font-size:var(--fs-2xs);font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--blue);margin:0 0 14px}
+.hero h1{font-size:var(--fs-hero);font-weight:700;letter-spacing:-.03em;line-height:1.1;margin:0;max-width:16ch}
+.herosub{font-size:var(--fs-subhead);color:var(--ink-soft);margin:16px 0 0;max-width:46ch;line-height:1.55}
 
 /* ===== sections ===== */
 .section{margin:56px 0}
-.sectionhead{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:20px}
+.sectionhead{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:20px;flex-wrap:wrap}
 .sectionhead h2{font-size:var(--fs-xl);font-weight:700;letter-spacing:-.02em;margin:0}
-.sectionhead .small{font-size:var(--fs-xs);color:var(--ink-faint);font-weight:500}
+.sectionhead .small{font-size:var(--fs-2xs);color:var(--ink-faint);font-weight:500}
+.sectiontools{display:flex;align-items:center;gap:10px;margin-left:auto}
 .card{background:var(--card);border-radius:var(--r-lg);border:1px solid rgba(0,0,0,.05);
   box-shadow:0 1px 2px rgba(0,0,0,.04),0 12px 28px rgba(0,0,0,.035);padding:6px 26px}
+
+/* ===== buttons ===== */
+.ghostbtn{font-size:var(--fs-2xs);font-weight:600;border:1px solid var(--line);background:var(--card);
+  border-radius:999px;padding:7px 14px;cursor:pointer;color:var(--blue);font-family:var(--sans);transition:.15s}
+.ghostbtn:hover{background:var(--blue-tint);border-color:rgba(0,113,227,.25)}
+.ghostbtn:disabled{opacity:.5;cursor:default}
+.primarybtn{font-size:var(--fs-sm);font-weight:600;border:0;background:var(--blue);color:#fff;
+  border-radius:999px;padding:9px 18px;cursor:pointer;font-family:var(--sans);transition:.15s}
+.primarybtn:hover{background:#0064cc}
+.primarybtn:disabled{opacity:.5;cursor:default}
 
 /* ===== ai news ===== */
 .newsrow{display:grid;grid-template-columns:26px 1fr;gap:16px;padding:20px 0;border-top:1px solid var(--line)}
@@ -105,45 +122,52 @@ a{color:inherit}
   align-items:center;justify-content:center;font-size:var(--fs-2xs);font-weight:700;color:var(--ink-soft);margin-top:2px}
 .newstitle{font-size:var(--fs-md);font-weight:600;letter-spacing:-.01em;line-height:1.4}
 .newssummary{font-size:var(--fs-sm);color:var(--ink-soft);line-height:1.6;margin-top:6px}
-.trend{margin-top:4px;padding:20px 24px;background:var(--blue-tint);border-radius:var(--r-md);
-  display:flex;gap:14px;align-items:flex-start}
-.trend b{font-size:var(--fs-xs);font-weight:700;color:var(--blue);white-space:nowrap;padding-top:2px;letter-spacing:-.01em}
-.trend div{font-size:var(--fs-base);line-height:1.6;color:var(--ink)}
 
-/* ===== signals ===== */
-.signals{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.signal{background:var(--card);border-radius:var(--r-lg);padding:24px;border:1px solid rgba(0,0,0,.05);
-  box-shadow:0 1px 2px rgba(0,0,0,.04),0 10px 24px rgba(0,0,0,.035);transition:transform .35s var(--ease),box-shadow .35s var(--ease)}
-.signal:hover{transform:translateY(-3px);box-shadow:0 4px 8px rgba(0,0,0,.05),0 20px 34px rgba(0,0,0,.06)}
-.stag{display:inline-block;font-size:var(--fs-2xs);font-weight:700;letter-spacing:.04em;text-transform:uppercase;
-  padding:4px 10px;border-radius:999px}
-.stag.up{background:var(--green-tint);color:var(--green)}
-.stag.down{background:var(--red-tint);color:var(--red)}
-.stag.flat{background:var(--bg-alt);color:var(--ink-soft)}.stag.warn{background:var(--orange-tint);color:var(--orange)}
-.signal b{display:block;font-size:var(--fs-md);font-weight:700;margin:13px 0 6px;letter-spacing:-.01em;line-height:1.35}
-.signal p{margin:0;color:var(--ink-soft);font-size:var(--fs-sm);line-height:1.6}
-
-/* ===== executive grid ===== */
+/* ===== executive grid (Executive Summary + Top Competitor Analysis 통합) ===== */
 .execgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
-.execcard{border-radius:var(--r-md);overflow:hidden;background:var(--card);min-width:0;
+.execcard{position:relative;border-radius:var(--r-md);overflow:hidden;background:var(--card);min-width:0;
   border:1px solid rgba(0,0,0,.05);box-shadow:0 1px 2px rgba(0,0,0,.04),0 8px 18px rgba(0,0,0,.03);
-  transition:transform .35s var(--ease),box-shadow .35s var(--ease)}
+  transition:transform .35s var(--ease),box-shadow .35s var(--ease),border-color .2s var(--ease);cursor:pointer}
 .execcard:hover{transform:translateY(-4px) scale(1.015);box-shadow:0 6px 14px rgba(0,0,0,.06),0 22px 34px rgba(0,0,0,.07)}
+.execcard.active{border-color:var(--blue);box-shadow:0 0 0 2px rgba(0,113,227,.25),0 10px 22px rgba(0,0,0,.06)}
+.execcard.mine{border-color:rgba(0,113,227,.3);background:var(--blue-tint)}
+.execcard.static{cursor:default}
 .execthumb{width:100%;aspect-ratio:1/1;object-fit:cover;background:var(--bg-alt);display:block}
 .execbody{padding:13px 14px 15px}
 .execname{font-size:var(--fs-sm);font-weight:600;line-height:1.4;height:2.8em;overflow:hidden;
   display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;letter-spacing:-.005em}
 .execcat{font-size:var(--fs-2xs);color:var(--ink-faint);margin-top:6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .execrank{font-size:var(--fs-xl);font-weight:700;margin-top:10px;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
-.execdelta{font-size:var(--fs-xs);margin-top:3px;font-weight:600}
+.execdelta{font-size:var(--fs-2xs);margin-top:3px;font-weight:600}
 .execdelta span{font-weight:400;color:var(--ink-faint)}
+.execremove{position:absolute;top:8px;right:8px;width:24px;height:24px;border-radius:50%;border:0;
+  background:rgba(29,29,31,.55);color:#fff;font-size:15px;line-height:1;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .15s;z-index:2}
+.execcard:hover .execremove{opacity:1}
+.execremove:hover{background:var(--red)}
+.execaddcard{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
+  min-height:100%;border:1.5px dashed var(--line);border-radius:var(--r-md);background:transparent;
+  color:var(--ink-soft);cursor:pointer;font-family:var(--sans);font-size:var(--fs-sm);font-weight:600;
+  padding:20px 10px;transition:.15s}
+.execaddcard:hover{border-color:var(--blue);color:var(--blue);background:var(--blue-tint)}
+.execaddcard .plus{font-size:26px;font-weight:400;line-height:1}
 .surgeup{color:var(--surgeup)} .up{color:var(--up)} .down{color:var(--down)} .surgedown{color:var(--surgedown)} .stable{color:var(--green)} .outrange{color:var(--ink-faint)} .warn{color:var(--orange)}
+
+/* ===== competitor panel (Executive Summary 하위, 선택한 상품 기준) ===== */
+.competitorpanel{margin-top:28px;padding-top:24px;border-top:1px solid var(--line)}
+.competitorhead{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px;flex-wrap:wrap}
+.competitorlabel{font-size:var(--fs-sm);color:var(--ink-soft)}
+.competitorlabel b{color:var(--ink);font-weight:700}
+.competitorlabel a{color:var(--blue);font-weight:500;text-decoration:none}
+.competitorstate{padding:20px;color:var(--ink-soft);font-size:var(--fs-sm);text-align:center;
+  border:1px dashed var(--line);border-radius:16px}
+.competitornote{font-size:var(--fs-2xs);color:var(--ink-faint);margin-top:12px;line-height:1.5}
 
 /* ===== overview chart ===== */
 .chartbox{padding:24px 26px}
 .overview{width:100%;height:320px;display:block}
 .legend{display:flex;gap:8px 20px;flex-wrap:wrap;margin-top:16px;padding-top:16px;border-top:1px solid var(--line)}
-.legenditem{font-size:var(--fs-xs);color:var(--ink-soft);display:flex;align-items:center;gap:6px}
+.legenditem{font-size:var(--fs-2xs);color:var(--ink-soft);display:flex;align-items:center;gap:6px}
 .legenditem::before{content:'';width:9px;height:9px;border-radius:50%;background:var(--dot,var(--ink));display:inline-block}
 
 /* ===== watchlist detail ===== */
@@ -156,12 +180,12 @@ a{color:inherit}
 .producttop{display:flex;justify-content:space-between;gap:10px;min-width:0}
 .productname{font-size:var(--fs-md);font-weight:700;line-height:1.4;letter-spacing:-.01em;
   min-width:0;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;height:2.8em}
-.category{font-size:var(--fs-xs);color:var(--ink-faint);line-height:1.5;margin-top:5px;
+.category{font-size:var(--fs-2xs);color:var(--ink-faint);line-height:1.5;margin-top:5px;
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .rank{font-size:var(--fs-2xl);font-weight:700;white-space:nowrap;letter-spacing:-.02em;
   font-variant-numeric:tabular-nums;flex-shrink:0}
 .tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:11px}
-.tag{font-size:var(--fs-xs);padding:5px 10px;border-radius:999px;background:var(--bg-alt);color:var(--ink-soft);
+.tag{font-size:var(--fs-2xs);padding:5px 10px;border-radius:999px;background:var(--bg-alt);color:var(--ink-soft);
   display:inline-flex;align-items:center;gap:4px;font-weight:500}
 .tag.surgeup{background:var(--surgeup-tint);color:var(--surgeup);font-weight:700}
 .tag.up{background:var(--up-tint);color:var(--up)}
@@ -175,7 +199,7 @@ a{color:inherit}
 .stat b{font-size:var(--fs-base);display:block;margin-top:4px;font-weight:700;letter-spacing:-.01em}
 .detailbody{padding:14px 24px 16px;margin-top:auto}
 .range{display:inline-flex;background:var(--bg-alt);border-radius:9px;padding:2px;gap:2px}
-.range button{border:0;background:transparent;padding:5px 12px;font-size:var(--fs-xs);font-weight:500;
+.range button{border:0;background:transparent;padding:5px 12px;font-size:var(--fs-2xs);font-weight:500;
   border-radius:7px;cursor:pointer;color:var(--ink-soft);font-family:var(--sans);transition:.15s}
 .range button.active{background:#fff;color:var(--ink);font-weight:700;box-shadow:0 1px 3px rgba(0,0,0,.15)}
 .spark{width:100%;height:200px;display:block}
@@ -188,32 +212,42 @@ a{color:inherit}
 footer{margin:64px 0 44px;padding-top:22px;border-top:1px solid var(--line);
   font-size:var(--fs-2xs);color:var(--ink-faint);display:flex;justify-content:space-between}
 
+/* ===== modal (상품 추가 / 관리자 인증) ===== */
+.modaloverlay{position:fixed;inset:0;background:rgba(29,29,31,.4);backdrop-filter:blur(2px);
+  display:flex;align-items:center;justify-content:center;z-index:100;padding:20px}
+.modal{background:var(--card);border-radius:var(--r-lg);padding:26px 26px 22px;width:100%;max-width:420px;
+  box-shadow:0 24px 60px rgba(0,0,0,.25)}
+.modaltitle{font-size:var(--fs-xl);font-weight:700;letter-spacing:-.01em;margin-bottom:6px}
+.modaldesc{font-size:var(--fs-sm);color:var(--ink-soft);margin-bottom:18px;line-height:1.5}
+.modalfield{margin-bottom:14px}
+.modalfield label{display:block;font-size:var(--fs-2xs);font-weight:600;color:var(--ink-soft);margin-bottom:6px}
+.modalfield input{width:100%;font-size:var(--fs-base);font-family:var(--sans);padding:10px 12px;
+  border:1px solid var(--line);border-radius:10px;background:var(--bg-alt);color:var(--ink)}
+.modalfield input:focus{outline:2px solid var(--blue);outline-offset:1px;background:#fff}
+.modalerror{font-size:var(--fs-sm);color:var(--red);margin-bottom:10px;display:none}
+.modalactions{display:flex;justify-content:flex-end;gap:8px;margin-top:18px}
+
 @media(prefers-reduced-motion:no-preference){
   .section{animation:rise .6s var(--ease) both}
   .section:nth-of-type(2){animation-delay:.05s}
   .section:nth-of-type(3){animation-delay:.1s}
   .section:nth-of-type(4){animation-delay:.15s}
-  .section:nth-of-type(5){animation-delay:.2s}
   @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
 }
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 
 @media(max-width:1000px){
   .execgrid{grid-template-columns:repeat(3,1fr)}
-  .signals{grid-template-columns:1fr}
   .watchgrid{grid-template-columns:1fr}
-  .hero h1{font-size:36px;max-width:none}
+  .hero h1{font-size:32px;max-width:none}
   .herograph{width:300px;height:190px;top:-6px;right:-60px}
 }
 @media(max-width:620px){
   .wrap,.navwrap{padding-left:16px;padding-right:16px}
   .hero{padding:44px 0 32px}
-  .hero h1{font-size:30px}
-  .herosub{font-size:var(--fs-base)}
+  .hero h1{font-size:28px}
   .herograph{display:none}
-  .herostats{flex-wrap:wrap;row-gap:20px}
-  .herostat{flex:0 0 46%;border-right:0}
-  .herostat b{font-size:30px}
+  .navcorp{display:none}
   .execgrid{grid-template-columns:repeat(2,1fr)}
   .productmain{grid-template-columns:76px 1fr;padding:18px}
   .thumb{width:76px;height:76px}
@@ -223,13 +257,17 @@ footer{margin:64px 0 44px;padding-top:22px;border-top:1px solid var(--line);
   footer{flex-direction:column;gap:6px}
   .card{padding:6px 18px}
   .chartbox{padding:18px}
+  .sectiontools{margin-left:0;width:100%}
 }
 </style></head>
 <body>
 
 <header class="nav"><div class="navwrap">
   <div class="navbrand"><img src="/kray_logo.png" alt="Kray, Inc."><span class="navtitle">Daily Briefing</span></div>
-  <div class="navmeta"><span id="today"></span><span class="dot">·</span><span id="updated">불러오는 중</span></div>
+  <div class="navright">
+    <div class="navmeta"><span id="today"></span><span class="dot">·</span><span id="updated">불러오는 중</span></div>
+    <span class="navcorp">Kray, Inc.</span>
+  </div>
 </div></header>
 
 <div class="wrap">
@@ -257,30 +295,28 @@ footer{margin:64px 0 44px;padding-top:22px;border-top:1px solid var(--line);
     <p class="eyebrow">Daily Briefing</p>
     <h1>오늘, 무엇이<br>움직였을까요.</h1>
     <p class="herosub">AI·테크 산업의 흐름과 Rakuten 판매 신호를 하나의 화면에서 확인하고, 오늘 할 일을 정합니다.</p>
-    <div class="herostats">
-      <div class="herostat"><b id="newsCount">–</b><span>오늘의 AI 핵심 뉴스</span></div>
-      <div class="herostat"><b id="watchCount">–</b><span>모니터링 상품</span></div>
-      <div class="herostat"><b class="up" id="risingCount">–</b><span>전일 대비 상승</span></div>
-      <div class="herostat"><b id="avgRank">–</b><span>평균 현재 랭킹</span></div>
-    </div>
   </section>
 
   <section class="section">
-    <div class="sectionhead"><h2>오늘의 AI &amp; Tech</h2><span class="small" id="aiUpdated">업데이트 —</span></div>
+    <div class="sectionhead"><h2>오늘의 AI &amp; Tech</h2></div>
     <div class="card">
       <div id="aiNews"><div class="empty">데이터 연결 중입니다.</div></div>
     </div>
-    <div id="trendWrap" style="display:none;margin-top:16px"><div class="trend"><b>오늘의 흐름</b><div id="trend"></div></div></div>
   </section>
 
   <section class="section">
-    <div class="sectionhead"><h2>오늘의 전략 신호</h2><span class="small">현재 랭킹 데이터 기반</span></div>
-    <div class="signals" id="signals"></div>
-  </section>
-
-  <section class="section">
-    <div class="sectionhead"><h2>Executive Summary</h2><span class="small" id="execUpdated">업데이트 —</span></div>
+    <div class="sectionhead">
+      <h2>Executive Summary</h2>
+      <div class="sectiontools"><button class="ghostbtn" id="addProductBtn">+ 상품 추가</button></div>
+    </div>
     <div class="execgrid" id="execGrid"></div>
+    <div class="competitorpanel" id="competitorPanel" style="display:none">
+      <div class="competitorhead">
+        <span class="competitorlabel" id="competitorLabel">동일 카테고리 1~10위 비교</span>
+        <button class="ghostbtn" id="competitorRefresh">↻ 새로고침</button>
+      </div>
+      <div id="competitorBody"><div class="competitorstate">비교 데이터를 불러오는 중…</div></div>
+    </div>
   </section>
 
   <section class="section">
@@ -297,6 +333,42 @@ footer{margin:64px 0 44px;padding-top:22px;border-top:1px solid var(--line);
   <footer><span>Kray, Inc. — Daily Briefing</span><span id="foottime"></span></footer>
 </div>
 
+<div class="modaloverlay" id="addModal" style="display:none">
+  <div class="modal">
+    <div class="modaltitle">상품 추가</div>
+    <div class="modaldesc">Rakuten 상품 URL을 입력하면 자동으로 이름·이미지·카테고리를 조회해 Watchlist에 등록합니다. 관리자 토큰이 필요합니다.</div>
+    <div class="modalerror" id="addModalError"></div>
+    <div class="modalfield">
+      <label for="addModalUrl">Rakuten 상품 URL</label>
+      <input id="addModalUrl" type="text" placeholder="https://item.rakuten.co.jp/샵명/상품코드/">
+    </div>
+    <div class="modalfield" id="addModalTokenField">
+      <label for="addModalToken">관리자 토큰</label>
+      <input id="addModalToken" type="password" placeholder="관리자 토큰">
+    </div>
+    <div class="modalactions">
+      <button class="ghostbtn" id="addModalCancel">취소</button>
+      <button class="primarybtn" id="addModalConfirm">추가</button>
+    </div>
+  </div>
+</div>
+
+<div class="modaloverlay" id="tokenModal" style="display:none">
+  <div class="modal">
+    <div class="modaltitle">관리자 인증</div>
+    <div class="modaldesc">상품을 제거하려면 관리자 토큰이 필요합니다.</div>
+    <div class="modalerror" id="tokenModalError"></div>
+    <div class="modalfield">
+      <label for="tokenModalInput">관리자 토큰</label>
+      <input id="tokenModalInput" type="password" placeholder="관리자 토큰">
+    </div>
+    <div class="modalactions">
+      <button class="ghostbtn" id="tokenModalCancel">취소</button>
+      <button class="primarybtn" id="tokenModalConfirm">확인</button>
+    </div>
+  </div>
+</div>
+
 <script>
 const API='/api/news';
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -304,12 +376,13 @@ const fd=d=>{const p=String(d||'').split('-');return p.length===3?`${+p[1]}/${+p
 const fr=x=>x.rank!=null?`${x.rank}위`:(x.rankStatus==='out_of_range'?'1000위 밖':'순위 확인 불가');
 const dt=d=>d==null?'전일 비교 없음':`${d>0?'↑':d<0?'↓':'→'}${Math.abs(+d)}`;
 const trunc=(s,n)=>{s=String(s??'').trim();return s.length>n?s.slice(0,n).trim()+'…':s};
+const yen=n=>Number.isFinite(Number(n))?'¥'+Number(n).toLocaleString():'—';
 
 document.getElementById('today').textContent=new Intl.DateTimeFormat('ko-KR',{dateStyle:'long',timeZone:'Asia/Tokyo'}).format(new Date());
 
 function sig(x){
   const d=x.delta==null?null:+x.delta, c=x.change7==null?null:+x.change7;
-  if(x.rank==null) return x.rankStatus==='out_of_range'?['순위권 밖','outrange',`현재 관측 범위 내 순위가 없습니다.`]:['순위 확인 불가','warn',`재고 소진 또는 판매 중단 가능성이 있어 순위를 확인하지 못했습니다.`];
+  if(x.rank==null) return x.rankStatus==='out_of_range'?['순위권 밖','outrange',`현재 관측 범위 내 순위가 없습니다.`]:['순위 확인 불가','warn',`재고 소진, 판매 중단 또는 등록 직후로 아직 순위를 확인하지 못했습니다.`];
   if(c>=20) return['급상승','surgeup',`관측 시작 대비 ${c}계단 개선됐습니다.`];
   if(c<=-20) return['급하락','surgedown',`관측 시작 대비 ${Math.abs(c)}계단 하락했습니다.`];
   if(d>0) return['상승','up',`전일 대비 ${d}계단 상승했습니다.`];
@@ -318,32 +391,258 @@ function sig(x){
 }
 function img(url,cls){return url?`<img class="${cls}" src="${esc(url)}" alt="" loading="lazy" onerror="this.style.display='none'">`:`<div class="${cls}"></div>`}
 
-function signals(w){
-  const a=[];
-  const r=[...w].filter(x=>x.delta>0).sort((a,b)=>b.delta-a.delta)[0];
-  const f=[...w].filter(x=>x.delta<0).sort((a,b)=>a.delta-b.delta)[0];
-  const b=[...w].filter(x=>x.rank!=null).sort((a,b)=>a.rank-b.rank)[0];
-  if(r) a.push(['상승 모멘텀','up',trunc(r.label,24),`${r.category} · ${r.rank}위 · +${r.delta}`]);
-  if(f) a.push(['리스크 체크','down',trunc(f.label,24),`${f.category} · ${f.rank}위 · ${f.delta}`]);
-  if(b) a.push(['현재 최고 성과','flat',trunc(b.label,24),`${b.category} · ${b.rank}위`]);
-  const rows=(a.length?a:[['오늘의 상태','flat','유의미한 변화 없음','현재 큰 변화 신호가 없습니다.']]).slice(0,3);
-  document.getElementById('signals').innerHTML=rows.map(x=>
-    `<div class="signal"><span class="stag ${x[1]}">${esc(x[0])}</span><b>${esc(x[2])}</b><p>${esc(x[3])}</p></div>`
-  ).join('');
-}
+/* ===================== Executive Summary + Top Competitor Analysis ===================== */
+let CURRENT_WATCHLIST=[];
+let SELECTED_INDEX=0;
 
 function exec(w){
-  document.getElementById('execGrid').innerHTML=w.map(x=>{
+  CURRENT_WATCHLIST=w;
+  if(SELECTED_INDEX>=w.length) SELECTED_INDEX=0;
+  document.getElementById('execGrid').innerHTML=w.map((x,i)=>{
     const s=sig(x);
-    return `<div class="execcard">${img(x.imageUrl,'execthumb')}<div class="execbody">
+    return `<div class="execcard${i===SELECTED_INDEX?' active':''}" data-i="${i}">
+      <button class="execremove" data-i="${i}" title="상품 제거" aria-label="상품 제거">×</button>
+      ${img(x.imageUrl,'execthumb')}<div class="execbody">
       <div class="execname" title="${esc(x.label)}">${esc(trunc(x.label,40))}</div>
       <div class="execcat">${esc(x.category||'카테고리 미확인')}</div>
       <div class="execrank">${fr(x)}</div>
       <div class="execdelta ${s[1]}">${dt(x.delta)} <span>· ${s[0]}</span></div>
     </div></div>`;
-  }).join('');
+  }).join('') + `<button class="execaddcard" id="execAddCard"><span class="plus">+</span><span>상품 추가</span></button>`;
+
+  document.querySelectorAll('.execcard').forEach(c=>{
+    c.addEventListener('click',()=>selectExec(+c.dataset.i));
+  });
+  document.querySelectorAll('.execremove').forEach(b=>{
+    b.addEventListener('click',e=>{e.stopPropagation();removeProduct(w[+b.dataset.i]);});
+  });
+  const addCard=document.getElementById('execAddCard');
+  if(addCard) addCard.addEventListener('click',openAddModal);
+
+  const panel=document.getElementById('competitorPanel');
+  if(w.length){
+    panel.style.display='block';
+    loadCompetitor(SELECTED_INDEX);
+  } else {
+    panel.style.display='none';
+  }
 }
 
+function selectExec(i){
+  SELECTED_INDEX=i;
+  document.querySelectorAll('.execcard').forEach(c=>c.classList.toggle('active',+c.dataset.i===i));
+  loadCompetitor(i);
+}
+
+function genreOf(o){return String(o.genreId||o.genreID||'')}
+function itemUrlOf(o){if(o.itemUrl)return o.itemUrl;if(!o.itemCode)return'';const p=String(o.itemCode).split(':');return p.length===2?'https://item.rakuten.co.jp/'+encodeURIComponent(p[0])+'/'+encodeURIComponent(p[1])+'/':''}
+
+const CA_TTL_MS=3*60*60*1000;
+function caCacheKey(g,code){return 'ca_cache_v8_'+g+'_'+(code||'')}
+function caReadCache(ck){try{const raw=localStorage.getItem(ck);if(!raw)return null;return JSON.parse(raw)}catch(e){return null}}
+function caWriteCache(ck,data){try{localStorage.setItem(ck,JSON.stringify({data,ts:Date.now()}))}catch(e){}}
+
+function normalizeTop(top){
+  if(!Array.isArray(top)) return [];
+  let rows=top.filter(x=>{const r=Number(x&&x.rank);return Number.isInteger(r)&&r>=1&&r<=10}).sort((a,b)=>Number(a.rank)-Number(b.rank));
+  const seen={};rows=rows.filter(x=>{const r=Number(x.rank);if(seen[r])return false;seen[r]=true;return true});
+  if(rows.length!==10) return [];
+  for(let i=1;i<=10;i++) if(Number(rows[i-1].rank)!==i) return [];
+  return rows;
+}
+
+function competitorCard(p,label,cls){
+  p=p||{};
+  return `<div class="execcard static${cls?' '+cls:''}">
+    ${img(p.imageUrl,'execthumb')}<div class="execbody">
+    <div class="execname" title="${esc(p.title||'상품 정보 확인 중')}">${esc(trunc(p.title||'상품 정보 미확인',40))}</div>
+    <div class="execcat">${esc(yen(p.price))} · 리뷰 ${p.reviews==null?'0':Number(p.reviews).toLocaleString()}건</div>
+    <div class="execrank">${esc(label)}</div>
+  </div></div>`;
+}
+
+async function fetchCompetitor(o,force){
+  const g=genreOf(o); if(!g) return {ok:false,error:'no-genre'};
+  const ck=caCacheKey(g,o.itemCode);
+  if(!force){
+    const c=caReadCache(ck);
+    if(c&&(Date.now()-c.ts)<CA_TTL_MS) return {data:c.data,stale:false};
+  }
+  try{
+    const u='/api/competitor-analysis?genreId='+encodeURIComponent(g)+'&myRank='+encodeURIComponent(o.rank||'')+'&itemCode='+encodeURIComponent(o.itemCode||'')+'&itemUrl='+encodeURIComponent(itemUrlOf(o));
+    const r=await fetch(u,{cache:'no-store'});
+    const d=await r.json();
+    if(!d||!d.ok) throw new Error('bad response');
+    if(normalizeTop(d.top||[]).length===10) caWriteCache(ck,d);
+    return {data:d,stale:false};
+  }catch(e){
+    const c=caReadCache(ck);
+    if(c) return {data:c.data,stale:true};
+    return {ok:false,error:e.message};
+  }
+}
+
+async function loadCompetitor(i,force){
+  const o=CURRENT_WATCHLIST[i]; if(!o) return;
+  const body=document.getElementById('competitorBody');
+  const label=document.getElementById('competitorLabel');
+  label.innerHTML=`<b>${esc(trunc(o.label,26))}</b>와 동일 카테고리 1~10위 비교`;
+  body.innerHTML='<div class="competitorstate">동일 카테고리 상위권과 비교 분석 중…</div>';
+
+  const g=genreOf(o);
+  if(!g){ body.innerHTML='<div class="competitorstate">이 상품의 genreId가 없어 경쟁 분석을 시작할 수 없습니다.</div>'; return; }
+
+  const res=await fetchCompetitor(o,force);
+  if(SELECTED_INDEX!==i) return; // 선택이 바뀐 사이 응답이 온 경우 무시
+  if(!res||!res.data||!res.data.ok){ body.innerHTML='<div class="competitorstate">경쟁 상품 데이터를 불러오지 못했습니다.</div>'; return; }
+
+  const top=normalizeTop(res.data.top||[]);
+  if(top.length!==10){ body.innerHTML='<div class="competitorstate">상위 1~10위 데이터를 정확히 확인하지 못했습니다. 잘못된 순위를 표시하지 않고 재수집을 기다립니다.</div>'; return; }
+
+  const mine=res.data.mine||{title:o.label,imageUrl:o.imageUrl,price:o.price,reviews:o.reviewCount};
+  const mineRank=(res.data.mine&&res.data.mine.rank!=null)?res.data.mine.rank:null;
+  const mineLabel=mineRank!=null?(mineRank+'위'):(res.data.mineOutOfRange?'확인 범위 밖':'순위 미확인');
+
+  let h='<div class="execgrid">'+competitorCard(mine,'내 상품 · '+mineLabel,'mine');
+  for(let k=0;k<10;k++) h+=competitorCard(top[k],top[k].rank+'위','');
+  h+='</div>';
+  if(res.stale) h+='<div class="competitornote">⚠ 최신 데이터를 불러오지 못해 이전 데이터를 표시하고 있습니다.</div>';
+  body.innerHTML=h;
+}
+
+document.getElementById('competitorRefresh').addEventListener('click',()=>{
+  const btn=document.getElementById('competitorRefresh');
+  btn.disabled=true; const orig=btn.textContent; btn.textContent='새로고침 중…';
+  loadCompetitor(SELECTED_INDEX,true).finally(()=>{btn.disabled=false;btn.textContent=orig;});
+});
+
+/* ===================== 상품 추가 / 제거 (관리자 전용) ===================== */
+const ADMIN_TOKEN_KEY='kray_admin_token_v1';
+function getAdminToken(){try{return localStorage.getItem(ADMIN_TOKEN_KEY)||''}catch(e){return ''}}
+function setAdminToken(t){try{if(t)localStorage.setItem(ADMIN_TOKEN_KEY,t);else localStorage.removeItem(ADMIN_TOKEN_KEY)}catch(e){}}
+
+async function callWatchlistApi(action,extra,token){
+  const res=await fetch('/api/watchlist',{
+    method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify(Object.assign({action,adminToken:token},extra))
+  });
+  let data; try{data=await res.json()}catch(e){data={ok:false,error:'응답을 해석하지 못했습니다.'}}
+  return data;
+}
+
+function openAddModal(){
+  const modal=document.getElementById('addModal');
+  const err=document.getElementById('addModalError');
+  const tokenField=document.getElementById('addModalTokenField');
+  const cached=getAdminToken();
+  document.getElementById('addModalUrl').value='';
+  document.getElementById('addModalToken').value=cached;
+  tokenField.style.display='block';
+  err.style.display='none'; err.textContent='';
+  modal.style.display='flex';
+  document.getElementById('addModalUrl').focus();
+}
+function closeAddModal(){document.getElementById('addModal').style.display='none'}
+
+document.getElementById('addProductBtn').addEventListener('click',openAddModal);
+document.getElementById('addModalCancel').addEventListener('click',closeAddModal);
+document.getElementById('addModal').addEventListener('click',e=>{if(e.target.id==='addModal')closeAddModal()});
+
+document.getElementById('addModalConfirm').addEventListener('click',async()=>{
+  const url=document.getElementById('addModalUrl').value.trim();
+  const token=document.getElementById('addModalToken').value.trim();
+  const err=document.getElementById('addModalError');
+  const btn=document.getElementById('addModalConfirm');
+  if(!url){err.textContent='Rakuten 상품 URL을 입력해 주세요.';err.style.display='block';return}
+  if(!token){err.textContent='관리자 토큰을 입력해 주세요.';err.style.display='block';return}
+  err.style.display='none';
+  btn.disabled=true; const orig=btn.textContent; btn.textContent='등록 중… (최대 1분)';
+  const data=await callWatchlistApi('addWatchlistItem',{itemUrl:url},token);
+  btn.disabled=false; btn.textContent=orig;
+  if(data&&data.ok){
+    setAdminToken(token);
+    closeAddModal();
+    load();
+  } else {
+    err.textContent=(data&&data.error)||'상품을 추가하지 못했습니다.';
+    err.style.display='block';
+  }
+});
+
+let pendingRemove=null;
+function openTokenModal(){
+  const modal=document.getElementById('tokenModal');
+  document.getElementById('tokenModalInput').value='';
+  document.getElementById('tokenModalError').style.display='none';
+  modal.style.display='flex';
+  document.getElementById('tokenModalInput').focus();
+}
+function closeTokenModal(){document.getElementById('tokenModal').style.display='none';pendingRemove=null}
+document.getElementById('tokenModalCancel').addEventListener('click',closeTokenModal);
+document.getElementById('tokenModal').addEventListener('click',e=>{if(e.target.id==='tokenModal')closeTokenModal()});
+document.getElementById('tokenModalConfirm').addEventListener('click',async()=>{
+  const token=document.getElementById('tokenModalInput').value.trim();
+  const err=document.getElementById('tokenModalError');
+  if(!token){err.textContent='관리자 토큰을 입력해 주세요.';err.style.display='block';return}
+  err.style.display='none';
+  const item=pendingRemove; closeTokenModal();
+  if(item) doRemove(item,token);
+});
+
+function removeProduct(x){
+  if(!confirm(`"${x.label}" 상품을 Watchlist에서 제거할까요?\n(관측 데이터는 삭제되지 않고, 대시보드 노출만 즉시 중단됩니다.)`)) return;
+  const token=getAdminToken();
+  if(token){ doRemove(x,token); return; }
+  pendingRemove=x;
+  openTokenModal();
+}
+async function doRemove(x,token){
+  const data=await callWatchlistApi('removeWatchlistItem',{itemCode:x.itemCode},token);
+  if(data&&data.ok){
+    setAdminToken(token);
+    load();
+  } else {
+    if(data&&/인증/.test(data.error||'')) setAdminToken('');
+    alert((data&&data.error)||'상품을 제거하지 못했습니다.');
+  }
+}
+
+/* ===================== Ranking Trend ===================== */
+function overview(w){
+  const svg=document.getElementById('overview'), leg=document.getElementById('legend');
+  const seriesOf=x=>({ds:x.history365Dates||x.history30Dates||[], vs:x.history365||x.history30||[]});
+  const allDates=[...new Set(w.flatMap(x=>seriesOf(x).ds))].sort();
+  /* 상품마다 관측 시작일이 달라, 전체 날짜를 그냥 합치면(union) 대부분 상품에
+     데이터가 없는 구간까지 X축에 포함되어 그래프가 오른쪽 끝으로 쏠려 보이는
+     버그가 있었다. "적어도 한 상품이라도 실제 값이 있는 날짜"만 남긴다. */
+  const dates=allDates.filter(d=>w.some(x=>{
+    const s=seriesOf(x), j=s.ds.indexOf(d);
+    return j>=0 && s.vs[j]!=null;
+  }));
+  const ser=w.map((x,i)=>({n:trunc(x.label,18),v:dates.map(d=>{
+    const s=seriesOf(x), j=s.ds.indexOf(d);
+    return j>=0?s.vs[j]:null;
+  }),i}));
+  const vals=ser.flatMap(s=>s.v).filter(v=>v!=null).map(Number);
+  const W=Math.max(280,Math.round(svg.clientWidth||svg.parentElement?.clientWidth||1080));
+  const H=Math.max(160,Math.round(svg.clientHeight||310));
+  const L=40,R=16,T=16,B=32;
+  if(dates.length<2||!vals.length){svg.setAttribute('viewBox',`0 0 ${W} ${H}`);svg.innerHTML=`<text x="${W/2}" y="${H/2}" text-anchor="middle" fill="#a1a1a6" font-size="13">데이터가 더 쌓이면 전체 추이가 표시됩니다.</text>`;leg.innerHTML='';return}
+  const mn=Math.max(1,Math.min(...vals)),mx=Math.max(...vals);
+  const lmn=Math.log(mn),lmx=Math.log(Math.max(mx,mn+1)),lsp=Math.max(1e-6,lmx-lmn);
+  const yOf=v=>T+(Math.log(Math.max(1,v))-lmn)*(H-T-B)/lsp;
+  const cs=['#0071e3','#1a7f37','#b06400','#8944ab','#86868b'];
+  let h='';
+  for(let g=0;g<4;g++){const y=T+g*(H-T-B)/3,v=Math.round(Math.exp(lmn+g*lsp/3));h+=`<line x1="${L}" y1="${y}" x2="${W-R}" y2="${y}" stroke="#eeeef0"/><text x="0" y="${y+4}" font-size="10" fill="#a1a1a6">${v}위</text>`}
+  dates.forEach((d,i)=>{if(i===0||i===dates.length-1||i%Math.max(1,Math.floor(dates.length/6))===0){const x=L+i*(W-L-R)/Math.max(1,dates.length-1);h+=`<text x="${x}" y="${H-8}" text-anchor="middle" font-size="10" fill="#a1a1a6">${fd(d)}</text>`}});
+  ser.forEach((s,k)=>{const c=cs[k%cs.length];const p=s.v.map((v,i)=>v==null?null:{x:L+i*(W-L-R)/Math.max(1,dates.length-1),y:yOf(+v),v,i}).filter(Boolean);
+    if(p.length) h+=`<polyline fill="none" stroke="${c}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" points="${p.map(o=>`${o.x},${o.y}`).join(' ')}"/>`;});
+  svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
+  svg.innerHTML=h;
+  leg.innerHTML=ser.map((s,i)=>`<span class="legenditem" style="--dot:${cs[i%cs.length]}">${esc(s.n)}</span>`).join('');
+}
+
+/* ===================== Watchlist Detail ===================== */
 function pack(x,n){
   if(n===365) return{x:x.history365||x.history30||[],d:x.history365Dates||x.history30Dates||[]};
   if(n===90) return{x:x.history90||x.history30||[],d:x.history90Dates||x.history30Dates||[]};
@@ -351,13 +650,8 @@ function pack(x,n){
   return{x:x.history7||[],d:x.history7Dates||[]};
 }
 
-let sparkId=0;
 const trendColor={surgeup:'#a4001a',up:'#e2574a',down:'#3f7fbf',surgedown:'#0b3d91',stable:'#1a7f37',outrange:'#86868b'};
 function spark(svg,v,d,state){
-  /* Ranking Trend(overview) 섹션 그래프와 시각적으로 동일한 스타일을 쓴다:
-     그리드 라인 + 순위 축 라벨, 그라데이션 채우기 없는 단순 라인, 여러 지점의 날짜 라벨.
-     viewBox를 컨테이너의 실제 렌더 픽셀 크기와 1:1로 맞춰서(= preserveAspectRatio
-     기본값 그대로) 프레임을 꽉 채우면서도 글자/선이 옆으로 늘어나지 않게 한다. */
   const color=trendColor[state]||trendColor.outrange;
   const a=v.map((z,i)=>({v:z==null?null:+z,i})).filter(o=>Number.isFinite(o.v));
   const W=Math.max(200,Math.round(svg.clientWidth||svg.parentElement?.clientWidth||500));
@@ -384,35 +678,6 @@ function spark(svg,v,d,state){
   svg.innerHTML=h;
 }
 
-function overview(w){
-  const svg=document.getElementById('overview'), leg=document.getElementById('legend');
-  const dates=[...new Set(w.flatMap(x=>(x.history365Dates||x.history30Dates||[])))].sort();
-  const ser=w.map((x,i)=>({n:trunc(x.label,18),v:dates.map(d=>{
-    const ds=x.history365Dates||x.history30Dates||[], vs=x.history365||x.history30||[], j=ds.indexOf(d);
-    return j>=0?vs[j]:null;
-  }),i}));
-  const vals=ser.flatMap(s=>s.v).filter(v=>v!=null).map(Number);
-  const W=Math.max(280,Math.round(svg.clientWidth||svg.parentElement?.clientWidth||1080));
-  const H=Math.max(160,Math.round(svg.clientHeight||310));
-  const L=40,R=16,T=16,B=32;
-  if(dates.length<2||!vals.length){svg.setAttribute('viewBox',`0 0 ${W} ${H}`);svg.innerHTML=`<text x="${W/2}" y="${H/2}" text-anchor="middle" fill="#a1a1a6" font-size="13">데이터가 더 쌓이면 전체 추이가 표시됩니다.</text>`;leg.innerHTML='';return}
-  /* 상품마다 랭킹 범위가 크게 달라(예: 4위~499위) 선형 스케일을 쓰면
-     범위가 좁은 상품의 실제 변동이 뭉개져 "데이터가 안 맞는" 것처럼 보인다.
-     로그 스케일로 바꿔서 상품별 상대적인 순위 변동이 모두 보이게 한다. */
-  const mn=Math.max(1,Math.min(...vals)),mx=Math.max(...vals);
-  const lmn=Math.log(mn),lmx=Math.log(Math.max(mx,mn+1)),lsp=Math.max(1e-6,lmx-lmn);
-  const yOf=v=>T+(Math.log(Math.max(1,v))-lmn)*(H-T-B)/lsp;
-  const cs=['#0071e3','#1a7f37','#b06400','#8944ab','#86868b'];
-  let h='';
-  for(let g=0;g<4;g++){const y=T+g*(H-T-B)/3,v=Math.round(Math.exp(lmn+g*lsp/3));h+=`<line x1="${L}" y1="${y}" x2="${W-R}" y2="${y}" stroke="#eeeef0"/><text x="0" y="${y+4}" font-size="10" fill="#a1a1a6">${v}위</text>`}
-  dates.forEach((d,i)=>{if(i===0||i===dates.length-1||i%Math.max(1,Math.floor(dates.length/6))===0){const x=L+i*(W-L-R)/Math.max(1,dates.length-1);h+=`<text x="${x}" y="${H-8}" text-anchor="middle" font-size="10" fill="#a1a1a6">${fd(d)}</text>`}});
-  ser.forEach((s,k)=>{const c=cs[k%cs.length];const p=s.v.map((v,i)=>v==null?null:{x:L+i*(W-L-R)/Math.max(1,dates.length-1),y:yOf(+v),v,i}).filter(Boolean);
-    if(p.length) h+=`<polyline fill="none" stroke="${c}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" points="${p.map(o=>`${o.x},${o.y}`).join(' ')}"/>`;});
-  svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
-  svg.innerHTML=h;
-  leg.innerHTML=ser.map((s,i)=>`<span class="legenditem" style="--dot:${cs[i%cs.length]}">${esc(s.n)}</span>`).join('');
-}
-
 function watch(w){
   const g=document.getElementById('watchGrid');
   g.innerHTML=w.map((x,i)=>{
@@ -437,7 +702,7 @@ function watch(w){
         <div class="stat"><span>최초 관측</span><b>${fd(x.firstObservedDate)||'-'}</b></div>
       </div>
       <div style="display:flex;justify-content:space-between;align-items:center;margin-top:20px">
-        <span style="font-size:var(--fs-xs);color:var(--ink-faint)">랭킹 추이</span>
+        <span style="font-size:var(--fs-2xs);color:var(--ink-faint)">랭킹 추이</span>
         <div class="range"><button class="active" data-r="7">7일</button><button data-r="30">30일</button></div>
       </div>
       <svg class="spark" style="margin-top:10px"></svg>
@@ -458,29 +723,16 @@ function watch(w){
 
 function render(d){
   const a=d.aiNews||{}, n=a.news||[], w=d.watchlist||[];
-  /* x.rank가 null이면 "1000위 밖"이라는 뜻인데, +null이 0으로 변환되고
-     Number.isFinite(0)도 true라서 순위권 밖 상품이 0위로 평균에 섞여
-     평균이 비정상적으로 좋게 나오는 버그가 있었다. null(순위권 밖)은
-     평균 계산에서 아예 제외해야 한다. */
-  const rs=w.map(x=>x.rank).filter(r=>r!=null).map(Number);
-  document.getElementById('newsCount').textContent=n.length;
-  document.getElementById('watchCount').textContent=w.length;
-  document.getElementById('risingCount').textContent=w.filter(x=>x.delta>0).length;
-  document.getElementById('avgRank').textContent=rs.length?Math.round(rs.reduce((a,b)=>a+b,0)/rs.length)+'위':'-';
   document.getElementById('aiNews').innerHTML=n.map((x,i)=>
     `<div class="newsrow"><div class="newsidx">${i+1}</div><div>
       <div class="newstitle">${esc(x.title)}</div>
       <div class="newssummary">${esc(x.summary)}</div>
     </div></div>`
   ).join('') || '<div class="empty">오늘 수집된 AI·테크 뉴스가 없습니다.</div>';
-  if(a.trend){document.getElementById('trend').textContent=a.trend;document.getElementById('trendWrap').style.display='block'}
-  signals(w); exec(w); overview(w); watch(w);
+  exec(w); overview(w); watch(w);
   const t=new Intl.DateTimeFormat('ko-KR',{hour:'2-digit',minute:'2-digit',timeZone:'Asia/Tokyo'}).format(new Date());
-  const dstamp=new Intl.DateTimeFormat('ko-KR',{month:'long',day:'numeric',timeZone:'Asia/Tokyo'}).format(new Date());
   document.getElementById('updated').textContent='최종 갱신 '+t;
   document.getElementById('foottime').textContent=t+' JST 기준';
-  document.getElementById('aiUpdated').textContent=dstamp+' 업데이트';
-  document.getElementById('execUpdated').textContent=dstamp+' 업데이트';
 }
 
 async function load(){

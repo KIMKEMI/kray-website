@@ -1,1 +1,14 @@
-<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Kray Daily Briefing</title><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"><link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"></head><body><script>(async function(){try{var r=await fetch('/news/v2.html?_='+Date.now(),{cache:'no-store'});if(!r.ok)throw new Error('[KR-UI-001] dashboard '+r.status);var h=await r.text();var trendBlock='<div id="trendWrap" style="display:none;margin-top:16px"><div class="trend"><b>오늘의 흐름</b><div id="trend"></div></div></div>';var signalBlock='<section class="section">\n    <div class="sectionhead"><h2>오늘의 전략 신호</h2><span class="small">현재 랭킹 데이터 기반</span></div>\n    <div class="signals" id="signals"></div>\n  </section>';h=h.replace(trendBlock,'');h=h.replace(signalBlock,'');h=h.replace("  if(a.trend){document.getElementById('trend').textContent=a.trend;document.getElementById('trendWrap').style.display='block'}\n  signals(w); exec(w); overview(w); watch(w);","  exec(w); overview(w); watch(w);");if(h.indexOf('오늘의 흐름')>=0)console.error('[KR-UI-002] trend block removal failed');if(h.indexOf('<h2>오늘의 전략 신호</h2>')>=0)console.error('[KR-UI-003] strategy signal block removal failed');h=h.replace('<script>','<script src="/news/competitor.js?v=2"></'+'script><script>');document.open();document.write(h);document.close()}catch(e){console.error('[KR-UI-004] dashboard loader failed',e);document.body.innerHTML='<div style="font-family:sans-serif;padding:40px">대시보드를 불러오지 못했습니다. 새로고침해 주세요.</div>'}})();</script></body></html>
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Kray Daily Briefing</title><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"><link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta http-equiv="refresh" content="0; url=/news/v2.html">
+</head><body>
+<script>
+/*
+ * v3.html은 과거 v2.html에서 trend/signal 블록을 문자열 치환으로 제거하고
+ * competitor.js를 주입해 보여주던 별도 로더였다. 2026-08-23 리디자인으로
+ * v2.html 자체가 그 내용(Executive Summary + 경쟁분석 통합, 전략 신호/오늘의
+ * 흐름 제거)을 이미 포함하므로, v3.html은 이제 v2.html로 안내만 한다.
+ */
+location.replace('/news/v2.html');
+</script>
+<noscript><meta http-equiv="refresh" content="0; url=/news/v2.html"></noscript>
+</body></html>
