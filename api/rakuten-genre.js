@@ -1,4 +1,4 @@
-const FIXED_IP_PROXY = 'http://168.110.52.250:8080/ichibaranking/api/IchibaItem/Ranking/20220601';
+const FIXED_IP_PROXY = 'http://168.110.52.250:8080/ichibagenre/api/IchibaGenre/Search/20140222';
 const PROXY_TIMEOUT_MS = 15000;
 
 // Vercel 서버리스 함수 자체의 최대 실행 시간을 늘려, 프록시 타임아웃(15초) +
@@ -39,25 +39,20 @@ export default async function handler(req, res) {
   const applicationId = String(body.applicationId || '').trim();
   const accessKey = String(body.accessKey || '').trim();
   const genreId = String(body.genreId || '').trim();
-  const page = Number(body.page || 1);
   const proxyToken = String(body.proxyToken || '').trim();
-  // 'realtime'이면 리얼타임 랭킹, 그 외(미지정 포함)는 라쿠텐 기본값인 데일리 랭킹.
-  const period = String(body.period || '').trim();
 
-  if (!applicationId || !accessKey || !genreId || !proxyToken || !Number.isFinite(page) || page < 1 || page > 34) {
+  if (!applicationId || !genreId || !proxyToken) {
     return res.status(400).json({ ok: false, error: 'Missing or invalid parameters' });
   }
 
   const upstream = new URL(FIXED_IP_PROXY);
   upstream.searchParams.set('applicationId', applicationId);
-  upstream.searchParams.set('accessKey', accessKey);
+  if (accessKey) {
+    upstream.searchParams.set('accessKey', accessKey);
+  }
   upstream.searchParams.set('format', 'json');
   upstream.searchParams.set('formatVersion', '2');
   upstream.searchParams.set('genreId', genreId);
-  upstream.searchParams.set('page', String(page));
-  if (period === 'realtime') {
-    upstream.searchParams.set('period', 'realtime');
-  }
 
   // 오라클 서버가 일시적으로 느릴 때를 대비해 최대 2회(최초 + 재시도 1회) 시도한다.
   const attempts = 2;
@@ -95,7 +90,7 @@ export default async function handler(req, res) {
         });
       }
 
-      res.setHeader('Cache-Control', 'no-store, max-age=0');
+      res.setHeader('Cache-Control', 'no-store, max-age=300');
       return res.status(200).json(data);
     } catch (error) {
       const timedOut = error && error.name === 'AbortError';
@@ -105,7 +100,7 @@ export default async function handler(req, res) {
           ok: false,
           error: timedOut
             ? `Fixed-IP proxy timeout after ${PROXY_TIMEOUT_MS / 1000}s`
-            : (error instanceof Error ? error.message : 'Ranking relay error'),
+            : (error instanceof Error ? error.message : 'Genre relay error'),
         },
       };
       if (attempt < attempts) {
