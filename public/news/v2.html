@@ -301,7 +301,7 @@ footer{margin:64px 0 44px;padding-top:22px;border-top:1px solid var(--line);
 const API='/api/news';
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fd=d=>{const p=String(d||'').split('-');return p.length===3?`${+p[1]}/${+p[2]}`:String(d||'')};
-const fr=x=>x.rank!=null?`${x.rank}위`:'1000위 밖';
+const fr=x=>x.rank!=null?`${x.rank}위`:(x.rankStatus==='out_of_range'?'1000위 밖':'순위 확인 불가');
 const dt=d=>d==null?'전일 비교 없음':`${d>0?'↑':d<0?'↓':'→'}${Math.abs(+d)}`;
 const trunc=(s,n)=>{s=String(s??'').trim();return s.length>n?s.slice(0,n).trim()+'…':s};
 
