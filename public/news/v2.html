@@ -458,7 +458,11 @@ function watch(w){
 
 function render(d){
   const a=d.aiNews||{}, n=a.news||[], w=d.watchlist||[];
-  const rs=w.map(x=>+x.rank).filter(Number.isFinite);
+  /* x.rank가 null이면 "1000위 밖"이라는 뜻인데, +null이 0으로 변환되고
+     Number.isFinite(0)도 true라서 순위권 밖 상품이 0위로 평균에 섞여
+     평균이 비정상적으로 좋게 나오는 버그가 있었다. null(순위권 밖)은
+     평균 계산에서 아예 제외해야 한다. */
+  const rs=w.map(x=>x.rank).filter(r=>r!=null).map(Number);
   document.getElementById('newsCount').textContent=n.length;
   document.getElementById('watchCount').textContent=w.length;
   document.getElementById('risingCount').textContent=w.filter(x=>x.delta>0).length;
