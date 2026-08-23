@@ -16,7 +16,7 @@
   --green-tint:#edf9f0;
   --red:#d70015;
   --red-tint:#fdeeee;
-  --orange:#b06400;
+  --orange:#b06400;--orange-tint:#fdf3e6;
   --sans:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Helvetica Neue","Apple SD Gothic Neo","Noto Sans KR",Arial,sans-serif;
   --r-lg:28px;--r-md:20px;--r-sm:12px;
   --ease:cubic-bezier(.16,1,.3,1);
@@ -85,7 +85,7 @@ a{color:inherit}
   padding:4px 10px;border-radius:999px}
 .stag.up{background:var(--green-tint);color:var(--green)}
 .stag.down{background:var(--red-tint);color:var(--red)}
-.stag.flat{background:var(--bg-alt);color:var(--ink-soft)}
+.stag.flat{background:var(--bg-alt);color:var(--ink-soft)}.stag.warn{background:var(--orange-tint);color:var(--orange)}
 .signal b{display:block;font-size:16.5px;font-weight:700;margin:13px 0 6px;letter-spacing:-.01em;line-height:1.35}
 .signal p{margin:0;color:var(--ink-soft);font-size:13px;line-height:1.6}
 
@@ -103,7 +103,7 @@ a{color:inherit}
 .execrank{font-size:22px;font-weight:700;margin-top:10px;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
 .execdelta{font-size:11.5px;margin-top:3px;font-weight:600}
 .execdelta span{font-weight:400;color:var(--ink-faint)}
-.up{color:var(--green)} .down{color:var(--red)} .flat{color:var(--ink-faint)}
+.up{color:var(--green)} .down{color:var(--red)} .flat{color:var(--ink-faint)} .warn{color:var(--orange)}
 
 /* ===== overview chart ===== */
 .chartbox{padding:24px 26px}
@@ -253,7 +253,7 @@ function sig(x){
   if(c<=-20) return['급하락','down',`관측 시작 대비 ${Math.abs(c)}계단 하락했습니다.`];
   if(d>0) return['상승','up',`전일 대비 ${d}계단 상승했습니다.`];
   if(d<0) return['하락','down',`전일 대비 ${Math.abs(d)}계단 하락했습니다.`];
-  if(x.rank==null) return['순위권 밖','flat',`현재 관측 범위 내 순위가 없습니다.`];
+  if(x.rank==null) return x.rankStatus==='out_of_range'?['순위권 밖','flat',`현재 관측 범위 내 순위가 없습니다.`]:['순위 확인 불가','warn',`재고 소진 또는 판매 중단 가능성이 있어 순위를 확인하지 못했습니다.`];
   return['안정','flat',`현재 큰 변동이 없습니다.`];
 }
 function img(url,cls){return url?`<img class="${cls}" src="${esc(url)}" alt="" loading="lazy" onerror="this.style.display='none'">`:`<div class="${cls}"></div>`}
