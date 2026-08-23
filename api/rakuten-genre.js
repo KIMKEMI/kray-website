@@ -1,4 +1,4 @@
-const FIXED_IP_PROXY = 'http://168.110.52.250:8080/ichibagenre/api/IchibaGenre/Search/20140222';
+const FIXED_IP_PROXY = 'http://168.110.52.250:8080/ichibagt/api/IchibaGenre/Search/20260701';
 const PROXY_TIMEOUT_MS = 15000;
 
 // Vercel 서버리스 함수 자체의 최대 실행 시간을 늘려, 프록시 타임아웃(15초) +
