@@ -19,7 +19,7 @@
   --green-tint:#edf9f0;
   --red:#d70015;
   --red-tint:#fdeeee;
-  --orange:#b06400;
+  --orange:#b06400;--orange-tint:#fdf3e6;
   --surgeup:#a4001a;
   --surgeup-tint:#f8d6d9;
   --up:#e2574a;
@@ -119,7 +119,7 @@ a{color:inherit}
   padding:4px 10px;border-radius:999px}
 .stag.up{background:var(--green-tint);color:var(--green)}
 .stag.down{background:var(--red-tint);color:var(--red)}
-.stag.flat{background:var(--bg-alt);color:var(--ink-soft)}
+.stag.flat{background:var(--bg-alt);color:var(--ink-soft)}.stag.warn{background:var(--orange-tint);color:var(--orange)}
 .signal b{display:block;font-size:var(--fs-md);font-weight:700;margin:13px 0 6px;letter-spacing:-.01em;line-height:1.35}
 .signal p{margin:0;color:var(--ink-soft);font-size:var(--fs-sm);line-height:1.6}
 
@@ -137,7 +137,7 @@ a{color:inherit}
 .execrank{font-size:var(--fs-xl);font-weight:700;margin-top:10px;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
 .execdelta{font-size:var(--fs-xs);margin-top:3px;font-weight:600}
 .execdelta span{font-weight:400;color:var(--ink-faint)}
-.surgeup{color:var(--surgeup)} .up{color:var(--up)} .down{color:var(--down)} .surgedown{color:var(--surgedown)} .stable{color:var(--green)} .outrange{color:var(--ink-faint)}
+.surgeup{color:var(--surgeup)} .up{color:var(--up)} .down{color:var(--down)} .surgedown{color:var(--surgedown)} .stable{color:var(--green)} .outrange{color:var(--ink-faint)} .warn{color:var(--orange)}
 
 /* ===== overview chart ===== */
 .chartbox{padding:24px 26px}
@@ -168,7 +168,7 @@ a{color:inherit}
 .tag.down{background:var(--down-tint);color:var(--down)}
 .tag.surgedown{background:var(--surgedown-tint);color:var(--surgedown);font-weight:700}
 .tag.stable{background:var(--green-tint);color:var(--green)}
-.tag.outrange{background:var(--bg-alt);color:var(--ink-faint)}
+.tag.outrange{background:var(--bg-alt);color:var(--ink-faint)}.tag.warn{background:var(--orange-tint);color:var(--orange)}
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:16px}
 .stat{padding:11px 10px;background:var(--bg-alt);border-radius:var(--r-sm)}
 .stat span{font-size:var(--fs-2xs);color:var(--ink-faint);display:block}
@@ -309,7 +309,7 @@ document.getElementById('today').textContent=new Intl.DateTimeFormat('ko-KR',{da
 
 function sig(x){
   const d=x.delta==null?null:+x.delta, c=x.change7==null?null:+x.change7;
-  if(x.rank==null) return['순위권 밖','outrange',`현재 관측 범위 내 순위가 없습니다.`];
+  if(x.rank==null) return x.rankStatus==='out_of_range'?['순위권 밖','outrange',`현재 관측 범위 내 순위가 없습니다.`]:['순위 확인 불가','warn',`재고 소진 또는 판매 중단 가능성이 있어 순위를 확인하지 못했습니다.`];
   if(c>=20) return['급상승','surgeup',`관측 시작 대비 ${c}계단 개선됐습니다.`];
   if(c<=-20) return['급하락','surgedown',`관측 시작 대비 ${Math.abs(c)}계단 하락했습니다.`];
   if(d>0) return['상승','up',`전일 대비 ${d}계단 상승했습니다.`];
