@@ -360,6 +360,7 @@ function spark(svg,v,d,state){
   const a=v.map((z,i)=>({v:z==null?null:+z,i})).filter(o=>Number.isFinite(o.v));
   const W=500,H=220,L=40,R=16,T=16,B=32;
   svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
+  svg.setAttribute('preserveAspectRatio','none');
   if(a.length<2){svg.innerHTML='<text x="250" y="110" text-anchor="middle" fill="#a1a1a6" font-size="13">데이터가 더 쌓이면 그래프가 표시됩니다.</text>';return}
   const mn=Math.min(...a.map(o=>o.v)),mx=Math.max(...a.map(o=>o.v)),sp=Math.max(1,mx-mn);
   const p=a.map(o=>({x:L+o.i*(W-L-R)/Math.max(1,v.length-1),y:T+(o.v-mn)*(H-T-B)/sp,v:o.v,i:o.i}));
@@ -390,14 +391,20 @@ function overview(w){
   const vals=ser.flatMap(s=>s.v).filter(v=>v!=null).map(Number);
   if(dates.length<2||!vals.length){svg.innerHTML='<text x="50%" y="50%" text-anchor="middle" fill="#a1a1a6" font-size="13">데이터가 더 쌓이면 전체 추이가 표시됩니다.</text>';leg.innerHTML='';return}
   const W=1080,H=310,L=40,R=16,T=16,B=32;
-  const mn=Math.min(...vals),mx=Math.max(...vals),sp=Math.max(1,mx-mn);
+  /* 상품마다 랭킹 범위가 크게 달라(예: 4위~499위) 선형 스케일을 쓰면
+     범위가 좁은 상품의 실제 변동이 뭉개져 "데이터가 안 맞는" 것처럼 보인다.
+     로그 스케일로 바꿔서 상품별 상대적인 순위 변동이 모두 보이게 한다. */
+  const mn=Math.max(1,Math.min(...vals)),mx=Math.max(...vals);
+  const lmn=Math.log(mn),lmx=Math.log(Math.max(mx,mn+1)),lsp=Math.max(1e-6,lmx-lmn);
+  const yOf=v=>T+(Math.log(Math.max(1,v))-lmn)*(H-T-B)/lsp;
   const cs=['#0071e3','#1a7f37','#b06400','#8944ab','#86868b'];
   let h='';
-  for(let g=0;g<4;g++){const y=T+g*(H-T-B)/3,v=Math.round(mn+g*sp/3);h+=`<line x1="${L}" y1="${y}" x2="${W-R}" y2="${y}" stroke="#eeeef0"/><text x="0" y="${y+4}" font-size="10" fill="#a1a1a6">${v}위</text>`}
+  for(let g=0;g<4;g++){const y=T+g*(H-T-B)/3,v=Math.round(Math.exp(lmn+g*lsp/3));h+=`<line x1="${L}" y1="${y}" x2="${W-R}" y2="${y}" stroke="#eeeef0"/><text x="0" y="${y+4}" font-size="10" fill="#a1a1a6">${v}위</text>`}
   dates.forEach((d,i)=>{if(i===0||i===dates.length-1||i%Math.max(1,Math.floor(dates.length/6))===0){const x=L+i*(W-L-R)/Math.max(1,dates.length-1);h+=`<text x="${x}" y="${H-8}" text-anchor="middle" font-size="10" fill="#a1a1a6">${fd(d)}</text>`}});
-  ser.forEach((s,k)=>{const c=cs[k%cs.length];const p=s.v.map((v,i)=>v==null?null:{x:L+i*(W-L-R)/Math.max(1,dates.length-1),y:T+(+v-mn)*(H-T-B)/sp,v,i}).filter(Boolean);
+  ser.forEach((s,k)=>{const c=cs[k%cs.length];const p=s.v.map((v,i)=>v==null?null:{x:L+i*(W-L-R)/Math.max(1,dates.length-1),y:yOf(+v),v,i}).filter(Boolean);
     if(p.length) h+=`<polyline fill="none" stroke="${c}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" points="${p.map(o=>`${o.x},${o.y}`).join(' ')}"/>`;});
   svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
+  svg.setAttribute('preserveAspectRatio','none');
   svg.innerHTML=h;
   leg.innerHTML=ser.map((s,i)=>`<span class="legenditem" style="--dot:${cs[i%cs.length]}">${esc(s.n)}</span>`).join('');
 }
