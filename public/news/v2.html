@@ -355,13 +355,16 @@ let sparkId=0;
 const trendColor={surgeup:'#a4001a',up:'#e2574a',down:'#3f7fbf',surgedown:'#0b3d91',stable:'#1a7f37',outrange:'#86868b'};
 function spark(svg,v,d,state){
   /* Ranking Trend(overview) 섹션 그래프와 시각적으로 동일한 스타일을 쓴다:
-     그리드 라인 + 순위 축 라벨, 그라데이션 채우기 없는 단순 라인, 여러 지점의 날짜 라벨. */
+     그리드 라인 + 순위 축 라벨, 그라데이션 채우기 없는 단순 라인, 여러 지점의 날짜 라벨.
+     viewBox를 컨테이너의 실제 렌더 픽셀 크기와 1:1로 맞춰서(= preserveAspectRatio
+     기본값 그대로) 프레임을 꽉 채우면서도 글자/선이 옆으로 늘어나지 않게 한다. */
   const color=trendColor[state]||trendColor.outrange;
   const a=v.map((z,i)=>({v:z==null?null:+z,i})).filter(o=>Number.isFinite(o.v));
-  const W=500,H=220,L=40,R=16,T=16,B=32;
+  const W=Math.max(200,Math.round(svg.clientWidth||svg.parentElement?.clientWidth||500));
+  const H=Math.max(120,Math.round(svg.clientHeight||200));
+  const L=40,R=16,T=16,B=32;
   svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
-  svg.setAttribute('preserveAspectRatio','none');
-  if(a.length<2){svg.innerHTML='<text x="250" y="110" text-anchor="middle" fill="#a1a1a6" font-size="13">데이터가 더 쌓이면 그래프가 표시됩니다.</text>';return}
+  if(a.length<2){svg.innerHTML=`<text x="${W/2}" y="${H/2}" text-anchor="middle" fill="#a1a1a6" font-size="13">데이터가 더 쌓이면 그래프가 표시됩니다.</text>`;return}
   const mn=Math.min(...a.map(o=>o.v)),mx=Math.max(...a.map(o=>o.v)),sp=Math.max(1,mx-mn);
   const p=a.map(o=>({x:L+o.i*(W-L-R)/Math.max(1,v.length-1),y:T+(o.v-mn)*(H-T-B)/sp,v:o.v,i:o.i}));
   const line=p.map(o=>`${o.x},${o.y}`).join(' ');
@@ -389,8 +392,10 @@ function overview(w){
     return j>=0?vs[j]:null;
   }),i}));
   const vals=ser.flatMap(s=>s.v).filter(v=>v!=null).map(Number);
-  if(dates.length<2||!vals.length){svg.innerHTML='<text x="50%" y="50%" text-anchor="middle" fill="#a1a1a6" font-size="13">데이터가 더 쌓이면 전체 추이가 표시됩니다.</text>';leg.innerHTML='';return}
-  const W=1080,H=310,L=40,R=16,T=16,B=32;
+  const W=Math.max(280,Math.round(svg.clientWidth||svg.parentElement?.clientWidth||1080));
+  const H=Math.max(160,Math.round(svg.clientHeight||310));
+  const L=40,R=16,T=16,B=32;
+  if(dates.length<2||!vals.length){svg.setAttribute('viewBox',`0 0 ${W} ${H}`);svg.innerHTML=`<text x="${W/2}" y="${H/2}" text-anchor="middle" fill="#a1a1a6" font-size="13">데이터가 더 쌓이면 전체 추이가 표시됩니다.</text>`;leg.innerHTML='';return}
   /* 상품마다 랭킹 범위가 크게 달라(예: 4위~499위) 선형 스케일을 쓰면
      범위가 좁은 상품의 실제 변동이 뭉개져 "데이터가 안 맞는" 것처럼 보인다.
      로그 스케일로 바꿔서 상품별 상대적인 순위 변동이 모두 보이게 한다. */
@@ -404,7 +409,6 @@ function overview(w){
   ser.forEach((s,k)=>{const c=cs[k%cs.length];const p=s.v.map((v,i)=>v==null?null:{x:L+i*(W-L-R)/Math.max(1,dates.length-1),y:yOf(+v),v,i}).filter(Boolean);
     if(p.length) h+=`<polyline fill="none" stroke="${c}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" points="${p.map(o=>`${o.x},${o.y}`).join(' ')}"/>`;});
   svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
-  svg.setAttribute('preserveAspectRatio','none');
   svg.innerHTML=h;
   leg.innerHTML=ser.map((s,i)=>`<span class="legenditem" style="--dot:${cs[i%cs.length]}">${esc(s.n)}</span>`).join('');
 }
