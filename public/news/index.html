@@ -470,7 +470,7 @@ async function fetchCompetitor(o,force){
   }
   try{
     const u='/api/competitor-analysis?genreId='+encodeURIComponent(g)+'&myRank='+encodeURIComponent(o.rank||'')+'&itemCode='+encodeURIComponent(o.itemCode||'')+'&itemUrl='+encodeURIComponent(itemUrlOf(o));
-    const r=await fetch(u,{cache:'no-store'});
+    const r=await fetch(u);
     const d=await r.json();
     if(!d||!d.ok) throw new Error('bad response');
     if(normalizeTop(d.top||[]).length===10) caWriteCache(ck,d);
@@ -721,7 +721,7 @@ function watch(w){
   });
 }
 
-function render(d){
+function render(d,stamp,fromCache){
   const a=d.aiNews||{}, n=a.news||[], w=d.watchlist||[];
   document.getElementById('aiNews').innerHTML=n.map((x,i)=>
     `<div class="newsrow"><div class="newsidx">${i+1}</div><div>
@@ -730,20 +730,67 @@ function render(d){
     </div></div>`
   ).join('') || '<div class="empty">오늘 수집된 AI·테크 뉴스가 없습니다.</div>';
   exec(w); overview(w); watch(w);
-  const t=new Intl.DateTimeFormat('ko-KR',{hour:'2-digit',minute:'2-digit',timeZone:'Asia/Tokyo'}).format(new Date());
-  document.getElementById('updated').textContent='최종 갱신 '+t;
+  const t=new Intl.DateTimeFormat('ko-KR',{hour:'2-digit',minute:'2-digit',timeZone:'Asia/Tokyo'}).format(new Date(stamp||Date.now()));
+  document.getElementById('updated').textContent=(fromCache?'최근 저장본 '+t:'최종 갱신 '+t);
   document.getElementById('foottime').textContent=t+' JST 기준';
 }
 
+/* ===========================================================
+ * 로딩 체감속도 개선 (2026-08-24, Kemi 요청)
+ *
+ * 기존: 페이지를 열 때마다 /api/news 응답(5~6초)을 끝까지 기다린 뒤에야
+ *       화면에 아무거나 그려졌다. 그 다음 경쟁사 랭킹을 또 따로 받아서
+ *       실제로 다 보이기까지 9초 안팎이 걸렸다.
+ *
+ * 개선: (1) 직전에 받아둔 데이터를 localStorage에 넣어두고, 페이지가 열리는
+ *           즉시 그걸로 화면을 채운다. 경쟁사 랭킹도 자체 캐시(ca_cache_v8)가
+ *           있어서 같이 즉시 표시된다. -> 재방문은 사실상 즉시 표시.
+ *       (2) 그 뒤 조용히 최신 데이터를 받아 화면을 갱신한다.
+ *       (3) 캐시 무력화용 ?_=timestamp 를 없애서 Vercel CDN이 실제로
+ *           캐시할 수 있게 했다. (이게 있으면 매 요청이 전부 CDN MISS)
+ * =========================================================== */
+const NEWS_CACHE_KEY='kray_news_cache_v2';
+const NEWS_CACHE_MAX_AGE=6*60*60*1000;
+
+function readNewsCache(){
+  try{
+    const raw=localStorage.getItem(NEWS_CACHE_KEY);
+    if(!raw) return null;
+    const o=JSON.parse(raw);
+    if(!o||!o.d||!o.ts) return null;
+    if((Date.now()-o.ts)>NEWS_CACHE_MAX_AGE) return null;
+    return o;
+  }catch(e){return null}
+}
+function writeNewsCache(d){
+  try{localStorage.setItem(NEWS_CACHE_KEY,JSON.stringify({d,ts:Date.now()}))}catch(e){}
+}
+
+let PAINTED=false;
+
 async function load(){
   try{
-    const r=await fetch(API+'?_='+Date.now(),{cache:'no-store'});
+    /* ?_=Date.now() 제거 + no-store 제거 -> CDN 엣지 캐시(HIT) 사용 가능 */
+    const r=await fetch(API);
     if(!r.ok) throw Error('HTTP '+r.status);
-    render(await r.json());
+    const d=await r.json();
+    render(d,Date.now(),false);
+    writeNewsCache(d);
+    PAINTED=true;
   }catch(e){
+    if(PAINTED) return;                 /* 이미 뭔가 떠 있으면 굳이 지우지 않는다 */
+    const c=readNewsCache();
+    if(c){ render(c.d,c.ts,true); PAINTED=true; return; }
     document.getElementById('aiNews').innerHTML=`<div class="error">데이터를 불러오지 못했습니다 — ${esc(e.message)}</div>`;
   }
 }
+
+/* 저장본이 있으면 네트워크를 기다리지 않고 먼저 그린다 */
+(function(){
+  const c=readNewsCache();
+  if(c){ try{ render(c.d,c.ts,true); PAINTED=true; }catch(e){} }
+})();
+
 load();
 setInterval(load,300000);
 </script>
