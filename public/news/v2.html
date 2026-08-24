@@ -124,8 +124,14 @@ a{color:inherit}
 .newsrow:first-child{border-top:0}
 .newsidx{width:24px;height:24px;border-radius:50%;background:var(--bg-alt);display:flex;
   align-items:center;justify-content:center;font-size:var(--fs-2xs);font-weight:700;color:var(--ink-soft);margin-top:2px}
+.newshead{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
 .newstitle{font-size:var(--fs-md);font-weight:600;letter-spacing:-.01em;line-height:1.4}
 .newssummary{font-size:var(--fs-sm);color:var(--ink-soft);line-height:1.6;margin-top:6px}
+.newsbuzz{display:inline-flex;align-items:center;gap:4px;flex-shrink:0;font-size:var(--fs-2xs);font-weight:700;
+  padding:3px 9px 3px 8px;border-radius:999px;background:var(--orange-tint);color:var(--orange);white-space:nowrap;margin-top:1px}
+.newsreason{font-size:var(--fs-2xs);color:var(--ink-soft);margin-top:8px;padding:8px 10px;
+  background:var(--bg-alt);border-radius:10px;line-height:1.5}
+.newsreason b{color:var(--ink);font-weight:700}
 
 /* ===== executive grid (Executive Summary + Top Competitor Analysis 통합) ===== */
 .execgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
@@ -326,7 +332,7 @@ footer{margin:64px 0 44px;padding-top:22px;border-top:1px solid var(--line);
   </section>
 
   <section class="section">
-    <div class="sectionhead"><h2>오늘의 AI &amp; Tech</h2></div>
+    <div class="sectionhead"><h2 id="aiNewsTitle">오늘의 AI &amp; Tech</h2></div>
     <div class="card">
       <div id="aiNews"><div class="empty">데이터 연결 중입니다.</div></div>
     </div>
@@ -846,14 +852,26 @@ function watch(w){
   });
 }
 
+function aiNewsRow(x,i){
+  const score=Number(x.score)||0;
+  const buzz=score>0?`<span class="newsbuzz">🔥 화제도 ${score}</span>`:'';
+  const reason=x.reason?`<div class="newsreason"><b>선정 이유</b> · ${esc(x.reason)}</div>`:'';
+  return `<div class="newsrow"><div class="newsidx">${i+1}</div><div>
+      <div class="newshead"><div class="newstitle">${esc(x.title)}</div>${buzz}</div>
+      <div class="newssummary">${esc(x.summary)}</div>
+      ${reason}
+    </div></div>`;
+}
+
+function renderAiNewsTitle(){
+  const d=new Intl.DateTimeFormat('ko-KR',{timeZone:'Asia/Tokyo',year:'numeric',month:'long',day:'numeric'}).format(new Date());
+  document.getElementById('aiNewsTitle').textContent=`${d} AI & Tech 주요 뉴스`;
+}
+
 function render(d,stamp,fromCache){
   const a=d.aiNews||{}, n=a.news||[], w=d.watchlist||[];
-  document.getElementById('aiNews').innerHTML=n.map((x,i)=>
-    `<div class="newsrow"><div class="newsidx">${i+1}</div><div>
-      <div class="newstitle">${esc(x.title)}</div>
-      <div class="newssummary">${esc(x.summary)}</div>
-    </div></div>`
-  ).join('') || '<div class="empty">오늘 수집된 AI·테크 뉴스가 없습니다.</div>';
+  renderAiNewsTitle();
+  document.getElementById('aiNews').innerHTML=n.map(aiNewsRow).join('') || '<div class="empty">오늘 수집된 AI·테크 뉴스가 없습니다.</div>';
   exec(w); overview(w); watch(w); achievements(d.milestones||[]);
   const t=new Intl.DateTimeFormat('ko-KR',{hour:'2-digit',minute:'2-digit',timeZone:'Asia/Tokyo'}).format(new Date(stamp||Date.now()));
   document.getElementById('updated').textContent=(fromCache?'최근 저장본 '+t:'최종 갱신 '+t);
@@ -911,6 +929,7 @@ async function load(){
 }
 
 /* 저장본이 있으면 네트워크를 기다리지 않고 먼저 그린다 */
+renderAiNewsTitle();
 (function(){
   const c=readNewsCache();
   if(c){ try{ render(c.d,c.ts,true); PAINTED=true; }catch(e){} }
