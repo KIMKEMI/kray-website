@@ -26,7 +26,7 @@ export default async function handler(req, res) {
     upstream.searchParams.set('_', Date.now().toString());
 
     const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), 12000);
+    const timer = setTimeout(() => controller.abort(), 20000);
     let response;
     try {
       response = await fetch(upstream, {
@@ -58,9 +58,17 @@ export default async function handler(req, res) {
     data = applyWatchlistFallbacks(data);
 
     res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0');
-    res.setHeader('CDN-Cache-Control', 'no-store');
-    res.setHeader('Vercel-CDN-Cache-Control', 'no-store');
+    // 2026-08-24 (Kemi): 대시보드 로딩 속도 개선.
+    // 이 데이터는 수집 트리거가 돌 때(수십 분 간격)만 바뀌므로 매 방문마다
+    // Apps Script를 5~6초씩 기다릴 이유가 없다.
+    //   - max-age=0        : 브라우저는 항상 CDN에 확인(항상 최신 여부 체크)
+    //   - s-maxage=120     : CDN 엣지에서 120초 동안 즉시 응답
+    //   - stale-while-revalidate=1800 : 만료 후에도 우선 캐시본을 즉시 주고,
+    //     뒤에서 조용히 새로 받아온다 -> 사용자가 기다리는 일이 사실상 없어진다.
+    const CACHE_POLICY = 'public, max-age=0, s-maxage=120, stale-while-revalidate=1800';
+    res.setHeader('Cache-Control', CACHE_POLICY);
+    res.setHeader('CDN-Cache-Control', CACHE_POLICY);
+    res.setHeader('Vercel-CDN-Cache-Control', CACHE_POLICY);
     return res.status(200).json(data);
   } catch (error) {
     const message = error && error.name === 'AbortError'

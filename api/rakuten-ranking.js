@@ -12,6 +12,7 @@ export const config = {
 async function fetchOnce(upstream, proxyToken) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), PROXY_TIMEOUT_MS);
+  const startedAt = Date.now();
   try {
     const response = await fetch(upstream, {
       method: 'GET',
@@ -23,9 +24,26 @@ async function fetchOnce(upstream, proxyToken) {
       },
     });
     const text = await response.text();
-    return { response, text };
+    return { response, text, latencyMs: Date.now() - startedAt };
   } finally {
     clearTimeout(timer);
+  }
+}
+
+/*
+ * 2026-08-24 (Kemi 요청): 오라클 고정IP 프록시(168.110.52.250)의 안정성을
+ * 객관적으로 판정하기 위한 구조화 로그.
+ * Vercel 런타임 로그에서 tag="oracle-proxy"로 검색하면 전부 모인다.
+ * upstream 본문을 같이 남기는 게 핵심 -- 같은 404라도
+ *   - 라쿠텐이 "데이터 없음"이라 답한 정상 404 인지
+ *   - 오라클 서버가 뻗어서 뱉은 404 인지
+ * 를 본문으로만 구별할 수 있기 때문이다.
+ */
+function logProxy(fields) {
+  try {
+    console.log(JSON.stringify(Object.assign({ tag: 'oracle-proxy' }, fields)));
+  } catch (_) {
+    /* 로깅 실패가 본 기능을 막아서는 안 된다 */
   }
 }
 
@@ -65,15 +83,24 @@ export default async function handler(req, res) {
 
   for (let attempt = 1; attempt <= attempts; attempt++) {
     try {
-      const { response, text } = await fetchOnce(upstream, proxyToken);
+      const { response, text, latencyMs } = await fetchOnce(upstream, proxyToken);
 
       if (!response.ok) {
+        const snippet = String(text || '').slice(0, 200).replace(/\s+/g, ' ').trim();
+        logProxy({
+          event: 'upstream_error', genreId, page, period: period || 'daily',
+          attempt, status: response.status, latencyMs,
+          upstream: snippet || '<empty body>',
+        });
         lastErrorPayload = {
           status: response.status,
+          // upstream 본문을 error 문자열에 함께 실어야 Apps Script 쪽 로그와
+          // proxy_health 시트까지 원인이 그대로 전달된다.
           body: {
             ok: false,
-            error: `Fixed-IP proxy HTTP ${response.status}`,
+            error: `Fixed-IP proxy HTTP ${response.status} :: ${snippet || '<empty body>'}`,
             upstreamBody: text.slice(0, 500),
+            latencyMs,
           },
         };
         // 5xx/타임아웃성 오류만 재시도. 4xx(요청 자체 문제)는 즉시 반환.
@@ -88,17 +115,32 @@ export default async function handler(req, res) {
       try {
         data = JSON.parse(text);
       } catch {
+        const snippet = String(text || '').slice(0, 200).replace(/\s+/g, ' ').trim();
+        logProxy({
+          event: 'non_json', genreId, page, period: period || 'daily',
+          attempt, status: response.status, latencyMs, upstream: snippet,
+        });
         return res.status(502).json({
           ok: false,
-          error: 'Fixed-IP proxy returned non-JSON',
+          error: `Fixed-IP proxy returned non-JSON :: ${snippet}`,
           upstreamBody: text.slice(0, 500),
         });
       }
 
+      logProxy({
+        event: 'ok', genreId, page, period: period || 'daily',
+        attempt, status: 200, latencyMs,
+      });
       res.setHeader('Cache-Control', 'no-store, max-age=0');
       return res.status(200).json(data);
     } catch (error) {
       const timedOut = error && error.name === 'AbortError';
+      logProxy({
+        event: timedOut ? 'timeout' : 'connect_error',
+        genreId, page, period: period || 'daily', attempt,
+        timeoutMs: timedOut ? PROXY_TIMEOUT_MS : undefined,
+        message: error instanceof Error ? error.message : String(error),
+      });
       lastErrorPayload = {
         status: timedOut ? 504 : 502,
         body: {
