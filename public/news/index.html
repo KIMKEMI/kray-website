@@ -114,9 +114,13 @@ a{color:inherit}
   border-radius:999px;padding:9px 18px;cursor:pointer;font-family:var(--sans);transition:.15s}
 .primarybtn:hover{background:#0064cc}
 .primarybtn:disabled{opacity:.5;cursor:default}
+.primarybtn.danger{background:var(--red)}
+.primarybtn.danger:hover{background:#b3000f}
 
 /* ===== ai news ===== */
-.newsrow{display:grid;grid-template-columns:26px 1fr;gap:16px;padding:20px 0;border-top:1px solid var(--line)}
+.newsrow{display:grid;grid-template-columns:26px 1fr;gap:16px;padding:18px 14px;margin:0 -14px;
+  border-top:1px solid var(--line);border-radius:14px;transition:background .15s var(--ease)}
+.newsrow:hover{background:var(--bg-alt)}
 .newsrow:first-child{border-top:0}
 .newsidx{width:24px;height:24px;border-radius:50%;background:var(--bg-alt);display:flex;
   align-items:center;justify-content:center;font-size:var(--fs-2xs);font-weight:700;color:var(--ink-soft);margin-top:2px}
@@ -169,6 +173,30 @@ a{color:inherit}
 .legend{display:flex;gap:8px 20px;flex-wrap:wrap;margin-top:16px;padding-top:16px;border-top:1px solid var(--line)}
 .legenditem{font-size:var(--fs-2xs);color:var(--ink-soft);display:flex;align-items:center;gap:6px}
 .legenditem::before{content:'';width:9px;height:9px;border-radius:50%;background:var(--dot,var(--ink));display:inline-block}
+
+/* ===== 오늘의 성과 (achievements) — 실제 캡처 스크린샷 표시 ===== */
+.achv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.achv-card{background:var(--card);border-radius:var(--r-lg);overflow:hidden;border:1px solid rgba(0,0,0,.05);
+  box-shadow:0 1px 2px rgba(0,0,0,.04),0 10px 24px rgba(0,0,0,.035)}
+.achv-shotwrap{background:var(--bg-alt);display:flex;align-items:center;justify-content:center;max-height:260px;overflow:hidden}
+.achv-shot{width:100%;display:block;object-fit:contain;max-height:260px}
+.achv-body{padding:14px 18px 16px}
+.achv-badge{display:inline-flex;align-items:center;gap:5px;font-size:var(--fs-2xs);font-weight:700;
+  padding:4px 10px;border-radius:999px;background:var(--orange-tint);color:var(--orange);margin-bottom:8px}
+.achv-name{font-size:var(--fs-sm);font-weight:700;line-height:1.4}
+.achv-meta{font-size:var(--fs-2xs);color:var(--ink-faint);margin-top:5px}
+.achv-meta a{color:var(--blue);font-weight:600;text-decoration:none;margin-left:6px}
+
+/* ===== 오늘 확인해볼 상품 (attention) ===== */
+.attention{margin-top:20px;padding:16px 18px;background:var(--orange-tint);border-radius:var(--r-md)}
+.attention-title{font-size:var(--fs-sm);font-weight:700;color:var(--orange);margin-bottom:8px}
+.attention ul{margin:0;padding-left:18px}
+.attention li{font-size:var(--fs-sm);color:var(--ink);line-height:1.7}
+.attention li b{font-weight:700}
+
+/* ===== product identity dot (Executive Summary ↔ Ranking Trend 색상 매칭) ===== */
+.execdot{position:absolute;top:10px;left:10px;width:9px;height:9px;border-radius:50%;
+  box-shadow:0 0 0 2px rgba(255,255,255,.85);z-index:2}
 
 /* ===== watchlist detail ===== */
 .watchgrid{display:grid;grid-template-columns:1fr;gap:14px;align-items:start}
@@ -317,6 +345,15 @@ footer{margin:64px 0 44px;padding-top:22px;border-top:1px solid var(--line);
       </div>
       <div id="competitorBody"><div class="competitorstate">비교 데이터를 불러오는 중…</div></div>
     </div>
+    <div class="attention" id="attentionBox" style="display:none">
+      <div class="attention-title">⚠ 오늘 확인해볼 상품</div>
+      <ul id="attentionList"></ul>
+    </div>
+  </section>
+
+  <section class="section" id="achvSection" style="display:none">
+    <div class="sectionhead"><h2>🏆 오늘의 성과</h2></div>
+    <div class="achv-grid" id="achvGrid"></div>
   </section>
 
   <section class="section">
@@ -369,20 +406,39 @@ footer{margin:64px 0 44px;padding-top:22px;border-top:1px solid var(--line);
   </div>
 </div>
 
+<div class="modaloverlay" id="confirmModal" style="display:none">
+  <div class="modal">
+    <div class="modaltitle">상품 제거</div>
+    <div class="modaldesc" id="confirmModalDesc"></div>
+    <div class="modalactions">
+      <button class="ghostbtn" id="confirmModalCancel">취소</button>
+      <button class="primarybtn danger" id="confirmModalConfirm">제거</button>
+    </div>
+  </div>
+</div>
+
 <script>
 const API='/api/news';
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fd=d=>{const p=String(d||'').split('-');return p.length===3?`${+p[1]}/${+p[2]}`:String(d||'')};
-const fr=x=>x.rank!=null?`${x.rank}위`:(x.rankStatus==='out_of_range'?'1000위 밖':'순위 확인 불가');
+const fr=x=>x.rank!=null?`${x.rank}위`:(x.rankStatus==='not_found'?'관측 범위 밖':'순위 확인 중');
 const dt=d=>d==null?'전일 비교 없음':`${d>0?'↑':d<0?'↓':'→'}${Math.abs(+d)}`;
 const trunc=(s,n)=>{s=String(s??'').trim();return s.length>n?s.slice(0,n).trim()+'…':s};
 const yen=n=>Number.isFinite(Number(n))?'¥'+Number(n).toLocaleString():'—';
+/* Executive Summary 카드 ↔ Ranking Trend 그래프 선 색을 동일 순서로 매칭 */
+const PRODUCT_COLORS=['#0071e3','#1a7f37','#b06400','#8944ab','#c2185b','#00796b','#5c6bc0','#8d6e63'];
 
 document.getElementById('today').textContent=new Intl.DateTimeFormat('ko-KR',{dateStyle:'long',timeZone:'Asia/Tokyo'}).format(new Date());
 
 function sig(x){
   const d=x.delta==null?null:+x.delta, c=x.change7==null?null:+x.change7;
-  if(x.rank==null) return x.rankStatus==='out_of_range'?['순위권 밖','outrange',`현재 관측 범위 내 순위가 없습니다.`]:['순위 확인 불가','warn',`재고 소진, 판매 중단 또는 등록 직후로 아직 순위를 확인하지 못했습니다.`];
+  if(x.rank==null){
+    /* rankStatus는 백엔드가 이미 자동으로 구분해 둔 값이라 별도 수동 상태 입력이 필요 없다.
+       'not_found' = 랭킹 페이지 끝까지 확인했지만 못 찾음(진짜 순위 밖으로 확정).
+       그 외(신규 등록 직후, 이번 수집에서 아직 못 찾음 등)는 '확인 중'으로 안내한다. */
+    if(x.rankStatus==='not_found') return['범위 밖','outrange',`Rakuten 랭킹 페이지 끝까지 확인했지만 이 상품을 찾지 못했습니다. 대략 1,000위 밖으로 추정됩니다.`];
+    return['확인 중','warn',`아직 정확한 순위를 특정하지 못했습니다. 신규 등록 직후이거나, 다음 수집에서 더 넓은 범위를 확인합니다.`];
+  }
   if(c>=20) return['급상승','surgeup',`관측 시작 대비 ${c}계단 개선됐습니다.`];
   if(c<=-20) return['급하락','surgedown',`관측 시작 대비 ${Math.abs(c)}계단 하락했습니다.`];
   if(d>0) return['상승','up',`전일 대비 ${d}계단 상승했습니다.`];
@@ -394,13 +450,23 @@ function img(url,cls){return url?`<img class="${cls}" src="${esc(url)}" alt="" l
 /* ===================== Executive Summary + Top Competitor Analysis ===================== */
 let CURRENT_WATCHLIST=[];
 let SELECTED_INDEX=0;
+let INIT_SELECTED=false;
 
 function exec(w){
   CURRENT_WATCHLIST=w;
+  /* 첫 로드 때만: 경쟁사 비교 패널이 열자마자 실패 메시지부터 보이지 않도록,
+     순위가 확인된 첫 상품을 기본 선택으로 고른다. 사용자가 이미 카드를
+     클릭해 다른 상품을 보고 있다면(두 번째 렌더부터) 그 선택을 유지한다. */
+  if(!INIT_SELECTED){
+    const firstRanked=w.findIndex(x=>x.rank!=null);
+    SELECTED_INDEX=firstRanked>=0?firstRanked:0;
+    INIT_SELECTED=true;
+  }
   if(SELECTED_INDEX>=w.length) SELECTED_INDEX=0;
   document.getElementById('execGrid').innerHTML=w.map((x,i)=>{
     const s=sig(x);
     return `<div class="execcard${i===SELECTED_INDEX?' active':''}" data-i="${i}">
+      <span class="execdot" style="background:${PRODUCT_COLORS[i%PRODUCT_COLORS.length]}" title="Ranking Trend 그래프 색상"></span>
       <button class="execremove" data-i="${i}" title="상품 제거" aria-label="상품 제거">×</button>
       ${img(x.imageUrl,'execthumb')}<div class="execbody">
       <div class="execname" title="${esc(x.label)}">${esc(trunc(x.label,40))}</div>
@@ -426,6 +492,44 @@ function exec(w){
   } else {
     panel.style.display='none';
   }
+  attention(w);
+}
+
+/* ===================== 오늘 확인해볼 상품 ===================== */
+function attention(w){
+  const box=document.getElementById('attentionBox'), list=document.getElementById('attentionList');
+  const order={surgedown:0,down:1,warn:2};
+  const items=w.map((x,i)=>({x,i,s:sig(x)})).filter(o=>order[o.s[1]]!=null);
+  if(!items.length){ box.style.display='none'; return; }
+  items.sort((a,b)=>order[a.s[1]]-order[b.s[1]]);
+  list.innerHTML=items.slice(0,4).map(o=>`<li><b>${esc(trunc(o.x.label,28))}</b> — ${esc(o.s[2])}</li>`).join('');
+  box.style.display='block';
+}
+
+/* ===================== 🏆 오늘의 성과 (실제 캡처 이미지) ===================== */
+function achievements(list){
+  const section=document.getElementById('achvSection'), grid=document.getElementById('achvGrid');
+  const items=(list||[]).filter(m=>m&&m.imageUrl);
+  if(!items.length){ section.style.display='none'; return; }
+  const badgeOf=m=>{
+    const isRealtime=String(m.type||'').indexOf('realtime')===0;
+    const isParent=String(m.type||'').slice(-7)==='_parent';
+    return isRealtime?(isParent?'⚡ 리얼타임 상위 카테고리 1위':'⚡ 리얼타임 1위 달성')
+      :(isParent?'🏆 상위 카테고리 1위':'🏆 카테고리 1위 달성');
+  };
+  grid.innerHTML=items.map(m=>{
+    const w=CURRENT_WATCHLIST.find(x=>x.itemCode===m.itemCode);
+    const url=w&&w.itemUrl?w.itemUrl:'';
+    return `<div class="achv-card">
+      <div class="achv-shotwrap"><img class="achv-shot" src="${esc(m.imageUrl)}" alt="${esc(m.label)} 랭킹 1위 캡처" loading="lazy" onerror="this.parentElement.style.display='none'"></div>
+      <div class="achv-body">
+        <span class="achv-badge">${badgeOf(m)}</span>
+        <div class="achv-name" title="${esc(m.label)}">${esc(trunc(m.label,42))}</div>
+        <div class="achv-meta">${esc(fd(m.date))} 첫 달성${url?` · <a href="${esc(url)}" target="_blank" rel="noopener">Rakuten 상품 보기 →</a>`:''}</div>
+      </div>
+    </div>`;
+  }).join('');
+  section.style.display='block';
 }
 
 function selectExec(i){
@@ -589,13 +693,25 @@ document.getElementById('tokenModalConfirm').addEventListener('click',async()=>{
   if(item) doRemove(item,token);
 });
 
+/* 상품 제거 확인 — 브라우저 기본 confirm() 대신 사이트 톤에 맞춘 모달 사용 */
+let pendingConfirmRemove=null;
 function removeProduct(x){
-  if(!confirm(`"${x.label}" 상품을 Watchlist에서 제거할까요?\n(관측 데이터는 삭제되지 않고, 대시보드 노출만 즉시 중단됩니다.)`)) return;
+  pendingConfirmRemove=x;
+  document.getElementById('confirmModalDesc').textContent=`"${x.label}" 상품을 Watchlist에서 제거할까요? 관측 데이터는 삭제되지 않고, 대시보드 노출만 즉시 중단됩니다.`;
+  document.getElementById('confirmModal').style.display='flex';
+}
+function closeConfirmModal(){document.getElementById('confirmModal').style.display='none';pendingConfirmRemove=null}
+document.getElementById('confirmModalCancel').addEventListener('click',closeConfirmModal);
+document.getElementById('confirmModal').addEventListener('click',e=>{if(e.target.id==='confirmModal')closeConfirmModal()});
+document.getElementById('confirmModalConfirm').addEventListener('click',()=>{
+  const x=pendingConfirmRemove;
+  closeConfirmModal();
+  if(!x) return;
   const token=getAdminToken();
   if(token){ doRemove(x,token); return; }
   pendingRemove=x;
   openTokenModal();
-}
+});
 async function doRemove(x,token){
   const data=await callWatchlistApi('removeWatchlistItem',{itemCode:x.itemCode},token);
   if(data&&data.ok){
@@ -631,12 +747,19 @@ function overview(w){
   const mn=Math.max(1,Math.min(...vals)),mx=Math.max(...vals);
   const lmn=Math.log(mn),lmx=Math.log(Math.max(mx,mn+1)),lsp=Math.max(1e-6,lmx-lmn);
   const yOf=v=>T+(Math.log(Math.max(1,v))-lmn)*(H-T-B)/lsp;
-  const cs=['#0071e3','#1a7f37','#b06400','#8944ab','#86868b'];
+  /* Executive Summary 카드와 동일한 팔레트/순서를 그대로 써서, 어떤 선이
+     어떤 상품인지 범례를 다시 보지 않아도 바로 매칭되게 한다. */
+  const cs=PRODUCT_COLORS;
   let h='';
   for(let g=0;g<4;g++){const y=T+g*(H-T-B)/3,v=Math.round(Math.exp(lmn+g*lsp/3));h+=`<line x1="${L}" y1="${y}" x2="${W-R}" y2="${y}" stroke="#eeeef0"/><text x="0" y="${y+4}" font-size="10" fill="#a1a1a6">${v}위</text>`}
   dates.forEach((d,i)=>{if(i===0||i===dates.length-1||i%Math.max(1,Math.floor(dates.length/6))===0){const x=L+i*(W-L-R)/Math.max(1,dates.length-1);h+=`<text x="${x}" y="${H-8}" text-anchor="middle" font-size="10" fill="#a1a1a6">${fd(d)}</text>`}});
   ser.forEach((s,k)=>{const c=cs[k%cs.length];const p=s.v.map((v,i)=>v==null?null:{x:L+i*(W-L-R)/Math.max(1,dates.length-1),y:yOf(+v),v,i}).filter(Boolean);
-    if(p.length) h+=`<polyline fill="none" stroke="${c}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" points="${p.map(o=>`${o.x},${o.y}`).join(' ')}"/>`;});
+    if(p.length){
+      h+=`<polyline fill="none" stroke="${c}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" points="${p.map(o=>`${o.x},${o.y}`).join(' ')}"/>`;
+      /* hover 시 정확한 날짜·순위를 보여주는 툴팁(네이티브 SVG title) */
+      p.forEach(o=>{h+=`<circle cx="${o.x}" cy="${o.y}" r="7" fill="transparent"><title>${esc(s.n)} · ${esc(fd(dates[o.i]))} · ${o.v}위</title></circle><circle cx="${o.x}" cy="${o.y}" r="2.2" fill="${c}" pointer-events="none"/>`;});
+    }
+  });
   svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
   svg.innerHTML=h;
   leg.innerHTML=ser.map((s,i)=>`<span class="legenditem" style="--dot:${cs[i%cs.length]}">${esc(s.n)}</span>`).join('');
@@ -674,7 +797,9 @@ function spark(svg,v,d,state){
     }
   });
   h+=`<polyline fill="none" stroke="${color}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" points="${line}"/>`;
-  h+=`<circle cx="${p[p.length-1].x}" cy="${p[p.length-1].y}" r="3.5" fill="${color}"/>`;
+  /* hover 시 정확한 날짜·순위를 보여주는 툴팁(네이티브 SVG title) */
+  p.forEach(o=>{h+=`<circle cx="${o.x}" cy="${o.y}" r="9" fill="transparent"><title>${esc(fd(d[o.i]))} · ${o.v}위</title></circle>`;});
+  h+=`<circle cx="${p[p.length-1].x}" cy="${p[p.length-1].y}" r="3.5" fill="${color}" pointer-events="none"/>`;
   svg.innerHTML=h;
 }
 
@@ -729,7 +854,7 @@ function render(d,stamp,fromCache){
       <div class="newssummary">${esc(x.summary)}</div>
     </div></div>`
   ).join('') || '<div class="empty">오늘 수집된 AI·테크 뉴스가 없습니다.</div>';
-  exec(w); overview(w); watch(w);
+  exec(w); overview(w); watch(w); achievements(d.milestones||[]);
   const t=new Intl.DateTimeFormat('ko-KR',{hour:'2-digit',minute:'2-digit',timeZone:'Asia/Tokyo'}).format(new Date(stamp||Date.now()));
   document.getElementById('updated').textContent=(fromCache?'최근 저장본 '+t:'최종 갱신 '+t);
   document.getElementById('foottime').textContent=t+' JST 기준';
