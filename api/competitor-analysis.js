@@ -91,7 +91,30 @@ export default async function handler(req, res) {
 
     const top = Array.isArray(data.top) ? data.top.map(normalizeTop) : [];
     const mine = data.mine ? normalizeTop(data.mine) : null;
-    res.setHeader('Cache-Control', 'public, s-maxage=600, stale-while-revalidate=1800');
+
+    /*
+     * 2026-08-24 (Kemi): 1~10위가 온전한 응답만 CDN에 캐시한다.
+     *
+     * 프론트엔드는 순위가 1..10으로 정확히 채워지지 않으면 "잘못된 순위를
+     * 표시하지 않는다"는 정책상 표시를 거부한다. 그런데 지금까지는 그런
+     * 불완전한 응답까지 10분간 캐시돼서, 업스트림이 잠깐 흔들린 대가를
+     * 사용자가 10분 내내 치르고 있었다. (실측 예: [1,2,3,4,6,7,8,9,10,11]
+     * -- 5위가 빠지고 11위가 섞여 들어옴)
+     *
+     * 온전하지 않으면 캐시하지 않고 다음 요청에서 곧바로 다시 시도하게 한다.
+     */
+    const ranks = top.map((x) => Number(x.rank));
+    const isComplete = ranks.length === 10 && ranks.every((r, i) => r === i + 1);
+
+    if (isComplete) {
+      res.setHeader('Cache-Control', 'public, s-maxage=600, stale-while-revalidate=1800');
+    } else {
+      res.setHeader('Cache-Control', 'no-store');
+      console.log(JSON.stringify({
+        tag: 'oracle-proxy', event: 'incomplete_top10',
+        genreId, receivedRanks: ranks, count: ranks.length,
+      }));
+    }
     return res.status(200).json({
       ok: true,
       genreId,
