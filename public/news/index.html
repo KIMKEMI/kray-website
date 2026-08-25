@@ -157,16 +157,6 @@ a{color:inherit}
 .surgeup{color:var(--surgeup)} .up{color:var(--up)} .down{color:var(--down)} .surgedown{color:var(--surgedown)} .stable{color:var(--green)} .outrange{color:var(--ink-faint)} .warn{color:var(--orange)}
 .exechint{font-size:var(--fs-2xs);color:var(--ink-faint);margin-top:14px}
 
-/* ===== tabs (개요 / 경쟁사 / 트렌드 / Watchlist) ===== */
-.tabbar{display:flex;gap:4px;margin:36px 0 4px;border-bottom:1px solid var(--line);overflow-x:auto}
-.tabbtn{font-family:var(--sans);font-size:var(--fs-sm);font-weight:600;color:var(--ink-faint);
-  background:transparent;border:0;padding:13px 18px;cursor:pointer;border-bottom:2px solid transparent;
-  margin-bottom:-1px;white-space:nowrap;transition:.15s}
-.tabbtn:hover{color:var(--ink)}
-.tabbtn.active{color:var(--blue);border-bottom-color:var(--blue)}
-.tabpanel{display:none}
-.tabpanel.active{display:block}
-
 /* ===== 경쟁사 비교 상품 선택 칩 ===== */
 .competitorpicker{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
 .pickerchip{display:inline-flex;align-items:center;gap:7px;font-size:var(--fs-sm);font-weight:600;color:var(--ink-soft);
@@ -190,37 +180,26 @@ a{color:inherit}
 .legenditem{font-size:var(--fs-2xs);color:var(--ink-soft);display:flex;align-items:center;gap:6px}
 .legenditem::before{content:'';width:9px;height:9px;border-radius:50%;background:var(--dot,var(--ink));display:inline-block}
 
-/* ===== 오늘의 성과 (achievements) — 실제 캡처 스크린샷 표시 ===== */
-.achv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+/* ===== 오늘의 성과 (achievements) — 페이지 최상단 하이라이트 섹션.
+   실제 캡처 스크린샷을 크게 보여줘서 성과를 확실히 어필한다. ===== */
+.achv-featured{padding:36px 32px 12px;border-radius:32px;
+  background:linear-gradient(180deg,var(--blue-tint) 0%,rgba(240,246,255,0) 70%)}
+.achv-featured .sectionhead h2{font-size:26px}
+.achv-featured .sectiontitles .small{font-size:var(--fs-sm)}
+.achv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px}
 .achv-card{background:var(--card);border-radius:var(--r-lg);overflow:hidden;border:1px solid rgba(0,0,0,.05);
   box-shadow:0 1px 2px rgba(0,0,0,.04),0 10px 24px rgba(0,0,0,.035)}
-.achv-shotwrap{background:var(--bg-alt);display:flex;align-items:center;justify-content:center;max-height:260px;overflow:hidden}
-.achv-shot{width:100%;display:block;object-fit:contain;max-height:260px}
-.achv-body{padding:14px 18px 16px}
-.achv-badge{display:inline-flex;align-items:center;gap:5px;font-size:var(--fs-2xs);font-weight:700;
-  padding:4px 10px;border-radius:999px;background:var(--orange-tint);color:var(--orange);margin-bottom:8px}
-.achv-name{font-size:var(--fs-sm);font-weight:700;line-height:1.4}
-.achv-meta{font-size:var(--fs-2xs);color:var(--ink-faint);margin-top:5px}
+.achv-shotwrap{background:var(--bg-alt);display:flex;align-items:center;justify-content:center;max-height:300px;overflow:hidden}
+.achv-shot{width:100%;display:block;object-fit:contain;max-height:300px}
+.achv-body{padding:18px 22px 20px}
+.achv-badge{display:inline-flex;align-items:center;gap:5px;font-size:var(--fs-sm);font-weight:700;
+  padding:5px 12px;border-radius:999px;background:var(--orange-tint);color:var(--orange);margin-bottom:9px}
+.achv-name{font-size:var(--fs-md);font-weight:700;line-height:1.4}
+.achv-meta{font-size:var(--fs-sm);color:var(--ink-faint);margin-top:6px}
 .achv-meta a{color:var(--blue);font-weight:600;text-decoration:none;margin-left:6px}
-.achv-empty{padding:38px 20px;text-align:center;border:1px dashed var(--line);border-radius:var(--r-lg);background:var(--bg-alt)}
-.achv-empty-title{font-size:var(--fs-md);font-weight:700;color:var(--ink);margin-bottom:6px}
-.achv-empty-text{font-size:var(--fs-sm);color:var(--ink-soft);max-width:440px;margin:0 auto;line-height:1.6}
-
-/* ===== 오늘의 상태 (status banner) — 상단 고정, 조건에 관계없이 항상 노출 ===== */
-.statusbanner{display:flex;gap:14px;align-items:flex-start;padding:18px 20px;border-radius:var(--r-lg);
-  background:var(--green-tint);border:1px solid rgba(0,0,0,.05);transition:background .2s var(--ease)}
-.statusbanner.alert{background:var(--orange-tint)}
-.statusbanner.empty{background:var(--bg-alt)}
-.statusicon{flex-shrink:0;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;
-  font-size:14px;font-weight:700;background:var(--green);color:#fff;margin-top:1px}
-.statusbanner.alert .statusicon{background:var(--orange)}
-.statusbanner.empty .statusicon{background:var(--ink-faint)}
-.statusbody{min-width:0}
-.statustitle{font-size:var(--fs-md);font-weight:700;color:var(--ink);letter-spacing:-.01em}
-.statussub{font-size:var(--fs-sm);color:var(--ink-soft);margin-top:4px;line-height:1.6}
-.statuslist{margin:10px 0 0;padding-left:18px}
-.statuslist li{font-size:var(--fs-sm);color:var(--ink);line-height:1.7}
-.statuslist li b{font-weight:700}
+.achv-empty{padding:52px 24px;text-align:center;border:1px dashed var(--line);border-radius:var(--r-lg);background:var(--card)}
+.achv-empty-title{font-size:22px;font-weight:700;color:var(--ink);margin-bottom:8px}
+.achv-empty-text{font-size:var(--fs-md);color:var(--ink-soft);max-width:480px;margin:0 auto;line-height:1.6}
 
 /* ===== product identity dot (Executive Summary ↔ Ranking Trend 색상 매칭) ===== */
 .execdot{position:absolute;top:10px;left:10px;width:9px;height:9px;border-radius:50%;
@@ -359,79 +338,59 @@ footer{margin:64px 0 44px;padding-top:22px;border-top:1px solid var(--line);
     <p class="herosub">AI·테크 산업의 흐름과 Rakuten 판매 신호를 하나의 화면에서 확인하고, 오늘 할 일을 정합니다.</p>
   </section>
 
-  <section class="section" id="statusSection" style="margin:32px 0 56px">
-    <div class="statusbanner" id="statusBanner">
-      <span class="statusicon" id="statusIcon">✓</span>
-      <div class="statusbody">
-        <div class="statustitle" id="statusTitle">오늘의 상태를 확인하는 중입니다</div>
-        <ul id="statusList" class="statuslist"></ul>
+  <section class="section achv-featured" id="achvSection" style="margin:32px 0 64px">
+    <div class="sectionhead">
+      <div class="sectiontitles">
+        <h2>오늘의 성과</h2>
+        <span class="small">등록된 상품이 오늘 달성한 순위를 확인하세요</span>
       </div>
+    </div>
+    <div class="achv-grid" id="achvGrid"></div>
+  </section>
+
+  <section class="section">
+    <div class="sectionhead"><h2 id="aiNewsTitle">오늘의 AI &amp; Tech</h2></div>
+    <div class="card">
+      <div id="aiNews"><div class="empty">데이터 연결 중입니다.</div></div>
     </div>
   </section>
 
-  <nav class="tabbar" id="tabBar">
-    <button class="tabbtn" data-tab="overview">개요</button>
-    <button class="tabbtn" data-tab="competitors">경쟁사</button>
-    <button class="tabbtn" data-tab="trend">트렌드</button>
-    <button class="tabbtn" data-tab="watchlist">Watchlist</button>
-  </nav>
-
-  <div class="tabpanel" data-tabpanel="overview">
-    <section class="section">
-      <div class="sectionhead"><h2 id="aiNewsTitle">오늘의 AI &amp; Tech</h2></div>
-      <div class="card">
-        <div id="aiNews"><div class="empty">데이터 연결 중입니다.</div></div>
+  <section class="section">
+    <div class="sectionhead">
+      <div class="sectiontitles">
+        <h2>Executive Summary</h2>
+        <span class="small">등록된 상품의 오늘 순위와 변화를 한눈에 확인합니다 · <a href="#" id="execSettingsLink">상품 관리</a></span>
       </div>
-    </section>
+    </div>
+    <div class="execgrid" id="execGrid"></div>
+    <p class="exechint">카드를 선택하면 아래 '경쟁사 비교'의 대상이 바뀝니다.</p>
+  </section>
 
-    <section class="section">
-      <div class="sectionhead">
-        <div class="sectiontitles">
-          <h2>Executive Summary</h2>
-          <span class="small">등록된 상품의 오늘 순위와 변화를 한눈에 확인합니다 · <a href="#" id="execSettingsLink">상품 관리</a></span>
-        </div>
+  <section class="section">
+    <div class="sectionhead">
+      <div class="sectiontitles">
+        <h2>경쟁사 비교</h2>
+        <span class="small">선택한 상품과 동일 카테고리 1~10위를 비교합니다</span>
       </div>
-      <div class="execgrid" id="execGrid"></div>
-      <p class="exechint">카드를 선택하면 '경쟁사' 탭의 비교 대상이 바뀝니다.</p>
-    </section>
+      <div class="sectiontools"><button class="ghostbtn" id="competitorRefresh">↻ 새로고침</button></div>
+    </div>
+    <div class="competitorpicker" id="competitorPicker"></div>
+    <div class="card" style="padding:20px 26px 26px">
+      <span class="competitorlabel" id="competitorLabel">동일 카테고리 1~10위 비교</span>
+      <div id="competitorBody"><div class="competitorstate">비교 데이터를 불러오는 중…</div></div>
+    </div>
+  </section>
 
-    <section class="section" id="achvSection">
-      <div class="sectionhead"><h2>오늘의 성과</h2></div>
-      <div class="achv-grid" id="achvGrid"></div>
-    </section>
-  </div>
+  <section class="section">
+    <div class="sectionhead"><h2>Ranking Trend</h2></div>
+    <div class="card chartbox"><svg id="overview" class="overview"></svg><div id="legend" class="legend"></div></div>
+  </section>
 
-  <div class="tabpanel" data-tabpanel="competitors">
-    <section class="section">
-      <div class="sectionhead">
-        <div class="sectiontitles">
-          <h2>경쟁사 비교</h2>
-          <span class="small">선택한 상품과 동일 카테고리 1~10위를 비교합니다</span>
-        </div>
-        <div class="sectiontools"><button class="ghostbtn" id="competitorRefresh">↻ 새로고침</button></div>
-      </div>
-      <div class="competitorpicker" id="competitorPicker"></div>
-      <div class="card" style="padding:20px 26px 26px">
-        <span class="competitorlabel" id="competitorLabel">동일 카테고리 1~10위 비교</span>
-        <div id="competitorBody"><div class="competitorstate">비교 데이터를 불러오는 중…</div></div>
-      </div>
-    </section>
-  </div>
-
-  <div class="tabpanel" data-tabpanel="trend">
-    <section class="section">
-      <div class="sectionhead"><h2>Ranking Trend</h2></div>
-      <div class="card chartbox"><svg id="overview" class="overview"></svg><div id="legend" class="legend"></div></div>
-    </section>
-  </div>
-
-  <div class="tabpanel" data-tabpanel="watchlist">
-    <section class="section">
-      <div class="sectionhead"><h2>Rakuten Watchlist Detail</h2></div>
-      <div class="watchgrid" id="watchGrid"></div>
-      <div class="historymeta">※ rank_snapshots는 삭제하지 않고 계속 누적합니다. 웹 API에는 최대 최근 365일을 전달합니다.</div>
-    </section>
-  </div>
+  <section class="section">
+    <div class="sectionhead"><h2>Rakuten Watchlist Detail</h2></div>
+    <div class="watchgrid" id="watchGrid"></div>
+    <div class="historymeta">※ rank_snapshots는 삭제하지 않고 계속 누적합니다. 웹 API에는 최대 최근 365일을 전달합니다.</div>
+  </section>
 
   <footer><span>Kray, Inc. — Daily Briefing</span><span id="foottime"></span></footer>
 </div>
@@ -564,52 +523,15 @@ function exec(w){
     document.getElementById('competitorLabel').textContent='비교할 상품이 없습니다';
     document.getElementById('competitorBody').innerHTML='<div class="competitorstate">등록된 상품이 없어 비교할 수 없습니다. 설정에서 상품을 추가하면 자동으로 비교가 시작됩니다.</div>';
   }
-  attention(w);
 }
 
-/* ===================== 경쟁사 탭 상품 선택 칩 ===================== */
+/* ===================== 경쟁사 비교 상품 선택 칩 ===================== */
 function renderCompetitorPicker(w){
   const el=document.getElementById('competitorPicker');
   if(!el) return;
   el.innerHTML=w.map((x,i)=>`<button class="pickerchip${i===SELECTED_INDEX?' active':''}" data-i="${i}">
     <span class="pickerdot" style="background:${PRODUCT_COLORS[i%PRODUCT_COLORS.length]}"></span>${esc(trunc(x.label,20))}</button>`).join('');
   el.querySelectorAll('.pickerchip').forEach(b=>b.addEventListener('click',()=>selectExec(+b.dataset.i)));
-}
-
-/* ===================== 오늘의 상태 (상단 고정 요약 배너) =====================
-   조건부로 숨었다 나타나던 기존 방식을 버리고, 항상 같은 자리에서 3가지 상태 중
-   하나를 보여준다: 등록 상품 없음 / 확인할 것 없음(정상) / 확인이 필요함(경고).
-   사용자가 매번 "오늘은 왜 안 보이지"를 추리하지 않도록 하는 것이 목적. */
-function attention(w){
-  const banner=document.getElementById('statusBanner');
-  const icon=document.getElementById('statusIcon');
-  const title=document.getElementById('statusTitle');
-  const list=document.getElementById('statusList');
-
-  if(!w.length){
-    banner.className='statusbanner empty';
-    icon.textContent='+';
-    title.textContent='아직 등록된 상품이 없습니다';
-    list.innerHTML='<li>오른쪽 위 \'+ 상품 추가\'로 첫 Rakuten 상품을 등록해 보세요.</li>';
-    return;
-  }
-
-  const order={surgedown:0,down:1,warn:2};
-  const items=w.map((x,i)=>({x,i,s:sig(x)})).filter(o=>order[o.s[1]]!=null);
-
-  if(!items.length){
-    banner.className='statusbanner';
-    icon.textContent='✓';
-    title.textContent='오늘은 특별히 확인할 상품이 없습니다';
-    list.innerHTML=`<li>등록된 상품 ${w.length}개 모두 안정적인 순위 범위입니다.</li>`;
-    return;
-  }
-
-  items.sort((a,b)=>order[a.s[1]]-order[b.s[1]]);
-  banner.className='statusbanner alert';
-  icon.textContent='!';
-  title.textContent=`오늘 확인해볼 상품 ${items.length}개`;
-  list.innerHTML=items.slice(0,4).map(o=>`<li><b>${esc(trunc(o.x.label,28))}</b> — ${esc(o.s[2])}</li>`).join('');
 }
 
 /* ===================== 🏆 오늘의 성과 (실제 캡처 이미지) =====================
@@ -1008,27 +930,6 @@ function render(d,stamp,fromCache){
   document.getElementById('updated').textContent=(fromCache?'최근 저장본 '+t:'최종 갱신 '+t);
   document.getElementById('foottime').textContent=t+' JST 기준';
 }
-
-/* ===================== 탭 (개요 / 경쟁사 / 트렌드 / Watchlist) =====================
-   기존에는 6개 섹션이 하나의 긴 스크롤에 나열돼 있었다. 상품 수가 늘어날수록
-   이 구조는 감당이 안 되므로, 성격이 다른 화면(비교 분석·추이 차트·상품별
-   상세)을 각자의 탭으로 분리한다. SVG 차트는 display:none 상태에서는 폭을
-   0으로 읽어 찌그러지므로, 해당 탭이 활성화되는 순간 다시 그린다. */
-const TAB_KEY='kray_active_tab_v1';
-function showTab(name){
-  document.querySelectorAll('.tabbtn').forEach(b=>b.classList.toggle('active',b.dataset.tab===name));
-  document.querySelectorAll('.tabpanel').forEach(p=>p.classList.toggle('active',p.dataset.tabpanel===name));
-  try{localStorage.setItem(TAB_KEY,name)}catch(e){}
-  if(name==='trend') overview(CURRENT_WATCHLIST);
-  if(name==='watchlist') watch(CURRENT_WATCHLIST);
-}
-function initTabs(){
-  const valid=['overview','competitors','trend','watchlist'];
-  let saved=null; try{saved=localStorage.getItem(TAB_KEY)}catch(e){}
-  showTab(valid.includes(saved)?saved:'overview');
-  document.querySelectorAll('.tabbtn').forEach(b=>b.addEventListener('click',()=>showTab(b.dataset.tab)));
-}
-initTabs();
 
 /* ===========================================================
  * 로딩 체감속도 개선 (2026-08-24, Kemi 요청)
