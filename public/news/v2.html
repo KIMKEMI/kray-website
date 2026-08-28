@@ -648,6 +648,7 @@ async function loadCompetitor(i,force){
   for(let k=0;k<10;k++) h+=competitorCard(top[k],top[k].rank+'위','');
   h+='</div>';
   if(res.stale) h+='<div class="competitornote">최신 데이터를 불러오지 못해 이전 데이터를 표시하고 있습니다.</div>';
+  if(g) h+=`<a class="link" href="https://ranking.rakuten.co.jp/daily/${encodeURIComponent(g)}/" target="_blank" rel="noopener">Rakuten 공식 랭킹 페이지에서 직접 확인 ↗</a>`;
   body.innerHTML=h;
 }
 
