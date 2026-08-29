@@ -189,8 +189,8 @@ a{color:inherit}
 .achv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px}
 .achv-card{background:var(--card);border-radius:var(--r-lg);overflow:hidden;border:1px solid rgba(0,0,0,.05);
   box-shadow:0 1px 2px rgba(0,0,0,.04),0 10px 24px rgba(0,0,0,.035)}
-.achv-shotwrap{background:var(--bg-alt);display:flex;align-items:center;justify-content:center;max-height:300px;overflow:hidden}
-.achv-shot{width:100%;display:block;object-fit:contain;max-height:300px}
+.achv-shotwrap{background:var(--bg-alt);display:flex;align-items:center;justify-content:center}
+.achv-shot{display:block;max-width:100%;height:auto}
 .achv-body{padding:18px 22px 20px}
 .achv-badge{display:inline-flex;align-items:center;gap:5px;font-size:var(--fs-sm);font-weight:700;
   padding:5px 12px;border-radius:999px;background:var(--orange-tint);color:var(--orange);margin-bottom:9px}
@@ -543,8 +543,8 @@ function achievements(list){
   const items=(list||[]).filter(m=>m&&m.imageUrl);
   if(!items.length){
     grid.innerHTML=`<div class="achv-empty">
-      <div class="achv-empty-title">아직 달성한 순위가 없습니다</div>
-      <div class="achv-empty-text">등록된 상품이 카테고리 1위 또는 실시간 상위권에 오르면 이곳에 캡처와 함께 자동으로 기록됩니다.</div>
+      <div class="achv-empty-title">오늘은 1위 달성한 상품이 없습니다</div>
+      <div class="achv-empty-text">리얼타임 랭킹 체크가 주기적으로 진행 중이에요. 등록된 상품이 카테고리 1위 또는 실시간 상위권에 오르면 이곳에 달성 시각·캡처와 함께 자동으로 기록됩니다.</div>
     </div>`;
     return;
   }
@@ -562,7 +562,7 @@ function achievements(list){
       <div class="achv-body">
         <span class="achv-badge">${badgeOf(m)}</span>
         <div class="achv-name" title="${esc(m.label)}">${esc(trunc(m.label,42))}</div>
-        <div class="achv-meta">${esc(fd(m.date))} 첫 달성${url?` · <a href="${esc(url)}" target="_blank" rel="noopener">Rakuten 상품 보기 →</a>`:''}</div>
+        <div class="achv-meta">${esc(fd(m.date))}${m.time?` ${esc(m.time)}`:''} 첫 달성${url?` · <a href="${esc(url)}" target="_blank" rel="noopener">Rakuten 상품 보기 →</a>`:''}</div>
       </div>
     </div>`;
   }).join('');
