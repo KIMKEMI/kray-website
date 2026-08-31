@@ -62,10 +62,21 @@ export default async function handler(req, res) {
     // 이 데이터는 수집 트리거가 돌 때(수십 분 간격)만 바뀌므로 매 방문마다
     // Apps Script를 5~6초씩 기다릴 이유가 없다.
     //   - max-age=0        : 브라우저는 항상 CDN에 확인(항상 최신 여부 체크)
-    //   - s-maxage=120     : CDN 엣지에서 120초 동안 즉시 응답
-    //   - stale-while-revalidate=1800 : 만료 후에도 우선 캐시본을 즉시 주고,
+    //   - s-maxage           : CDN 엣지에서 이 시간 동안 즉시 응답
+    //   - stale-while-revalidate : 만료 후에도 우선 캐시본을 즉시 주고,
     //     뒤에서 조용히 새로 받아온다 -> 사용자가 기다리는 일이 사실상 없어진다.
-    const CACHE_POLICY = 'public, max-age=0, s-maxage=120, stale-while-revalidate=1800';
+    //
+    // 2026-08-31 (Kemi 보고): 자정 직후 리얼타임 랭킹 1위 달성 LINE 알림을
+    // 받았는데 사이트에는 "오늘의 성과"가 비어 보였다. 원인은 두 가지였다:
+    //  1) GAS 쪽 날짜 계산 버그(recordRankMilestone_에서 수정, day/achievedTime
+    //     불일치) - 이게 주 원인.
+    //  2) 이 CDN 캐시가 최대 120초(심지어 재검증 지연 시 최대 1800초까지)
+    //     오래된 응답을 그대로 내줄 수 있어 위 버그가 없어도 최대 몇 분간은
+    //     "방금 달성한 성과"가 안 보일 수 있었다.
+    // "오늘의 성과"는 실시간성이 중요한 데이터이므로 캐시 시간을 크게
+    // 줄인다. 워치리스트/뉴스 데이터도 같은 응답에 실려가지만, 10~15초
+    // 캐시로도 "매 방문마다 5~6초 대기" 문제는 여전히 방지된다.
+    const CACHE_POLICY = 'public, max-age=0, s-maxage=15, stale-while-revalidate=60';
     res.setHeader('Cache-Control', CACHE_POLICY);
     res.setHeader('CDN-Cache-Control', CACHE_POLICY);
     res.setHeader('Vercel-CDN-Cache-Control', CACHE_POLICY);
